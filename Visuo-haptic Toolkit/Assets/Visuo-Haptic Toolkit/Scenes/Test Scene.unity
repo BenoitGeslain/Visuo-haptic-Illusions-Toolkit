@@ -687,11 +687,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c6eac9d82e7fde4d816294ebdd46b8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  technique: 0
+  techniqueEnum: 2
   realHand: {fileID: 1632942466}
   virtualHand: {fileID: 1835407082}
   invariant: {fileID: 741344272}
   direction: 2
+  redirecting: 0
 --- !u!4 &1211356051
 Transform:
   m_ObjectHideFlags: 0

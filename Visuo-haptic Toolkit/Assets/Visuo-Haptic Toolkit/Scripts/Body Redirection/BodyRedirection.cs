@@ -46,6 +46,15 @@ namespace BG.VHIllusion {
 				case Technique.Azmandian2016Hybrid:
 					technique = new Azmandian2016Hybrid();
 					break;
+				case Technique.Han2018Instant:
+					technique = new Han2018Instant();
+					break;
+				case Technique.Han2018Continous:
+					technique = new Han2018Continous();
+					break;
+				case Technique.Cheng2017Sparse:
+					technique = new Cheng2017Sparse();
+					break;
 				default:
 					Debug.LogError("Error Unknown Redirection technique.");
 					redirecting = false;
