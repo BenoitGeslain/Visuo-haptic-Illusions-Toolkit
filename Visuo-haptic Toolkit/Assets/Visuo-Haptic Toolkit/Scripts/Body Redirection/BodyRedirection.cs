@@ -2,21 +2,22 @@ using UnityEngine;
 
 namespace BG.VHIllusion {
 
-	public class BodyRedirection : MonoBehaviour {
-		public enum Technique {
-			Han2018Instant,
-			Han2018Continous,
-			Azmandian2016Body,
-			Azmandian2016World,
-			Azmandian2016Hybrid,
-			Cheng2017Sparse
-		}
+	public enum Technique {
+		Han2018Instant,
+		Han2018Continous,
+		Azmandian2016Body,
+		Azmandian2016World,
+		Azmandian2016Hybrid,
+		Cheng2017Sparse
+	}
 
-		public enum Axis {
-			X,
-			Y,
-			Z
-		}
+	public enum Axis {
+		X,
+		Y,
+		Z
+	}
+
+	public class BodyRedirection : MonoBehaviour {
 
 		static readonly Vector3[] vectorAxes = new Vector3[] {
 			Vector3.right,
@@ -24,15 +25,15 @@ namespace BG.VHIllusion {
 			Vector3.forward
 		};
 
-		public Technique techniqueEnum;
-		private BodyRedirectionTechnique technique;
+		[SerializeField] private Technique techniqueEnum;
+		[SerializeField] private BodyRedirectionTechnique technique;
 
-		public GameObject realHand;
-		public GameObject virtualHand;
-		public GameObject invariant;
-		public Axis direction;
+		[SerializeField] private GameObject realHand;
+		[SerializeField] private GameObject virtualHand;
+		[SerializeField] private GameObject invariant;
+		[SerializeField] private Axis direction;
 
-		public bool redirecting;
+		[SerializeField] private bool redirecting;
 
 		void Start() {
 			redirecting = true;
@@ -64,6 +65,10 @@ namespace BG.VHIllusion {
 
 		void Update() {
 			technique.Redirect(realHand, virtualHand, invariant, vectorAxes[(int)direction]);
+		}
+
+		public bool IsRedirecting() {
+			return redirecting;
 		}
 	}
 }

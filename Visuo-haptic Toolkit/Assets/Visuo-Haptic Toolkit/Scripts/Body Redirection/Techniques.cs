@@ -5,7 +5,7 @@ namespace BG.VHIllusion {
 	public class BodyRedirectionTechnique {
 
 		public virtual void Redirect(GameObject realHand, GameObject virtualHand, GameObject invariant, Vector3 direction) {
-			Debug.LogError("Method not implemented.");
+			Debug.LogError("Virtual Method.");
 		}
 	}
 
