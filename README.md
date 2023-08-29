@@ -32,6 +32,7 @@ Voir le [wiki](../../wikis) pour plus d'informations sur les tâches à réalise
 | Interpolation   |     |
 | [Kohli et al., 2010](), Redirected Touching<br />[Kohli, 2013](https://doi.org/10.1109/3DUI.2010.5444703)   | &cross;   |
 | Pseudo-Haptic   |     |
+| [Lécuyer et al., 2000](https://doi.org/10.1109/VR.2000.840369), Spring stiffness   | &cross;   |
 | [Gomez Jauregui et al., 2014](http://ieeexplore.ieee.org/document/6777424/), Weight   | &cross;   |
 
 ### Good Contribution
@@ -40,7 +41,7 @@ Voir le [wiki](../../wikis) pour plus d'informations sur les tâches à réalise
 |:-------------- | -------------- |
 | [Han et al., 2019](http://ieeexplore.ieee.org/document/8260974/), Instant    | &cross; |
 | Pseudo-Haptic   |     |
-| [Lécuyer et al., 2000](https://doi.org/10.1109/VR.2000.840369), Spring stiffness   | &cross;   |
+
 | [Lécuyer et al., 2000](https://doi.org/10.1109/VR.2000.840369), Swamp Illusion   | &cross;   |
 
 <!-- | World Redirection   | Status    |
