@@ -27,7 +27,7 @@ Voir le [wiki](../../wikis) pour plus d'informations sur les tâches à réalise
 | World Redirection   |     |
 | [Razzaque et al., 2001](https://diglib.eg.org:443/xmlui/handle/10.2312/egs20011036), Over Time Rotation    | &cross;   |
 | [Steinicke et al., 2008](http://ieeexplore.ieee.org/document/4741303/), Translational    | &cross;   |
-| [Razzaque et al., 2001](https://diglib.eg.org:443/xmlui/handle/10.2312/egs20011036), Rotational, <br />[Steinicke et al., 2008](http://ieeexplore.ieee.org/document/4741303/)    | &cross;   |
+| [Razzaque et al., 2001](https://diglib.eg.org:443/xmlui/handle/10.2312/egs20011036), Rotational <br />[Steinicke et al., 2008](http://ieeexplore.ieee.org/document/4741303/)    | &cross;   |
 | [Razzaque et al., 2001](https://diglib.eg.org:443/xmlui/handle/10.2312/egs20011036), Curvature <br />[Steinicke et al., 2008](http://ieeexplore.ieee.org/document/4741303/)    | &cross;   |
 | Interpolation   |     |
 | [Kohli et al., 2010](), Redirected Touching<br />[Kohli, 2013](https://doi.org/10.1109/3DUI.2010.5444703)   | &cross;   |

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 
-namespace BG.VHIllusion {
+namespace BG.Redirection {
 	[CustomEditor(typeof(BodyRedirection))]
 	public class BodyRedirectionEditor : Editor {
 
