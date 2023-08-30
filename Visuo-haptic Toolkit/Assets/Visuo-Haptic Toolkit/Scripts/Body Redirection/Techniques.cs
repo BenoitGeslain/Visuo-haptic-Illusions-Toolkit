@@ -1,11 +1,15 @@
 using UnityEngine;
 
-
 namespace BG.Redirection {
+
+	/// <summary>
+	///  This class is the most conceptual class of  body redirection defining the important
+    ///  functions to call: Redirect()
+	/// </summary>
 	public class BodyRedirectionTechnique {
 
 		public virtual void Redirect(Transform realTarget, Transform virtualTarget, Transform origin, Transform realHand, Transform virtualHand) {
-			Debug.LogError("Virtual Method.");
+			Debug.LogError("Calling Redirect() virtual method. It should be overriden");
 		}
 	}
 

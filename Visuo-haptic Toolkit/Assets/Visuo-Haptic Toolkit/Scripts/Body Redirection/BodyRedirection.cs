@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace BG.Redirection {
 
-	public enum Technique {
+	public enum BRTechnique {
 		Han2018Instant,
 		Han2018Continous,
 		Azmandian2016Body,
@@ -11,67 +11,89 @@ namespace BG.Redirection {
 		Cheng2017Sparse
 	}
 
-	public enum Axis {
-		X,
-		Y,
-		Z
-	}
-
+	/// <summary>
+	/// This class allows users to select through the inspector or set through the API which
+	/// body redirection technique to use as well as the relevant parameters.
+	/// </summary>
 	public class BodyRedirection : MonoBehaviour {
 
-		// static readonly Vector3[] vectorAxes = new Vector3[] {
-		// 	Vector3.right,
-		// 	Vector3.up,
-		// 	Vector3.forward
-		// };
-
-		[SerializeField] private Technique technique;
+		[SerializeField] private BRTechnique technique;
 		[SerializeField] private BodyRedirectionTechnique techniqueClass;
 
-		[Header("Technique Parameters")]
+		[Header("User Parameters")]
 		[SerializeField] private Transform realHand;
 		[SerializeField] private Transform virtualHand;
-		[SerializeField] private Transform invariant;
-		[SerializeField] private Transform realTarget;
-		[SerializeField] private Transform virtualTarget;
-		// [SerializeField] private Axis direction;
 
-		[SerializeField] private bool redirecting;
+		[Header("Technique Parameters")]
+		public Transform origin;
+		public Transform realTarget;
+		public Transform virtualTarget;
 
-		void Start() {
-			redirecting = true;
+		private bool reset;
+
+		private void init() {
 			switch (technique) {
-				case Technique.Azmandian2016Body:
+				case BRTechnique.Azmandian2016Body:
 					techniqueClass = new Azmandian2016Body();
 					break;
-				case Technique.Azmandian2016World:
+				case BRTechnique.Azmandian2016World:
 					techniqueClass = new Azmandian2016World();
 					break;
-				case Technique.Azmandian2016Hybrid:
+				case BRTechnique.Azmandian2016Hybrid:
 					techniqueClass = new Azmandian2016Hybrid();
 					break;
-				case Technique.Han2018Instant:
+				case BRTechnique.Han2018Instant:
 					techniqueClass = new Han2018Instant();
 					break;
-				case Technique.Han2018Continous:
+				case BRTechnique.Han2018Continous:
 					techniqueClass = new Han2018Continous();
 					break;
-				case Technique.Cheng2017Sparse:
+				case BRTechnique.Cheng2017Sparse:
 					techniqueClass = new Cheng2017Sparse();
 					break;
 				default:
 					Debug.LogError("Error Unknown Redirection technique.");
-					redirecting = false;
 					break;
 			}
 		}
 
-		void Update() {
-			techniqueClass.Redirect(realTarget, virtualTarget, invariant, realHand, virtualHand);
+		private void Start() {
+			init();
+		}
+
+		private void Update() {
+			if (!reset) {
+				techniqueClass.Redirect(realTarget, virtualTarget, origin, realHand, virtualHand);
+			} else {
+				// Reset virtualHand to realHand progressively
+			}
+		}
+
+		public void setTechnique(BRTechnique t) {
+			technique = t;
+			init();
+		}
+		public BRTechnique getTechnique(BRTechnique t) {
+			return technique;
 		}
 
 		public bool IsRedirecting() {
-			return redirecting;
+			return Vector3.Distance(realHand.position, virtualHand.position) < Vector3.kEpsilon;
+		}
+
+		public void resetRedirection() {
+			reset = true;
+		}
+
+		public void restartRedirection() {
+			if (reset) {
+				Debug.LogWarning("Redirection should be reset before restarted.");
+				return;
+			} else if (IsRedirecting()) {
+				Debug.LogWarning("Redirection is not reset yet");
+				return;
+			}
+			reset = false;
 		}
 	}
 }
