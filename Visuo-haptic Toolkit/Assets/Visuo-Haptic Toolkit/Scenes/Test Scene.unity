@@ -52,7 +52,7 @@ LightmapSettings:
     m_AlbedoBoost: 1
     m_EnvironmentLightingMode: 0
     m_EnableBakedLightmaps: 1
-    m_EnableRealtimeLightmaps: 0
+    m_EnablephysicaltimeLightmaps: 0
   m_LightmapEditorSettings:
     serializedVersion: 12
     m_Resolution: 2
@@ -717,13 +717,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4c6eac9d82e7fde4d816294ebdd46b8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   technique: 0
-  realHand: {fileID: 1632942470}
+  physicalHand: {fileID: 1632942470}
   virtualHand: {fileID: 1835407086}
   origin: {fileID: 741344273}
-  realTarget: {fileID: 544231395}
+  physicalTarget: {fileID: 544231395}
   virtualTarget: {fileID: 901110811}
 --- !u!4 &1211356051
 Transform:
@@ -755,7 +755,7 @@ GameObject:
   - component: {fileID: 1632942468}
   - component: {fileID: 1632942467}
   m_Layer: 0
-  m_Name: Real Hand
+  m_Name: physical Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
