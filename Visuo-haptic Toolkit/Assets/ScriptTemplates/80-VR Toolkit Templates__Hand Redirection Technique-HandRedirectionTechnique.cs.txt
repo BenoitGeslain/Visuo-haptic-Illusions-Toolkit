@@ -2,7 +2,7 @@ using UnityEngine;
 
 class NewBRTechnique: BodyRedirectionTechnique {
 
-	public override void Redirect(Transform realTarget, Transform virtualTarget, Transform origin, Transform realHand, Transform virtualHand) {
+	public override void Redirect(Transform physicalTarget, Transform virtualTarget, Transform origin, Transform physicalHand, Transform virtualHand) {
 		Debug.Log("Method not implemented yet.");
 	}
 }
