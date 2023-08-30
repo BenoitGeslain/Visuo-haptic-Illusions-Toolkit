@@ -20,11 +20,10 @@ namespace BG.Redirection {
 		[SerializeField] private WorldRedirectionTechnique techniqueClass;
 
 		[Header("User Parameters")]
-		[SerializeField] private Transform physicalHand;
-		[SerializeField] private Transform virtualHand;
+		[SerializeField] private Transform physicalHead;
+		[SerializeField] private Transform virtualHead;
 
 		[Header("Technique Parameters")]
-		public Transform origin;
 		public Transform physicalTarget;
 		public Transform virtualTarget;
 
@@ -59,7 +58,7 @@ namespace BG.Redirection {
 
 		private void Update() {
 			if (!reset) {
-				techniqueClass.Redirect(physicalTarget, virtualTarget, origin, physicalHand, virtualHand);
+				techniqueClass.Redirect(physicalTarget, virtualTarget, physicalHead, virtualHead);
 			} else {
 				// Reset virtualHand to physicalHand progressively
 			}
@@ -74,7 +73,8 @@ namespace BG.Redirection {
 		}
 
 		public bool IsRedirecting() {
-			return Vector3.Distance(physicalHand.position, virtualHand.position) < Vector3.kEpsilon;
+			return Vector3.Distance(physicalHead.position, virtualHead.position) < Vector3.kEpsilon;
+				   // && test orientation;
 		}
 
 		public void resetRedirection() {
