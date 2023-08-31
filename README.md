@@ -17,7 +17,7 @@ Voir le [wiki](../../wikis) pour plus d'informations sur les tâches à réalise
 ### Must Have
 
 | Body Redirection  | Status   |
-|:-------------- | -------------- |
+|:-------------- | :--------------: |
 | [Azmandian et al., 2016](https://doi.org/10.1145/2858036.2858226), Body Warping    | &cross; |
 | [Azmandian et al., 2016](https://doi.org/10.1145/2858036.2858226), World Warping    | &cross; |
 | [Azmandian et al., 2016](https://doi.org/10.1145/2858036.2858226), Hybrid Warping    | &cross; |
@@ -25,13 +25,13 @@ Voir le [wiki](../../wikis) pour plus d'informations sur les tâches à réalise
 | [Cheng et al., 2017](http://doi.acm.org/10.1145/3025453.3025753), Sparse Haptics   | &cross;   |
 | [Geslain et al., 2022](https://doi.org/10.1145/3531073.3531100), 2<sup>nd</sup> order polynomials   | &cross;   |
 | World Redirection   |     |
-| [Razzaque et al., 2001](https://diglib.eg.org:443/xmlui/handle/10.2312/egs20011036), Over Time Rotation    | &cross;   |
-| [Steinicke et al., 2008](http://ieeexplore.ieee.org/document/4741303/), Translational    | &cross;   |
+| [Razzaque et al., 2001](http://dx.doi.org/10.2312/egs.20011036), Over Time Rotation    | &cross;   |
+| [Williams et al., 2006](https://dl.acm.org/doi/10.1145/1140491.1140495), Translational <br />[Steinicke et al., 2008](http://ieeexplore.ieee.org/document/4741303/),    | &cross;   |
 | [Razzaque et al., 2001](https://diglib.eg.org:443/xmlui/handle/10.2312/egs20011036), Rotational <br />[Steinicke et al., 2008](http://ieeexplore.ieee.org/document/4741303/)    | &cross;   |
 | [Razzaque et al., 2001](https://diglib.eg.org:443/xmlui/handle/10.2312/egs20011036), Curvature <br />[Steinicke et al., 2008](http://ieeexplore.ieee.org/document/4741303/)    | &cross;   |
 | [Razzaque et al., 2001](https://diglib.eg.org:443/xmlui/handle/10.2312/egs20011036), Hybrid    | &cross;   |
 | Interpolation   |     |
-| [Kohli et al., 2010](), Redirected Touching<br />[Kohli, 2013](https://doi.org/10.1109/3DUI.2010.5444703)   | &cross;   |
+| [Kohli et al., 2010](https://doi.org/10.1109/3DUI.2010.5444703), Redirected Touching<br />[Kohli, 2013](https://doi.org/10.17615/34cy-pt44)   | &cross;   |
 | Pseudo-Haptic   |     |
 | [Lécuyer et al., 2000](https://doi.org/10.1109/VR.2000.840369), Spring stiffness   | &cross;   |
 | [Gomez Jauregui et al., 2014](http://ieeexplore.ieee.org/document/6777424/), Weight   | &cross;   |
@@ -42,7 +42,6 @@ Voir le [wiki](../../wikis) pour plus d'informations sur les tâches à réalise
 |:-------------- | -------------- |
 | [Han et al., 2019](http://ieeexplore.ieee.org/document/8260974/), Instant    | &cross; |
 | Pseudo-Haptic   |     |
-
 | [Lécuyer et al., 2000](https://doi.org/10.1109/VR.2000.840369), Swamp Illusion   | &cross;   |
 
 <!-- | World Redirection   | Status    |
@@ -59,6 +58,8 @@ Voir le [wiki](../../wikis) pour plus d'informations sur les tâches à réalise
 |:-------------- | -------------- |
 | [Poupyrev et al., 1996](https://dl.acm.org/doi/10.1145/237091.237102), The Go-Go   | &cross;   |
 | World Redirection   |     |
+| [Abtahi and Follmer, 2019](https://dl.acm.org/doi/10.1145/3290605.3300752), World-in-miniature   | &cross;   |
+| [Abtahi and Follmer, 2019](https://dl.acm.org/doi/10.1145/3290605.3300752), World-in-miniature   | &cross;   |
 | [Abtahi and Follmer, 2019](https://dl.acm.org/doi/10.1145/3290605.3300752), World-in-miniature   | &cross;   |
 | Interpolation   |    |
 | [Zhao et Follmer et al., 2018](https://dl.acm.org/doi/10.1145/3173574.3174118), Complex Boundaries   | &cross;   |
