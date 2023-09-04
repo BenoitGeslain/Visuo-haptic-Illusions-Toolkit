@@ -13,10 +13,10 @@ namespace BG.Redirection {
 				BodyRedirection BRScript = (BodyRedirection) target;
 				BRScript.resetRedirection();
 			}
-			if(GUILayout.Button("Restart Redirection")) {
-				BodyRedirection BRScript = (BodyRedirection) target;
-				BRScript.restartRedirection();
-			}
+			// if(GUILayout.Button("Restart Redirection")) {
+			// 	BodyRedirection BRScript = (BodyRedirection) target;
+			// 	BRScript.restartRedirection();
+			// }
 			EditorGUILayout.EndHorizontal();
 		}
 	}

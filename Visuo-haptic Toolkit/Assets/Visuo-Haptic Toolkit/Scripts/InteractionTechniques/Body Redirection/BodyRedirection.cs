@@ -19,6 +19,7 @@ namespace BG.Redirection {
 	public class BodyRedirection: Interaction {
 
 		[SerializeField] private BRTechnique technique;
+		private BRTechnique previousTechnique;
 		[SerializeField] private BodyRedirectionTechnique techniqueClass;
 
 		[Header("User Parameters")]
@@ -58,6 +59,7 @@ namespace BG.Redirection {
 					Debug.LogError("Error Unknown Redirection technique.");
 					break;
 			}
+			previousTechnique = technique;
 		}
 
 		private void Start() {
@@ -65,6 +67,9 @@ namespace BG.Redirection {
 		}
 
 		private void Update() {
+			if (previousTechnique!=technique) {
+				init();
+			}
 			techniqueClass.Redirect(physicalTarget, virtualTarget, origin, physicalHand, virtualHand);
 		}
 
