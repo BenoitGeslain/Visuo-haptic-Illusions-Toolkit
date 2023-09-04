@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e581f0f440a7c904aa70c37c0de08866, type: 3}
   m_Name: Data
   m_EditorClassIdentifier: 
-  MaxAngles: {x: 20, y: 20, z: 20}
+  MaxAngles: {x: 15, y: 15, z: 15}
   NoRedirectionBuffer: 0.1
   GainsOverTimeRotaton: 0
   GainsTranslational: 0
