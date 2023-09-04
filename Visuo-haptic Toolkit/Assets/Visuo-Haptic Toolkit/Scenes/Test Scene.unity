@@ -52,7 +52,7 @@ LightmapSettings:
     m_AlbedoBoost: 1
     m_EnvironmentLightingMode: 0
     m_EnableBakedLightmaps: 1
-    m_EnablephysicaltimeLightmaps: 0
+    m_EnableRealtimeLightmaps: 0
   m_LightmapEditorSettings:
     serializedVersion: 12
     m_Resolution: 2
@@ -242,7 +242,7 @@ GameObject:
   - component: {fileID: 544231397}
   - component: {fileID: 544231396}
   m_Layer: 0
-  m_Name: "Cube R\xE9el"
+  m_Name: Physical Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -257,7 +257,7 @@ Transform:
   m_GameObject: {fileID: 544231394}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.0006905909, w: 0.99999976}
-  m_LocalPosition: {x: -0.027374763, y: 0.5700637, z: 0.247}
+  m_LocalPosition: {x: 0, y: 0.5700637, z: 0.247}
   m_LocalScale: {x: 0.027374793, y: 0.06597942, z: 0.05}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -506,7 +506,7 @@ GameObject:
   - component: {fileID: 901110813}
   - component: {fileID: 901110812}
   m_Layer: 0
-  m_Name: Cube Virtuel
+  m_Name: Virtual Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -521,7 +521,7 @@ Transform:
   m_GameObject: {fileID: 901110810}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.027374763, y: 0.5700637, z: 0.247}
+  m_LocalPosition: {x: 0.068, y: 0.5700637, z: 0.247}
   m_LocalScale: {x: 0.027374763, y: 0.0659796, z: 0.05}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -683,13 +683,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 2.37, z: -0.36}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &1211356049
 GameObject:
   m_ObjectHideFlags: 0
@@ -700,8 +700,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1211356051}
   - component: {fileID: 1211356050}
+  - component: {fileID: 1211356052}
   m_Layer: 0
-  m_Name: VHRoot
+  m_Name: ToolkitRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -717,9 +718,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4c6eac9d82e7fde4d816294ebdd46b8d, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
-  technique: 0
+  m_Name: 
+  m_EditorClassIdentifier: 
+  technique: 1
   physicalHand: {fileID: 1632942470}
   virtualHand: {fileID: 1835407086}
   origin: {fileID: 741344273}
@@ -742,6 +743,20 @@ Transform:
   - {fileID: 1835407086}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1211356052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1211356049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9825707130c9eb4a9c129292679e71c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parameters: {fileID: 11400000, guid: c39097e50bc3898498d2edf378be3a21, type: 2}
+  rootScript: {fileID: 0}
 --- !u!1 &1632942466
 GameObject:
   m_ObjectHideFlags: 0
@@ -755,7 +770,7 @@ GameObject:
   - component: {fileID: 1632942468}
   - component: {fileID: 1632942467}
   m_Layer: 0
-  m_Name: physical Hand
+  m_Name: Physical Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -844,7 +859,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.6912207, y: -0, z: -0, w: 0.7226438}
   m_LocalPosition: {x: -0.109, y: 0.814, z: -0.204}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 0.07, y: 0.09, z: 0.03}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1211356051}
@@ -862,7 +877,7 @@ GameObject:
   - component: {fileID: 1751920832}
   - component: {fileID: 1751920831}
   m_Layer: 0
-  m_Name: Cube Virtuel 2
+  m_Name: Virtual Cube 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -877,7 +892,7 @@ Transform:
   m_GameObject: {fileID: 1751920829}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.08212429, y: 0.5700637, z: 0.247}
+  m_LocalPosition: {x: -0.118, y: 0.5700637, z: 0.247}
   m_LocalScale: {x: 0.027374763, y: 0.0659796, z: 0.05}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1056,7 +1071,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.6912207, y: -0, z: -0, w: 0.7226438}
   m_LocalPosition: {x: -0.109, y: 0.814, z: -0.204}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 0.07, y: 0.09, z: 0.03}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1211356051}

@@ -3,6 +3,7 @@ using UnityEngine;
 namespace BG.Redirection {
 
 	public enum WRTechnique {
+		None,
 		Razzaque2001OverTimeRotation,
 		Steinicke2008Translational,
 		Razzaque2001Rotational,
@@ -31,6 +32,9 @@ namespace BG.Redirection {
 
 		private void init() {
 			switch (technique) {
+				case WRTechnique.None:
+					techniqueClass = null;
+					break;
 				case WRTechnique.Razzaque2001OverTimeRotation:
 					techniqueClass = new Razzaque2001OverTimeRotation();
 					break;
@@ -57,7 +61,7 @@ namespace BG.Redirection {
 		}
 
 		private void Update() {
-			if (!reset) {
+			if (!reset && techniqueClass != null) {
 				techniqueClass.Redirect(physicalTarget, virtualTarget, physicalHead, virtualHead);
 			} else {
 				// Reset virtualHand to physicalHand progressively
