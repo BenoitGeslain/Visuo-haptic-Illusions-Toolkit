@@ -8,16 +8,16 @@ namespace BG.Redirection {
 		public override void OnInspectorGUI() {
 			base.OnInspectorGUI();
 
-			EditorGUILayout.BeginHorizontal();
-			if(GUILayout.Button("Reset Redirection")) {
-				BodyRedirection BRScript = (BodyRedirection) target;
-				BRScript.resetRedirection();
-			}
-			// if(GUILayout.Button("Restart Redirection")) {
+			// EditorGUILayout.BeginHorizontal();
+			// if(GUILayout.Button("Reset Redirection")) {
 			// 	BodyRedirection BRScript = (BodyRedirection) target;
-			// 	BRScript.restartRedirection();
+			// 	BRScript.resetRedirection();
 			// }
-			EditorGUILayout.EndHorizontal();
+			// // if(GUILayout.Button("Restart Redirection")) {
+			// // 	BodyRedirection BRScript = (BodyRedirection) target;
+			// // 	BRScript.restartRedirection();
+			// // }
+			// EditorGUILayout.EndHorizontal();
 		}
 	}
 }
