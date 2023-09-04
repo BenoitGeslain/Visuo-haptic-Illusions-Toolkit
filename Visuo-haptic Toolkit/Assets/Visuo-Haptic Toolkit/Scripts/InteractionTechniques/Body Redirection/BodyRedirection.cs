@@ -30,6 +30,7 @@ namespace BG.Redirection {
 		public Transform physicalTarget;
 		public Transform virtualTarget;
 
+
 		private void init() {
 			switch (technique) {
 				case BRTechnique.None:
