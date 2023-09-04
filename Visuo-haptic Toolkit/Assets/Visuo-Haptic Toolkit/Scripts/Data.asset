@@ -12,10 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e581f0f440a7c904aa70c37c0de08866, type: 3}
   m_Name: Data
   m_EditorClassIdentifier: 
-  BRMaxAngles: {x: 0, y: 0, z: 0}
-  WRMaxGainsOverTimeRotaton:
-    min: -1.07
-    max: 0
-  WRMaxGainsTranslational: []
-  WRMaxGainsRotational: []
-  WRMaxGainsCurvature: []
+  MaxAngles: {x: 10, y: 10, z: 10}
+  NoRedirectionBuffer: 0.1
+  GainsOverTimeRotaton: 0
+  GainsTranslational: 0
+  GainsRotational: 0
+  GainsCurvature: 0

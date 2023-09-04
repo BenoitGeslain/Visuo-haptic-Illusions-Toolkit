@@ -18,13 +18,13 @@ namespace BG.Redirection {
 	/// </summary>
 	public class BodyRedirection: Interaction {
 
-		[SerializeField] private BRTechnique technique;
+		public BRTechnique technique;
 		private BRTechnique previousTechnique;
-		[SerializeField] private BodyRedirectionTechnique techniqueClass;
+		public BodyRedirectionTechnique techniqueClass;
 
 		[Header("User Parameters")]
-		[SerializeField] private Transform physicalHand;
-		[SerializeField] private Transform virtualHand;
+		public Transform physicalHand;
+		public Transform virtualHand;
 
 		[Header("Technique Parameters")]
 		public Transform origin;
@@ -81,8 +81,8 @@ namespace BG.Redirection {
 			return technique;
 		}
 
-		public bool IsRedirecting() {
-			return Vector3.Distance(physicalHand.position, virtualHand.position) < Vector3.kEpsilon;
+		public override bool IsRedirecting() {
+			return Vector3.Distance(physicalHand.position, virtualHand.position) > Vector3.kEpsilon;
 		}
 
 		public void resetRedirection() {
