@@ -91,6 +91,15 @@ namespace BG.Redirection {
 		}
 	}
 
+	public class Geslain2022Polynom: BodyRedirectionTechnique {
+
+		public Geslain2022Polynom(BodyRedirection script): base(script) {}
+
+		public override void Redirect(Transform physicalTarget, Transform virtualTarget, Transform origin, Transform physicalHand, Transform virtualHand) {
+			Debug.Log("Method not implemented yet.");
+		}
+	}
+
 
 
 

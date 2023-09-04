@@ -16,7 +16,7 @@ namespace BG.Redirection {
 	/// This class allows users to select through the inspector or set through the API which
 	/// body redirection technique to use as well as the relevant parameters.
 	/// </summary>
-	public class BodyRedirection: Interaction {
+	public class BodyRedirection: Interaction{
 
 		public BRTechnique technique;
 		private BRTechnique previousTechnique;
@@ -81,7 +81,7 @@ namespace BG.Redirection {
 			return technique;
 		}
 
-		public override bool IsRedirecting() {
+		public bool IsRedirecting() {
 			return Vector3.Distance(physicalHand.position, virtualHand.position) > Vector3.kEpsilon;
 		}
 
