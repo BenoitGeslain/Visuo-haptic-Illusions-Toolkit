@@ -19,8 +19,6 @@ namespace BG.Redirection {
 			}
 		}
 
-		private void Start() {
-			rootScript = this.gameObject.GetComponent<Interaction>();
-		}
-	}
+        private void Start() => rootScript = this.gameObject.GetComponent<Interaction>();
+    }
 }

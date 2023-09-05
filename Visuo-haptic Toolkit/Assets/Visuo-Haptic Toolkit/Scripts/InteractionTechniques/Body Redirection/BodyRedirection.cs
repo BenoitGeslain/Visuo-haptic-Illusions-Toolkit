@@ -33,60 +33,38 @@ namespace BG.Redirection {
 
 
 		private void init() {
-			switch (technique) {
-				case BRTechnique.None:
-					techniqueClass = new ResetRedirection(this);
-					break;
-				case BRTechnique.Azmandian2016Body:
-					techniqueClass = new Azmandian2016Body(this);
-					break;
-				case BRTechnique.Azmandian2016World:
-					techniqueClass = new Azmandian2016World(this);
-					break;
-				case BRTechnique.Azmandian2016Hybrid:
-					techniqueClass = new Azmandian2016Hybrid(this);
-					break;
-				case BRTechnique.Han2018Instant:
-					techniqueClass = new Han2018Instant(this);
-					break;
-				case BRTechnique.Han2018Continous:
-					techniqueClass = new Han2018Continous(this);
-					break;
-				case BRTechnique.Cheng2017Sparse:
-					techniqueClass = new Cheng2017Sparse(this);
-					break;
-				default:
-					Debug.LogError("Error Unknown Redirection technique.");
-					break;
-			}
+			techniqueClass = technique switch {
+				BRTechnique.None => new ResetRedirection(this),
+				BRTechnique.Azmandian2016Body => new Azmandian2016Body(this),
+				BRTechnique.Azmandian2016World => new Azmandian2016World(this),
+				BRTechnique.Han2018Instant => new Han2018Instant(this),
+				BRTechnique.Han2018Continous => new Han2018Continous(this),
+				BRTechnique.Cheng2017Sparse => new Cheng2017Sparse(this),
+				_ => null
+			};
+			if (techniqueClass is null)
+				Debug.LogError("Error Unknown Redirection technique.");
+           
 			previousTechnique = technique;
 		}
 
-		private void Start() {
-			init();
-		}
+        private void Start() => init();
 
-		private void Update() {
-			if (previousTechnique!=technique) {
+        private void Update() {
+			if (previousTechnique != technique) {
 				init();
 			}
-			techniqueClass.Redirect(physicalTarget, virtualTarget, origin, physicalHand, virtualHand);
+			techniqueClass?.Redirect(physicalTarget, virtualTarget, origin, physicalHand, virtualHand);
 		}
 
 		public void setTechnique(BRTechnique t) {
 			technique = t;
 			init();
 		}
-		public BRTechnique getTechnique(BRTechnique t) {
-			return technique;
-		}
+        public BRTechnique getTechnique(BRTechnique t) => technique;
 
-		public override bool IsRedirecting() {
-			return Vector3.Distance(physicalHand.position, virtualHand.position) > Vector3.kEpsilon;
-		}
+        public override bool IsRedirecting() => Vector3.Distance(physicalHand.position, virtualHand.position) > Vector3.kEpsilon;
 
-		public void resetRedirection() {
-			setTechnique(BRTechnique.None);
-		}
-	}
+        public void resetRedirection() => setTechnique(BRTechnique.None);
+    }
 }
