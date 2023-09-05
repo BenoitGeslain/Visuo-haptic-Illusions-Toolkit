@@ -113,7 +113,6 @@ namespace BG.Redirection {
 		public Geslain2022Polynom(BodyRedirection script): base(script) {}
 
 		public override void Redirect(Transform physicalTarget, Transform virtualTarget, Transform origin, Transform physicalHand, Transform virtualHand) {
-			Debug.Log(a0);
 			float[] coeffsByIncreasingPower = { a0, a1, a2 }; // TODO compute coeffs - current default is instant redirection
 			float d = Vector3.Distance(physicalHand.position, physicalTarget.position);
 			float ratio = (float) coeffsByIncreasingPower.Select((a, i) => a * Math.Pow(d, i)).Sum();
