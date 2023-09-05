@@ -16,11 +16,12 @@ namespace BG.Visualisation {
 		}
 
 		private void Update() {
+			BodyRedirection rootScript = (BodyRedirection) Toolkit.Instance.rootScript;
 			// draws threshold lines for the targets
-			drawThresholdLines(rootScript.physicalTarget.position, rootScript.virtualTarget.position);
+			drawThresholdLines(rootScript.physicalTarget.position, rootScript.virtualTarget.position, rootScript);
 			if (rootScript.IsRedirecting()) {
 				// draws threshold lines for the hands
-				drawThresholdLines(rootScript.physicalHand.position, rootScript.virtualHand.position);
+				drawThresholdLines(rootScript.physicalHand.position, rootScript.virtualHand.position, rootScript);
 			}
 		}
 
@@ -30,8 +31,8 @@ namespace BG.Visualisation {
 		/// </summary>
 		/// <param name="obj1">Vector3: A physical GameObject's position</param>
 		/// <param name="obj2">Vector3: The virtual corresponding GameObject's position</param>
-		private void drawThresholdLines(Vector3 obj1, Vector3 obj2) {
-			BodyRedirection rootScript = (BodyRedirection) Toolkit.Instance.rootScript;
+		/// <param name="rootScript"></param>
+		private void drawThresholdLines(Vector3 obj1, Vector3 obj2, BodyRedirection rootScript) {
 			// Computes the euler angles from the rotation matrix from obj1 to obj2 around the origin
 			Vector3 d = Quaternion.FromToRotation(rootScript.origin.position - obj1,
 												  rootScript.origin.position - obj2).eulerAngles;

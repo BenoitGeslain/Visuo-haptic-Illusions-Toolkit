@@ -7,7 +7,7 @@ namespace BG.Redirection {
 		[Header("Body Warping Thresholds")]
 		[Tooltip("The detection thresholds measured by Zenner et al., 2019. The coordinate system is that of Unity, i.e. X: Letf/Right, Y: Up/Down, Z: Forward/Backward. Values are in degrees.")]
 		public Vector3 MaxAngles;
-		[Tooltip("A buffer value .")]
+		[Tooltip("A buffer value where the hand redirection is not applied [Han et al., 2018].")]
 		public float NoRedirectionBuffer = 0.1f;
 
 		[Header("3D Interpolation Thresholds")]

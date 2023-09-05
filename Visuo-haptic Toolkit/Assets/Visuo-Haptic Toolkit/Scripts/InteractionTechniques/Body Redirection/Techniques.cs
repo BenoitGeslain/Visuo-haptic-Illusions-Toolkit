@@ -5,7 +5,7 @@ namespace BG.Redirection {
 
 	/// <summary>
 	///  This class is the most conceptual class of  body redirection defining the important
-	///  functions to call: Redirect()
+	///  functions to call: Redirect().
 	/// </summary>
 	public class BodyRedirectionTechnique {
 
@@ -17,6 +17,15 @@ namespace BG.Redirection {
 			Debug.LogError("Calling Redirect() virtual method. It should be overriden");
 		}
 
+		/// <summary>
+		/// This virtual function applies the redirection to the virtualHand Transform according to the other parameters and the equations
+		/// defined in the corresponding techniques.
+		/// </summary>
+		/// <param name="physicalTarget">The physical target the hand should reach when the virtual hand reaches the virtual target.</param>
+		/// <param name="virtualTarget">The virtual target the user is reaching for.</param>
+		/// <param name="origin">The point of origin where no redirection is applied.</param>
+		/// <param name="physicalHand">The Transform representing the user's physical hand.</param>
+		/// <param name="virtualHand">The Transform representing the user's virtual hand, i.e. the user's avatar.</param>
 		public virtual void Redirect(Transform physicalTarget, Transform virtualTarget, Transform origin, Transform physicalHand, Transform virtualHand) {
 			Debug.LogError("Calling Redirect() virtual method. It should be overriden");
 		}
@@ -59,8 +68,14 @@ namespace BG.Redirection {
 
 		public Han2018Instant(BodyRedirection script): base(script) {}
 
-        public override void Redirect(Transform physicalTarget, Transform virtualTarget, Transform origin, Transform physicalHand, Transform virtualHand) => 
-			virtualHand.position = physicalHand.position + virtualTarget.position - physicalTarget.position;
+        public override void Redirect(Transform physicalTarget, Transform virtualTarget, Transform origin, Transform physicalHand, Transform virtualHand) {
+			// If the hand is inside the redirection boundary, instantly applies the redirection
+			if (Vector3.Magnitude(physicalHand.position - origin.position) > Toolkit.Instance.parameters.NoRedirectionBuffer) {
+				virtualHand.position = physicalHand.position + virtualTarget.position - physicalTarget.position;
+			} else {
+				virtualHand.position = physicalHand.position;
+			}
+		}
     }
 
 	public class Han2018Continous: BodyRedirectionTechnique {
@@ -71,7 +86,7 @@ namespace BG.Redirection {
 			float D = Vector3.Magnitude(physicalTarget.position - physicalHand.position);
 			float B = Vector3.Magnitude(physicalTarget.position - origin.position) + Toolkit.Instance.parameters.NoRedirectionBuffer;
 
-			if (D >= B) {		// 1:1 mapping
+			if (D >= B) {		// 1:1 mapping outside the redirection boundary
 				virtualHand.position = physicalHand.position;
 			} else {		// Inside redirection boundary
 				virtualHand.position = physicalHand.position - (physicalTarget.position - virtualTarget.position) * (1 - D / B);
@@ -84,8 +99,8 @@ namespace BG.Redirection {
 		public Cheng2017Sparse(BodyRedirection script): base(script) {}
 
 		public override void Redirect(Transform physicalTarget, Transform virtualTarget, Transform origin, Transform physicalHand, Transform virtualHand) {
-			float Ds = Vector3.Distance(physicalHand.position, origin.position);
-			float Dp = Vector3.Distance(physicalHand.position, physicalTarget.position);
+			float Ds = Vector3.Magnitude(physicalHand.position - origin.position);
+			float Dp = Vector3.Magnitude(physicalHand.position - physicalTarget.position);
 			float alpha = Ds / (Ds + Dp);
 			virtualHand.position = physicalHand.position + alpha * (virtualTarget.position - physicalTarget.position);
 		}
