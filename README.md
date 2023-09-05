@@ -18,13 +18,13 @@ Voir le [wiki](../../wikis) pour plus d'informations sur les tâches à réalise
 
 | Body Redirection  | Status   |
 |:-------------- | :--------------: |
-| [Azmandian et al., 2016](https://doi.org/10.1145/2858036.2858226), Body Warping    | &cross; |
-| [Azmandian et al., 2016](https://doi.org/10.1145/2858036.2858226), World Warping    | &cross; |
+| [Azmandian et al., 2016](https://doi.org/10.1145/2858036.2858226), Body Warping    | &check; |
 | [Azmandian et al., 2016](https://doi.org/10.1145/2858036.2858226), Hybrid Warping    | &cross; |
 | [Han et al., 2019](http://ieeexplore.ieee.org/document/8260974/), Continous *    | &check; |
-| [Cheng et al., 2017](http://doi.acm.org/10.1145/3025453.3025753), Sparse Haptics   | &cross;   |
+| [Cheng et al., 2017](http://doi.acm.org/10.1145/3025453.3025753), Sparse Haptics   | &check;   |
 | [Geslain et al., 2022](https://doi.org/10.1145/3531073.3531100), 2<sup>nd</sup> order polynomials   | &cross;   |
 | World Redirection   |     |
+| [Azmandian et al., 2016](https://doi.org/10.1145/2858036.2858226), World Warping    | &cross; |
 | [Razzaque et al., 2001](http://dx.doi.org/10.2312/egs.20011036), Over Time Rotation    | &cross;   |
 | [Williams et al., 2006](https://dl.acm.org/doi/10.1145/1140491.1140495), Translational <br />[Steinicke et al., 2008](http://ieeexplore.ieee.org/document/4741303/),    | &cross;   |
 | [Razzaque et al., 2001](https://diglib.eg.org:443/xmlui/handle/10.2312/egs20011036), Rotational <br />[Steinicke et al., 2008](http://ieeexplore.ieee.org/document/4741303/)    | &cross;   |
