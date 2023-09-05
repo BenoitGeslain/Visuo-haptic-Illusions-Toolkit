@@ -1,3 +1,5 @@
+using System;
+
 using UnityEngine;
 using UnityEditor;
 
@@ -31,17 +33,26 @@ namespace BG.Redirection {
 
 			if (technique.enumNames[technique.enumValueIndex] == "Geslain2022Polynom") {
 				BodyRedirection bodyRedirection = (BodyRedirection)target;
-				Geslain2022Polynom techniqueInstance = (Geslain2022Polynom)bodyRedirection.techniqueInstance;
+				try {
+					Geslain2022Polynom techniqueInstance = (Geslain2022Polynom)bodyRedirection.techniqueInstance;
 
-				a0 = EditorGUILayout.FloatField("a0", a0);
-				a1 = EditorGUILayout.FloatField("a1", a1);
-				a2 = EditorGUILayout.FloatField("a2", a2);
+					EditorGUILayout.BeginHorizontal();
+					EditorGUILayout.PrefixLabel("Polynom Coefficients");
+					EditorGUIUtility.labelWidth = 20;
+					a0 = EditorGUILayout.FloatField("a0", a0, GUILayout.Width(100));
+					a1 = EditorGUILayout.FloatField("a1", a1, GUILayout.Width(100));
+					a2 = EditorGUILayout.FloatField("a2", a2, GUILayout.Width(100));
+					EditorGUIUtility.labelWidth = 0;
+					EditorGUILayout.EndHorizontal();
 
-				if (Application.isPlaying) {
-					techniqueInstance.a0 = a0;
-					techniqueInstance.a1 = a1;
-					techniqueInstance.a2 = a2;
+					if (techniqueInstance != null) {
+						techniqueInstance.a0 = a0;
+						techniqueInstance.a1 = a1;
+						techniqueInstance.a2 = a2;
+					}
 				}
+				catch (InvalidCastException e) {}
+
 			}
 
 			EditorGUILayout.PropertyField(physicalHand, new GUIContent ("Physical Hand"));
