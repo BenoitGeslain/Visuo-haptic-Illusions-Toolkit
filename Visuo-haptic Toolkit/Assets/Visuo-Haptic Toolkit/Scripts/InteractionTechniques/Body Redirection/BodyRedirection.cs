@@ -63,7 +63,7 @@ namespace BG.Redirection {
 		}
         public BRTechnique getTechnique(BRTechnique t) => technique;
 
-        public override bool IsRedirecting() => Vector3.Distance(physicalHand.position, virtualHand.position) > Vector3.kEpsilon;
+        public bool IsRedirecting() => Vector3.Distance(physicalHand.position, virtualHand.position) > Vector3.kEpsilon;
 
         public void resetRedirection() => setTechnique(BRTechnique.None);
     }
