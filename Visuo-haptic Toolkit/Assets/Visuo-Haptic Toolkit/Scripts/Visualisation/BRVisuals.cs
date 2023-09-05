@@ -16,12 +16,11 @@ namespace BG.Visualisation {
 		}
 
 		private void Update() {
-			BodyRedirection rootScript = (BodyRedirection) Toolkit.Instance.rootScript;
 			// draws threshold lines for the targets
-			drawThresholdLines(rootScript.physicalTarget.position, rootScript.virtualTarget.position, rootScript);
+			drawThresholdLines(rootScript.physicalTarget.position, rootScript.virtualTarget.position);
 			if (rootScript.IsRedirecting()) {
 				// draws threshold lines for the hands
-				drawThresholdLines(rootScript.physicalHand.position, rootScript.virtualHand.position, rootScript);
+				drawThresholdLines(rootScript.physicalHand.position, rootScript.virtualHand.position);
 			}
 		}
 
@@ -29,10 +28,10 @@ namespace BG.Visualisation {
 		/// Draws a white line between obj1 and obj2 only visible in editor. If the objects are too far apart according to
 		/// Zenner et al. 2019, the lines turns yellow.
 		/// </summary>
-		/// <param name="obj1"></param>
-		/// <param name="obj2"></param>
-		/// <param name="rootScript"></param>
-		private void drawThresholdLines(Vector3 obj1, Vector3 obj2, BodyRedirection rootScript) {
+		/// <param name="obj1">Vector3: A physical GameObject's position</param>
+		/// <param name="obj2">Vector3: The virtual corresponding GameObject's position</param>
+		private void drawThresholdLines(Vector3 obj1, Vector3 obj2) {
+			BodyRedirection rootScript = (BodyRedirection) Toolkit.Instance.rootScript;
 			// Computes the euler angles from the rotation matrix from obj1 to obj2 around the origin
 			Vector3 d = Quaternion.FromToRotation(rootScript.origin.position - obj1,
 												  rootScript.origin.position - obj2).eulerAngles;
