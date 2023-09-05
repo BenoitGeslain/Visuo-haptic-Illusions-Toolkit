@@ -72,7 +72,7 @@ namespace BG.Redirection {
 
 		public override void Redirect(Transform physicalTarget, Transform virtualTarget, Transform origin, Transform physicalHand, Transform virtualHand) {
 			float D = Vector3.Magnitude(physicalTarget.position - physicalHand.position);
-			float B = Vector3.Magnitude(physicalTarget.position - physicalHand.position) + Toolkit.Instance.parameters.NoRedirectionBuffer;
+			float B = Vector3.Magnitude(physicalTarget.position - origin.position) + Toolkit.Instance.parameters.NoRedirectionBuffer;
 
 			if (D >= B) {		// 1:1 mapping
 				virtualHand.position = physicalHand.position;

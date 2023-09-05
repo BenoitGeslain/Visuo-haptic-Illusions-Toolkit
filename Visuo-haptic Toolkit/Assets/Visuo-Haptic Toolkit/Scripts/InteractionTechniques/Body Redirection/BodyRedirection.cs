@@ -44,7 +44,7 @@ namespace BG.Redirection {
 			};
 			if (techniqueClass is null)
 				Debug.LogError("Error Unknown Redirection technique.");
-           
+
 			previousTechnique = technique;
 		}
 
