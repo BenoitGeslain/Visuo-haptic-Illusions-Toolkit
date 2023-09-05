@@ -40,8 +40,11 @@ namespace BG.Redirection {
 		public Azmandian2016Body(BodyRedirection script): base(script) {}
 
 		public override void Redirect(Transform physicalTarget, Transform virtualTarget, Transform origin, Transform physicalHand, Transform virtualHand) {
-			var d = virtualTarget.position - origin.position;
-			var warpingRatio = Vector3.Dot(d, physicalHand.position - origin.position) / d.sqrMagnitude;
+			var d = physicalTarget.position - origin.position;
+			var warpingRatio = Mathf.Clamp(
+				Vector3.Dot(d, physicalHand.position - origin.position) / d.sqrMagnitude,
+				0f,
+				1f);
 			virtualHand.position = physicalHand.position + warpingRatio * (virtualTarget.position - physicalTarget.position);
 		}
 	}
