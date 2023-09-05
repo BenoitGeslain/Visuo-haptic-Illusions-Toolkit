@@ -36,7 +36,7 @@ Voir le [wiki](../../wikis) pour plus d'informations sur les tâches à réalise
 | [Lécuyer et al., 2000](https://doi.org/10.1109/VR.2000.840369), Spring stiffness   | &cross;   |
 | [Rietzler et al., 2018](https://dl.acm.org/doi/10.1145/3173574.3173702), Breaking the tracking, weight   | &cross;   |
 
-\* Erreur de signe dans l'équation à 3.3, la technqiue redirige dans la direction opposée.
+\* Erreur de signe dans l'équation à 3.3, la technique redirige dans la direction opposée. + B est faux
 
 ### Good Contribution
 
