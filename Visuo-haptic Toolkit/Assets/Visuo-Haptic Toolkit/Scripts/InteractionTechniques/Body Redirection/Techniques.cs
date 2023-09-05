@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace BG.Redirection {
@@ -10,11 +11,9 @@ namespace BG.Redirection {
 
 		protected BodyRedirection rootScript;
 
-		public BodyRedirectionTechnique(BodyRedirection script) {
-			this.rootScript = script;
-		}
+        public BodyRedirectionTechnique(BodyRedirection script) => this.rootScript = script;
 
-		public virtual void InitRedirection() {
+        public virtual void InitRedirection() {
 			Debug.LogError("Calling Redirect() virtual method. It should be overriden");
 		}
 
@@ -32,7 +31,9 @@ namespace BG.Redirection {
 		public Azmandian2016Body(BodyRedirection script): base(script) {}
 
 		public override void Redirect(Transform physicalTarget, Transform virtualTarget, Transform origin, Transform physicalHand, Transform virtualHand) {
-			Debug.Log("Method not implemented yet.");
+			var d = virtualTarget.position - origin.position;
+			var warpingRatio = Vector3.Dot(d, physicalHand.position - origin.position) / d.sqrMagnitude;
+			virtualHand.position = physicalHand.position + warpingRatio * (virtualTarget.position - physicalTarget.position);
 		}
 	}
 
@@ -58,10 +59,9 @@ namespace BG.Redirection {
 
 		public Han2018Instant(BodyRedirection script): base(script) {}
 
-		public override void Redirect(Transform physicalTarget, Transform virtualTarget, Transform origin, Transform physicalHand, Transform virtualHand) {
-			virtualHand.position = physicalHand.position - (physicalTarget.position - virtualTarget.position);
-		}
-	}
+        public override void Redirect(Transform physicalTarget, Transform virtualTarget, Transform origin, Transform physicalHand, Transform virtualHand) => 
+			virtualHand.position = physicalHand.position + virtualTarget.position - physicalTarget.position;
+    }
 
 	public class Han2018Continous: BodyRedirectionTechnique {
 
@@ -71,10 +71,10 @@ namespace BG.Redirection {
 			float D = Vector3.Magnitude(physicalTarget.position - physicalHand.position);
 			float B = Vector3.Magnitude(physicalTarget.position - origin.position) + Toolkit.Instance.parameters.NoRedirectionBuffer;
 
-			if (D>=B) {		// 1:1 mapping
+			if (D >= B) {		// 1:1 mapping
 				virtualHand.position = physicalHand.position;
 			} else {		// Inside redirection boundary
-				virtualHand.position = physicalHand.position - (physicalTarget.position - virtualTarget.position)*(1-D/B);
+				virtualHand.position = physicalHand.position - (physicalTarget.position - virtualTarget.position) * (1 - D / B);
 			}
 		}
 	}
@@ -86,7 +86,7 @@ namespace BG.Redirection {
 		public override void Redirect(Transform physicalTarget, Transform virtualTarget, Transform origin, Transform physicalHand, Transform virtualHand) {
 			float Ds = Vector3.Distance(physicalHand.position, origin.position);
 			float Dp = Vector3.Distance(physicalHand.position, physicalTarget.position);
-			float alpha = Ds/(Ds+Dp);
+			float alpha = Ds / (Ds + Dp);
 			virtualHand.position = physicalHand.position + alpha * (virtualTarget.position - physicalTarget.position);
 		}
 	}
@@ -110,7 +110,7 @@ namespace BG.Redirection {
 
 		public override void Redirect(Transform physicalTarget, Transform virtualTarget, Transform origin, Transform physicalHand, Transform virtualHand) {
 			if (Vector3.Distance(physicalHand.position, virtualHand.position) > Vector3.kEpsilon) {
-				virtualHand.position = virtualHand.position - Vector3.ClampMagnitude((virtualHand.position - physicalHand.position) * Time.deltaTime, 0.0025f);
+				virtualHand.position = virtualHand.position - Vector3.ClampMagnitude((virtualHand.position - physicalHand.position) * Time.deltaTime, maxLength: 0.0025f);
 			}
 		}
 	}
