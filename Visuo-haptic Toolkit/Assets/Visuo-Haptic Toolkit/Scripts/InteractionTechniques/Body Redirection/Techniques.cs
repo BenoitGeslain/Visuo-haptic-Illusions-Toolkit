@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -88,12 +90,7 @@ namespace BG.Redirection {
 		public override void Redirect(Transform physicalTarget, Transform virtualTarget, Transform origin, Transform physicalHand, Transform virtualHand) {
 			float D = Vector3.Magnitude(physicalTarget.position - physicalHand.position);
 			float B = Vector3.Magnitude(physicalTarget.position - origin.position) + Toolkit.Instance.parameters.NoRedirectionBuffer;
-
-			if (D >= B) {		// 1:1 mapping outside the redirection boundary
-				virtualHand.position = physicalHand.position;
-			} else {		// Inside redirection boundary
-				virtualHand.position = physicalHand.position - (physicalTarget.position - virtualTarget.position) * (1 - D / B);
-			}
+			virtualHand.position = physicalHand.position + Math.Max(1 - D / B, 0f) * (virtualTarget.position - physicalTarget.position);
 		}
 	}
 
@@ -102,8 +99,8 @@ namespace BG.Redirection {
 		public Cheng2017Sparse(BodyRedirection script): base(script) {}
 
 		public override void Redirect(Transform physicalTarget, Transform virtualTarget, Transform origin, Transform physicalHand, Transform virtualHand) {
-			float Ds = Vector3.Magnitude(physicalHand.position - origin.position);
-			float Dp = Vector3.Magnitude(physicalHand.position - physicalTarget.position);
+			float Ds = Vector3.Distance(physicalHand.position, origin.position);
+			float Dp = Vector3.Distance(physicalHand.position, physicalTarget.position);
 			float alpha = Ds / (Ds + Dp);
 			virtualHand.position = physicalHand.position + alpha * (virtualTarget.position - physicalTarget.position);
 		}
@@ -115,6 +112,10 @@ namespace BG.Redirection {
 
 		public override void Redirect(Transform physicalTarget, Transform virtualTarget, Transform origin, Transform physicalHand, Transform virtualHand) {
 			Debug.Log("Method not implemented yet.");
+			float[] coeffsByIncreasingPower = { 0f, 1f, 0f }; // TODO compute coeffs - current default is instant redirection
+			float d = Vector3.Distance(physicalHand.position, physicalTarget.position);
+			float ratio = (float) coeffsByIncreasingPower.Select((a, i) => a * Math.Pow(d, i)).Sum();
+			virtualHand.position = physicalHand.position + ratio * (virtualTarget.position - physicalTarget.position);
 		}
 	}
 
@@ -128,7 +129,7 @@ namespace BG.Redirection {
 
 		public override void Redirect(Transform physicalTarget, Transform virtualTarget, Transform origin, Transform physicalHand, Transform virtualHand) {
 			if (Vector3.Distance(physicalHand.position, virtualHand.position) > Vector3.kEpsilon) {
-				virtualHand.position = virtualHand.position - Vector3.ClampMagnitude((virtualHand.position - physicalHand.position) * Time.deltaTime, maxLength: 0.0025f);
+				virtualHand.position += Vector3.ClampMagnitude((physicalHand.position - virtualHand.position) * Time.deltaTime, maxLength: 0.0025f);
 			}
 		}
 	}
