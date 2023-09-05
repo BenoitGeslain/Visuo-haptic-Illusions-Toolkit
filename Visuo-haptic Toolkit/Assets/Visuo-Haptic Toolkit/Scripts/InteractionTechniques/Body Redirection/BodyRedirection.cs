@@ -9,7 +9,8 @@ namespace BG.Redirection {
 		Azmandian2016Body,
 		Azmandian2016World,
 		Azmandian2016Hybrid,
-		Cheng2017Sparse
+		Cheng2017Sparse,
+		Geslain2022Polynom
 	}
 
 	/// <summary>
@@ -20,7 +21,7 @@ namespace BG.Redirection {
 
 		public BRTechnique technique;
 		private BRTechnique previousTechnique;
-		public BodyRedirectionTechnique techniqueClass;
+		public BodyRedirectionTechnique techniqueInstance;
 
 		[Header("User Parameters")]
 		public Transform physicalHand;
@@ -31,18 +32,18 @@ namespace BG.Redirection {
 		public Transform physicalTarget;
 		public Transform virtualTarget;
 
-
 		private void init() {
-			techniqueClass = technique switch {
+			techniqueInstance = technique switch {
 				BRTechnique.None => new ResetRedirection(this),
 				BRTechnique.Azmandian2016Body => new Azmandian2016Body(this),
 				BRTechnique.Azmandian2016World => new Azmandian2016World(this),
 				BRTechnique.Han2018Instant => new Han2018Instant(this),
 				BRTechnique.Han2018Continous => new Han2018Continous(this),
 				BRTechnique.Cheng2017Sparse => new Cheng2017Sparse(this),
+				BRTechnique.Geslain2022Polynom => new Geslain2022Polynom(this),
 				_ => null
 			};
-			if (techniqueClass is null)
+			if (techniqueInstance is null)
 				Debug.LogError("Error Unknown Redirection technique.");
 
 			previousTechnique = technique;
@@ -54,7 +55,7 @@ namespace BG.Redirection {
 			if (previousTechnique != technique) {
 				init();
 			}
-			techniqueClass?.Redirect(physicalTarget, virtualTarget, origin, physicalHand, virtualHand);
+			techniqueInstance?.Redirect(physicalTarget, virtualTarget, origin, physicalHand, virtualHand);
 		}
 
 		public void setTechnique(BRTechnique t) {
