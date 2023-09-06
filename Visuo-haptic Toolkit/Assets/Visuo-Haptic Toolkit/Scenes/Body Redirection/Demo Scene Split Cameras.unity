@@ -1264,7 +1264,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7800700034087830833, guid: 2add36b5ad103b7439c30cb837f665bf, type: 3}
       propertyPath: m_Layer
-      value: 11
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 8676660445167701194, guid: 2add36b5ad103b7439c30cb837f665bf, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1598,7 +1598,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7800700034087830833, guid: 30dca327354442346a1feb172a2a43bb, type: 3}
       propertyPath: m_Name
-      value: Trail
+      value: Virtual Trail
       objectReference: {fileID: 0}
     - target: {fileID: 8676660445167701194, guid: 30dca327354442346a1feb172a2a43bb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1658,6 +1658,18 @@ PrefabInstance:
       value: Main Camera
       objectReference: {fileID: 0}
     - target: {fileID: 4540386287237671500, guid: 62b65531291536c48bf27b9f1887a9ed, type: 3}
+      propertyPath: orthographic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4540386287237671500, guid: 62b65531291536c48bf27b9f1887a9ed, type: 3}
+      propertyPath: orthographic size
+      value: 0.43
+      objectReference: {fileID: 0}
+    - target: {fileID: 4540386287237671500, guid: 62b65531291536c48bf27b9f1887a9ed, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 4540386287237671500, guid: 62b65531291536c48bf27b9f1887a9ed, type: 3}
       propertyPath: m_NormalizedViewPortRect.height
       value: 0.5
       objectReference: {fileID: 0}
@@ -1667,11 +1679,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8046781420760954164, guid: 62b65531291536c48bf27b9f1887a9ed, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.37
+      value: 1.845
       objectReference: {fileID: 0}
     - target: {fileID: 8046781420760954164, guid: 62b65531291536c48bf27b9f1887a9ed, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.259
+      value: -0.062
       objectReference: {fileID: 0}
     - target: {fileID: 8046781420760954164, guid: 62b65531291536c48bf27b9f1887a9ed, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1722,6 +1734,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 1607897844603459841, guid: 04e531f9da6b5c640b2de2a8fa88a2fa, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 1607897844603459841, guid: 04e531f9da6b5c640b2de2a8fa88a2fa, type: 3}
       propertyPath: m_Name
       value: ToolkitBodyRedirection
@@ -1839,8 +1855,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7578277640001813283, guid: 04e531f9da6b5c640b2de2a8fa88a2fa, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7578277640001813283, guid: 04e531f9da6b5c640b2de2a8fa88a2fa, type: 3}
       propertyPath: m_TagString
-      value: EditorOnly
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
