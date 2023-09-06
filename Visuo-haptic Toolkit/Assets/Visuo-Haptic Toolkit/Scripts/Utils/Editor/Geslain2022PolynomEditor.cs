@@ -17,7 +17,6 @@ namespace BG.Redirection {
 			// New line
 			Rect rect = GUILayoutUtility.GetRect(GUIContent.none, EditorStyles.objectField);
 
-
 			// Property controlPoint
 			EditorGUI.BeginProperty(rect, label, property);
 
