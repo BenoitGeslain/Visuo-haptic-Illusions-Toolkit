@@ -1,10 +1,5 @@
 using UnityEngine;
 
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
-
-
 namespace BG.Redirection {
 	[CreateAssetMenu(fileName = "Data", menuName = "VR Toolkit/Interaction Techniques Parameters", order = 1)]
 	public class ParametersToolkit : ScriptableObject {
@@ -17,7 +12,7 @@ namespace BG.Redirection {
 
 		[Header("World Warping")]
 		[Tooltip("The error in rotation where users are considered to be in the correct direction. Value is in °.")]
-		public float RotationalEpsilon;
+		public float RotationalEpsilon = 1f;
 		[Tooltip("The maximum rotation that can be applied to the user's point of view in rotation along the vertical axis (Y). Value is in °/s.")]
 		public float OverTimeRotaton;
 		[Tooltip("The maximum gain in translation that can be applied to the user's point of view in translation (akin to a C/D ratio). Value has no unit and is not a percentage.")]
