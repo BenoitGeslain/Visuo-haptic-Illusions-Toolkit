@@ -116,10 +116,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3169019813816358605}
-  - component: {fileID: 2891068713693094246}
   - component: {fileID: 551704495323053107}
   m_Layer: 0
-  m_Name: ToolkitRoot
+  m_Name: ToolkitWorldRedirection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -142,24 +141,6 @@ Transform:
   - {fileID: 1139996173463392248}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2891068713693094246
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1607897844603459841}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c6eac9d82e7fde4d816294ebdd46b8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  technique: 1
-  physicalHand: {fileID: 2681787275890688385}
-  virtualHand: {fileID: 1139996173463392248}
-  origin: {fileID: 0}
-  physicalTarget: {fileID: 0}
-  virtualTarget: {fileID: 0}
 --- !u!114 &551704495323053107
 MonoBehaviour:
   m_ObjectHideFlags: 0

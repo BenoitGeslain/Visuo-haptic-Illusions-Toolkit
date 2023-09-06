@@ -9,7 +9,11 @@ namespace BG.Redirection {
 	///  This class is the most conceptual class of  body redirection defining the important
 	///  functions to call: Redirect().
 	/// </summary>
+	[Serializable]
 	public class BodyRedirectionTechnique {
+
+		public float a2; // or a1
+		public Vector2 controlPoint;
 
 		protected BodyRedirection rootScript;
 
@@ -97,11 +101,14 @@ namespace BG.Redirection {
 		}
 	}
 
+	[Serializable]
 	public class Geslain2022Polynom: BodyRedirectionTechnique {
+		float a1, a0; // TODO A supprimer
 
-		public float a0, a1, a2;
-
-		public Geslain2022Polynom(BodyRedirection script): base(script) {}
+		public Geslain2022Polynom(BodyRedirection script, float a2, Vector2 controlPoint): base(script) {
+			this.a2 = a2;
+			this.controlPoint = controlPoint;
+		}
 
 		public override void Redirect(Transform physicalTarget, Transform virtualTarget, Transform origin, Transform physicalHand, Transform virtualHand) {
 			float[] coeffsByIncreasingPower = { a0, a1, a2 }; // TODO compute coeffs - current default is instant redirection
