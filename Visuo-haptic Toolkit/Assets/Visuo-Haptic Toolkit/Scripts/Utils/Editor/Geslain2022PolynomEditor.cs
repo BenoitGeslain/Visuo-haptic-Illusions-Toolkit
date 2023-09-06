@@ -10,7 +10,6 @@ namespace BG.Redirection {
 			// Property a2
 			EditorGUI.BeginProperty(position, label, property);
 
-			position = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
 			EditorGUI.PropertyField(position, property.FindPropertyRelative("a2"));
 
 			EditorGUI.EndProperty();
@@ -22,7 +21,6 @@ namespace BG.Redirection {
 			// Property controlPoint
 			EditorGUI.BeginProperty(rect, label, property);
 
-			rect = EditorGUI.PrefixLabel(rect, GUIUtility.GetControlID(FocusType.Passive), label);
 			EditorGUI.PropertyField(rect, property.FindPropertyRelative("controlPoint"));
 
 			EditorGUI.EndProperty();
