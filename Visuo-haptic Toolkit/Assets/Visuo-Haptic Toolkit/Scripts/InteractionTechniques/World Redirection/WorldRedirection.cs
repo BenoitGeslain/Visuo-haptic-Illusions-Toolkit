@@ -2,15 +2,6 @@ using UnityEngine;
 
 namespace BG.Redirection {
 
-	public enum WRTechnique {
-		None,
-		Razzaque2001OverTimeRotation,
-		Steinicke2008Translational,
-		Razzaque2001Rotational,
-		Razzaque2001Curvature,
-		Razzaque2001Hybrid,
-	}
-
 	/// <summary>
 	/// This class allows users to select through the inspector or set through the API which
 	/// body redirection technique to use as well as the relevant parameters.
@@ -23,6 +14,7 @@ namespace BG.Redirection {
 		[Header("User Parameters")]
 		[SerializeField] private Transform physicalHead;
 		[SerializeField] private Transform virtualHead;
+		private float previousFrameYOrientation;
 
 		[Header("Technique Parameters")]
 		public Transform physicalTarget;
@@ -50,10 +42,15 @@ namespace BG.Redirection {
 				case WRTechnique.Razzaque2001Hybrid:
 					techniqueClass = new Razzaque2001Hybrid();
 					break;
+				case WRTechnique.Azmandian2016World:
+					techniqueClass = new Azmandian2016World();
+					break;
 				default:
 					Debug.LogError("Error Unknown Redirection technique.");
 					break;
 			}
+
+			previousFrameYOrientation = virtualHead.eulerAngles.y;
 		}
 
 		private void Start() {
@@ -62,10 +59,11 @@ namespace BG.Redirection {
 
 		private void Update() {
 			if (!reset && techniqueClass != null) {
-				techniqueClass.Redirect(physicalTarget, virtualTarget, physicalHead, virtualHead);
+				techniqueClass.Redirect(Vector3.forward, physicalHead, virtualHead);
 			} else {
 				// Reset virtualHand to physicalHand progressively
 			}
+			previousFrameYOrientation = virtualHead.eulerAngles.y;
 		}
 
 		public void setTechnique(WRTechnique t) {

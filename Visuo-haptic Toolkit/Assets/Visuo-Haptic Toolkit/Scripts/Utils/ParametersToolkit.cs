@@ -15,8 +15,10 @@ namespace BG.Redirection {
 		// public Vector3 MaxAngles;
 
 		[Header("World Warping Thresholds")]
+		[Tooltip("The error in rotation where users are considered to be in the correct direction. Value is in °.")]
+		public float RotationalEpsilon;
 		[Tooltip("The maximum rotation that can be applied to the user's point of view in rotation along the vertical axis (Y). Value is in °/s.")]
-		public float GainsOverTimeRotaton;
+		public float OverTimeRotaton;
 		[Tooltip("The maximum gain in translation that can be applied to the user's point of view in translation (akin to a C/D ratio). Value has no unit and is not a percentage.")]
 		public float GainsTranslational;
 		[Tooltip("The maximum gain in rotation that can be applied to the user's point of view in rotation. Value has no unit and is not a percentage.")]

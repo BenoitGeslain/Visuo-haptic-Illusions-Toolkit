@@ -2,17 +2,6 @@ using UnityEngine;
 
 namespace BG.Redirection {
 
-	public enum BRTechnique {
-		None,
-		Han2018Instant,
-		Han2018Continous,
-		Azmandian2016Body,
-		Azmandian2016World,
-		Azmandian2016Hybrid,
-		Cheng2017Sparse,
-		Geslain2022Polynom
-	}
-
 	/// <summary>
 	/// This class allows users to select through the inspector or set through the API which
 	/// body redirection technique to use as well as the relevant parameters.
@@ -36,7 +25,6 @@ namespace BG.Redirection {
 			techniqueInstance = technique switch {
 				BRTechnique.None => new ResetRedirection(this),
 				BRTechnique.Azmandian2016Body => new Azmandian2016Body(this),
-				BRTechnique.Azmandian2016World => new Azmandian2016World(this),
 				BRTechnique.Han2018Instant => new Han2018Instant(this),
 				BRTechnique.Han2018Continous => new Han2018Continous(this),
 				BRTechnique.Cheng2017Sparse => new Cheng2017Sparse(this),

@@ -51,15 +51,6 @@ namespace BG.Redirection {
 		}
 	}
 
-	public class Azmandian2016World: BodyRedirectionTechnique {
-
-		public Azmandian2016World(BodyRedirection script): base(script) {}
-
-		public override void Redirect(Transform physicalTarget, Transform virtualTarget, Transform origin, Transform physicalHand, Transform virtualHand) {
-			Debug.Log("Method not implemented yet.");
-		}
-	}
-
 	public class Azmandian2016Hybrid: BodyRedirectionTechnique {
 
 		public Azmandian2016Hybrid(BodyRedirection script): base(script) {}
