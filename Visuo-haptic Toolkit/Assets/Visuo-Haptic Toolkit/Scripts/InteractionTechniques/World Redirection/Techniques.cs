@@ -34,10 +34,8 @@ namespace BG.Redirection {
 			}
         }
 
-		public float getFrameOffset() {
-			return Toolkit.Instance.parameters.OverTimeRotaton;
-		}
-	}
+        public float getFrameOffset() => Toolkit.Instance.parameters.OverTimeRotaton;
+    }
 
 	public class Razzaque2001Rotational: WorldRedirectionTechnique {
         public override void Redirect(Vector3 forwardTarget, float previousFrameYOrientation, Transform physicalHead, Transform virtualHead) {
