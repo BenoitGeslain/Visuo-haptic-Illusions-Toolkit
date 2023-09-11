@@ -18,7 +18,7 @@ namespace BG.Redirection {
 		/// <param name="forwardTarget">MUST be colinear with horizontal plane</param>
 		/// <param name="physicalHead"></param>
 		/// <param name="virtualHead"></param>
-		public virtual void Redirect(Vector3 forwardTarget, Transform physicalHead, Transform virtualHead) {
+		public virtual void Redirect(Vector3 forwardTarget, float previousFrameYOrientation, Transform physicalHead, Transform virtualHead) {
 			Debug.LogError("Calling Redirect() virtual method. It should be overriden");
 		}
 
@@ -28,7 +28,7 @@ namespace BG.Redirection {
 	}
 
 	public class Razzaque2001OverTimeRotation: WorldRedirectionTechnique {
-        public override void Redirect(Vector3 forwardTarget, Transform physicalHead, Transform virtualHead) {
+        public override void Redirect(Vector3 forwardTarget, float previousFrameYOrientation, Transform physicalHead, Transform virtualHead) {
             if (Vector3.Angle(Vector3.ProjectOnPlane(physicalHead.forward, Vector3.up), forwardTarget) < Toolkit.Instance.parameters.RotationalEpsilon) {
 				virtualHead.Rotate(0f, Toolkit.Instance.parameters.OverTimeRotaton, 0f);
 			}
@@ -40,19 +40,23 @@ namespace BG.Redirection {
 	}
 
 	public class Razzaque2001Rotational: WorldRedirectionTechnique {
-        public override void Redirect(Vector3 forwardTarget, Transform physicalHead, Transform virtualHead) {
+        public override void Redirect(Vector3 forwardTarget, float previousFrameYOrientation, Transform physicalHead, Transform virtualHead) {
             if (Vector3.Angle(Vector3.ProjectOnPlane(physicalHead.forward, Vector3.up), forwardTarget) < Toolkit.Instance.parameters.RotationalEpsilon) {
-				virtualHead.Rotate(0f, getFrameOffset(forwardTarget, physicalHead, virtualHead), 0f);
+				virtualHead.Rotate(0f, getFrameOffset(forwardTarget, previousFrameYOrientation, physicalHead, virtualHead), 0f);
 			}
         }
 
-		public float getFrameOffset(Vector3 forwardTarget, Transform physicalHead, Transform virtualHead) {
-			return 0;
+		public float getFrameOffset(Vector3 forwardTarget, float previousFrameYOrientation, Transform physicalHead, Transform virtualHead) {
+			float rotationRate = physicalHead.eulerAngles.y - previousFrameYOrientation;
+			if (rotationRate > 0f) {
+				return rotationRate * Toolkit.Instance.parameters.GainsRotational.right;
+			}
+			return rotationRate * Toolkit.Instance.parameters.GainsRotational.left;
 		}
 	}
 
 	public class Razzaque2001Curvature: WorldRedirectionTechnique {
-        public override void Redirect(Vector3 forwardTarget, Transform physicalHead, Transform virtualHead) {
+        public override void Redirect(Vector3 forwardTarget, float previousFrameYOrientation, Transform physicalHead, Transform virtualHead) {
 			Debug.Log("Method not implemented yet.");
         }
 
@@ -62,19 +66,19 @@ namespace BG.Redirection {
 	}
 
 	public class Steinicke2008Translational: WorldRedirectionTechnique {
-        public override void Redirect(Vector3 forwardTarget, Transform physicalHead, Transform virtualHead) {
+        public override void Redirect(Vector3 forwardTarget, float previousFrameYOrientation, Transform physicalHead, Transform virtualHead) {
             Debug.Log("Method not implemented yet.");
         }
 	}
 
 	public class Razzaque2001Hybrid: WorldRedirectionTechnique {
-        public override void Redirect(Vector3 forwardTarget, Transform physicalHead, Transform virtualHead) {
+        public override void Redirect(Vector3 forwardTarget, float previousFrameYOrientation, Transform physicalHead, Transform virtualHead) {
             Debug.Log("Method not implemented yet.");
         }
 	}
 
 	public class Azmandian2016World: WorldRedirectionTechnique {
-        public override void Redirect(Vector3 forwardTarget, Transform physicalHead, Transform virtualHead) {
+        public override void Redirect(Vector3 forwardTarget, float previousFrameYOrientation, Transform physicalHead, Transform virtualHead) {
             Debug.Log("Method not implemented yet.");
         }
 	}

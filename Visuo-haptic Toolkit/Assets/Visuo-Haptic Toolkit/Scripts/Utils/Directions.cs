@@ -2,20 +2,20 @@ using UnityEngine;
 
 namespace BG.Redirection {
 	[System.Serializable]
-	public class XDirection {
-		[SerializeField] private float right;
-		[SerializeField] private float left;
+	public class Vector2Translation {
+		public float forward;
+		public float backward;
 	}
 
 	[System.Serializable]
-	public class YDirection {
-		[SerializeField] private float up;
-		[SerializeField] private float down;
+	public class Vector2Rotation {
+		public float left;
+		public float right;
 	}
 
 	[System.Serializable]
 	public class ZDirection {
-		[SerializeField] private float forward;
-		[SerializeField] private float backward;
+		public float forward;
+		public float backward;
 	}
 }

@@ -24,6 +24,16 @@ namespace BG.Redirection {
 		Azmandian2016World,
 	}
 
+	public enum WRStrategy {
+		None,
+		Razzaque2001OverTimeRotation,
+		Steinicke2008Translational,
+		Razzaque2001Rotational,
+		Razzaque2001Curvature,
+		Razzaque2001Hybrid,
+		Azmandian2016World,
+	}
+
 	public class Toolkit : MonoBehaviour {
 		public static Toolkit Instance { get; private set; }
 

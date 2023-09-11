@@ -59,7 +59,7 @@ namespace BG.Redirection {
 
 		private void Update() {
 			if (!reset && techniqueClass != null) {
-				techniqueClass.Redirect(Vector3.forward, physicalHead, virtualHead);
+				techniqueClass.Redirect(Vector3.forward, previousFrameYOrientation, physicalHead, virtualHead);
 			} else {
 				// Reset virtualHand to physicalHand progressively
 			}
