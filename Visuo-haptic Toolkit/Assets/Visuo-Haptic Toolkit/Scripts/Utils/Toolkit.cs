@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace BG.Redirection {
-
+	/// <summary>
+	/// Body redirection techniques.
+	/// </summary>
 	public enum BRTechnique {
 		None,
 		Han2018Instant,
@@ -13,8 +15,10 @@ namespace BG.Redirection {
 		Cheng2017Sparse,
 		Geslain2022Polynom
 	}
-
-	public enum WRTechnique {
+    /// <summary>
+    /// World redirection techniques.
+    /// </summary>
+    public enum WRTechnique {
 		None,
 		Razzaque2001OverTimeRotation,
 		Steinicke2008Translational,

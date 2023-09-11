@@ -11,8 +11,9 @@ namespace BG.Redirection {
 	/// </summary>
 	[Serializable]
 	public class BodyRedirectionTechnique {
-
-		public float a2; // or a1
+        
+		[Range(-10.0f, 10.0f)]
+        public float a2;
 		public Vector2 controlPoint;
 
 		protected BodyRedirection rootScript;
@@ -103,7 +104,7 @@ namespace BG.Redirection {
 
 	[Serializable]
 	public class Geslain2022Polynom: BodyRedirectionTechnique {
-		float a1, a0; // TODO A supprimer
+	
 
 		public Geslain2022Polynom(BodyRedirection script, float a2, Vector2 controlPoint): base(script) {
 			this.a2 = a2;
@@ -111,8 +112,14 @@ namespace BG.Redirection {
 		}
 
 		public override void Redirect(Transform physicalTarget, Transform virtualTarget, Transform origin, Transform physicalHand, Transform virtualHand) {
-			float[] coeffsByIncreasingPower = { a0, a1, a2 }; // TODO compute coeffs - current default is instant redirection
-			float d = Vector3.Distance(physicalHand.position, physicalTarget.position);
+
+			// The redirection is a degree-2 polynomial function of the distance, 
+			// f(d) = a_0 + a_1 * d + a_2 * d²,
+			// with limit conditions f(0) = 1 (hence a_0 = 1) and f(D) = 0, where D is the origin - real target distance
+			// (hence a_1 * D = 1 - a_2 * D²). 
+			float D = Vector3.Distance(physicalTarget.position, origin.position);
+            float[] coeffsByIncreasingPower = { 1f, -1f / D - a2 * D, a2 };
+            float d = Vector3.Distance(physicalHand.position, physicalTarget.position);
 			float ratio = (float) coeffsByIncreasingPower.Select((a, i) => a * Math.Pow(d, i)).Sum();
 			virtualHand.position = physicalHand.position + ratio * (virtualTarget.position - physicalTarget.position);
 		}

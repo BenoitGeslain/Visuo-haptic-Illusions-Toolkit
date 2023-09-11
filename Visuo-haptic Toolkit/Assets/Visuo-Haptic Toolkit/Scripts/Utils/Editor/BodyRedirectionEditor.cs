@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEditor;
 
 namespace BG.Redirection {
+	/// <summary>
+	/// Custom editor for the body redirection scene.
+	/// </summary>
 	[CustomEditor(typeof(BodyRedirection))]
 	public class BodyRedirectionEditor : Editor {
 		SerializedProperty technique;
