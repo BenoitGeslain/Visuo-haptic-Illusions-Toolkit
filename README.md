@@ -38,6 +38,13 @@ Voir le [wiki](../../wikis) pour plus d'informations sur les tâches à réalise
 
 \* Erreur de signe dans l'équation à 3.3, la technique redirige dans la direction opposée. + B est faux
 
+| Body Redirection  | Status   |
+|:-------------- | :--------------: |
+| [Langbehn and Steinicke, 2013](https://link.springer.com/referenceworkentry/10.1007/978-3-319-08234-9_253-1), Steer To Center    | &cross; |
+| [Langbehn and Steinicke, 2013](https://link.springer.com/referenceworkentry/10.1007/978-3-319-08234-9_253-1), Steer To Orbit    | &cross; |
+| [Langbehn and Steinicke, 2013](https://link.springer.com/referenceworkentry/10.1007/978-3-319-08234-9_253-1), Steer To Targets    | &cross; |
+| [Langbehn and Steinicke, 2013](https://link.springer.com/referenceworkentry/10.1007/978-3-319-08234-9_253-1), Steer To Targets + Center    | &cross; |
+
 ### Good Contribution
 
 | Body Redirection  | Status   |
