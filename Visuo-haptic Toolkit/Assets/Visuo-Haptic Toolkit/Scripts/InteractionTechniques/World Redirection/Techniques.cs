@@ -30,13 +30,16 @@ namespace BG.Redirection {
 	public class Razzaque2001OverTimeRotation: WorldRedirectionTechnique {
         public override void Redirect(Vector3 forwardTarget, Transform physicalHead, Transform virtualHead, Vector3 previousPosition, Quaternion previousOrientation) {
             if (Vector3.Angle(Vector3.ProjectOnPlane(physicalHead.forward, Vector3.up), forwardTarget) < Toolkit.Instance.parameters.RotationalEpsilon) {
-				virtualHead.Rotate(0f, Toolkit.Instance.parameters.OverTimeRotaton, 0f);
+				virtualHead.Rotate(0f, Toolkit.Instance.parameters.OverTimeRotation, 0f);
 			}
         }
 
-        public float getFrameOffset() => Toolkit.Instance.parameters.OverTimeRotaton;
+        public float getFrameOffset() => Toolkit.Instance.parameters.OverTimeRotation;
     }
 
+	/// <summary>
+	/// Class for rotating the world around the user by an amount proportional to her angular speed.
+	/// </summary>
 	public class Razzaque2001Rotational: WorldRedirectionTechnique {
         public override void Redirect(Vector3 forwardTarget, Transform physicalHead, Transform virtualHead, Vector3 previousPosition, Quaternion previousOrientation) {
             if (Vector3.Angle(Vector3.ProjectOnPlane(physicalHead.forward, Vector3.up), forwardTarget) < Toolkit.Instance.parameters.RotationalEpsilon) {
@@ -86,5 +89,5 @@ namespace BG.Redirection {
         public override void Redirect(Vector3 forwardTarget, Transform physicalHead, Transform virtualHead, Vector3 previousPosition, Quaternion previousOrientation) {
             Debug.Log("Method not implemented yet.");
         }
-	}
+    }
 }

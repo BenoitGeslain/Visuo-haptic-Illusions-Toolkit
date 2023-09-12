@@ -34,7 +34,7 @@ namespace BG.Redirection {
 
 			EditorGUILayout.PropertyField(technique, new GUIContent ("Technique"));
 
-			// Hides a2 and controlpoint fields if the technique is not Geslain2022Polynom
+			// Hides redirectionLateness and controlpoint fields if the technique is not Geslain2022Polynom
 			if (technique.enumNames[technique.enumValueIndex] == "Geslain2022Polynom") {
 				EditorGUILayout.PropertyField(techniqueInstance, new GUIContent ("Parameters"));
 			}

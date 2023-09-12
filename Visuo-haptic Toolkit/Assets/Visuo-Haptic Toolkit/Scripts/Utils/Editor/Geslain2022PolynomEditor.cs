@@ -7,10 +7,10 @@ namespace BG.Redirection {
 
 		public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
 
-			// Property a2
+			// Property redirectionLateness
 			EditorGUI.BeginProperty(position, label, property);
 
-			EditorGUI.PropertyField(position, property.FindPropertyRelative("a2"));
+			EditorGUI.PropertyField(position, property.FindPropertyRelative("redirectionLateness"));
 
 			EditorGUI.EndProperty();
 

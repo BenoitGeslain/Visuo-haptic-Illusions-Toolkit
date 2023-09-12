@@ -22,7 +22,7 @@ namespace BG.Redirection {
 		[Tooltip("The soothing factor preventing abrupt changes. Value has no unit. [Hogson and Bachmann, 2013]")]
 		public float SmoothingFactor = 0.2f;
 		[Tooltip("The maximum rotation that can be applied to the user's point of view in rotation along the vertical axis (Y). Value is in °/s.")]
-		public float OverTimeRotaton;
+		public float OverTimeRotation;
 		[Tooltip("The maximum gain in translation that can be applied to the user's point of view in translation (akin to a C/D ratio). Value has no unit and is not a percentage.")]
 		public Vector2Translation GainsTranslational;
 		[Tooltip("The maximum gain in rotation that can be applied to the user's point of view in rotation. Value has no unit and is not a percentage. [Steinicke et al., 2010]")]
