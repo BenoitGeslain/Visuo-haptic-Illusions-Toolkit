@@ -13,7 +13,7 @@ namespace BG.Redirection {
 		}
 
 		/// <summary>
-		///
+		/// Redirects the user towards the actual target. Should be overriden in subclasses.
 		/// </summary>
 		/// <param name="forwardTarget">MUST be colinear with horizontal plane</param>
 		/// <param name="physicalHead"></param>

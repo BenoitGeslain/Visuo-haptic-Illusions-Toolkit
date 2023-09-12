@@ -156,7 +156,7 @@ namespace BG.Redirection {
 		public ResetRedirection(BodyRedirection script): base(script) { }
 
 		public override void Redirect(Transform physicalTarget, Transform virtualTarget, Transform origin, Transform physicalHand, Transform virtualHand) {
-			if (Vector3.Distance(physicalHand.position, virtualHand.position) > Vector3.kEpsilon) {
+			if (this.rootScript.IsRedirecting()) {
 				virtualHand.position += Vector3.ClampMagnitude((physicalHand.position - virtualHand.position) * Time.deltaTime, maxLength: 0.0025f);
 			}
 		}
