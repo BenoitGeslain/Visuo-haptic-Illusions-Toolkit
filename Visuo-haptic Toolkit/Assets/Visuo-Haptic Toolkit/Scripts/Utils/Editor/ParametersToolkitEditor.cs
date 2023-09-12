@@ -21,7 +21,7 @@
 // 			noRedirectionBuffer = serializedObject.FindProperty ("NoRedirectionBuffer");
 
 // 			rotationalEpsilon = serializedObject.FindProperty("RotationalEpsilon");
-// 			overTimeRotaton = serializedObject.FindProperty ("OverTimeRotaton");
+// 			overTimeRotaton = serializedObject.FindProperty ("OverTimeRotation");
 // 			gainsTranslational = serializedObject.FindProperty("GainsTranslational");
 // 			gainsRotational = serializedObject.FindProperty ("GainsRotational");
 // 			gainsCurvature = serializedObject.FindProperty("GainsCurvature");

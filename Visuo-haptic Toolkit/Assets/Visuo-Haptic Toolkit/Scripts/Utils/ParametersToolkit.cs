@@ -14,7 +14,7 @@ namespace BG.Redirection {
 		[Tooltip("The error in rotation where users are considered to be in the correct direction. Value is in °.")]
 		public float RotationalEpsilon = 1f;
 		[Tooltip("The maximum rotation that can be applied to the user's point of view in rotation along the vertical axis (Y). Value is in °/s.")]
-		public float OverTimeRotaton;
+		public float OverTimeRotation;
 		[Tooltip("The maximum gain in translation that can be applied to the user's point of view in translation (akin to a C/D ratio). Value has no unit and is not a percentage.")]
 		public Vector2Translation GainsTranslational;
 		[Tooltip("The maximum gain in rotation that can be applied to the user's point of view in rotation. Value has no unit and is not a percentage.")]
