@@ -11,9 +11,10 @@ namespace BG.Redirection {
 	/// </summary>
 	[Serializable]
 	public class BodyRedirectionTechnique {
-        
-		[Range(-10.0f, 10.0f)]
-        public float a2;
+        /// redirectionLateness governs the distance at which the correction is strongest, from -1 (strong redirection towards the beginning)
+        /// to +1 (strong redirection towards the end)
+        [Range(-1f, 1f)]
+        public float redirectionLateness;
 		public Vector2 controlPoint;
 
 		protected BodyRedirection rootScript;
@@ -42,6 +43,10 @@ namespace BG.Redirection {
 		}
 	}
 
+	/// <summary>
+	/// Class for redirecting the user's virtual hand by an amount proportional to the sine of the 
+	/// real target - origin - real hand angle and to the real hand - origin distance, clamped.
+	/// </summary>
 	public class Azmandian2016Body: BodyRedirectionTechnique {
 
 		public Azmandian2016Body(BodyRedirection script): base(script) {}
@@ -56,7 +61,10 @@ namespace BG.Redirection {
 		}
 	}
 
-	public class Azmandian2016Hybrid: BodyRedirectionTechnique {
+    /// <summary>
+    /// 
+    /// </summary>
+    public class Azmandian2016Hybrid: BodyRedirectionTechnique {
 
 		public Azmandian2016Hybrid(BodyRedirection script): base(script) {}
 
@@ -65,7 +73,10 @@ namespace BG.Redirection {
 		}
 	}
 
-	public class Han2018Instant: BodyRedirectionTechnique {
+    /// <summary>
+    /// Class for instantly redirecting the user's virtual hand.
+    /// </summary>
+    public class Han2018Instant: BodyRedirectionTechnique {
 
 		public Han2018Instant(BodyRedirection script): base(script) {}
 
@@ -79,7 +90,10 @@ namespace BG.Redirection {
 		}
     }
 
-	public class Han2018Continous: BodyRedirectionTechnique {
+    /// <summary>
+    /// Class for redirecting the user's virtual hand by an amount that decreases linearly with the target - hand distance.
+    /// </summary>
+    public class Han2018Continous: BodyRedirectionTechnique {
 
 		public Han2018Continous(BodyRedirection script): base(script) {}
 
@@ -102,12 +116,16 @@ namespace BG.Redirection {
 		}
 	}
 
+
+	/// <summary>
+	/// Class for redirecting the user's hand by an amount that has a degree-2 polynomial dependency on the hand-target distance.
+	/// </summary>
 	[Serializable]
 	public class Geslain2022Polynom: BodyRedirectionTechnique {
 	
 
-		public Geslain2022Polynom(BodyRedirection script, float a2, Vector2 controlPoint): base(script) {
-			this.a2 = a2;
+		public Geslain2022Polynom(BodyRedirection script, float redirectionLateness, Vector2 controlPoint): base(script) {
+			this.redirectionLateness = redirectionLateness;
 			this.controlPoint = controlPoint;
 		}
 
@@ -116,8 +134,12 @@ namespace BG.Redirection {
 			// The redirection is a degree-2 polynomial function of the distance, 
 			// f(d) = a_0 + a_1 * d + a_2 * d²,
 			// with limit conditions f(0) = 1 (hence a_0 = 1) and f(D) = 0, where D is the origin - real target distance
-			// (hence a_1 * D = 1 - a_2 * D²). 
+			// (hence a_1 * D = -1 - a_2 * D²). 
+			// Reasonable a_2 values: df/dd is negative or null at d = 0 and d = D, meaning a_1 <= 0 and a_1 + 2 a_2 * D <= 0,
+			// or -1 <= a_2 * D² <= 1
+			// The input redirectionLateness is -a_2 * D².
 			float D = Vector3.Distance(physicalTarget.position, origin.position);
+			float a2 = -this.redirectionLateness / (D * D);
             float[] coeffsByIncreasingPower = { 1f, -1f / D - a2 * D, a2 };
             float d = Vector3.Distance(physicalHand.position, physicalTarget.position);
 			float ratio = (float) coeffsByIncreasingPower.Select((a, i) => a * Math.Pow(d, i)).Sum();
@@ -126,10 +148,10 @@ namespace BG.Redirection {
 	}
 
 
-
-
-	// Reset the redirection over a short period of time
-	public class ResetRedirection: BodyRedirectionTechnique {
+    /// <summary>
+    /// Class for resetting the user's hand to its actual position over time.
+    /// </summary>
+    public class ResetRedirection: BodyRedirectionTechnique {
 
 		public ResetRedirection(BodyRedirection script): base(script) { }
 
