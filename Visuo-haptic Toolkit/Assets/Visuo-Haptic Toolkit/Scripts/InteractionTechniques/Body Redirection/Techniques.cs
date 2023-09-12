@@ -14,7 +14,7 @@ namespace BG.Redirection {
 
 		[Tooltip("The coefficient a2 from the second order polynom: f(d) = a_0 + a_1 * d + a_2 * d^2. If a2 = 0, then the redirection is linear and equivalent to Han et al., 2018. If a2 is -1/D²<a2<1/D², the redirectionfunction doesn't redirect in the opposite direction (-1/D^2) or over redirects (1/D^2).")]
 		[Range(-10.0f, 10.0f)]
-        public float a2;
+        public float redirectionLateness;
 		public Vector2 controlPoint;
 
 		protected BodyRedirection rootScript;
