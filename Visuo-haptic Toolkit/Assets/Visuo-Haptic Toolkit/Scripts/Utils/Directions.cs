@@ -9,13 +9,7 @@ namespace BG.Redirection {
 
 	[System.Serializable]
 	public class Vector2Rotation {
-		public float left;
-		public float right;
-	}
-
-	[System.Serializable]
-	public class ZDirection {
-		public float forward;
-		public float backward;
+		public float same;
+		public float opposite;
 	}
 }
