@@ -15,6 +15,7 @@ namespace BG.Redirection {
 		[SerializeField] private Transform physicalHead;
 		[SerializeField] private Transform virtualHead;
 		private float previousFrameYOrientation;
+		private Vector3 previousPosition;
 
 		[Header("Technique Parameters")]
 		public Transform physicalTarget;
@@ -51,6 +52,7 @@ namespace BG.Redirection {
 			}
 
 			previousFrameYOrientation = virtualHead.eulerAngles.y;
+			previousPosition = virtualHead.position;
 		}
 
 		private void Start() {
@@ -59,7 +61,7 @@ namespace BG.Redirection {
 
 		private void Update() {
 			if (!reset && techniqueClass != null) {
-				techniqueClass.Redirect(Vector3.forward, previousFrameYOrientation, physicalHead, virtualHead);
+				techniqueClass.Redirect(Vector3.forward, previousPosition, previousFrameYOrientation, physicalHead, virtualHead);
 			} else {
 				// Reset virtualHand to physicalHand progressively
 			}
