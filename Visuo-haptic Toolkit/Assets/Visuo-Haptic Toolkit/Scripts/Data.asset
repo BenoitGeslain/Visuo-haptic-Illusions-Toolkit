@@ -14,7 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxAngles: {x: 15, y: 15, z: 15}
   NoRedirectionBuffer: 0.1
-  GainsOverTimeRotaton: 0
-  GainsTranslational: 0
-  GainsRotational: 0
-  GainsCurvature: 0
+  RotationalEpsilon: 1
+  WalkingThreshold: 0.2
+  OverTimeRotaton: 0
+  GainsTranslational:
+    forward: 0
+    backward: 0
+  GainsRotational:
+    same: 1.3
+    opposite: 0.85
+  GainsCurvature:
+    forward: 0
+    backward: 0
+  a: {x: 0, y: 0, z: 0}
+  b: {x: 0, y: 0, z: 0}

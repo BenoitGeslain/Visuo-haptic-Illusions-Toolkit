@@ -25,17 +25,13 @@ namespace BG.Redirection {
 		Razzaque2001Rotational,
 		Razzaque2001Curvature,
 		Razzaque2001Hybrid,
-		Azmandian2016World,
+		Azmandian2016World
 	}
 
 	public enum WRStrategy {
-		None,
-		Razzaque2001OverTimeRotation,
-		Steinicke2008Translational,
-		Razzaque2001Rotational,
-		Razzaque2001Curvature,
-		Razzaque2001Hybrid,
-		Azmandian2016World,
+		SteerToCenter,
+		SteerToOrbit,
+		SteerToMultipleTargets
 	}
 
 	public class Toolkit : MonoBehaviour {
@@ -55,5 +51,13 @@ namespace BG.Redirection {
 		}
 
         private void Start() => rootScript = this.gameObject.GetComponent<Interaction>();
+
+		public float CurvatureRadiusToRotationRate() {
+			return 360f / (2 * Mathf.PI * parameters.CurvatureRadius);
+		}
+
+		public float CurvatureRadiusToRotationRate(float radius) {
+			return 360f / (2 * Mathf.PI * radius);
+		}
     }
 }

@@ -5,53 +5,61 @@ namespace BG.Redirection {
 	/// <summary>
 	/// This class allows users to select through the inspector or set through the API which
 	/// body redirection technique to use as well as the relevant parameters.
+	/// To reset redirection, set the technique enum to None.
 	/// </summary>
 	public class WorldRedirection : MonoBehaviour {
 
 		[SerializeField] private WRTechnique technique;
-		[SerializeField] private WorldRedirectionTechnique techniqueClass;
+		[SerializeField] private WorldRedirectionTechnique techniqueInstance;
 
 		[Header("User Parameters")]
 		[SerializeField] private Transform physicalHead;
 		[SerializeField] private Transform virtualHead;
-		private float previousFrameYOrientation;
+		private Quaternion previousOrientation;
 		private Vector3 previousPosition;
 
 		[Header("Technique Parameters")]
+		[SerializeField] private WRStrategy strategy;
+		[SerializeField] private WorldRedirectionStrategy strategyInstance;
 		public Transform physicalTarget;
 		public Transform virtualTarget;
-
-		private bool reset;
 
 		private void init() {
 			switch (technique) {
 				case WRTechnique.None:
-					techniqueClass = null;
+					techniqueInstance = new ResetWorldRedirection();
 					break;
 				case WRTechnique.Razzaque2001OverTimeRotation:
-					techniqueClass = new Razzaque2001OverTimeRotation();
+					techniqueInstance = new Razzaque2001OverTimeRotation();
 					break;
 				case WRTechnique.Steinicke2008Translational:
-					techniqueClass = new Steinicke2008Translational();
+					techniqueInstance = new Steinicke2008Translational();
 					break;
 				case WRTechnique.Razzaque2001Rotational:
-					techniqueClass = new Razzaque2001Rotational();
+					techniqueInstance = new Razzaque2001Rotational();
 					break;
 				case WRTechnique.Razzaque2001Curvature:
-					techniqueClass = new Razzaque2001Curvature();
+					techniqueInstance = new Razzaque2001Curvature();
 					break;
 				case WRTechnique.Razzaque2001Hybrid:
-					techniqueClass = new Razzaque2001Hybrid();
+					techniqueInstance = new Razzaque2001Hybrid();
 					break;
 				case WRTechnique.Azmandian2016World:
-					techniqueClass = new Azmandian2016World();
+					techniqueInstance = new Azmandian2016World();
 					break;
 				default:
 					Debug.LogError("Error Unknown Redirection technique.");
 					break;
 			}
 
-			previousFrameYOrientation = virtualHead.eulerAngles.y;
+			strategyInstance = strategy switch {
+				WRStrategy.SteerToCenter => new SteerToCenter(),
+				WRStrategy.SteerToOrbit => new SteerToOrbit(),
+				WRStrategy.SteerToMultipleTargets => new SteerToMultipleTargets(),
+				_ => null
+			};
+
+			previousOrientation = virtualHead.rotation;
 			previousPosition = virtualHead.position;
 		}
 
@@ -60,40 +68,23 @@ namespace BG.Redirection {
 		}
 
 		private void Update() {
-			if (!reset && techniqueClass != null) {
-				techniqueClass.Redirect(Vector3.forward, previousPosition, previousFrameYOrientation, physicalHead, virtualHead);
-			} else {
-				// Reset virtualHand to physicalHand progressively
+			if (techniqueInstance != null) {
+				techniqueInstance.Redirect(Vector3.forward, physicalHead, virtualHead, previousPosition, previousOrientation);
 			}
-			previousFrameYOrientation = virtualHead.eulerAngles.y;
+			previousOrientation = virtualHead.rotation;
+			previousPosition = virtualHead.position;
 		}
 
 		public void setTechnique(WRTechnique t) {
 			technique = t;
 			init();
 		}
-		public WRTechnique getTechnique(WRTechnique t) {
-			return technique;
-		}
+
+		public WRTechnique getTechnique(WRTechnique t) => technique;
 
 		public bool IsRedirecting() {
-			return Vector3.Distance(physicalHead.position, virtualHead.position) < Vector3.kEpsilon;
-				   // && test orientation;
-		}
-
-		public void resetRedirection() {
-			reset = true;
-		}
-
-		public void restartRedirection() {
-			if (reset) {
-				Debug.LogWarning("Redirection should be reset before restarted.");
-				return;
-			} else if (IsRedirecting()) {
-				Debug.LogWarning("Redirection is not reset yet");
-				return;
-			}
-			reset = false;
+			return Vector3.Distance(physicalHead.position, virtualHead.position) < Vector3.kEpsilon &&
+				   Quaternion.Angle(physicalHead.rotation, virtualHead.rotation) < Vector3.kEpsilon;
 		}
 	}
 }

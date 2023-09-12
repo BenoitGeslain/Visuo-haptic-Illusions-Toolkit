@@ -11,10 +11,10 @@ namespace BG.Redirection {
 	/// </summary>
 	[Serializable]
 	public class BodyRedirectionTechnique {
-        /// redirectionLateness governs the distance at which the correction is strongest, from -1 (strong redirection towards the beginning)
-        /// to +1 (strong redirection towards the end)
-        [Range(-1f, 1f)]
-        public float redirectionLateness;
+
+		[Tooltip("The coefficient a2 from the second order polynom: f(d) = a_0 + a_1 * d + a_2 * d^2. If a2 = 0, then the redirection is linear and equivalent to Han et al., 2018. If a2 is -1/DÂ²<a2<1/DÂ², the redirectionfunction doesn't redirect in the opposite direction (-1/D^2) or over redirects (1/D^2).")]
+		[Range(-10.0f, 10.0f)]
+        public float a2;
 		public Vector2 controlPoint;
 
 		protected BodyRedirection rootScript;
@@ -44,7 +44,7 @@ namespace BG.Redirection {
 	}
 
 	/// <summary>
-	/// Class for redirecting the user's virtual hand by an amount proportional to the sine of the 
+	/// Class for redirecting the user's virtual hand by an amount proportional to the sine of the
 	/// real target - origin - real hand angle and to the real hand - origin distance, clamped.
 	/// </summary>
 	public class Azmandian2016Body: BodyRedirectionTechnique {
@@ -62,7 +62,7 @@ namespace BG.Redirection {
 	}
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class Azmandian2016Hybrid: BodyRedirectionTechnique {
 
@@ -122,7 +122,7 @@ namespace BG.Redirection {
 	/// </summary>
 	[Serializable]
 	public class Geslain2022Polynom: BodyRedirectionTechnique {
-	
+
 
 		public Geslain2022Polynom(BodyRedirection script, float redirectionLateness, Vector2 controlPoint): base(script) {
 			this.redirectionLateness = redirectionLateness;
@@ -131,13 +131,10 @@ namespace BG.Redirection {
 
 		public override void Redirect(Transform physicalTarget, Transform virtualTarget, Transform origin, Transform physicalHand, Transform virtualHand) {
 
-			// The redirection is a degree-2 polynomial function of the distance, 
-			// f(d) = a_0 + a_1 * d + a_2 * d²,
+			// The redirection is a degree-2 polynomial function of the distance,
+			// f(d) = a_0 + a_1 * d + a_2 * d^2,
 			// with limit conditions f(0) = 1 (hence a_0 = 1) and f(D) = 0, where D is the origin - real target distance
-			// (hence a_1 * D = -1 - a_2 * D²). 
-			// Reasonable a_2 values: df/dd is negative or null at d = 0 and d = D, meaning a_1 <= 0 and a_1 + 2 a_2 * D <= 0,
-			// or -1 <= a_2 * D² <= 1
-			// The input redirectionLateness is -a_2 * D².
+			// (hence a_1 * D = 1 - a_2 * Dï¿½).
 			float D = Vector3.Distance(physicalTarget.position, origin.position);
 			float a2 = -this.redirectionLateness / (D * D);
             float[] coeffsByIncreasingPower = { 1f, -1f / D - a2 * D, a2 };
@@ -148,12 +145,12 @@ namespace BG.Redirection {
 	}
 
 
-    /// <summary>
-    /// Class for resetting the user's hand to its actual position over time.
-    /// </summary>
-    public class ResetRedirection: BodyRedirectionTechnique {
 
-		public ResetRedirection(BodyRedirection script): base(script) { }
+
+	// Reset the redirection over a short period of time
+	public class ResetBodyRedirection: BodyRedirectionTechnique {
+
+		public ResetBodyRedirection(BodyRedirection script): base(script) { }
 
 		public override void Redirect(Transform physicalTarget, Transform virtualTarget, Transform origin, Transform physicalHand, Transform virtualHand) {
 			if (this.rootScript.IsRedirecting()) {

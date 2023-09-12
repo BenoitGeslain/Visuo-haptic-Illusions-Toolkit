@@ -1764,7 +1764,7 @@ PrefabInstance:
       objectReference: {fileID: 544231395}
     - target: {fileID: 2891068713693094246, guid: 04e531f9da6b5c640b2de2a8fa88a2fa, type: 3}
       propertyPath: techniqueInstance.a2
-      value: 10
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2891068713693094246, guid: 04e531f9da6b5c640b2de2a8fa88a2fa, type: 3}
       propertyPath: curve.m_Curve.Array.size
