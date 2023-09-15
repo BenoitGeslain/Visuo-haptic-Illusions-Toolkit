@@ -22,7 +22,7 @@ namespace BG.Redirection {
 		[SerializeField] private WRStrategy strategy;
 		[SerializeField] private WorldRedirectionStrategy strategyInstance;
 
-		private void init() {
+		private void updateTechnique() {
 			techniqueInstance = technique switch {
 				WRTechnique.None => new ResetWorldRedirection(),
 				WRTechnique.Razzaque2001OverTimeRotation => new Razzaque2001OverTimeRotation(),
@@ -34,38 +34,44 @@ namespace BG.Redirection {
 				_ => null
 			};
 
+
 			if (techniqueInstance is null)
 				Debug.LogError("Error Unknown Redirection technique.");
 
 			strategyInstance = strategy switch {
-				WRStrategy.SteerToCenter => new SteerToCenter(),
-				WRStrategy.SteerToOrbit => new SteerToOrbit(),
-				WRStrategy.SteerToMultipleTargets => new SteerToMultipleTargets(),
+				WRStrategy.SteerToCenter => new SteerToCenter(strategyInstance.targets, strategyInstance.radius),
+				WRStrategy.SteerToOrbit => new SteerToOrbit(strategyInstance.targets, strategyInstance.radius),
+				WRStrategy.SteerToMultipleTargets => new SteerToMultipleTargets(strategyInstance.targets, strategyInstance.radius),
 				_ => null
 			};
 
 			if (strategyInstance is null)
 				Debug.LogError("Error Unknown Redirection strategy.");
+		}
+
+		private void Start() {
+			updateTechnique();
 
 			previousOrientation = virtualHead.rotation;
 			previousPosition = virtualHead.position;
 		}
 
-		private void Start() {
-			init();
-		}
-
 		private void Update() {
-			if (techniqueInstance is not null) {
-				techniqueInstance.Redirect(Vector3.forward, physicalHead, virtualHead, previousPosition, previousOrientation);
+			updateTechnique();
+
+			if (techniqueInstance is not null && strategyInstance is not null) {
+				Vector3 target = strategyInstance.SteerTo(physicalHead, virtualHead);
+				// Debug.Log(target);
+				techniqueInstance.Redirect(target, physicalHead, virtualHead, previousPosition, previousOrientation);
 			}
+
 			previousOrientation = virtualHead.rotation;
 			previousPosition = virtualHead.position;
 		}
 
 		public void SetTechnique(WRTechnique t) {
 			technique = t;
-			init();
+			updateTechnique();
 		}
 
         public void ResetRedirection() => SetTechnique(WRTechnique.None);

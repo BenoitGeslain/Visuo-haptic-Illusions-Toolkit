@@ -20,7 +20,7 @@ namespace BG.Redirection {
 		public Transform physicalTarget;
 		public Transform virtualTarget;
 
-		private void init() {
+		private void updateTechnique() {
 			techniqueInstance = technique switch {
 				BRTechnique.None => new ResetBodyRedirection(this),
 				BRTechnique.Azmandian2016Body => new Azmandian2016Body(this),
@@ -31,20 +31,22 @@ namespace BG.Redirection {
 				_ => null
 			};
 
-			if (techniqueInstance is not null)
+			if (techniqueInstance is null)
 				Debug.LogError("Error Unknown Redirection technique.");
 		}
 
-        private void Start() => init();
+        private void Start() => updateTechnique();
 
         private void Update() {
+			updateTechnique();
+
 			techniqueInstance?.Redirect(physicalTarget, virtualTarget, origin, physicalHand, virtualHand);
 			virtualHand.rotation = physicalHand.rotation;
 		}
 
 		public void SetTechnique(BRTechnique t) {
 			technique = t;
-			init();
+			updateTechnique();
 		}
 
         public void ResetRedirection() => SetTechnique(BRTechnique.None);
