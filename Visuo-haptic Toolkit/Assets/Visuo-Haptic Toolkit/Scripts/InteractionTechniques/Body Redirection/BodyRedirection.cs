@@ -30,7 +30,8 @@ namespace BG.Redirection {
 				BRTechnique.Geslain2022Polynom => new Geslain2022Polynom(this, techniqueInstance.redirectionLateness, techniqueInstance.controlPoint),
 				_ => null
 			};
-			if (techniqueInstance is null)
+
+			if (techniqueInstance is not null)
 				Debug.LogError("Error Unknown Redirection technique.");
 		}
 
@@ -41,14 +42,14 @@ namespace BG.Redirection {
 			virtualHand.rotation = physicalHand.rotation;
 		}
 
-		public void setTechnique(BRTechnique t) {
+		public void SetTechnique(BRTechnique t) {
 			technique = t;
 			init();
 		}
 
-        public void resetRedirection() => setTechnique(BRTechnique.None);
+        public void ResetRedirection() => SetTechnique(BRTechnique.None);
 
-        public BRTechnique getTechnique(BRTechnique t) => technique;
+        public BRTechnique GetTechnique(BRTechnique t) => technique;
 
         public bool IsRedirecting() => Vector3.Distance(physicalHand.position, virtualHand.position) > Vector3.kEpsilon;
     }

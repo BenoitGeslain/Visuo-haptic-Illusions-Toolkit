@@ -1,10 +1,12 @@
+using System;
 using UnityEngine;
 
 namespace BG.Redirection {
+	[Serializable]
 	public class WorldRedirectionStrategy {
 
-		Vector3[] targets;
-		float radius;
+		[SerializeField] private Vector3[] targets;
+		[SerializeField] private float radius;
 
         // public WorldRedirectionStrategy(Vector3[] targets, float radius) {
         public WorldRedirectionStrategy() {}

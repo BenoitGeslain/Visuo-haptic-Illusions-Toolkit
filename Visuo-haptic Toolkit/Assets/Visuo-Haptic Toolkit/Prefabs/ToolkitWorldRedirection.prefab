@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3169019813816358605}
+  - component: {fileID: 2542120560557277227}
   - component: {fileID: 551704495323053107}
   m_Layer: 0
   m_Name: ToolkitWorldRedirection
@@ -32,6 +33,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2542120560557277227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1607897844603459841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: def0fd96408763940a4daaa55934a833, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  technique: 0
+  physicalHead: {fileID: 0}
+  virtualHead: {fileID: 0}
+  strategy: 0
+  physicalTarget: {fileID: 0}
+  virtualTarget: {fileID: 0}
 --- !u!114 &551704495323053107
 MonoBehaviour:
   m_ObjectHideFlags: 0

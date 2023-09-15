@@ -21,36 +21,21 @@ namespace BG.Redirection {
 		[Header("Technique Parameters")]
 		[SerializeField] private WRStrategy strategy;
 		[SerializeField] private WorldRedirectionStrategy strategyInstance;
-		public Transform physicalTarget;
-		public Transform virtualTarget;
 
 		private void init() {
-			switch (technique) {
-				case WRTechnique.None:
-					techniqueInstance = new ResetWorldRedirection();
-					break;
-				case WRTechnique.Razzaque2001OverTimeRotation:
-					techniqueInstance = new Razzaque2001OverTimeRotation();
-					break;
-				case WRTechnique.Steinicke2008Translational:
-					techniqueInstance = new Steinicke2008Translational();
-					break;
-				case WRTechnique.Razzaque2001Rotational:
-					techniqueInstance = new Razzaque2001Rotational();
-					break;
-				case WRTechnique.Razzaque2001Curvature:
-					techniqueInstance = new Razzaque2001Curvature();
-					break;
-				case WRTechnique.Razzaque2001Hybrid:
-					techniqueInstance = new Razzaque2001Hybrid();
-					break;
-				case WRTechnique.Azmandian2016World:
-					techniqueInstance = new Azmandian2016World();
-					break;
-				default:
-					Debug.LogError("Error Unknown Redirection technique.");
-					break;
-			}
+			techniqueInstance = technique switch {
+				WRTechnique.None => new ResetWorldRedirection(),
+				WRTechnique.Razzaque2001OverTimeRotation => new Razzaque2001OverTimeRotation(),
+				WRTechnique.Steinicke2008Translational => new Steinicke2008Translational(),
+				WRTechnique.Razzaque2001Rotational => new Razzaque2001Rotational(),
+				WRTechnique.Razzaque2001Curvature => new Razzaque2001Curvature(),
+				WRTechnique.Razzaque2001Hybrid => new Razzaque2001Hybrid(),
+				WRTechnique.Azmandian2016World => new Azmandian2016World(),
+				_ => null
+			};
+
+			if (techniqueInstance is null)
+				Debug.LogError("Error Unknown Redirection technique.");
 
 			strategyInstance = strategy switch {
 				WRStrategy.SteerToCenter => new SteerToCenter(),
@@ -58,6 +43,9 @@ namespace BG.Redirection {
 				WRStrategy.SteerToMultipleTargets => new SteerToMultipleTargets(),
 				_ => null
 			};
+
+			if (strategyInstance is null)
+				Debug.LogError("Error Unknown Redirection strategy.");
 
 			previousOrientation = virtualHead.rotation;
 			previousPosition = virtualHead.position;
@@ -68,19 +56,21 @@ namespace BG.Redirection {
 		}
 
 		private void Update() {
-			if (techniqueInstance != null) {
+			if (techniqueInstance is not null) {
 				techniqueInstance.Redirect(Vector3.forward, physicalHead, virtualHead, previousPosition, previousOrientation);
 			}
 			previousOrientation = virtualHead.rotation;
 			previousPosition = virtualHead.position;
 		}
 
-		public void setTechnique(WRTechnique t) {
+		public void SetTechnique(WRTechnique t) {
 			technique = t;
 			init();
 		}
 
-		public WRTechnique getTechnique(WRTechnique t) => technique;
+        public void ResetRedirection() => SetTechnique(WRTechnique.None);
+
+		public WRTechnique GetTechnique(WRTechnique t) => technique;
 
 		public bool IsRedirecting() {
 			return Vector3.Distance(physicalHead.position, virtualHead.position) < Vector3.kEpsilon &&
