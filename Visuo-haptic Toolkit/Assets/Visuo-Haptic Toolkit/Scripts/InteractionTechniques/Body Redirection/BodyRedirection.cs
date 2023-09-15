@@ -46,10 +46,10 @@ namespace BG.Redirection {
 			init();
 		}
 
+        public void resetRedirection() => setTechnique(BRTechnique.None);
+
         public BRTechnique getTechnique(BRTechnique t) => technique;
 
         public bool IsRedirecting() => Vector3.Distance(physicalHand.position, virtualHand.position) > Vector3.kEpsilon;
-
-        public void resetRedirection() => setTechnique(BRTechnique.None);
     }
 }
