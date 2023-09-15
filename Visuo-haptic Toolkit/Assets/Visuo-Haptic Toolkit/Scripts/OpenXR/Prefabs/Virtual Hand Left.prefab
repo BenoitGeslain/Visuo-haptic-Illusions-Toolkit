@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6122743761864162889}
   - component: {fileID: 3701145544779066170}
   - component: {fileID: 2594974843553002091}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Virtual Hand Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,6 +48,7 @@ MonoBehaviour:
   showController: 0
   deviceCharacteristics: 320
   modelPrefabs:
+  - {fileID: 1979366302823610183, guid: 41e5a7bac2f1a4a44926252b3dee138a, type: 3}
   - {fileID: 5962158318127538417, guid: 98068cb51aca15e43953e0216ea19d82, type: 3}
   trackedHand: {fileID: 0}
 --- !u!114 &2594974843553002091
