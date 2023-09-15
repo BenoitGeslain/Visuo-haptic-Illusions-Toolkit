@@ -29,9 +29,10 @@ namespace BG.Redirection {
 
 	public class Razzaque2001OverTimeRotation: WorldRedirectionTechnique {
         public override void Redirect(Vector3 forwardTarget, Transform physicalHead, Transform virtualHead, Vector3 previousPosition, Quaternion previousOrientation) {
-            if (Vector3.Angle(Vector3.ProjectOnPlane(physicalHead.forward, Vector3.up), forwardTarget) > Toolkit.Instance.parameters.RotationalEpsilon) {
-				Debug.Log(Toolkit.Instance.parameters.OverTimeRotation*Time.deltaTime);
-				virtualHead.Rotate(0f, Toolkit.Instance.parameters.OverTimeRotation*Time.deltaTime, 0f, Space.World);
+			float angleToTarget = Vector3.SignedAngle(Vector3.ProjectOnPlane(physicalHead.forward, Vector3.up), forwardTarget, Vector3.up);
+
+            if (Mathf.Abs(angleToTarget) > Toolkit.Instance.parameters.RotationalEpsilon) {
+				virtualHead.Rotate(0f, Mathf.Sign(angleToTarget) * Toolkit.Instance.parameters.OverTimeRotation * Time.deltaTime, 0f, Space.World);
 			}
         }
 
@@ -43,18 +44,30 @@ namespace BG.Redirection {
 	/// </summary>
 	public class Razzaque2001Rotational: WorldRedirectionTechnique {
         public override void Redirect(Vector3 forwardTarget, Transform physicalHead, Transform virtualHead, Vector3 previousPosition, Quaternion previousOrientation) {
-            if (Vector3.Angle(Vector3.ProjectOnPlane(physicalHead.forward, Vector3.up), forwardTarget) < Toolkit.Instance.parameters.RotationalEpsilon) {
-				virtualHead.Rotate(0f, GetFrameOffset(forwardTarget, physicalHead, virtualHead, previousPosition, previousOrientation), 0f);
+			float angleToTarget = Vector3.SignedAngle(Vector3.ProjectOnPlane(physicalHead.forward, Vector3.up), forwardTarget, Vector3.up);
+			float instantaneousRotation = physicalHead.eulerAngles.y - previousOrientation.eulerAngles.y;
+
+			// Debug.Log(instantaneousRotation);
+			if (Mathf.Abs(instantaneousRotation) > Vector3.kEpsilon) {
+				if (Mathf.Abs(angleToTarget) > Toolkit.Instance.parameters.RotationalEpsilon) {
+					// Debug.Log("Rotating");
+					virtualHead.Rotate(0f, GetFrameOffset(forwardTarget, physicalHead, virtualHead, previousPosition, previousOrientation), 0f);
+				}
+			} else {
+				Quaternion q = physicalHead.rotation * Quaternion.Inverse(previousOrientation);
+				virtualHead.rotation = q * virtualHead.rotation;
 			}
         }
 
 		public float GetFrameOffset(Vector3 forwardTarget, Transform physicalHead, Transform virtualHead, Vector3 previousPosition, Quaternion previousOrientation) {
-			float instantRotation = physicalHead.eulerAngles.y - previousOrientation.eulerAngles.y;
+			float instantaneousRotation = physicalHead.eulerAngles.y - previousOrientation.eulerAngles.y;
 
-			if (Mathf.Sign(Vector3.SignedAngle(physicalHead.forward, forwardTarget, Vector3.up)) == Mathf.Sign(instantRotation)) {
-				return instantRotation * Toolkit.Instance.parameters.GainsRotational.same;
-			}
-			return instantRotation * Toolkit.Instance.parameters.GainsRotational.opposite;
+			// Debug.Log(instantaneousRotation * Toolkit.Instance.parameters.GainsRotational.same * Time.deltaTime);
+			// Debug.Log(Mathf.Sign(Vector3.SignedAngle(Vector3.ProjectOnPlane(physicalHead.forward, Vector3.up), forwardTarget, Vector3.up)) + ", " + Mathf.Sign(instantaneousRotation));
+			// Debug.Log(Mathf.Sign(Vector3.SignedAngle(Vector3.ProjectOnPlane(physicalHead.forward, Vector3.up), forwardTarget, Vector3.up)) == Mathf.Sign(instantaneousRotation));
+			if (Mathf.Sign(Vector3.SignedAngle(Vector3.ProjectOnPlane(physicalHead.forward, Vector3.up), forwardTarget, Vector3.up)) == Mathf.Sign(instantaneousRotation))
+				return instantaneousRotation * Toolkit.Instance.parameters.GainsRotational.same * Time.deltaTime;
+			return instantaneousRotation * Toolkit.Instance.parameters.GainsRotational.opposite * Time.deltaTime;
 		}
 	}
 

@@ -26,8 +26,7 @@ namespace BG.Redirection {
 		public SteerToCenter(Transform[] targets, float radius): base(targets, radius) {}
 
 		public override Vector3 SteerTo(Transform physicalHead, Transform virtualHead) {
-			Debug.Log("Forwards: " + targets[0].position + "/" + physicalHead.position);
-			return targets[0].position - physicalHead.position;
+			return Vector3.ProjectOnPlane(targets[0].position - physicalHead.position, Vector3.up);
 		}
 	}
 

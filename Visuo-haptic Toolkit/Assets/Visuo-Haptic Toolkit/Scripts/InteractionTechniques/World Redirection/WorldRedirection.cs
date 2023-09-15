@@ -7,20 +7,20 @@ namespace BG.Redirection {
 	/// body redirection technique to use as well as the relevant parameters.
 	/// To reset redirection, set the technique enum to None.
 	/// </summary>
-	public class WorldRedirection : MonoBehaviour {
+	public class WorldRedirection : Interaction {
 
 		[SerializeField] private WRTechnique technique;
 		[SerializeField] private WorldRedirectionTechnique techniqueInstance;
 
 		[Header("User Parameters")]
-		[SerializeField] private Transform physicalHead;
-		[SerializeField] private Transform virtualHead;
+		public Transform physicalHead;
+		public Transform virtualHead;
 		private Quaternion previousOrientation;
 		private Vector3 previousPosition;
 
 		[Header("Technique Parameters")]
 		[SerializeField] private WRStrategy strategy;
-		[SerializeField] private WorldRedirectionStrategy strategyInstance;
+		public WorldRedirectionStrategy strategyInstance;
 
 		private void updateTechnique() {
 			techniqueInstance = technique switch {
@@ -52,8 +52,8 @@ namespace BG.Redirection {
 		private void Start() {
 			updateTechnique();
 
-			previousOrientation = virtualHead.rotation;
-			previousPosition = virtualHead.position;
+			previousPosition = physicalHead.position;
+			previousOrientation = physicalHead.rotation;
 		}
 
 		private void Update() {
@@ -65,8 +65,8 @@ namespace BG.Redirection {
 				techniqueInstance.Redirect(target, physicalHead, virtualHead, previousPosition, previousOrientation);
 			}
 
-			previousOrientation = virtualHead.rotation;
-			previousPosition = virtualHead.position;
+			previousPosition = physicalHead.position;
+			previousOrientation = physicalHead.rotation;
 		}
 
 		public void SetTechnique(WRTechnique t) {
