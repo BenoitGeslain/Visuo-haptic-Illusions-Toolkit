@@ -32,13 +32,13 @@ namespace BG.Redirection {
 			};
 			if (techniqueInstance is null)
 				Debug.LogError("Error Unknown Redirection technique.");
-
 		}
 
         private void Start() => init();
 
         private void Update() {
 			techniqueInstance?.Redirect(physicalTarget, virtualTarget, origin, physicalHand, virtualHand);
+			virtualHand.rotation = physicalHand.rotation;
 		}
 
 		public void setTechnique(BRTechnique t) {

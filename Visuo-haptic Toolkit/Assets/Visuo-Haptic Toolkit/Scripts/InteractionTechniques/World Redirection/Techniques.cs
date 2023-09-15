@@ -48,11 +48,12 @@ namespace BG.Redirection {
         }
 
 		public float getFrameOffset(Vector3 forwardTarget, Transform physicalHead, Transform virtualHead, Vector3 previousPosition, Quaternion previousOrientation) {
-			float rotationRate = physicalHead.eulerAngles.y - previousOrientation.eulerAngles.y;
-			if (rotationRate > 0f) {	// TODO check whether head rotation is in the same direction or opposite the redirection
-				return rotationRate * Toolkit.Instance.parameters.GainsRotational.same;
+			float instantRotation = physicalHead.eulerAngles.y - previousOrientation.eulerAngles.y;
+
+			if (Mathf.Sign(Vector3.SignedAngle(physicalHead.forward, forwardTarget, Vector3.up)) == Mathf.Sign(instantRotation)) {
+				return instantRotation * Toolkit.Instance.parameters.GainsRotational.same;
 			}
-			return rotationRate * Toolkit.Instance.parameters.GainsRotational.opposite;
+			return instantRotation * Toolkit.Instance.parameters.GainsRotational.opposite;
 		}
 	}
 
