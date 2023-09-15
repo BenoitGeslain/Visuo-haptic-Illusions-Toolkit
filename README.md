@@ -2,6 +2,11 @@
 
 TODO: Ajouter description
 
+## Dependancies
+
+- [Unity XR Plugin](https://github.com/ValveSoftware/unity-xr-plugin)
+- Text Mesh Pro
+
 ## Contribuer
 
 Nous sommes nombreux à travailler sur le projet, pour que le code soit toujours formaté de la même manière et reste facile à lire, on va utiliser le format [The One True Brace Style](https://en.wikipedia.org/wiki/Indentation_style#Variant:_1TBS_(OTBS)) pour structurer le code et le [camelCase](https://fr.wikipedia.org/wiki/Camel_case) pour nommer les variables. Le One True Brace Style n'est pas le format que Unity et VS utilisent par défaut donc essayez de faire attention. Si vous êtes sur VSCode, je peux vous montrer comment le configurer pour que ça soit le défaut.
