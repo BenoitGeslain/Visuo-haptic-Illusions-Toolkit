@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3169019813816358605}
   - component: {fileID: 2542120560557277227}
   - component: {fileID: 551704495323053107}
+  - component: {fileID: 3051798777398496832}
   m_Layer: 0
   m_Name: ToolkitWorldRedirection
   m_TagString: Untagged
@@ -49,8 +50,9 @@ MonoBehaviour:
   physicalHead: {fileID: 0}
   virtualHead: {fileID: 0}
   strategy: 0
-  physicalTarget: {fileID: 0}
-  virtualTarget: {fileID: 0}
+  strategyInstance:
+    targets: []
+    radius: 0
 --- !u!114 &551704495323053107
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,3 +67,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parameters: {fileID: 11400000, guid: c39097e50bc3898498d2edf378be3a21, type: 2}
   rootScript: {fileID: 0}
+--- !u!114 &3051798777398496832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1607897844603459841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45db99859fe1b034db2ac3a0b70b43d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
