@@ -61,7 +61,7 @@ namespace BG.Redirection {
 			if (techniqueInstance is not null && strategyInstance is not null) {
 				Vector3 target = strategyInstance.SteerTo(physicalHead, virtualHead);
 				// Debug.Log(target);
-				techniqueInstance.Redirect(target, physicalHead, virtualHead, previousPosition, previousOrientation);
+				techniqueInstance.Redirect(forwardTarget: target, physicalHead: physicalHead, virtualHead: virtualHead, previousPosition: previousPosition, previousOrientation: previousOrientation);
 			}
 
 			previousPosition = physicalHead.position;

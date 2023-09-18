@@ -21,6 +21,7 @@ namespace BG.Redirection {
 		public Transform physicalTarget;
         public Transform virtualTarget;
 
+		public Scene scene;
 
         private void updateTechnique() {
 			techniqueInstance = technique switch {
@@ -37,11 +38,14 @@ namespace BG.Redirection {
 				Debug.LogError("Error Unknown Redirection technique.");
 		}
 
-        private void Start() => updateTechnique();
+		private void Start()
+		{
+			scene = new Scene(physicalTarget, virtualTarget, origin, physicalHand, virtualHand);
+			updateTechnique();
+		}
 
         private void Update() {
 			updateTechnique();
-            var scene = new Scene(physicalTarget, virtualTarget, origin, physicalHand, virtualHand);
 			techniqueInstance?.Redirect(scene);
 			virtualHand.rotation = physicalHand.rotation;
 		}
