@@ -2,11 +2,31 @@ using UnityEngine;
 
 namespace BG.Redirection {
 
-	/// <summary>
-	///  This class is the most conceptual class of  world redirection defining the important
+    public record WorldRedirectionScene()
+    {
+        public Transform physicalHead;
+        public Transform virtualHead;
+        public Vector3 forwardTarget;
+		public Vector3 previousPosition;
+		public Quaternion previousRotation;
+
+        public WorldRedirectionScene(Transform physicalHead, Transform virtualHead, Vector3 forwardTarget): this()
+        {
+            this.physicalHead = physicalHead;
+            this.virtualHead = virtualHead;
+            this.forwardTarget = forwardTarget;
+			this.previousPosition = physicalHead.position;
+			this.previousRotation = physicalHead.rotation;
+        }
+
+		public float GetHeadToHeadDistance() => Vector3.Distance(physicalHead.position, virtualHead.position);
+    }
+
+    /// <summary>
+    ///  This class is the most conceptual class of  world redirection defining the important
     ///  functions to call: Redirect()
-	/// </summary>
-	public class WorldRedirectionTechnique {
+    /// </summary>
+    public class WorldRedirectionTechnique {
 
 		public virtual void InitRedirection() {
 			Debug.LogError("Calling Redirect() virtual method. It should be overriden");
