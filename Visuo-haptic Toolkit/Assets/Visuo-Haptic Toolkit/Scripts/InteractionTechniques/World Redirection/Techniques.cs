@@ -21,6 +21,8 @@ namespace BG.Redirection {
 		}
 
 		public float GetHeadToHeadDistance() => Vector3.Distance(physicalHead.position, virtualHead.position);
+        public float GetAngleToTarget() => Vector3.SignedAngle(Vector3.ProjectOnPlane(physicalHead.forward, Vector3.up), forwardTarget, Vector3.up);
+        public float GetInstantaneousRotation() => physicalHead.eulerAngles.y - previousRotation.eulerAngles.y;
 
         /// <summary>
         /// Applies unaltered physical head rotations to the virtual head GameObject
@@ -55,8 +57,7 @@ namespace BG.Redirection {
 
 	public class Razzaque2001OverTimeRotation: WorldRedirectionTechnique {
         public override void Redirect(WorldRedirectionScene scene) {
-			float angleToTarget = Vector3.SignedAngle(Vector3.ProjectOnPlane(scene.physicalHead.forward, Vector3.up), scene.forwardTarget, Vector3.up);
-
+			float angleToTarget = scene.GetAngleToTarget();
 			// Debug.Log(angleToTarget);
             if (Mathf.Abs(angleToTarget) > Toolkit.Instance.parameters.RotationalEpsilon) {
 				scene.virtualHead.Rotate(0f, GetFrameOffset(angleToTarget), 0f, Space.World);
@@ -72,8 +73,8 @@ namespace BG.Redirection {
 	/// </summary>
 	public class Razzaque2001Rotational: WorldRedirectionTechnique {
         public override void Redirect(WorldRedirectionScene scene) {
-			float angleToTarget = Vector3.SignedAngle(Vector3.ProjectOnPlane(scene.physicalHead.forward, Vector3.up), scene.forwardTarget, Vector3.up);
-			float instantaneousRotation = scene.physicalHead.eulerAngles.y - scene.previousRotation.eulerAngles.y;
+			float angleToTarget = scene.GetAngleToTarget();
+			float instantaneousRotation = scene.GetInstantaneousRotation();
 
 			if (Mathf.Abs(instantaneousRotation) > Toolkit.Instance.parameters.MinimumRotation) {
 				if (Mathf.Abs(angleToTarget) > Toolkit.Instance.parameters.RotationalEpsilon) {
@@ -85,11 +86,11 @@ namespace BG.Redirection {
         }
 
 		public float GetFrameOffset(WorldRedirectionScene scene) {
-			float instantaneousRotation = scene.physicalHead.eulerAngles.y - scene.previousRotation.eulerAngles.y;
+			float instantaneousRotation = scene.GetInstantaneousRotation();
 
-            return instantaneousRotation *  Mathf.Sign(Vector3.SignedAngle(Vector3.ProjectOnPlane(scene.physicalHead.forward, Vector3.up), scene.forwardTarget, Vector3.up)) == Mathf.Sign(instantaneousRotation)
+            return instantaneousRotation *  ((Mathf.Sign(scene.GetAngleToTarget()) == Mathf.Sign(instantaneousRotation))
                 ? Toolkit.Instance.parameters.GainsRotational.same
-                : Toolkit.Instance.parameters.GainsRotational.opposite;
+                : Toolkit.Instance.parameters.GainsRotational.opposite);
         }
     }
 
