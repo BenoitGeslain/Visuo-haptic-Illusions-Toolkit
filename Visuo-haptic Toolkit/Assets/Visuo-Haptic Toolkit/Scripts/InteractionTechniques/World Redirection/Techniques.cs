@@ -27,7 +27,7 @@ namespace BG.Redirection {
 		}
 
 		/// <summary>
-		/// Applies unaltered physical head rotations to the virtual
+		/// Applies unaltered physical head rotations to the virtual head GameObject
 		/// </summary>
 		/// <param name="physicalHead"></param>
 		/// <param name="virtualHead"></param>
