@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEngine.UI.Image;
 
 namespace BG.Redirection {
 
@@ -18,9 +19,10 @@ namespace BG.Redirection {
 		[Header("Technique Parameters")]
 		public Transform origin;
 		public Transform physicalTarget;
-		public Transform virtualTarget;
+        public Transform virtualTarget;
 
-		private void updateTechnique() {
+
+        private void updateTechnique() {
 			techniqueInstance = technique switch {
 				BRTechnique.None => new ResetBodyRedirection(this),
 				BRTechnique.Azmandian2016Body => new Azmandian2016Body(this),
@@ -39,8 +41,8 @@ namespace BG.Redirection {
 
         private void Update() {
 			updateTechnique();
-
-			techniqueInstance?.Redirect(physicalTarget, virtualTarget, origin, physicalHand, virtualHand);
+            var scene = new Scene(physicalTarget, virtualTarget, origin, physicalHand, virtualHand);
+			techniqueInstance?.Redirect(scene);
 			virtualHand.rotation = physicalHand.rotation;
 		}
 
