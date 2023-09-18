@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7362913123119541781}
-  - component: {fileID: 5643108254618106356}
+  - component: {fileID: 2393926079200744761}
   m_Layer: 11
   m_Name: Physical Hand Right
   m_TagString: Untagged
@@ -33,7 +33,7 @@ Transform:
   - {fileID: 3667594597280696977}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 87.454, y: 0, z: 0}
---- !u!114 &5643108254618106356
+--- !u!114 &2393926079200744761
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

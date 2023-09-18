@@ -8,7 +8,8 @@ namespace BG.Visualisation {
 
 		private static List<Color> colors;	// colors of the lines between the physical and virtual elements
 
-		private void Start() {
+		// Calling Onenable instead of Start to support recompilation during play
+		private void OnEnable() {
 			colors = new List<Color> () {
 				Color.white,	// Indicates the redirection is within the detection thresholds
 				Color.yellow	// Indicates the redirection is beyond the detection thresholds

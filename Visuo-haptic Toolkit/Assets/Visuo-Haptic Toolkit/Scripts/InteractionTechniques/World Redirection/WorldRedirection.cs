@@ -34,7 +34,6 @@ namespace BG.Redirection {
 				_ => null
 			};
 
-
 			if (techniqueInstance is null)
 				Debug.LogError("Error Unknown Redirection technique.");
 

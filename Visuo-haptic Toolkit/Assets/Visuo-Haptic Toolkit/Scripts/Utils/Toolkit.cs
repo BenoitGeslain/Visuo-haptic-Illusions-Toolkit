@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -41,12 +42,13 @@ namespace BG.Redirection {
 
 		[HideInInspector] public Interaction rootScript;
 
-		private void Awake() {
+		private void OnEnable() {
 			if (Instance != null && Instance != this) {
 				Destroy(this);
 			}
 			else {
 				Instance = this;
+				DontDestroyOnLoad(this.gameObject);
 			}
 		}
 
