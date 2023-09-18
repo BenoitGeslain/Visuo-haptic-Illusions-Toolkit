@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace BG.Redirection {
 
-    /// <summary> 
+    /// <summary>
     /// This class records the position of various objects of interest.
     /// </summary>
     /// <param name="physicalTarget">The physical target the hand should reach when the virtual hand reaches the virtual target.</param>
@@ -75,8 +75,6 @@ namespace BG.Redirection {
         public virtual void InitRedirection() {
 			Debug.LogError("Calling Redirect() virtual method. It should be overriden");
 		}
-
-
 
 		/// <summary>
 		/// This virtual function applies the redirection to the virtualHand Transform according to the other parameters and the equations
@@ -192,9 +190,6 @@ namespace BG.Redirection {
 		}
 	}
 
-
-
-
 	// Reset the redirection over a short period of time
 	public class ResetBodyRedirection: BodyRedirectionTechnique {
 
@@ -202,7 +197,7 @@ namespace BG.Redirection {
 
 		public override void Redirect(BodyRedirectionScene scene) { 
 			if (this.rootScript.IsRedirecting()) {
-				scene.virtualHand.position += Vector3.ClampMagnitude((scene.physicalHand.position - scene.virtualHand.position) * Time.deltaTime, maxLength: 0.0025f);
+				scene.virtualHand.position += Vector3.ClampMagnitude((scene.physicalHand.position - scene.virtualHand.position) * Time.deltaTime, Toolkit.Instance.parameters.resetRedirectionSpeed);
 			}
 		}
 	}

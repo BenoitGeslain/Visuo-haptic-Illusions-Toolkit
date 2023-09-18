@@ -80,6 +80,8 @@ UnityLockFile
 # vscode
 .vs*
 omnisharp*
+UnityCompileInBackground/
+UnityCompileInBackground.meta
 
 # Python
 __pycache__
