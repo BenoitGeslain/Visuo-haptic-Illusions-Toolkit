@@ -74,6 +74,9 @@ crashlytics-build.properties
 
 UnityLockFile
 
+# VS
+.editorconfig
+
 # vscode
 .vs*
 omnisharp*
@@ -81,4 +84,4 @@ omnisharp*
 # Python
 __pycache__
 
-host.txt
+XR/

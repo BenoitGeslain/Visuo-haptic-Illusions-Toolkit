@@ -28,7 +28,7 @@ namespace BG.Redirection {
 			minimumRotation = serializedObject.FindProperty("MinimumRotation");
 			smoothingFactor = serializedObject.FindProperty("SmoothingFactor");
 			walkingThreshold = serializedObject.FindProperty("WalkingThreshold");
-			overTimeRotaton = serializedObject.FindProperty ("OverTimeRotaton");
+			overTimeRotaton = serializedObject.FindProperty ("OverTimeRotation");
 			gainsTranslational = serializedObject.FindProperty("GainsTranslational");
 			gainsRotational = serializedObject.FindProperty ("GainsRotational");
 			curvatureRadius = serializedObject.FindProperty("CurvatureRadius");

@@ -29,12 +29,14 @@ namespace BG.Redirection {
 
 	public class Razzaque2001OverTimeRotation: WorldRedirectionTechnique {
         public override void Redirect(Vector3 forwardTarget, Transform physicalHead, Transform virtualHead, Vector3 previousPosition, Quaternion previousOrientation) {
-            if (Vector3.Angle(Vector3.ProjectOnPlane(physicalHead.forward, Vector3.up), forwardTarget) < Toolkit.Instance.parameters.RotationalEpsilon) {
-				virtualHead.Rotate(0f, Toolkit.Instance.parameters.OverTimeRotation, 0f);
+			float angleToTarget = Vector3.SignedAngle(Vector3.ProjectOnPlane(physicalHead.forward, Vector3.up), forwardTarget, Vector3.up);
+
+            if (Mathf.Abs(angleToTarget) > Toolkit.Instance.parameters.RotationalEpsilon) {
+				virtualHead.Rotate(0f, Mathf.Sign(angleToTarget) * Toolkit.Instance.parameters.OverTimeRotation * Time.deltaTime, 0f, Space.World);
 			}
         }
 
-        public float getFrameOffset() => Toolkit.Instance.parameters.OverTimeRotation;
+        public float GetFrameOffset() => Toolkit.Instance.parameters.OverTimeRotation;
     }
 
 	/// <summary>
@@ -42,17 +44,30 @@ namespace BG.Redirection {
 	/// </summary>
 	public class Razzaque2001Rotational: WorldRedirectionTechnique {
         public override void Redirect(Vector3 forwardTarget, Transform physicalHead, Transform virtualHead, Vector3 previousPosition, Quaternion previousOrientation) {
-            if (Vector3.Angle(Vector3.ProjectOnPlane(physicalHead.forward, Vector3.up), forwardTarget) < Toolkit.Instance.parameters.RotationalEpsilon) {
-				virtualHead.Rotate(0f, getFrameOffset(forwardTarget, physicalHead, virtualHead, previousPosition, previousOrientation), 0f);
+			float angleToTarget = Vector3.SignedAngle(Vector3.ProjectOnPlane(physicalHead.forward, Vector3.up), forwardTarget, Vector3.up);
+			float instantaneousRotation = physicalHead.eulerAngles.y - previousOrientation.eulerAngles.y;
+
+			// Debug.Log(instantaneousRotation);
+			if (Mathf.Abs(instantaneousRotation) > Vector3.kEpsilon) {
+				if (Mathf.Abs(angleToTarget) > Toolkit.Instance.parameters.RotationalEpsilon) {
+					// Debug.Log("Rotating");
+					virtualHead.Rotate(0f, GetFrameOffset(forwardTarget, physicalHead, virtualHead, previousPosition, previousOrientation), 0f);
+				}
+			} else {
+				Quaternion q = physicalHead.rotation * Quaternion.Inverse(previousOrientation);
+				virtualHead.rotation = q * virtualHead.rotation;
 			}
         }
 
-		public float getFrameOffset(Vector3 forwardTarget, Transform physicalHead, Transform virtualHead, Vector3 previousPosition, Quaternion previousOrientation) {
-			float rotationRate = physicalHead.eulerAngles.y - previousOrientation.eulerAngles.y;
-			if (rotationRate > 0f) {	// TODO check whether head rotation is in the same direction or opposite the redirection
-				return rotationRate * Toolkit.Instance.parameters.GainsRotational.same;
-			}
-			return rotationRate * Toolkit.Instance.parameters.GainsRotational.opposite;
+		public float GetFrameOffset(Vector3 forwardTarget, Transform physicalHead, Transform virtualHead, Vector3 previousPosition, Quaternion previousOrientation) {
+			float instantaneousRotation = physicalHead.eulerAngles.y - previousOrientation.eulerAngles.y;
+
+			// Debug.Log(instantaneousRotation * Toolkit.Instance.parameters.GainsRotational.same * Time.deltaTime);
+			// Debug.Log(Mathf.Sign(Vector3.SignedAngle(Vector3.ProjectOnPlane(physicalHead.forward, Vector3.up), forwardTarget, Vector3.up)) + ", " + Mathf.Sign(instantaneousRotation));
+			// Debug.Log(Mathf.Sign(Vector3.SignedAngle(Vector3.ProjectOnPlane(physicalHead.forward, Vector3.up), forwardTarget, Vector3.up)) == Mathf.Sign(instantaneousRotation));
+			if (Mathf.Sign(Vector3.SignedAngle(Vector3.ProjectOnPlane(physicalHead.forward, Vector3.up), forwardTarget, Vector3.up)) == Mathf.Sign(instantaneousRotation))
+				return instantaneousRotation * Toolkit.Instance.parameters.GainsRotational.same * Time.deltaTime;
+			return instantaneousRotation * Toolkit.Instance.parameters.GainsRotational.opposite * Time.deltaTime;
 		}
 	}
 
@@ -61,7 +76,7 @@ namespace BG.Redirection {
 			Debug.Log("Method not implemented yet.");
         }
 
-		public void getFrameOffset() {
+		public void GetFrameOffset() {
 
 		}
 	}

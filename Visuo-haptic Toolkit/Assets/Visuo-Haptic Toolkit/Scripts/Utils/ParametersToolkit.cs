@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace BG.Redirection {
 	[CreateAssetMenu(fileName = "Data", menuName = "VR Toolkit/Interaction Techniques Parameters", order = 1)]
-	public class ParametersToolkit : ScriptableObject {
+	public class ParametersToolkit: ScriptableObject {
 
 		[Header("Body Warping")]
 		[Tooltip("The detection thresholds measured by Zenner et al., 2019 also called Just Noticeable Difference or Intervals of Non-detection. The coordinate system is that of Unity, i.e. X: Letf/Right, Y: Up/Down, Z: Forward/Backward. Values are in degrees.")]

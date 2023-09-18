@@ -20,7 +20,7 @@ namespace BG.Redirection {
 		public Transform physicalTarget;
 		public Transform virtualTarget;
 
-		private void init() {
+		private void updateTechnique() {
 			techniqueInstance = technique switch {
 				BRTechnique.None => new ResetBodyRedirection(this),
 				BRTechnique.Azmandian2016Body => new Azmandian2016Body(this),
@@ -30,26 +30,29 @@ namespace BG.Redirection {
 				BRTechnique.Geslain2022Polynom => new Geslain2022Polynom(this, techniqueInstance.redirectionLateness, techniqueInstance.controlPoint),
 				_ => null
 			};
+
 			if (techniqueInstance is null)
 				Debug.LogError("Error Unknown Redirection technique.");
-
 		}
 
-        private void Start() => init();
+        private void Start() => updateTechnique();
 
         private void Update() {
+			updateTechnique();
+
 			techniqueInstance?.Redirect(physicalTarget, virtualTarget, origin, physicalHand, virtualHand);
+			virtualHand.rotation = physicalHand.rotation;
 		}
 
-		public void setTechnique(BRTechnique t) {
+		public void SetTechnique(BRTechnique t) {
 			technique = t;
-			init();
+			updateTechnique();
 		}
 
-        public BRTechnique getTechnique(BRTechnique t) => technique;
+        public void ResetRedirection() => SetTechnique(BRTechnique.None);
+
+        public BRTechnique GetTechnique(BRTechnique t) => technique;
 
         public bool IsRedirecting() => Vector3.Distance(physicalHand.position, virtualHand.position) > Vector3.kEpsilon;
-
-        public void resetRedirection() => setTechnique(BRTechnique.None);
     }
 }
