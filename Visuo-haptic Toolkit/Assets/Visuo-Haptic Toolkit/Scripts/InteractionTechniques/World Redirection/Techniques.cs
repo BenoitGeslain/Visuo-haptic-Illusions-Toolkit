@@ -26,6 +26,12 @@ namespace BG.Redirection {
 			Debug.LogError("Calling Redirect() virtual method. It should be overriden");
 		}
 
+		/// <summary>
+		/// Applies unaltered physical head rotations to the virtual
+		/// </summary>
+		/// <param name="physicalHead"></param>
+		/// <param name="virtualHead"></param>
+		/// <param name="previousOrientation"></param>
 		protected void copyHeadRotations(Transform physicalHead, Transform virtualHead, Quaternion previousOrientation) {
 			Quaternion q = physicalHead.rotation * Quaternion.Inverse(previousOrientation);
 			virtualHead.rotation = q * virtualHead.rotation;
