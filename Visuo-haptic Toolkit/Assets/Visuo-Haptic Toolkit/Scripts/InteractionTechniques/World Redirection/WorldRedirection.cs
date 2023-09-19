@@ -18,6 +18,8 @@ namespace BG.Redirection {
 		private Quaternion previousOrientation;
 		private Vector3 previousPosition;
 
+		public WorldRedirectionScene scene;
+
 		[Header("Technique Parameters")]
 		public WRStrategy strategy;
 		public WorldRedirectionStrategy strategyInstance;
@@ -49,23 +51,20 @@ namespace BG.Redirection {
 		}
 
 		private void Start() {
+			scene = new WorldRedirectionScene(physicalHead: physicalHead, virtualHead: virtualHead, forwardTarget: Vector3.one);
 			updateTechnique();
-
-			previousPosition = physicalHead.position;
-			previousOrientation = physicalHead.rotation;
 		}
 
 		private void Update() {
 			updateTechnique();
 
 			if (techniqueInstance is not null && strategyInstance is not null) {
-				Vector3 target = strategyInstance.SteerTo(physicalHead, virtualHead);
-				// Debug.Log(target);
-				techniqueInstance.Redirect(forwardTarget: target, physicalHead: physicalHead, virtualHead: virtualHead, previousPosition: previousPosition, previousOrientation: previousOrientation);
+				scene.forwardTarget = strategyInstance.SteerTo(scene.physicalHead, scene.virtualHead);
+				techniqueInstance.Redirect(scene);
 			}
 
-			previousPosition = physicalHead.position;
-			previousOrientation = physicalHead.rotation;
+			scene.previousPosition = scene.physicalHead.position;
+			scene.previousRotation = scene.physicalHead.rotation;
 		}
 
 		public void SetTechnique(WRTechnique t) {
@@ -78,8 +77,8 @@ namespace BG.Redirection {
 		public WRTechnique GetTechnique() => technique;
 
 		public bool IsRedirecting() {
-			return Vector3.Distance(physicalHead.position, virtualHead.position) < Vector3.kEpsilon &&
-				   Quaternion.Angle(physicalHead.rotation, virtualHead.rotation) < Vector3.kEpsilon;
+			return scene.GetHeadToHeadDistance() < Vector3.kEpsilon &&
+				   Quaternion.Angle(scene.physicalHead.rotation, scene.virtualHead.rotation) < Vector3.kEpsilon;
 		}
 	}
 }

@@ -1,13 +1,44 @@
+using TMPro;
 using UnityEditor;
 using UnityEngine;
 
 namespace BG.Redirection {
 
-	/// <summary>
-	///  This class is the most conceptual class of  world redirection defining the important
+	public record WorldRedirectionScene()
+	{
+		public Transform physicalHead;
+		public Transform virtualHead;
+		public Vector3 forwardTarget;
+		public Vector3 previousPosition;
+		public Quaternion previousRotation;
+
+		public WorldRedirectionScene(Transform physicalHead, Transform virtualHead, Vector3 forwardTarget) : this()
+		{
+			this.physicalHead = physicalHead;
+			this.virtualHead = virtualHead;
+			this.forwardTarget = forwardTarget;
+			this.previousPosition = physicalHead.position;
+			this.previousRotation = physicalHead.rotation;
+		}
+
+		public float GetHeadToHeadDistance() => Vector3.Distance(physicalHead.position, virtualHead.position);
+        public float GetAngleToTarget() => Vector3.SignedAngle(Vector3.ProjectOnPlane(physicalHead.forward, Vector3.up), forwardTarget, Vector3.up);
+        public float GetInstantaneousRotation() => physicalHead.eulerAngles.y - previousRotation.eulerAngles.y;
+
+        /// <summary>
+        /// Applies unaltered physical head rotations to the virtual head GameObject
+        /// </summary>
+        public void copyHeadRotations() {
+			Quaternion q = this.physicalHead.rotation * Quaternion.Inverse(this.previousRotation);
+			this.virtualHead.rotation = q * this.virtualHead.rotation;
+		}
+    }
+
+    /// <summary>
+    ///  This class is the most conceptual class of  world redirection defining the important
     ///  functions to call: Redirect()
-	/// </summary>
-	public class WorldRedirectionTechnique {
+    /// </summary>
+    public class WorldRedirectionTechnique {
 
 		public virtual void InitRedirection() {
 			Debug.LogError("Calling Redirect() virtual method. It should be overriden");
@@ -16,37 +47,23 @@ namespace BG.Redirection {
 		/// <summary>
 		/// Redirects the user towards the actual target. Should be overriden in subclasses.
 		/// </summary>
-		/// <param name="forwardTarget">MUST be colinear with horizontal plane</param>
-		/// <param name="physicalHead"></param>
-		/// <param name="virtualHead"></param>
-		public virtual void Redirect(Vector3 forwardTarget, Transform physicalHead, Transform virtualHead, Vector3 previousPosition, Quaternion previousOrientation) {
+		public virtual void Redirect(WorldRedirectionScene scene) {
 			Debug.LogError("Calling Redirect() virtual method. It should be overriden");
 		}
 
 		public virtual void EndRedirection() {
 			Debug.LogError("Calling Redirect() virtual method. It should be overriden");
 		}
-
-		/// <summary>
-		/// Applies unaltered physical head rotations to the virtual head GameObject
-		/// </summary>
-		/// <param name="physicalHead"></param>
-		/// <param name="virtualHead"></param>
-		/// <param name="previousOrientation"></param>
-		protected void copyHeadRotations(Transform physicalHead, Transform virtualHead, Quaternion previousOrientation) {
-			Quaternion q = physicalHead.rotation * Quaternion.Inverse(previousOrientation);
-			virtualHead.rotation = q * virtualHead.rotation;
-		}
 	}
 
 	public class Razzaque2001OverTimeRotation: WorldRedirectionTechnique {
-        public override void Redirect(Vector3 forwardTarget, Transform physicalHead, Transform virtualHead, Vector3 previousPosition, Quaternion previousOrientation) {
-			copyHeadRotations(physicalHead, virtualHead, previousOrientation);
-			virtualHead.Rotate(0f, GetFrameOffset(forwardTarget, physicalHead, virtualHead, previousPosition, previousOrientation), 0f, Space.World);
+        public override void Redirect(WorldRedirectionScene scene) {
+			scene.copyHeadRotations();
+			scene.virtualHead.Rotate(0f, GetFrameOffset(scene), 0f, Space.World);
         }
 
-        public static float GetFrameOffset(Vector3 forwardTarget, Transform physicalHead, Transform virtualHead, Vector3 previousPosition, Quaternion previousOrientation) {
-			float angleToTarget = Vector3.SignedAngle(Vector3.ProjectOnPlane(physicalHead.forward, Vector3.up), forwardTarget, Vector3.up);
+        public static float GetFrameOffset(WorldRedirectionScene scene) {
+			float angleToTarget = scene.GetAngleToTarget();
 
             if (Mathf.Abs(angleToTarget) > Toolkit.Instance.parameters.RotationalEpsilon) {
 				return Mathf.Sign(angleToTarget) * Toolkit.Instance.parameters.OverTimeRotation * Time.deltaTime;
@@ -59,20 +76,19 @@ namespace BG.Redirection {
 	/// Class for rotating the world around the user by an amount proportional to their angular speed.
 	/// </summary>
 	public class Razzaque2001Rotational: WorldRedirectionTechnique {
-        public override void Redirect(Vector3 forwardTarget, Transform physicalHead, Transform virtualHead, Vector3 previousPosition, Quaternion previousOrientation) {
-			copyHeadRotations(physicalHead, virtualHead, previousOrientation);
-			virtualHead.Rotate(0f, GetFrameOffset(forwardTarget, physicalHead, virtualHead, previousPosition, previousOrientation), 0f);
+		public override void Redirect(WorldRedirectionScene scene) {
+			scene.copyHeadRotations();
+			scene.virtualHead.Rotate(0f, GetFrameOffset(scene), 0f);
         }
 
-		public static float GetFrameOffset(Vector3 forwardTarget, Transform physicalHead, Transform virtualHead, Vector3 previousPosition, Quaternion previousOrientation) {
-			float angleToTarget = Vector3.SignedAngle(Vector3.ProjectOnPlane(physicalHead.forward, Vector3.up), forwardTarget, Vector3.up);
-			float instantRotation = physicalHead.eulerAngles.y - previousOrientation.eulerAngles.y;
+		public static float GetFrameOffset(WorldRedirectionScene scene) {
+			float angleToTarget = scene.GetAngleToTarget();
+			float instantRotation = scene.GetInstantaneousRotation();
 
 			if (Mathf.Abs(instantRotation) > Toolkit.Instance.parameters.MinimumRotation && Mathf.Abs(angleToTarget) > Toolkit.Instance.parameters.RotationalEpsilon) {
-				if (Mathf.Sign(Vector3.SignedAngle(Vector3.ProjectOnPlane(physicalHead.forward, Vector3.up), forwardTarget, Vector3.up)) == Mathf.Sign(instantRotation)) {
-					return instantRotation * (Toolkit.Instance.parameters.GainsRotational.same - 1);
-				}
-				return instantRotation * (Toolkit.Instance.parameters.GainsRotational.opposite - 1);
+				return instantRotation *  ((Mathf.Sign(scene.GetAngleToTarget()) == Mathf.Sign(instantRotation))
+                ? Toolkit.Instance.parameters.GainsRotational.same
+                : Toolkit.Instance.parameters.GainsRotational.opposite);
 			}
 			return 0f;
 		}
@@ -82,14 +98,14 @@ namespace BG.Redirection {
 	/// Class for rotating the world around the user by an amount proportional to their linear velocity.
 	/// </summary>
 	public class Razzaque2001Curvature: WorldRedirectionTechnique {
-        public override void Redirect(Vector3 forwardTarget, Transform physicalHead, Transform virtualHead, Vector3 previousPosition, Quaternion previousOrientation) {
-			copyHeadRotations(physicalHead, virtualHead, previousOrientation);
-			virtualHead.Rotate(0f, GetFrameOffset(forwardTarget, physicalHead, virtualHead, previousPosition, previousOrientation), 0f);
+        public override void Redirect(WorldRedirectionScene scene) {
+			scene.copyHeadRotations();
+			scene.virtualHead.Rotate(0f, GetFrameOffset(scene), 0f);
         }
 
-		public static float GetFrameOffset(Vector3 forwardTarget, Transform physicalHead, Transform virtualHead, Vector3 previousPosition, Quaternion previousOrientation) {
-			float angleToTarget = Vector3.SignedAngle(Vector3.ProjectOnPlane(physicalHead.forward, Vector3.up), forwardTarget, Vector3.up);
-			float instantTranslation = Vector3.Project(physicalHead.position - previousPosition, physicalHead.forward).magnitude;
+		public static float GetFrameOffset(WorldRedirectionScene scene) {
+			float angleToTarget = scene.GetAngleToTarget();
+			float instantTranslation = Vector3.Project(scene.physicalHead.position - scene.previousPosition, scene.physicalHead.forward).magnitude;
 
 			if (instantTranslation > Toolkit.Instance.parameters.WalkingThreshold) {
 				return Mathf.Sign(angleToTarget) * instantTranslation * Toolkit.Instance.CurvatureRadiusToRotationRate();
@@ -99,26 +115,26 @@ namespace BG.Redirection {
 	}
 
 	public class Steinicke2008Translational: WorldRedirectionTechnique {
-        public override void Redirect(Vector3 forwardTarget, Transform physicalHead, Transform virtualHead, Vector3 previousPosition, Quaternion previousOrientation) {
+        public override void Redirect(WorldRedirectionScene scene) {
             Debug.Log("Method not implemented yet.");
         }
 	}
 
 	public class Razzaque2001Hybrid: WorldRedirectionTechnique {
-        public override void Redirect(Vector3 forwardTarget, Transform physicalHead, Transform virtualHead, Vector3 previousPosition, Quaternion previousOrientation) {
+        public override void Redirect(WorldRedirectionScene scene) {
             float angle = Mathf.Max(
-				Razzaque2001OverTimeRotation.GetFrameOffset(forwardTarget, physicalHead, virtualHead, previousPosition, previousOrientation),
-				Razzaque2001Rotational.GetFrameOffset(forwardTarget, physicalHead, virtualHead, previousPosition, previousOrientation),
-				Razzaque2001Curvature.GetFrameOffset(forwardTarget, physicalHead, virtualHead, previousPosition, previousOrientation)
+				Razzaque2001OverTimeRotation.GetFrameOffset(scene),
+				Razzaque2001Rotational.GetFrameOffset(scene),
+				Razzaque2001Curvature.GetFrameOffset(scene)
 			);
 
-			copyHeadRotations(physicalHead, virtualHead, previousOrientation);
-			virtualHead.Rotate(0f, angle, 0f);
+			scene.copyHeadRotations();
+			scene.virtualHead.Rotate(0f, angle, 0f);
         }
 	}
 
 	public class Azmandian2016World: WorldRedirectionTechnique {
-        public override void Redirect(Vector3 forwardTarget, Transform physicalHead, Transform virtualHead, Vector3 previousPosition, Quaternion previousOrientation) {
+        public override void Redirect(WorldRedirectionScene scene) {
             Debug.Log("Method not implemented yet.");
         }
 	}
@@ -126,7 +142,7 @@ namespace BG.Redirection {
 
 
 	public class ResetWorldRedirection: WorldRedirectionTechnique {
-        public override void Redirect(Vector3 forwardTarget, Transform physicalHead, Transform virtualHead, Vector3 previousPosition, Quaternion previousOrientation) {
+        public override void Redirect(WorldRedirectionScene scene) {
             Debug.Log("Method not implemented yet.");
         }
     }

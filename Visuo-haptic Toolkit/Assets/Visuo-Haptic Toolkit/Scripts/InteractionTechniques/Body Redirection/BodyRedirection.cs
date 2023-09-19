@@ -21,7 +21,7 @@ namespace BG.Redirection {
 		public Transform physicalTarget;
         public Transform virtualTarget;
 
-		public Scene scene;
+		public BodyRedirectionScene scene;
 
         private void updateTechnique() {
 			techniqueInstance = technique switch {
@@ -40,14 +40,14 @@ namespace BG.Redirection {
 
 		private void Start()
 		{
-			scene = new Scene(physicalTarget, virtualTarget, origin, physicalHand, virtualHand);
+			scene = new BodyRedirectionScene(physicalTarget, virtualTarget, origin, physicalHand, virtualHand);
 			updateTechnique();
 		}
 
         private void Update() {
 			updateTechnique();
 			techniqueInstance?.Redirect(scene);
-			virtualHand.rotation = physicalHand.rotation;
+			scene.virtualHand.rotation = scene.physicalHand.rotation;
 		}
 
 		public void SetTechnique(BRTechnique t) {
@@ -59,6 +59,6 @@ namespace BG.Redirection {
 
         public BRTechnique GetTechnique(BRTechnique t) => technique;
 
-        public bool IsRedirecting() => Vector3.Distance(physicalHand.position, virtualHand.position) > Vector3.kEpsilon;
+        public bool IsRedirecting() => scene.GetHandRedirectionDistance() > Vector3.kEpsilon;
     }
 }
