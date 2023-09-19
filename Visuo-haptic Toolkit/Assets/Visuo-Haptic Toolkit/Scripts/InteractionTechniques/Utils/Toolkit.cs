@@ -54,12 +54,8 @@ namespace BG.Redirection {
 
         private void Start() => rootScript = this.gameObject.GetComponent<Interaction>();
 
-		public float CurvatureRadiusToRotationRate() {
-			return 360f / (2 * Mathf.PI * parameters.CurvatureRadius);
-		}
+        public float CurvatureRadiusToRotationRate() => 360f / (2 * Mathf.PI * parameters.CurvatureRadius);
 
-		public float CurvatureRadiusToRotationRate(float radius) {
-			return 360f / (2 * Mathf.PI * radius);
-		}
+        public float CurvatureRadiusToRotationRate(float radius) => 360f / (2 * Mathf.PI * radius);
     }
 }

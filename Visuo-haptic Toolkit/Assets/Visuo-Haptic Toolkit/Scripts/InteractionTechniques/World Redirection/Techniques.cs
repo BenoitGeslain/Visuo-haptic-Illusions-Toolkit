@@ -29,9 +29,15 @@ namespace BG.Redirection {
         /// Applies unaltered physical head rotations to the virtual head GameObject
         /// </summary>
         public void copyHeadRotations() {
-			Quaternion q = this.physicalHead.rotation * Quaternion.Inverse(this.previousRotation);
-			this.virtualHead.rotation = q * this.virtualHead.rotation;
+            virtualHead.rotation = physicalHead.rotation * Quaternion.Inverse(previousRotation) * virtualHead.rotation;
 		}
+		/// <summary>
+		/// Rotate the virtual head by the given amount of degrees around the world's y axis
+		/// </summary>
+		public void RotateVirtualHeadY(float degrees)
+		{
+            virtualHead.Rotate(xAngle: 0f, yAngle: degrees, zAngle: 0f, relativeTo: Space.World);
+        }
     }
 
     /// <summary>
@@ -86,9 +92,9 @@ namespace BG.Redirection {
 			float instantRotation = scene.GetInstantaneousRotation();
 
 			if (Mathf.Abs(instantRotation) > Toolkit.Instance.parameters.MinimumRotation && Mathf.Abs(angleToTarget) > Toolkit.Instance.parameters.RotationalEpsilon) {
-				return instantRotation *  ((Mathf.Sign(scene.GetAngleToTarget()) == Mathf.Sign(instantRotation))
-                ? Toolkit.Instance.parameters.GainsRotational.same
-                : Toolkit.Instance.parameters.GainsRotational.opposite);
+				return instantRotation * ((Mathf.Sign(scene.GetAngleToTarget()) == Mathf.Sign(instantRotation))
+					? Toolkit.Instance.parameters.GainsRotational.same
+					: Toolkit.Instance.parameters.GainsRotational.opposite);
 			}
 			return 0f;
 		}

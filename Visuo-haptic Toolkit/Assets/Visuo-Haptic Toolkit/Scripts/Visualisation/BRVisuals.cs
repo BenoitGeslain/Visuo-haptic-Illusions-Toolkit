@@ -35,19 +35,15 @@ namespace BG.Visualisation {
 		/// <param name="rootScript"></param>
 		private void drawThresholdLines(Vector3 obj1, Vector3 obj2, BodyRedirection rootScript) {
 			// Computes the euler angles from the rotation matrix from obj1 to obj2 around the origin
-			Vector3 d = Quaternion.FromToRotation(rootScript.origin.position - obj1,
-												  rootScript.origin.position - obj2).eulerAngles;
-			Color c;
-			// Compares the euler angles against the thresholds and applies the correct color
-			if (Mathf.Min(d.x, 360-d.x) < Toolkit.Instance.parameters.MaxAngles.x &&
-				Mathf.Min(d.y, 360-d.y) < Toolkit.Instance.parameters.MaxAngles.y &&
-				Mathf.Min(d.z, 360-d.z) < Toolkit.Instance.parameters.MaxAngles.z) {
-				c = colors[0];
-			} else {
-				c = colors[1];
-			}
+			Vector3 d = Quaternion.FromToRotation(rootScript.origin.position - obj1, rootScript.origin.position - obj2).eulerAngles;
+           // Compares the euler angles against the thresholds and applies the correct color
+		  	Color c = Mathf.Min(d.x, 360-d.x) < Toolkit.Instance.parameters.MaxAngles.x &&
+                Mathf.Min(d.y, 360-d.y) < Toolkit.Instance.parameters.MaxAngles.y &&
+                Mathf.Min(d.z, 360-d.z) < Toolkit.Instance.parameters.MaxAngles.z
+                ? colors[0]
+                : colors[1];
 
-			Debug.DrawLine(obj1, obj2, c);
+            Debug.DrawLine(obj1, obj2, c);
 		}
 	}
 }
