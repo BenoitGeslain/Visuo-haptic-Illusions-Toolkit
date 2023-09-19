@@ -31,6 +31,14 @@ namespace BG.Redirection {
         public void CopyHeadRotations() {
             virtualHead.rotation = physicalHead.rotation * Quaternion.Inverse(previousRotation) * virtualHead.rotation;
 		}
+
+        /// <summary>
+        /// Applies unaltered physical head rotations to the virtual head GameObject
+        /// </summary>
+        public void CopyHeadTranslations() {
+            virtualHead.position += physicalHead.position - previousPosition;
+		}
+
 		/// <summary>
 		/// Rotate the virtual head by the given amount of degrees around the world's y axis
 		/// </summary>
@@ -65,6 +73,7 @@ namespace BG.Redirection {
 	public class Razzaque2001OverTimeRotation: WorldRedirectionTechnique {
         public override void Redirect(WorldRedirectionScene scene) {
 			scene.CopyHeadRotations();
+			scene.CopyHeadTranslations();
 			scene.virtualHead.Rotate(0f, GetFrameOffset(scene), 0f, Space.World);
         }
 
@@ -85,6 +94,7 @@ namespace BG.Redirection {
 		public override void Redirect(WorldRedirectionScene scene) {
 			scene.CopyHeadRotations();
 			scene.RotateVirtualHeadY(GetFrameOffset(scene));
+			scene.CopyHeadTranslations();
         }
 
 		public static float GetFrameOffset(WorldRedirectionScene scene) {
@@ -107,6 +117,7 @@ namespace BG.Redirection {
         public override void Redirect(WorldRedirectionScene scene) {
 			scene.CopyHeadRotations();
 			scene.RotateVirtualHeadY(GetFrameOffset(scene));
+			scene.CopyHeadTranslations();
         }
 
 		public static float GetFrameOffset(WorldRedirectionScene scene) {
@@ -136,6 +147,7 @@ namespace BG.Redirection {
 
 			scene.CopyHeadRotations();
 			scene.RotateVirtualHeadY(angle);
+			scene.CopyHeadTranslations();
         }
 	}
 
