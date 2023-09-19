@@ -28,9 +28,15 @@ namespace BG.Redirection {
         /// Applies unaltered physical head rotations to the virtual head GameObject
         /// </summary>
         public void copyHeadRotations() {
-			Quaternion q = this.physicalHead.rotation * Quaternion.Inverse(this.previousRotation);
-			this.virtualHead.rotation = q * this.virtualHead.rotation;
+            virtualHead.rotation = physicalHead.rotation * Quaternion.Inverse(previousRotation) * virtualHead.rotation;
 		}
+		/// <summary>
+		/// Rotate the virtual head by the given amount of degrees around the world's y axis
+		/// </summary>
+		public void RotateVirtualHeadY(float degrees)
+		{
+            virtualHead.Rotate(xAngle: 0f, yAngle: degrees, zAngle: 0f, relativeTo: Space.World);
+        }
     }
 
     /// <summary>
@@ -58,9 +64,8 @@ namespace BG.Redirection {
 	public class Razzaque2001OverTimeRotation: WorldRedirectionTechnique {
         public override void Redirect(WorldRedirectionScene scene) {
 			float angleToTarget = scene.GetAngleToTarget();
-			// Debug.Log(angleToTarget);
             if (Mathf.Abs(angleToTarget) > Toolkit.Instance.parameters.RotationalEpsilon) {
-				scene.virtualHead.Rotate(0f, GetFrameOffset(angleToTarget), 0f, Space.World);
+				scene.RotateVirtualHeadY(GetFrameOffset(angleToTarget));
 			}
 			scene.copyHeadRotations();
         }
@@ -73,13 +78,11 @@ namespace BG.Redirection {
 	/// </summary>
 	public class Razzaque2001Rotational: WorldRedirectionTechnique {
         public override void Redirect(WorldRedirectionScene scene) {
-			float angleToTarget = scene.GetAngleToTarget();
-			float instantaneousRotation = scene.GetInstantaneousRotation();
 
-			if (Mathf.Abs(instantaneousRotation) > Toolkit.Instance.parameters.MinimumRotation) {
-				if (Mathf.Abs(angleToTarget) > Toolkit.Instance.parameters.RotationalEpsilon) {
-					scene.virtualHead.Rotate(0f, GetFrameOffset(scene), 0f);
-				}
+            if (Mathf.Abs(scene.GetInstantaneousRotation()) > Toolkit.Instance.parameters.MinimumRotation) {
+				if (Mathf.Abs(scene.GetAngleToTarget()) > Toolkit.Instance.parameters.RotationalEpsilon) {
+                    scene.RotateVirtualHeadY(GetFrameOffset(scene));
+                }
 			} else {
 				scene.copyHeadRotations();
 			}
@@ -88,7 +91,7 @@ namespace BG.Redirection {
 		public float GetFrameOffset(WorldRedirectionScene scene) {
 			float instantaneousRotation = scene.GetInstantaneousRotation();
 
-            return instantaneousRotation *  ((Mathf.Sign(scene.GetAngleToTarget()) == Mathf.Sign(instantaneousRotation))
+            return instantaneousRotation * ((Mathf.Sign(scene.GetAngleToTarget()) == Mathf.Sign(instantaneousRotation))
                 ? Toolkit.Instance.parameters.GainsRotational.same
                 : Toolkit.Instance.parameters.GainsRotational.opposite);
         }

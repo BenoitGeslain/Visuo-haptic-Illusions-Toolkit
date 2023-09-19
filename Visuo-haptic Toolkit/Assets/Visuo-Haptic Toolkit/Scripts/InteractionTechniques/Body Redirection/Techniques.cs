@@ -30,11 +30,11 @@ namespace BG.Redirection {
             this.physicalHand = physicalHand;
             this.virtualHand = virtualHand;
         }
-		/// <summary>
-		/// Distance between the user's real and virtual hands.
-		/// </summary>
-		/// <returns></returns>
-		public float GetHandRedirectionDistance() => Vector3.Distance(physicalHand.position, virtualHand.position);
+        /// <summary>
+        /// Distance between the user's real and virtual hands.
+        /// </summary>
+        /// <returns></returns>
+        public float GetHandRedirectionDistance() => Vector3.Distance(physicalHand.position, virtualHand.position);
 		/// <summary>
 		/// Distance between the user's real hand and the physical target.
 		/// </summary>
@@ -180,7 +180,7 @@ namespace BG.Redirection {
 			// f(d) = a_0 + a_1 * d + a_2 * d^2,
 			// with limit conditions f(0) = 1 (hence a_0 = 1) and f(D) = 0, where D is the origin - real target distance
 			// (hence a_1 * D = 1 - a_2 * D^2).
-			// The input parameter redirectionLateness is - a2 * D^2
+			// The input parameter redirectionLateness is a2 * D^2
 			float D = Vector3.Distance(scene.physicalTarget.position, scene.origin.position);
 			float a2 = this.redirectionLateness / (D * D);
             float[] coeffsByIncreasingPower = { 1f, -1f / D - a2 * D, a2 };

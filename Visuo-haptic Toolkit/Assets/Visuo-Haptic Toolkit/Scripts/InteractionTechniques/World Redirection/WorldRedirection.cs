@@ -15,10 +15,7 @@ namespace BG.Redirection {
 		[Header("User Parameters")]
 		public Transform physicalHead;
 		public Transform virtualHead;
-		private Quaternion previousOrientation;
-		private Vector3 previousPosition;
-
-		public WorldRedirectionScene scene;
+        public WorldRedirectionScene scene;
 
 		[Header("Technique Parameters")]
 		[SerializeField] private WRStrategy strategy;
@@ -76,9 +73,7 @@ namespace BG.Redirection {
 
 		public WRTechnique GetTechnique(WRTechnique t) => technique;
 
-		public bool IsRedirecting() {
-			return scene.GetHeadToHeadDistance() < Vector3.kEpsilon &&
-				   Quaternion.Angle(scene.physicalHead.rotation, scene.virtualHead.rotation) < Vector3.kEpsilon;
-		}
-	}
+        public bool IsRedirecting() => scene.GetHeadToHeadDistance() < Vector3.kEpsilon &&
+                   Quaternion.Angle(scene.physicalHead.rotation, scene.virtualHead.rotation) < Vector3.kEpsilon;
+    }
 }

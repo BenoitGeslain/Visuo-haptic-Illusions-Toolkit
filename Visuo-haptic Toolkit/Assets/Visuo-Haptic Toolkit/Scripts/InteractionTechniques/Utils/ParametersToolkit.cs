@@ -14,6 +14,7 @@ namespace BG.Redirection {
 		public float resetRedirectionSpeed = 0.001f;
 
 		[Header("World Warping")]
+        [Range(0, 360)]
 		[Tooltip("The error in rotation where users are considered to be in the correct direction. Value is in °.")]
 		public float RotationalEpsilon = 1f;
 		[Tooltip("The minimum head rotation required to apply a world redirection. Value is in °/s.")]
