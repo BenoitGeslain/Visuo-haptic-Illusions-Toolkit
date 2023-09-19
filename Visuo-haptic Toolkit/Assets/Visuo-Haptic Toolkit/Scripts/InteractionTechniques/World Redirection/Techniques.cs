@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 namespace BG.Redirection {
@@ -40,52 +41,60 @@ namespace BG.Redirection {
 
 	public class Razzaque2001OverTimeRotation: WorldRedirectionTechnique {
         public override void Redirect(Vector3 forwardTarget, Transform physicalHead, Transform virtualHead, Vector3 previousPosition, Quaternion previousOrientation) {
-			float angleToTarget = Vector3.SignedAngle(Vector3.ProjectOnPlane(physicalHead.forward, Vector3.up), forwardTarget, Vector3.up);
-
-			// Debug.Log(angleToTarget);
-            if (Mathf.Abs(angleToTarget) > Toolkit.Instance.parameters.RotationalEpsilon) {
-				virtualHead.Rotate(0f, GetFrameOffset(angleToTarget), 0f, Space.World);
-			}
 			copyHeadRotations(physicalHead, virtualHead, previousOrientation);
+			virtualHead.Rotate(0f, GetFrameOffset(forwardTarget, physicalHead, virtualHead, previousPosition, previousOrientation), 0f, Space.World);
         }
 
-        public float GetFrameOffset(float angleToTarget) => Mathf.Sign(angleToTarget) * Toolkit.Instance.parameters.OverTimeRotation * Time.deltaTime;
+        public static float GetFrameOffset(Vector3 forwardTarget, Transform physicalHead, Transform virtualHead, Vector3 previousPosition, Quaternion previousOrientation) {
+			float angleToTarget = Vector3.SignedAngle(Vector3.ProjectOnPlane(physicalHead.forward, Vector3.up), forwardTarget, Vector3.up);
+
+            if (Mathf.Abs(angleToTarget) > Toolkit.Instance.parameters.RotationalEpsilon) {
+				return Mathf.Sign(angleToTarget) * Toolkit.Instance.parameters.OverTimeRotation * Time.deltaTime;
+			}
+			return 0f;
+		}
     }
 
 	/// <summary>
-	/// Class for rotating the world around the user by an amount proportional to her angular speed.
+	/// Class for rotating the world around the user by an amount proportional to their angular speed.
 	/// </summary>
 	public class Razzaque2001Rotational: WorldRedirectionTechnique {
         public override void Redirect(Vector3 forwardTarget, Transform physicalHead, Transform virtualHead, Vector3 previousPosition, Quaternion previousOrientation) {
-			float angleToTarget = Vector3.SignedAngle(Vector3.ProjectOnPlane(physicalHead.forward, Vector3.up), forwardTarget, Vector3.up);
-			float instantaneousRotation = physicalHead.eulerAngles.y - previousOrientation.eulerAngles.y;
-
-			if (Mathf.Abs(instantaneousRotation) > Toolkit.Instance.parameters.MinimumRotation) {
-				if (Mathf.Abs(angleToTarget) > Toolkit.Instance.parameters.RotationalEpsilon) {
-					virtualHead.Rotate(0f, GetFrameOffset(forwardTarget, physicalHead, virtualHead, previousPosition, previousOrientation), 0f);
-				}
-			} else {
-				copyHeadRotations(physicalHead, virtualHead, previousOrientation);
-			}
+			copyHeadRotations(physicalHead, virtualHead, previousOrientation);
+			virtualHead.Rotate(0f, GetFrameOffset(forwardTarget, physicalHead, virtualHead, previousPosition, previousOrientation), 0f);
         }
 
-		public float GetFrameOffset(Vector3 forwardTarget, Transform physicalHead, Transform virtualHead, Vector3 previousPosition, Quaternion previousOrientation) {
-			float instantaneousRotation = physicalHead.eulerAngles.y - previousOrientation.eulerAngles.y;
+		public static float GetFrameOffset(Vector3 forwardTarget, Transform physicalHead, Transform virtualHead, Vector3 previousPosition, Quaternion previousOrientation) {
+			float angleToTarget = Vector3.SignedAngle(Vector3.ProjectOnPlane(physicalHead.forward, Vector3.up), forwardTarget, Vector3.up);
+			float instantRotation = physicalHead.eulerAngles.y - previousOrientation.eulerAngles.y;
 
-			if (Mathf.Sign(Vector3.SignedAngle(Vector3.ProjectOnPlane(physicalHead.forward, Vector3.up), forwardTarget, Vector3.up)) == Mathf.Sign(instantaneousRotation)) {
-				return instantaneousRotation * Toolkit.Instance.parameters.GainsRotational.same;
+			if (Mathf.Abs(instantRotation) > Toolkit.Instance.parameters.MinimumRotation && Mathf.Abs(angleToTarget) > Toolkit.Instance.parameters.RotationalEpsilon) {
+				if (Mathf.Sign(Vector3.SignedAngle(Vector3.ProjectOnPlane(physicalHead.forward, Vector3.up), forwardTarget, Vector3.up)) == Mathf.Sign(instantRotation)) {
+					return instantRotation * (Toolkit.Instance.parameters.GainsRotational.same - 1);
+				}
+				return instantRotation * (Toolkit.Instance.parameters.GainsRotational.opposite - 1);
 			}
-			return instantaneousRotation * Toolkit.Instance.parameters.GainsRotational.opposite;
+			return 0f;
 		}
 	}
 
+	/// <summary>
+	/// Class for rotating the world around the user by an amount proportional to their linear velocity.
+	/// </summary>
 	public class Razzaque2001Curvature: WorldRedirectionTechnique {
         public override void Redirect(Vector3 forwardTarget, Transform physicalHead, Transform virtualHead, Vector3 previousPosition, Quaternion previousOrientation) {
-			Debug.Log("Method not implemented yet.");
+			copyHeadRotations(physicalHead, virtualHead, previousOrientation);
+			virtualHead.Rotate(0f, GetFrameOffset(forwardTarget, physicalHead, virtualHead, previousPosition, previousOrientation), 0f);
         }
 
-		public void GetFrameOffset() {
+		public static float GetFrameOffset(Vector3 forwardTarget, Transform physicalHead, Transform virtualHead, Vector3 previousPosition, Quaternion previousOrientation) {
+			float angleToTarget = Vector3.SignedAngle(Vector3.ProjectOnPlane(physicalHead.forward, Vector3.up), forwardTarget, Vector3.up);
+			float instantTranslation = Vector3.Project(physicalHead.position - previousPosition, physicalHead.forward).magnitude;
 
+			if (instantTranslation > Toolkit.Instance.parameters.WalkingThreshold) {
+				return Mathf.Sign(angleToTarget) * instantTranslation * Toolkit.Instance.CurvatureRadiusToRotationRate();
+			}
+			return 0f;
 		}
 	}
 
@@ -97,7 +106,14 @@ namespace BG.Redirection {
 
 	public class Razzaque2001Hybrid: WorldRedirectionTechnique {
         public override void Redirect(Vector3 forwardTarget, Transform physicalHead, Transform virtualHead, Vector3 previousPosition, Quaternion previousOrientation) {
-            Debug.Log("Method not implemented yet.");
+            float angle = Mathf.Max(
+				Razzaque2001OverTimeRotation.GetFrameOffset(forwardTarget, physicalHead, virtualHead, previousPosition, previousOrientation),
+				Razzaque2001Rotational.GetFrameOffset(forwardTarget, physicalHead, virtualHead, previousPosition, previousOrientation),
+				Razzaque2001Curvature.GetFrameOffset(forwardTarget, physicalHead, virtualHead, previousPosition, previousOrientation)
+			);
+
+			copyHeadRotations(physicalHead, virtualHead, previousOrientation);
+			virtualHead.Rotate(0f, angle, 0f);
         }
 	}
 
@@ -106,6 +122,7 @@ namespace BG.Redirection {
             Debug.Log("Method not implemented yet.");
         }
 	}
+
 
 
 	public class ResetWorldRedirection: WorldRedirectionTechnique {

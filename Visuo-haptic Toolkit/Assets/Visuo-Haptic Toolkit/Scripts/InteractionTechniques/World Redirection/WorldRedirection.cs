@@ -9,8 +9,8 @@ namespace BG.Redirection {
 	/// </summary>
 	public class WorldRedirection : Interaction {
 
-		[SerializeField] private WRTechnique technique;
-		[SerializeField] private WorldRedirectionTechnique techniqueInstance;
+		[SerializeField] public WRTechnique technique;
+		[SerializeField] public WorldRedirectionTechnique techniqueInstance;
 
 		[Header("User Parameters")]
 		public Transform physicalHead;
@@ -19,7 +19,7 @@ namespace BG.Redirection {
 		private Vector3 previousPosition;
 
 		[Header("Technique Parameters")]
-		[SerializeField] private WRStrategy strategy;
+		public WRStrategy strategy;
 		public WorldRedirectionStrategy strategyInstance;
 
 		private void updateTechnique() {
@@ -75,7 +75,7 @@ namespace BG.Redirection {
 
         public void ResetRedirection() => SetTechnique(WRTechnique.None);
 
-		public WRTechnique GetTechnique(WRTechnique t) => technique;
+		public WRTechnique GetTechnique() => technique;
 
 		public bool IsRedirecting() {
 			return Vector3.Distance(physicalHead.position, virtualHead.position) < Vector3.kEpsilon &&
