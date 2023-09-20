@@ -133,12 +133,11 @@ namespace BG.Redirection {
 			float angleToTarget = scene.GetAngleToTarget();
 			float instantTranslation = scene.GetInstantaneousTranslation().magnitude;
 
-			if (instantTranslation > Toolkit.Instance.parameters.WalkingThreshold) {
-				return Mathf.Sign(angleToTarget) * instantTranslation * Toolkit.Instance.CurvatureRadiusToRotationRate();
-			}
-			return 0f;
-		}
-	}
+            return instantTranslation > Toolkit.Instance.parameters.WalkingThreshold
+                ? Mathf.Sign(angleToTarget) * instantTranslation * Toolkit.Instance.CurvatureRadiusToRotationRate()
+                : 0f;
+        }
+    }
 
 	public class Steinicke2008Translational: WorldRedirectionTechnique {
         public override void Redirect(WorldRedirectionScene scene) {
