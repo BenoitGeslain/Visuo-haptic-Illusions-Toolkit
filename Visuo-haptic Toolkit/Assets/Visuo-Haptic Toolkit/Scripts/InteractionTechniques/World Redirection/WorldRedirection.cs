@@ -16,10 +16,6 @@ namespace BG.Redirection {
 
 		public WorldRedirectionScene scene;
 
-
-		public bool applyDampening = false;
-		public bool applySmoothing = false;
-
 		private void updateTechnique() {
 			techniqueInstance = technique switch {
 				WRTechnique.None => new ResetWorldRedirection(),
@@ -36,6 +32,7 @@ namespace BG.Redirection {
 				Debug.LogError("Error Unknown Redirection technique.");
 
 			strategyInstance = strategy switch {
+				WRStrategy.None => new NoSteer(),
 				WRStrategy.SteerToCenter => new SteerToCenter(),
 				WRStrategy.SteerToOrbit => new SteerToOrbit(),
 				WRStrategy.SteerToMultipleTargets => new SteerToMultipleTargets(),
@@ -48,6 +45,10 @@ namespace BG.Redirection {
 
 		private void Start() {
 			updateTechnique();
+
+			scene.selectedTarget = scene.targets[0];
+			scene.previousPosition = scene.physicalHead.position;
+			scene.previousRotation = scene.physicalHead.rotation;
 		}
 
 		private void Update() {

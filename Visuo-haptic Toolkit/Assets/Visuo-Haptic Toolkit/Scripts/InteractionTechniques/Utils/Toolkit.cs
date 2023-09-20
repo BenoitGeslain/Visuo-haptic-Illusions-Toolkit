@@ -30,6 +30,7 @@ namespace BG.Redirection {
 	}
 
 	public enum WRStrategy {
+		None,
 		SteerToCenter,
 		SteerToOrbit,
 		SteerToMultipleTargets

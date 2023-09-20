@@ -10,14 +10,18 @@ namespace BG.Redirection {
         [Header("User Parameters")]
         public Transform physicalHead;
 		public Transform virtualHead;
+
         [Header("Technique Parameters")]
+		public Transform[] targets;
+		[HideInInspector] public Transform selectedTarget;
+		public float radius = 5f;
+		public bool applyDampening = false;
+		public bool applySmoothing = false;
+
         [HideInInspector] public Vector3 forwardTarget;
 		[HideInInspector] public Vector3 previousPosition;
 		[HideInInspector] public Quaternion previousRotation;
-		public Transform[] targets;
-		public float radius;
-
-		public float previousRedirection;
+		[HideInInspector] public float previousRedirection;
 
 		public WorldRedirectionScene(Transform physicalHead, Transform virtualHead, Vector3 forwardTarget) : this() {
             this.physicalHead = physicalHead;
@@ -28,8 +32,8 @@ namespace BG.Redirection {
 		}
 
 		public float GetHeadToHeadDistance() => Vector3.Distance(physicalHead.position, virtualHead.position);
-		public float GetDistanceToTarget() => Vector3.Distance(physicalHead.position, targets[0].position);	// TODO Implement target selectin in Strategy
-        public float GetAngleToTarget() => Vector3.SignedAngle(Vector3.ProjectOnPlane(physicalHead.forward, Vector3.up), forwardTarget, Vector3.up);
+		public float GetDistanceToTarget() => Vector3.Distance(physicalHead.position, selectedTarget.position);	// TODO Implement target selectin in Strategy
+        public float GetAngleToTarget() => Vector3.SignedAngle(Vector3.ProjectOnPlane(physicalHead.forward, Vector3.up), forwardTarget, Vector3.up); // TODO Rendre 2 dimensions
         public float GetInstantaneousRotation() => physicalHead.eulerAngles.y - previousRotation.eulerAngles.y;
 
 		public Vector3 GetInstantaneousTranslation() => Vector3.Project(physicalHead.position - previousPosition, physicalHead.forward);
@@ -51,8 +55,7 @@ namespace BG.Redirection {
 		/// <summary>
 		/// Rotate the virtual head by the given amount of degrees around the world's y axis
 		/// </summary>
-		public void RotateVirtualHeadY(float degrees)
-		{
+		public void RotateVirtualHeadY(float degrees) {
             virtualHead.Rotate(xAngle: 0f, yAngle: degrees, zAngle: 0f, relativeTo: Space.World);
         }
     }
@@ -153,6 +156,14 @@ namespace BG.Redirection {
 				Razzaque2001Rotational.GetFrameOffset(scene),
 				Razzaque2001Curvature.GetFrameOffset(scene)
 			);
+
+			if (scene.applyDampening) {
+				angle = ApplyDampening(scene, angle);
+			}
+			if (scene.applySmoothing) {
+				angle = ApplyDampening(scene, angle);
+			}
+
 			scene.previousRedirection = angle;
 
 			scene.CopyHeadRotations();
@@ -160,13 +171,13 @@ namespace BG.Redirection {
 			scene.CopyHeadTranslations();
         }
 
-		public float GetDampenedFrameOffset(WorldRedirectionScene scene) {
-			float dampened = GetDampenedFrameOffset(scene) * Mathf.Sin(Mathf.Min(scene.GetAngleToTarget() / Toolkit.Instance.parameters.DampeningRange, 1f) * Mathf.PI/2);
-			// TODO replace 1f by distance to target
-			return (scene.GetDistanceToTarget() < Toolkit.Instance.parameters.DistanceThreshold)? dampened * Mathf.Min(scene.GetDistanceToTarget() / Toolkit.Instance.parameters.DistanceThreshold, 1f) : dampened;
+		public float ApplyDampening(WorldRedirectionScene scene, float angle) {
+			float dampenedAngle = angle * Mathf.Sin(Mathf.Min(scene.GetAngleToTarget() / Toolkit.Instance.parameters.DampeningRange, 1f) * Mathf.PI/2);
+			float dampenedAngleDistance = dampenedAngle * Mathf.Min(scene.GetDistanceToTarget() / Toolkit.Instance.parameters.DistanceThreshold, 1f);
+			return (scene.GetDistanceToTarget() < Toolkit.Instance.parameters.DistanceThreshold)? dampenedAngleDistance : dampenedAngle;
 		}
 
-        public float GetSmoothedFrameOffset(WorldRedirectionScene scene) => (1 - Toolkit.Instance.parameters.SmoothingFactor) * scene.previousRedirection + Toolkit.Instance.parameters.SmoothingFactor * GetDampenedFrameOffset(scene);
+        public float ApplySmooting(WorldRedirectionScene scene, float angle) => (1 - Toolkit.Instance.parameters.SmoothingFactor) * scene.previousRedirection + Toolkit.Instance.parameters.SmoothingFactor * angle;
     }
 
 	public class Azmandian2016World: WorldRedirectionTechnique {
