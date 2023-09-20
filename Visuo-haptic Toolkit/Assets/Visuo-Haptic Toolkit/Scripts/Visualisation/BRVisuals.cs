@@ -19,10 +19,10 @@ namespace BG.Visualisation {
 		private void Update() {
 			BodyRedirection rootScript = (BodyRedirection) Toolkit.Instance.rootScript;
 			// draws threshold lines for the targets
-			drawThresholdLines(rootScript.physicalTarget.position, rootScript.virtualTarget.position, rootScript);
+			drawThresholdLines(rootScript.scene.physicalTarget.position, rootScript.scene.virtualTarget.position, rootScript);
 			if (rootScript.IsRedirecting()) {
 				// draws threshold lines for the hands
-				drawThresholdLines(rootScript.physicalHand.position, rootScript.virtualHand.position, rootScript);
+				drawThresholdLines(rootScript.scene.physicalHand.position, rootScript.scene.virtualHand.position, rootScript);
 			}
 		}
 
@@ -35,7 +35,7 @@ namespace BG.Visualisation {
 		/// <param name="rootScript"></param>
 		private void drawThresholdLines(Vector3 obj1, Vector3 obj2, BodyRedirection rootScript) {
 			// Computes the euler angles from the rotation matrix from obj1 to obj2 around the origin
-			Vector3 d = Quaternion.FromToRotation(rootScript.origin.position - obj1, rootScript.origin.position - obj2).eulerAngles;
+			Vector3 d = Quaternion.FromToRotation(rootScript.scene.origin.position - obj1, rootScript.scene.origin.position - obj2).eulerAngles;
            // Compares the euler angles against the thresholds and applies the correct color
 		  	Color c = Mathf.Min(d.x, 360-d.x) < Toolkit.Instance.parameters.MaxAngles.x &&
                 Mathf.Min(d.y, 360-d.y) < Toolkit.Instance.parameters.MaxAngles.y &&

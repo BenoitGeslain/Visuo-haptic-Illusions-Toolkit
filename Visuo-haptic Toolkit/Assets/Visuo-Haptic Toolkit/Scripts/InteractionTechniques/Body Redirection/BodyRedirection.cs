@@ -12,16 +12,9 @@ namespace BG.Redirection {
 		public BRTechnique technique;
 		public BodyRedirectionTechnique techniqueInstance;
 
-		[Header("User Parameters")]
-		public Transform physicalHand;
-		public Transform virtualHand;
+        public BodyRedirectionScene scene;
 
-		[Header("Technique Parameters")]
-		public Transform origin;
-		public Transform physicalTarget;
-        public Transform virtualTarget;
-
-		public BodyRedirectionScene scene;
+		
 
         private void updateTechnique() {
 			techniqueInstance = technique switch {
@@ -40,7 +33,6 @@ namespace BG.Redirection {
 
 		private void Start()
 		{
-			scene = new BodyRedirectionScene(physicalTarget, virtualTarget, origin, physicalHand, virtualHand);
 			updateTechnique();
 		}
 

@@ -5,19 +5,22 @@ using UnityEngine;
 
 namespace BG.Redirection {
 
-    /// <summary>
-    /// This class records the position of various objects of interest.
-    /// </summary>
-    /// <param name="physicalTarget">The physical target the hand should reach when the virtual hand reaches the virtual target.</param>
-    /// <param name="virtualTarget">The virtual target the user is reaching for.</param>
-    /// <param name="origin">The point of origin where no redirection is applied.</param>
-    /// <param name="physicalHand">The Transform representing the user's physical hand.</param>
-    /// <param name="virtualHand">The Transform representing the user's virtual hand, i.e. the user's avatar.</param>
-    public record BodyRedirectionScene()
+	/// <summary>
+	/// This class records the position of various objects of interest.
+	/// </summary>
+	/// <param name="physicalTarget">The physical target the hand should reach when the virtual hand reaches the virtual target.</param>
+	/// <param name="virtualTarget">The virtual target the user is reaching for.</param>
+	/// <param name="origin">The point of origin where no redirection is applied.</param>
+	/// <param name="physicalHand">The Transform representing the user's physical hand.</param>
+	/// <param name="virtualHand">The Transform representing the user's virtual hand, i.e. the user's avatar.</param>
+	[Serializable]
+	public record BodyRedirectionScene()
     {
+		[Header("Technique Parameters")]
         public Transform physicalTarget;
         public Transform virtualTarget;
         public Transform origin;
+        [Header("User Parameters")]
         public Transform physicalHand;
         public Transform virtualHand;
 
