@@ -6,15 +6,17 @@ namespace BG.Redirection {
 
 	public record WorldRedirectionScene()
 	{
-		public Transform physicalHead;
+        [Header("User Parameters")]
+        public Transform physicalHead;
 		public Transform virtualHead;
-		public Vector3 forwardTarget;
-		public Vector3 previousPosition;
+        [Header("Technique Parameters")]
+        public Vector3 forwardTarget;
+		public Vector3 previousPosition; // TODO set private
 		public Quaternion previousRotation;
 
 		public WorldRedirectionScene(Transform physicalHead, Transform virtualHead, Vector3 forwardTarget) : this()
 		{
-			this.physicalHead = physicalHead;
+            this.physicalHead = physicalHead;
 			this.virtualHead = virtualHead;
 			this.forwardTarget = forwardTarget;
 			this.previousPosition = physicalHead.position;
@@ -24,6 +26,8 @@ namespace BG.Redirection {
 		public float GetHeadToHeadDistance() => Vector3.Distance(physicalHead.position, virtualHead.position);
         public float GetAngleToTarget() => Vector3.SignedAngle(Vector3.ProjectOnPlane(physicalHead.forward, Vector3.up), forwardTarget, Vector3.up);
         public float GetInstantaneousRotation() => physicalHead.eulerAngles.y - previousRotation.eulerAngles.y;
+
+		public Vector3 GetInstantaneousTranslation() => Vector3.Project(physicalHead.position - previousPosition, physicalHead.forward);
 
         /// <summary>
         /// Applies unaltered physical head rotations to the virtual head GameObject
@@ -122,7 +126,7 @@ namespace BG.Redirection {
 
 		public static float GetFrameOffset(WorldRedirectionScene scene) {
 			float angleToTarget = scene.GetAngleToTarget();
-			float instantTranslation = Vector3.Project(scene.physicalHead.position - scene.previousPosition, scene.physicalHead.forward).magnitude;
+			float instantTranslation = scene.GetInstantaneousTranslation().magnitude;
 
 			if (instantTranslation > Toolkit.Instance.parameters.WalkingThreshold) {
 				return Mathf.Sign(angleToTarget) * instantTranslation * Toolkit.Instance.CurvatureRadiusToRotationRate();
