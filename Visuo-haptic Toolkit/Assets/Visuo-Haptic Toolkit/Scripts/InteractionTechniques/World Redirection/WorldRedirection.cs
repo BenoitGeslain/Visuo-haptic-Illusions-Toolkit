@@ -48,7 +48,7 @@ namespace BG.Redirection {
 		}
 
 		private void Start() {
-			scene = new WorldRedirectionScene(physicalHead: physicalHead, virtualHead: virtualHead, forwardTarget: Vector3.one);
+			scene = new WorldRedirectionScene(physicalHead: physicalHead, virtualHead: virtualHead, forwardTarget: Vector3.forward);
 			updateTechnique();
 		}
 

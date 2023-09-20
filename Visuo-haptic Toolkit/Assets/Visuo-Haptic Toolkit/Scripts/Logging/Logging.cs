@@ -4,92 +4,77 @@ using System.IO;
 using System.Globalization;
 
 using CsvHelper;
+using CsvHelper.Configuration;
 
 using UnityEngine;
 using BG.Redirection;
-using System.Runtime.CompilerServices;
+using System.Linq;
+using UnityEditor;
 
 namespace BG.Logging {
-	public class Data {
-		public string technique { get; set; }
-		public string strategy { get; set; }
 
-		public Vector3 physicalHandPosition { get; set; }
-		public Quaternion physicalHandOrientation { get; set; }
-		public Vector3 virtualHandPosition { get; set; }
-		public Quaternion virtualHandOrientation { get; set; }
+	public class BodyRedirectionData {
+		public DateTime timeStamp = DateTime.Now;
+		public BodyRedirection script = (BodyRedirection)Toolkit.Instance.rootScript;
 
-		public Vector3 physicalHeadPosition { get; set; }
-		public Quaternion physicalHeadOrientation { get; set; }
-		public Vector3 virtualHeadPosition { get; set; }
-		public Quaternion virtualHeadOrientation { get; set; }
-
-		public Vector3 physicalTargetPosition { get; set; }
-		public Quaternion physicalTargetOrientation { get; set; }
-		public Vector3 virtualTargetPosition { get; set; }
-		public Quaternion virtualTargetOrientation { get; set; }
-
-		public string[] targets { get; set; }
-		public float radius { get; set; }
+		public BodyRedirectionData(DateTime timeStamp, BodyRedirection script) {
+			this.timeStamp = timeStamp;
+			this.script = script;
+		}
 	}
 
-	public class DataBR {
-		public string technique { get; set; }
 
-		public Vector3 physicalHandPosition { get; set; }
-		public Quaternion physicalHandOrientation { get; set; }
-		public Vector3 virtualHandPosition { get; set; }
-		public Quaternion virtualHandOrientation { get; set; }
-
-		public Vector3 physicalTargetPosition { get; set; }
-		public Quaternion physicalTargetOrientation { get; set; }
-		public Vector3 virtualTargetPosition { get; set; }
-		public Quaternion virtualTargetOrientation { get; set; }
-	}
-
-	public class DataWR {
-		public string technique { get; set; }
-		public string strategy { get; set; }
-
-		public Vector3 physicalHeadPosition { get; set; }
-		public Quaternion physicalHeadOrientation { get; set; }
-		public Vector3 virtualHeadPosition { get; set; }
-		public Quaternion virtualHeadOrientation { get; set; }
-
-		public string[] targets { get; set; }
-		public float radius { get; set; }
+	public sealed class BodyRedirectionDataMap : ClassMap<BodyRedirectionData> {
+		public BodyRedirectionDataMap() {
+			Map(m => m.timeStamp).TypeConverterOption.Format("yyyy/MM/dd-HH:mm:ss").Name("TimeStamp");
+			Map(m => m.script.technique).Name("Technique");
+			Map(m => m.script.scene.physicalHand.position).Name("physicalHandPosition");
+			Map(m => m.script.scene.physicalHand.rotation).Name("physicalHandOrientation");
+			Map(m => m.script.scene.virtualHand.position).Name("virtualHandPosition");
+			Map(m => m.script.scene.virtualHand.rotation).Name("virtualHandPosition");
+			Map(m => m.script.scene.physicalTarget.position).Name("physicalTargetPosition");
+			Map(m => m.script.scene.physicalTarget.rotation).Name("physicalTargetOrientation");
+			Map(m => m.script.scene.virtualTarget.position).Name("virtualTargetPosition");
+			Map(m => m.script.scene.virtualTarget.rotation).Name("virtualTargetPosition");
+			Map(m => m.script.scene.origin.position).Name("originPosition");
+		}
 	}
 
 	public class Logging : MonoBehaviour {
 
 		public string pathToFile = "LoggedData\\";
+		[SerializeField] private string fileNamePrefix;
 		private string fileName;
 
-		[SerializeField] private string fileNamePrefix;
-
-		// Add button to save to a new file
-
-		private List<DataBR> recordsBR;
-		private List<DataWR> recordsWR;
+		private List<BodyRedirectionData> recordsBR;
+		private List<WorldRedirectionScene> recordsWR;
 
 		private void Start() {
 			createNewFile();
 		}
 
 		private void Update() {
-			recordData();
-
-			if (recordsBR != null && recordsBR.Count > 10) {
-				using (var writer = new StreamWriter(fileName, append: true)) {
-					using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture)) {
-						csv.WriteRecords(recordsBR);
-						recordsBR.Clear();
+			if (recordsBR != null) {
+				BodyRedirection rootScript = (BodyRedirection) Toolkit.Instance.rootScript;
+				recordsBR.Add(new BodyRedirectionData(DateTime.Now, rootScript));
+				if(recordsBR.Count > 10) {
+					using (var writer = new StreamWriter(fileName, append: true)) {
+						var config = new CsvConfiguration(CultureInfo.InvariantCulture) {
+							HasHeaderRecord = false,
+						};
+						using (var csv = new CsvWriter(writer, config)) {
+							csv.Context.RegisterClassMap<BodyRedirectionDataMap>();
+							csv.WriteRecords<BodyRedirectionData>(recordsBR);
+						}
 					}
 				}
 			} else if (recordsWR != null && recordsWR.Count > 10) {
 				using (var writer = new StreamWriter(fileName, append: true)) {
-					using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture)) {
-						csv.WriteRecords(recordsWR);
+					var config = new CsvConfiguration(CultureInfo.InvariantCulture) {
+						HasHeaderRecord = false,
+					};
+					using (var csv = new CsvWriter(writer, config)) {
+						csv.WriteRecords(recordsWR.Select(record => record.GetHeadToHeadDistance()));
 						recordsWR.Clear();
 					}
 				}
@@ -99,17 +84,19 @@ namespace BG.Logging {
 		public void createNewFile() {
 			try {
 				BodyRedirection rootScript = (BodyRedirection) Toolkit.Instance.rootScript;
-				recordsBR = new List<DataBR>();
+				recordsBR = new List<BodyRedirectionData>();
 
 				fileName = pathToFile + fileNamePrefix + DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss") + ".csv";
 				using (var writer = new StreamWriter(fileName)) {
-					using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))	// TODO create a configuration to not write the header
-						csv.WriteRecords(recordsBR);
+					using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture)) {
+						csv.Context.RegisterClassMap<BodyRedirectionDataMap>();
+						csv.WriteRecords<BodyRedirectionData>(recordsBR);
+					}
 				}
 			} catch (InvalidCastException) {
 				try {
 					WorldRedirection rootScript = (WorldRedirection) Toolkit.Instance.rootScript;
-					recordsWR = new List<DataWR>();
+					recordsWR = new List<WorldRedirectionScene>();
 
 					fileName = pathToFile + fileNamePrefix + DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss") + ".csv";
 					using (var writer = new StreamWriter(fileName)) {
@@ -119,43 +106,6 @@ namespace BG.Logging {
 				} catch (InvalidCastException) {
 					Debug.LogError("Could not cast the toolkit rootsctipt to a known type.");
 				}
-			}
-		}
-
-		private void recordData() {
-			if (recordsBR != null) {
-				BodyRedirection rootScript = (BodyRedirection) Toolkit.Instance.rootScript;
-
-				var r = new DataBR();
-
-				r.technique = Enum.GetName(typeof(BRTechnique), (int)rootScript.technique);
-				r.physicalTargetPosition = rootScript.physicalTarget.position;
-				r.physicalTargetOrientation = rootScript.physicalTarget.rotation;
-				r.virtualTargetPosition = rootScript.virtualTarget.position;
-				r.virtualTargetOrientation = rootScript.virtualTarget.rotation;
-
-				r.physicalHandPosition = rootScript.physicalHand.position;
-				r.physicalHandOrientation = rootScript.physicalHand.rotation;
-				r.virtualHandPosition = rootScript.virtualHand.position;
-				r.virtualHandOrientation = rootScript.virtualHand.rotation;
-
-				recordsBR.Add(r);
-			} else if (recordsWR != null) {
-				WorldRedirection rootScript = (WorldRedirection) Toolkit.Instance.rootScript;
-
-				var r = new DataWR();
-
-				r.technique = Enum.GetName(typeof(WRTechnique), rootScript.technique);
-				r.strategy = Enum.GetName(typeof(WRStrategy), rootScript.strategy);
-				r.targets = targetsToString(rootScript.strategyInstance.targets);
-				r.radius = rootScript.strategyInstance.radius;
-
-				r.physicalHeadPosition = rootScript.physicalHead.position;
-				r.physicalHeadOrientation = rootScript.physicalHead.rotation;
-				r.virtualHeadPosition = rootScript.virtualHead.position;
-				r.virtualHeadOrientation = rootScript.virtualHead.rotation;
-
-				recordsWR.Add(r);
 			}
 		}
 
