@@ -21,6 +21,9 @@ namespace BG.Redirection {
 		public WRStrategy strategy;
 		public WorldRedirectionStrategy strategyInstance;
 
+		public bool applyDampening = false;
+		public bool applySmoothing = false;
+
 		private void updateTechnique() {
 			techniqueInstance = technique switch {
 				WRTechnique.None => new ResetWorldRedirection(),

@@ -98,12 +98,16 @@ namespace BG.Redirection {
 		public Azmandian2016Body(BodyRedirection script): base(script) {}
 
 		public override void Redirect(BodyRedirectionScene scene) {
+			scene.SetRedirection(GetRedirection(scene));
+		}
+
+		public Vector3 GetRedirection(BodyRedirectionScene scene) {
 			var d = scene.physicalTarget.position - scene.origin.position;
 			var warpingRatio = Mathf.Clamp(
 				Vector3.Dot(d, scene.physicalHand.position - scene.origin.position) / d.sqrMagnitude,
 				0f,
 				1f);
-			scene.SetRedirection(warpingRatio * (scene.virtualTarget.position - scene.physicalTarget.position));
+			return warpingRatio * (scene.virtualTarget.position - scene.physicalTarget.position);
 		}
 	}
 
@@ -175,7 +179,7 @@ namespace BG.Redirection {
 			this.controlPoint = controlPoint;
 		}
 
-		public override void Redirect(BodyRedirectionScene scene) { 
+		public override void Redirect(BodyRedirectionScene scene) {
 			// The redirection is a degree-2 polynomial function of the distance,
 			// f(d) = a_0 + a_1 * d + a_2 * d^2,
 			// with limit conditions f(0) = 1 (hence a_0 = 1) and f(D) = 0, where D is the origin - real target distance
@@ -195,7 +199,7 @@ namespace BG.Redirection {
 
 		public ResetBodyRedirection(BodyRedirection script): base(script) { }
 
-		public override void Redirect(BodyRedirectionScene scene) { 
+		public override void Redirect(BodyRedirectionScene scene) {
 			if (this.rootScript.IsRedirecting()) {
 				scene.virtualHand.position += Vector3.ClampMagnitude((scene.physicalHand.position - scene.virtualHand.position) * Time.deltaTime, Toolkit.Instance.parameters.resetRedirectionSpeed);
 			}

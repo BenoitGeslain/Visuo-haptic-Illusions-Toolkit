@@ -149,6 +149,16 @@ namespace BG.Redirection {
 			scene.RotateVirtualHeadY(angle);
 			scene.CopyHeadTranslations();
         }
+
+		public float GetDampenedFrameOffset(WorldRedirectionScene scene) {
+			float dampened = GetDampenedFrameOffset(scene) * Mathf.Sin(Mathf.Min(scene.GetAngleToTarget() / Toolkit.Instance.parameters.DampeningRange, 1f) * Mathf.PI/2);
+			// TODO replace 1f by distance to target
+			return (1f < Toolkit.Instance.parameters.DistanceThreshold)? dampened * Mathf.Min(1f / Toolkit.Instance.parameters.DistanceThreshold, 1f) : dampened;
+		}
+
+		public float GetSmoothedFrameOffset(WorldRedirectionScene scene) {
+			return (1 - Toolkit.Instance.parameters.SmoothingFactor) * 1f + Toolkit.Instance.parameters.SmoothingFactor * GetDampenedFrameOffset(scene);
+		}
 	}
 
 	public class Azmandian2016World: WorldRedirectionTechnique {
@@ -156,8 +166,6 @@ namespace BG.Redirection {
             Debug.Log("Method not implemented yet.");
         }
 	}
-
-
 
 	public class ResetWorldRedirection: WorldRedirectionTechnique {
         public override void Redirect(WorldRedirectionScene scene) {

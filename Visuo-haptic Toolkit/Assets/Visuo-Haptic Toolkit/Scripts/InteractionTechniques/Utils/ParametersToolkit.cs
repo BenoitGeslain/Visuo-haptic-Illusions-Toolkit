@@ -21,6 +21,10 @@ namespace BG.Redirection {
 		public float MinimumRotation = 0f;
 		[Tooltip("The speed threshold defining if the user is considered to be standing still or walking. Value is in m/s. [Hogson and Bachmann, 2013]")]
 		public float WalkingThreshold = 0.2f;
+		[Tooltip("The speed threshold defining if the user is considered to be standing still or walking. Value is in m/s. [Hogson and Bachmann, 2013]")]
+		public float DistanceThreshold = 0.2f;
+		[Tooltip("The dampening range. Value is in °.")]
+		public float DampeningRange = 0f;
 		[Range(0,1)]
 		[Tooltip("The soothing factor preventing abrupt changes. Value has no unit. [Hogson and Bachmann, 2013]")]
 		public float SmoothingFactor = 0.2f;
