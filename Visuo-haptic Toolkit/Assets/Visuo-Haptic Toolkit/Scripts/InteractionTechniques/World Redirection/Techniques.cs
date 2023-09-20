@@ -166,10 +166,8 @@ namespace BG.Redirection {
 			return (scene.GetDistanceToTarget() < Toolkit.Instance.parameters.DistanceThreshold)? dampened * Mathf.Min(scene.GetDistanceToTarget() / Toolkit.Instance.parameters.DistanceThreshold, 1f) : dampened;
 		}
 
-		public float GetSmoothedFrameOffset(WorldRedirectionScene scene) {
-			return (1 - Toolkit.Instance.parameters.SmoothingFactor) * scene.previousRedirection + Toolkit.Instance.parameters.SmoothingFactor * GetDampenedFrameOffset(scene);
-		}
-	}
+        public float GetSmoothedFrameOffset(WorldRedirectionScene scene) => (1 - Toolkit.Instance.parameters.SmoothingFactor) * scene.previousRedirection + Toolkit.Instance.parameters.SmoothingFactor * GetDampenedFrameOffset(scene);
+    }
 
 	public class Azmandian2016World: WorldRedirectionTechnique {
         public override void Redirect(WorldRedirectionScene scene) {

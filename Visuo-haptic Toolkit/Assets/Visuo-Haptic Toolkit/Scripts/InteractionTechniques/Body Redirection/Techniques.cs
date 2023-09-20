@@ -204,7 +204,7 @@ namespace BG.Redirection {
 
 		public override void Redirect(BodyRedirectionScene scene) {
 			if (this.rootScript.IsRedirecting()) {
-				scene.virtualHand.position += Vector3.ClampMagnitude((scene.physicalHand.position - scene.virtualHand.position) * Time.deltaTime, Toolkit.Instance.parameters.resetRedirectionSpeed);
+				scene.virtualHand.position += Vector3.ClampMagnitude((scene.physicalHand.position - scene.virtualHand.position) * Time.deltaTime, Toolkit.Instance.parameters.ResetRedirectionSpeed);
 			}
 		}
 	}
