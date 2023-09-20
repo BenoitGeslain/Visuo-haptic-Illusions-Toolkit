@@ -587,11 +587,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2542120560557277227, guid: 5fb8647dcfba39f43976bd2e07bcddf6, type: 3}
       propertyPath: strategy
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2542120560557277227, guid: 5fb8647dcfba39f43976bd2e07bcddf6, type: 3}
       propertyPath: technique
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2542120560557277227, guid: 5fb8647dcfba39f43976bd2e07bcddf6, type: 3}
       propertyPath: virtualHead
@@ -1720,9 +1720,9 @@ SceneRoots:
   m_Roots:
   - {fileID: 4457449987148767274}
   - {fileID: 705507995}
-  - {fileID: 476949598}
   - {fileID: 762187104}
   - {fileID: 982978982}
   - {fileID: 376059051}
   - {fileID: 8662740}
   - {fileID: 473822638}
+  - {fileID: 476949598}

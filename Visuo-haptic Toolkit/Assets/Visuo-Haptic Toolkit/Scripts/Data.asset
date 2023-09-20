@@ -19,7 +19,7 @@ MonoBehaviour:
   MinimumRotation: 0.1
   WalkingThreshold: 0.2
   DistanceThreshold: 0.2
-  DampeningRange: 0
+  DampeningRange: 1.57
   SmoothingFactor: 0.2
   OverTimeRotation: 0.2
   GainsTranslational:
