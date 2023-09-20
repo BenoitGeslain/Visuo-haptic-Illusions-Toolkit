@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1909,11 +1909,31 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1043024384}
     - target: {fileID: 2891068713693094246, guid: 04e531f9da6b5c640b2de2a8fa88a2fa, type: 3}
+      propertyPath: scene.origin
+      value: 
+      objectReference: {fileID: 741344273}
+    - target: {fileID: 2891068713693094246, guid: 04e531f9da6b5c640b2de2a8fa88a2fa, type: 3}
       propertyPath: virtualTarget
       value: 
       objectReference: {fileID: 901110811}
     - target: {fileID: 2891068713693094246, guid: 04e531f9da6b5c640b2de2a8fa88a2fa, type: 3}
       propertyPath: physicalTarget
+      value: 
+      objectReference: {fileID: 544231395}
+    - target: {fileID: 2891068713693094246, guid: 04e531f9da6b5c640b2de2a8fa88a2fa, type: 3}
+      propertyPath: scene.virtualHand
+      value: 
+      objectReference: {fileID: 1684451652}
+    - target: {fileID: 2891068713693094246, guid: 04e531f9da6b5c640b2de2a8fa88a2fa, type: 3}
+      propertyPath: scene.physicalHand
+      value: 
+      objectReference: {fileID: 1043024384}
+    - target: {fileID: 2891068713693094246, guid: 04e531f9da6b5c640b2de2a8fa88a2fa, type: 3}
+      propertyPath: scene.virtualTarget
+      value: 
+      objectReference: {fileID: 901110811}
+    - target: {fileID: 2891068713693094246, guid: 04e531f9da6b5c640b2de2a8fa88a2fa, type: 3}
+      propertyPath: scene.physicalTarget
       value: 
       objectReference: {fileID: 544231395}
     - target: {fileID: 3169019813816358605, guid: 04e531f9da6b5c640b2de2a8fa88a2fa, type: 3}

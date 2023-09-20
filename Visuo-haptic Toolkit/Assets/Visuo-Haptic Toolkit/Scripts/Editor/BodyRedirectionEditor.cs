@@ -12,21 +12,12 @@ namespace BG.Redirection {
 		SerializedProperty technique;
 		SerializedProperty techniqueInstance;
 
-		SerializedProperty physicalHand;
-		SerializedProperty virtualHand;
-		SerializedProperty origin;
-		SerializedProperty physicalTarget;
-		SerializedProperty virtualTarget;
+		SerializedProperty scene;
 
 		private void OnEnable() {
 			technique = serializedObject.FindProperty("technique");
-			techniqueInstance = serializedObject.FindProperty ("techniqueInstance");
-
-			physicalHand = serializedObject.FindProperty("physicalHand");
-			virtualHand = serializedObject.FindProperty("virtualHand");
-			origin = serializedObject.FindProperty("origin");
-			physicalTarget = serializedObject.FindProperty("physicalTarget");
-			virtualTarget = serializedObject.FindProperty("virtualTarget");
+            techniqueInstance = serializedObject.FindProperty("techniqueInstance");
+			scene = serializedObject.FindProperty("scene");
 		}
 
 		public override void OnInspectorGUI() {
@@ -38,12 +29,7 @@ namespace BG.Redirection {
 			if (technique.enumNames[technique.enumValueIndex] == "Geslain2022Polynom") {
 				EditorGUILayout.PropertyField(techniqueInstance, new GUIContent ("Parameters"));
 			}
-
-			EditorGUILayout.PropertyField(physicalHand, new GUIContent ("Physical Hand"));
-			EditorGUILayout.PropertyField(virtualHand, new GUIContent ("Virtual Hand"));
-			EditorGUILayout.PropertyField(origin, new GUIContent ("Origin"));
-			EditorGUILayout.PropertyField(physicalTarget, new GUIContent ("Physical Target"));
-			EditorGUILayout.PropertyField(virtualTarget, new GUIContent ("Virtual Target"));
+			EditorGUILayout.PropertyField(scene, new GUIContent("Scene"));
 
 			serializedObject.ApplyModifiedProperties();
 		}

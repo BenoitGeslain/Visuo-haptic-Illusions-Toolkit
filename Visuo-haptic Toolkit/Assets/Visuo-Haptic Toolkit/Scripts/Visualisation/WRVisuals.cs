@@ -24,11 +24,11 @@ namespace BG.Visualisation {
 
 		private void drawDirectionLines(WorldRedirection rootScript) {
 			Vector3 dir = rootScript.strategyInstance.targets[0].position;
-			dir.y = rootScript.physicalHead.position.y;
-			dir -= rootScript.physicalHead.position;
+			dir.y = rootScript.scene.physicalHead.position.y;
+			dir -= rootScript.scene.physicalHead.position;
 
-			Debug.DrawRay(rootScript.physicalHead.position, dir, colors[0]);
-			Debug.DrawRay(rootScript.physicalHead.position, rootScript.physicalHead.forward * dir.magnitude, colors[1]);
+			Debug.DrawRay(rootScript.scene.physicalHead.position, dir, colors[0]);
+			Debug.DrawRay(rootScript.scene.physicalHead.position, rootScript.scene.physicalHead.forward * dir.magnitude, colors[1]);
 		}
 	}
 }
