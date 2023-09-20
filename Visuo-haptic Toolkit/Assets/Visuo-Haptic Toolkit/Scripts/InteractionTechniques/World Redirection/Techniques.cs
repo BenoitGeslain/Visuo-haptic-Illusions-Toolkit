@@ -13,6 +13,10 @@ namespace BG.Redirection {
         public Vector3 forwardTarget;
 		public Vector3 previousPosition; // TODO set private
 		public Quaternion previousRotation;
+		public Transform[] targets;
+		public float radius;
+
+		public float previousRedirection;
 
 		public WorldRedirectionScene(Transform physicalHead, Transform virtualHead, Vector3 forwardTarget) : this()
 		{
@@ -24,6 +28,7 @@ namespace BG.Redirection {
 		}
 
 		public float GetHeadToHeadDistance() => Vector3.Distance(physicalHead.position, virtualHead.position);
+		public float GetDistanceToTarget() => Vector3.Distance(physicalHead.position, targets[0].position);	// TODO Implement target selectin in Strategy
         public float GetAngleToTarget() => Vector3.SignedAngle(Vector3.ProjectOnPlane(physicalHead.forward, Vector3.up), forwardTarget, Vector3.up);
         public float GetInstantaneousRotation() => physicalHead.eulerAngles.y - previousRotation.eulerAngles.y;
 
@@ -148,6 +153,7 @@ namespace BG.Redirection {
 				Razzaque2001Rotational.GetFrameOffset(scene),
 				Razzaque2001Curvature.GetFrameOffset(scene)
 			);
+			scene.previousRedirection = angle;
 
 			scene.CopyHeadRotations();
 			scene.RotateVirtualHeadY(angle);
@@ -157,11 +163,11 @@ namespace BG.Redirection {
 		public float GetDampenedFrameOffset(WorldRedirectionScene scene) {
 			float dampened = GetDampenedFrameOffset(scene) * Mathf.Sin(Mathf.Min(scene.GetAngleToTarget() / Toolkit.Instance.parameters.DampeningRange, 1f) * Mathf.PI/2);
 			// TODO replace 1f by distance to target
-			return (1f < Toolkit.Instance.parameters.DistanceThreshold)? dampened * Mathf.Min(1f / Toolkit.Instance.parameters.DistanceThreshold, 1f) : dampened;
+			return (scene.GetDistanceToTarget() < Toolkit.Instance.parameters.DistanceThreshold)? dampened * Mathf.Min(scene.GetDistanceToTarget() / Toolkit.Instance.parameters.DistanceThreshold, 1f) : dampened;
 		}
 
 		public float GetSmoothedFrameOffset(WorldRedirectionScene scene) {
-			return (1 - Toolkit.Instance.parameters.SmoothingFactor) * 1f + Toolkit.Instance.parameters.SmoothingFactor * GetDampenedFrameOffset(scene);
+			return (1 - Toolkit.Instance.parameters.SmoothingFactor) * scene.previousRedirection + Toolkit.Instance.parameters.SmoothingFactor * GetDampenedFrameOffset(scene);
 		}
 	}
 
