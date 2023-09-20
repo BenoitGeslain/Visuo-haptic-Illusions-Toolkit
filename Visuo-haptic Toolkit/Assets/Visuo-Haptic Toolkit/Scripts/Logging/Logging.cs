@@ -79,22 +79,23 @@ namespace BG.Logging {
 		private List<BodyRedirectionData> recordsBR;
 		private List<WorldRedirectionData> recordsWR;
 
-		private void Start() {
+        private CsvConfiguration config = new CsvConfiguration(CultureInfo.InvariantCulture) {
+            HasHeaderRecord = false,
+        };
+
+        private void Start() {
 			createNewFile();
 
 			Application.targetFrameRate = 60;
 		}
 
 		private void Update() {
-			if (recordsBR != null) {
+            if (recordsBR != null) {
 				BodyRedirection rootScript = (BodyRedirection) Toolkit.Instance.rootScript;
 				recordsBR.Add(new BodyRedirectionData(DateTime.Now, rootScript));
 
-				if(recordsBR.Count > 10) {
+                if (recordsBR.Count > 10) {
 					using (var writer = new StreamWriter(fileName, append: true)) {
-						var config = new CsvConfiguration(CultureInfo.InvariantCulture) {
-							HasHeaderRecord = false,
-						};
 						using (var csv = new CsvWriter(writer, config)) {
 							csv.Context.RegisterClassMap<BodyRedirectionDataMap>();
 							csv.WriteRecords<BodyRedirectionData>(recordsBR);
@@ -106,14 +107,12 @@ namespace BG.Logging {
 				WorldRedirection rootScript = (WorldRedirection) Toolkit.Instance.rootScript;
 				recordsWR.Add(new WorldRedirectionData(DateTime.Now, rootScript));
 
-				if(recordsWR.Count > 10) {
+                if (recordsWR.Count > 10) {
 					using (var writer = new StreamWriter(fileName, append: true)) {
-						var config = new CsvConfiguration(CultureInfo.InvariantCulture) {
-							HasHeaderRecord = false,
-						};
 						using (var csv = new CsvWriter(writer, config)) {
 							csv.Context.RegisterClassMap<WorldRedirectionDataMap>();
 							csv.WriteRecords<WorldRedirectionData>(recordsWR);
+							recordsWR.Clear();
 						}
 					}
 				}
@@ -121,11 +120,11 @@ namespace BG.Logging {
 		}
 
 		public void createNewFile() {
-			try {
+
+            fileName = $"{pathToFile}{fileNamePrefix}{DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss")}.csv";
+            try {
 				BodyRedirection rootScript = (BodyRedirection) Toolkit.Instance.rootScript;
 				recordsBR = new List<BodyRedirectionData>();
-
-				fileName = pathToFile + fileNamePrefix + DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss") + ".csv";
 				using (var writer = new StreamWriter(fileName)) {
 					using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture)) {
 						csv.Context.RegisterClassMap<BodyRedirectionDataMap>();
@@ -136,8 +135,6 @@ namespace BG.Logging {
 				try {
 					WorldRedirection rootScript = (WorldRedirection) Toolkit.Instance.rootScript;
 					recordsWR = new List<WorldRedirectionData>();
-
-					fileName = pathToFile + fileNamePrefix + DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss") + ".csv";
 					using (var writer = new StreamWriter(fileName)) {
 						// TODO create a configuration to not write the header
 						using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture)) {
@@ -151,12 +148,6 @@ namespace BG.Logging {
 			}
 		}
 
-		private string[] targetsToString(Transform[] targets) {
-			string[] s = new string[targets.Length];
-			for (var i=0; i<targets.Length; i++) {
-				s[i] = targets[i].name;
-			}
-			return s;
-		}
-	}
+        private string[] targetsToString(Transform[] targets) => targets.Select(t => t.name).ToArray();
+    }
 }
