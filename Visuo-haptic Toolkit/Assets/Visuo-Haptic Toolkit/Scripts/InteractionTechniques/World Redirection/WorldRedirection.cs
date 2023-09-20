@@ -9,14 +9,13 @@ namespace BG.Redirection {
 	/// </summary>
 	public class WorldRedirection : Interaction {
 
-		[SerializeField] public WRTechnique technique;
-		[SerializeField] public WorldRedirectionTechnique techniqueInstance;
+		public WRTechnique technique;
+		public WorldRedirectionTechnique techniqueInstance;
+		public WRStrategy strategy;
+		public WorldRedirectionStrategy strategyInstance;
 
 		public WorldRedirectionScene scene;
 
-		[Header("Technique Parameters")]
-		public WRStrategy strategy;
-		public WorldRedirectionStrategy strategyInstance;
 
 		public bool applyDampening = false;
 		public bool applySmoothing = false;
@@ -37,9 +36,9 @@ namespace BG.Redirection {
 				Debug.LogError("Error Unknown Redirection technique.");
 
 			strategyInstance = strategy switch {
-				WRStrategy.SteerToCenter => new SteerToCenter(strategyInstance.targets, strategyInstance.radius),
-				WRStrategy.SteerToOrbit => new SteerToOrbit(strategyInstance.targets, strategyInstance.radius),
-				WRStrategy.SteerToMultipleTargets => new SteerToMultipleTargets(strategyInstance.targets, strategyInstance.radius),
+				WRStrategy.SteerToCenter => new SteerToCenter(),
+				WRStrategy.SteerToOrbit => new SteerToOrbit(),
+				WRStrategy.SteerToMultipleTargets => new SteerToMultipleTargets(),
 				_ => null
 			};
 
@@ -55,7 +54,7 @@ namespace BG.Redirection {
 			updateTechnique();
 
 			if (techniqueInstance is not null && strategyInstance is not null) {
-				scene.forwardTarget = strategyInstance.SteerTo(scene.physicalHead, scene.virtualHead);
+				scene.forwardTarget = strategyInstance.SteerTo(scene);
 				techniqueInstance.Redirect(scene);
 			}
 

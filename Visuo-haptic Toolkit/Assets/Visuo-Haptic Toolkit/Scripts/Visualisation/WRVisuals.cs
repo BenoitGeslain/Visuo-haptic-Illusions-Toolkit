@@ -23,7 +23,7 @@ namespace BG.Visualisation {
 		}
 
 		private void drawDirectionLines(WorldRedirection rootScript) {
-			Vector3 dir = rootScript.strategyInstance.targets[0].position;
+			Vector3 dir = rootScript.scene.targets[0].position;
 			dir.y = rootScript.scene.physicalHead.position.y;
 			dir -= rootScript.scene.physicalHead.position;
 

@@ -2,18 +2,9 @@ using System;
 using UnityEngine;
 
 namespace BG.Redirection {
-	[Serializable]
 	public class WorldRedirectionStrategy {
 
-		public Transform[] targets;
-		public float radius;
-
-        public WorldRedirectionStrategy(Transform[] targets, float radius) {
-			this.targets = targets;
-			this.radius = radius;
-		}
-
-		public virtual Vector3 SteerTo(Transform physicalHead, Transform virtualHead) {
+		public virtual Vector3 SteerTo(WorldRedirectionScene scene) {
 			Debug.LogError("Calling Redirect() virtual method. It should be overriden");
 			return Vector3.zero;
 		}
@@ -22,21 +13,15 @@ namespace BG.Redirection {
 	// Incomplete implementation
 	public class SteerToCenter: WorldRedirectionStrategy {
 
-		// public SteerToCenter(Vector3[] targets, float radius): base(targets, radius) {}
-		public SteerToCenter(Transform[] targets, float radius): base(targets, radius) {}
-
-		public override Vector3 SteerTo(Transform physicalHead, Transform virtualHead) {
-			return Vector3.ProjectOnPlane(targets[0].position - physicalHead.position, Vector3.up);
+		public override Vector3 SteerTo(WorldRedirectionScene scene) {
+			return Vector3.ProjectOnPlane(scene.targets[0].position - scene.physicalHead.position, Vector3.up);
 		}
 	}
 
 	public class SteerToOrbit: WorldRedirectionStrategy {
 
-		// public SteerToOrbit(Vector3[] targets, float radius): base(targets, radius) {}
-		public SteerToOrbit(Transform[] targets, float radius): base(targets, radius) {}
 
-
-		public override Vector3 SteerTo(Transform physicalHead, Transform virtualHead) {
+		public override Vector3 SteerTo(WorldRedirectionScene scene) {
 			Debug.LogError("Calling Redirect() virtual method. It should be overriden");
 			return Vector3.zero;
 		}
@@ -44,10 +29,15 @@ namespace BG.Redirection {
 
 	public class SteerToMultipleTargets: WorldRedirectionStrategy {
 
-		// public SteerToMultipleTargets(Vector3[] targets, float radius): base(targets, radius) {}
-		public SteerToMultipleTargets(Transform[] targets, float radius): base(targets, radius) {}
+		public override Vector3 SteerTo(WorldRedirectionScene scene) {
+			Debug.LogError("Calling Redirect() virtual method. It should be overriden");
+			return Vector3.zero;
+		}
+	}
 
-		public override Vector3 SteerTo(Transform physicalHead, Transform virtualHead) {
+	public class SteerToMultipleTargetsCenter: WorldRedirectionStrategy {
+
+		public override Vector3 SteerTo(WorldRedirectionScene scene) {
 			Debug.LogError("Calling Redirect() virtual method. It should be overriden");
 			return Vector3.zero;
 		}

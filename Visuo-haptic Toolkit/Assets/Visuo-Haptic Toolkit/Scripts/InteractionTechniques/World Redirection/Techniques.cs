@@ -1,25 +1,25 @@
+using System;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
 
 namespace BG.Redirection {
 
-	public record WorldRedirectionScene()
-	{
+	[Serializable]
+	public record WorldRedirectionScene() {
         [Header("User Parameters")]
         public Transform physicalHead;
 		public Transform virtualHead;
         [Header("Technique Parameters")]
-        public Vector3 forwardTarget;
-		public Vector3 previousPosition; // TODO set private
-		public Quaternion previousRotation;
+        [HideInInspector] public Vector3 forwardTarget;
+		[HideInInspector] public Vector3 previousPosition;
+		[HideInInspector] public Quaternion previousRotation;
 		public Transform[] targets;
 		public float radius;
 
 		public float previousRedirection;
 
-		public WorldRedirectionScene(Transform physicalHead, Transform virtualHead, Vector3 forwardTarget) : this()
-		{
+		public WorldRedirectionScene(Transform physicalHead, Transform virtualHead, Vector3 forwardTarget) : this() {
             this.physicalHead = physicalHead;
 			this.virtualHead = virtualHead;
 			this.forwardTarget = forwardTarget;

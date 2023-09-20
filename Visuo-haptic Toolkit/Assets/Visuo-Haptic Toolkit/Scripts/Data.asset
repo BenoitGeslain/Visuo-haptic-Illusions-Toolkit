@@ -14,9 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxAngles: {x: 10, y: 10, z: 10}
   NoRedirectionBuffer: 0.1
-  RotationalEpsilon: 1
+  ResetRedirectionSpeed: 0.001
+  RotationalEpsilon: 0
   MinimumRotation: 0.1
   WalkingThreshold: 0.2
+  DistanceThreshold: 0.2
+  DampeningRange: 0
   SmoothingFactor: 0.2
   OverTimeRotation: 0.2
   GainsTranslational:
@@ -25,6 +28,6 @@ MonoBehaviour:
   GainsRotational:
     same: 1.3
     opposite: 0.85
-  CurvatureRadius: 0
+  CurvatureRadius: 7.5
   a: {x: 0, y: 0, z: 0}
   b: {x: 0, y: 0, z: 0}

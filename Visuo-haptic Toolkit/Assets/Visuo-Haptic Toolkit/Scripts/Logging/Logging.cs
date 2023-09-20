@@ -65,8 +65,8 @@ namespace BG.Logging {
 			Map(m => m.script.scene.virtualHead.rotation).Index(5).Name("VirtualHeadOrientation");
 			Map(m => m.script.scene.virtualHead.rotation.eulerAngles).Index(5).Name("VirtualHeadOrientationEuler");
 			Map(m => m.script.scene.forwardTarget).Index(6).Name("ForwardTarget");
-			Map(m => m.script.strategyInstance.targets).Index(7).Name("Targets");
-			Map(m => m.script.strategyInstance.radius).Index(8).Name("Radius");
+			Map(m => m.script.scene.targets).Index(7).Name("Targets");
+			Map(m => m.script.scene.radius).Index(8).Name("Radius");
 		}
 	}
 
