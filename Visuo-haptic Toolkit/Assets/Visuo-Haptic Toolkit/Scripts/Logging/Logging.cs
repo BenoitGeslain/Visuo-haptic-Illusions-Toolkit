@@ -26,17 +26,47 @@ namespace BG.Logging {
 
 	public sealed class BodyRedirectionDataMap : ClassMap<BodyRedirectionData> {
 		public BodyRedirectionDataMap() {
-			Map(m => m.timeStamp).TypeConverterOption.Format("yyyy/MM/dd-HH:mm:ss").Name("TimeStamp");
-			Map(m => m.script.technique).Name("Technique");
-			Map(m => m.script.scene.physicalHand.position).Name("physicalHandPosition");
-			Map(m => m.script.scene.physicalHand.rotation).Name("physicalHandOrientation");
-			Map(m => m.script.scene.virtualHand.position).Name("virtualHandPosition");
-			Map(m => m.script.scene.virtualHand.rotation).Name("virtualHandPosition");
-			Map(m => m.script.scene.physicalTarget.position).Name("physicalTargetPosition");
-			Map(m => m.script.scene.physicalTarget.rotation).Name("physicalTargetOrientation");
-			Map(m => m.script.scene.virtualTarget.position).Name("virtualTargetPosition");
-			Map(m => m.script.scene.virtualTarget.rotation).Name("virtualTargetPosition");
-			Map(m => m.script.scene.origin.position).Name("originPosition");
+			Map(m => m.timeStamp).TypeConverterOption.Format("yyyy/MM/dd-HH:mm:ss.fff").Index(0).Name("TimeStamp");
+			Map(m => m.script.technique).Index(1).Name("Technique");
+			Map(m => m.script.scene.physicalHand.position).Index(2).Name("PhysicalHandPosition");
+			Map(m => m.script.scene.physicalHand.rotation).Index(3).Name("PhysicalHandOrientation");
+			Map(m => m.script.scene.physicalHand.rotation.eulerAngles).Index(3).Name("PhysicalHandOrientationEuler");
+			Map(m => m.script.scene.virtualHand.position).Index(4).Name("VirtualHandPosition");
+			Map(m => m.script.scene.virtualHand.rotation).Index(5).Name("VirtualHandOrientation");
+			Map(m => m.script.scene.virtualHand.rotation.eulerAngles).Index(5).Name("VirtualHandOrientationEuler");
+			Map(m => m.script.scene.physicalTarget.position).Index(6).Name("PhysicalTargetPosition");
+			Map(m => m.script.scene.physicalTarget.rotation).Index(7).Name("PhysicalTargetOrientation");
+			Map(m => m.script.scene.physicalTarget.rotation.eulerAngles).Index(7).Name("PhysicalTargetOrientationEuler");
+			Map(m => m.script.scene.virtualTarget.position).Index(8).Name("VirtualTargetPosition");
+			Map(m => m.script.scene.virtualTarget.rotation).Index(9).Name("VirtualTargetOrientation");
+			Map(m => m.script.scene.virtualTarget.rotation.eulerAngles).Index(9).Name("VirtualTargetOrientationEuler");
+			Map(m => m.script.scene.origin.position).Index(10).Name("OriginPosition");
+		}
+	}
+
+	public class WorldRedirectionData {
+		public DateTime timeStamp = DateTime.Now;
+		public WorldRedirection script = (WorldRedirection)Toolkit.Instance.rootScript;
+
+		public WorldRedirectionData(DateTime timeStamp, WorldRedirection script) {
+			this.timeStamp = timeStamp;
+			this.script = script;
+		}
+	}
+
+	public sealed class WorldRedirectionDataMap : ClassMap<WorldRedirectionData> {
+		public WorldRedirectionDataMap() {
+			Map(m => m.timeStamp).TypeConverterOption.Format("yyyy/MM/dd-HH:mm:ss.fff").Index(0).Name("TimeStamp");
+			Map(m => m.script.technique).Index(1).Name("Technique");
+			Map(m => m.script.scene.physicalHead.position).Index(2).Name("PhysicalHeadPosition");
+			Map(m => m.script.scene.physicalHead.rotation).Index(3).Name("PhysicalHeadOrientation");
+			Map(m => m.script.scene.physicalHead.rotation.eulerAngles).Index(3).Name("PhysicalHeadOrientationEuler");
+			Map(m => m.script.scene.virtualHead.position).Index(4).Name("VirtualHeadPosition");
+			Map(m => m.script.scene.virtualHead.rotation).Index(5).Name("VirtualHeadOrientation");
+			Map(m => m.script.scene.virtualHead.rotation.eulerAngles).Index(5).Name("VirtualHeadOrientationEuler");
+			Map(m => m.script.scene.forwardTarget).Index(6).Name("ForwardTarget");
+			Map(m => m.script.strategyInstance.targets).Index(7).Name("Targets");
+			Map(m => m.script.strategyInstance.radius).Index(8).Name("Radius");
 		}
 	}
 
@@ -47,16 +77,19 @@ namespace BG.Logging {
 		private string fileName;
 
 		private List<BodyRedirectionData> recordsBR;
-		private List<WorldRedirectionScene> recordsWR;
+		private List<WorldRedirectionData> recordsWR;
 
 		private void Start() {
 			createNewFile();
+
+			Application.targetFrameRate = 60;
 		}
 
 		private void Update() {
 			if (recordsBR != null) {
 				BodyRedirection rootScript = (BodyRedirection) Toolkit.Instance.rootScript;
 				recordsBR.Add(new BodyRedirectionData(DateTime.Now, rootScript));
+
 				if(recordsBR.Count > 10) {
 					using (var writer = new StreamWriter(fileName, append: true)) {
 						var config = new CsvConfiguration(CultureInfo.InvariantCulture) {
@@ -65,17 +98,23 @@ namespace BG.Logging {
 						using (var csv = new CsvWriter(writer, config)) {
 							csv.Context.RegisterClassMap<BodyRedirectionDataMap>();
 							csv.WriteRecords<BodyRedirectionData>(recordsBR);
+							recordsBR.Clear();
 						}
 					}
 				}
-			} else if (recordsWR != null && recordsWR.Count > 10) {
-				using (var writer = new StreamWriter(fileName, append: true)) {
-					var config = new CsvConfiguration(CultureInfo.InvariantCulture) {
-						HasHeaderRecord = false,
-					};
-					using (var csv = new CsvWriter(writer, config)) {
-						csv.WriteRecords(recordsWR.Select(record => record.GetHeadToHeadDistance()));
-						recordsWR.Clear();
+			} else if (recordsWR != null) {
+				WorldRedirection rootScript = (WorldRedirection) Toolkit.Instance.rootScript;
+				recordsWR.Add(new WorldRedirectionData(DateTime.Now, rootScript));
+
+				if(recordsWR.Count > 10) {
+					using (var writer = new StreamWriter(fileName, append: true)) {
+						var config = new CsvConfiguration(CultureInfo.InvariantCulture) {
+							HasHeaderRecord = false,
+						};
+						using (var csv = new CsvWriter(writer, config)) {
+							csv.Context.RegisterClassMap<WorldRedirectionDataMap>();
+							csv.WriteRecords<WorldRedirectionData>(recordsWR);
+						}
 					}
 				}
 			}
@@ -96,12 +135,15 @@ namespace BG.Logging {
 			} catch (InvalidCastException) {
 				try {
 					WorldRedirection rootScript = (WorldRedirection) Toolkit.Instance.rootScript;
-					recordsWR = new List<WorldRedirectionScene>();
+					recordsWR = new List<WorldRedirectionData>();
 
 					fileName = pathToFile + fileNamePrefix + DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss") + ".csv";
 					using (var writer = new StreamWriter(fileName)) {
-						using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))	// TODO create a configuration to not write the header
-							csv.WriteRecords(recordsWR);
+						// TODO create a configuration to not write the header
+						using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture)) {
+							csv.Context.RegisterClassMap<WorldRedirectionDataMap>();
+							csv.WriteRecords<WorldRedirectionData>(recordsWR);
+						}
 					}
 				} catch (InvalidCastException) {
 					Debug.LogError("Could not cast the toolkit rootsctipt to a known type.");
