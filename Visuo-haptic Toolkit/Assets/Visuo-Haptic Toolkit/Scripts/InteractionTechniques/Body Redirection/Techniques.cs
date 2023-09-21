@@ -71,23 +71,11 @@ namespace BG.Redirection {
         public float redirectionLateness;
 		public Vector2 controlPoint;
 
-		protected BodyRedirection rootScript;
-
-        public BodyRedirectionTechnique(BodyRedirection script) => this.rootScript = script;
-
-        public virtual void InitRedirection() {
-			Debug.LogError("Calling Redirect() virtual method. It should be overriden");
-		}
-
 		/// <summary>
 		/// This virtual function applies the redirection to the virtualHand Transform according to the other parameters and the equations
 		/// defined in the corresponding techniques.
 		/// </summary>
 		public virtual void Redirect(BodyRedirectionScene scene) {
-			Debug.LogError("Calling Redirect() virtual method. It should be overriden");
-		}
-
-		public virtual void EndRedirection() {
 			Debug.LogError("Calling Redirect() virtual method. It should be overriden");
 		}
 	}
@@ -98,7 +86,7 @@ namespace BG.Redirection {
 	/// </summary>
 	public class Azmandian2016Body: BodyRedirectionTechnique {
 
-		public Azmandian2016Body(BodyRedirection script): base(script) {}
+		public Azmandian2016Body(): base() {}
 
 		public override void Redirect(BodyRedirectionScene scene) {
 			scene.SetRedirection(GetRedirection(scene));
@@ -119,7 +107,7 @@ namespace BG.Redirection {
     /// </summary>
     public class Azmandian2016Hybrid: BodyRedirectionTechnique {
 
-		public Azmandian2016Hybrid(BodyRedirection script): base(script) {}
+		public Azmandian2016Hybrid(): base() {}
 
 		public override void Redirect(BodyRedirectionScene scene) {
 			Debug.Log("Method not implemented yet.");
@@ -131,7 +119,7 @@ namespace BG.Redirection {
     /// </summary>
     public class Han2018Instant: BodyRedirectionTechnique {
 
-		public Han2018Instant(BodyRedirection script): base(script) {}
+		public Han2018Instant(): base() {}
 
         public override void Redirect(BodyRedirectionScene scene) {
 			// If the hand is inside the redirection boundary, instantly applies the redirection
@@ -148,7 +136,7 @@ namespace BG.Redirection {
     /// </summary>
     public class Han2018Continous: BodyRedirectionTechnique {
 
-		public Han2018Continous(BodyRedirection script): base(script) {}
+		public Han2018Continous(): base() {}
 
 		public override void Redirect(BodyRedirectionScene scene) {
 			float D = scene.GetPhysicalHandTargetDistance();
@@ -159,7 +147,7 @@ namespace BG.Redirection {
 
 	public class Cheng2017Sparse: BodyRedirectionTechnique {
 
-		public Cheng2017Sparse(BodyRedirection script): base(script) {}
+		public Cheng2017Sparse(): base() {}
 
 		public override void Redirect(BodyRedirectionScene scene) {
 			float Ds = scene.GetPhysicalHandOriginDistance();
@@ -177,7 +165,7 @@ namespace BG.Redirection {
 	public class Geslain2022Polynom: BodyRedirectionTechnique {
 
 
-		public Geslain2022Polynom(BodyRedirection script, float redirectionLateness, Vector2 controlPoint): base(script) {
+		public Geslain2022Polynom(float redirectionLateness, Vector2 controlPoint): base() {
 			this.redirectionLateness = redirectionLateness;
 			this.controlPoint = controlPoint;
 		}
@@ -200,12 +188,10 @@ namespace BG.Redirection {
 	// Reset the redirection over a short period of time
 	public class ResetBodyRedirection: BodyRedirectionTechnique {
 
-		public ResetBodyRedirection(BodyRedirection script): base(script) { }
+		public ResetBodyRedirection(): base() { }
 
 		public override void Redirect(BodyRedirectionScene scene) {
-			if (this.rootScript.IsRedirecting()) {
 				scene.virtualHand.position += Vector3.ClampMagnitude((scene.physicalHand.position - scene.virtualHand.position) * Time.deltaTime, Toolkit.Instance.parameters.ResetRedirectionSpeed);
-			}
 		}
 	}
 }

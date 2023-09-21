@@ -14,16 +14,16 @@ namespace BG.Redirection {
 
         public BodyRedirectionScene scene;
 
-		
+
 
         private void updateTechnique() {
 			techniqueInstance = technique switch {
-				BRTechnique.None => new ResetBodyRedirection(this),
-				BRTechnique.Azmandian2016Body => new Azmandian2016Body(this),
-				BRTechnique.Han2018Instant => new Han2018Instant(this),
-				BRTechnique.Han2018Continous => new Han2018Continous(this),
-				BRTechnique.Cheng2017Sparse => new Cheng2017Sparse(this),
-				BRTechnique.Geslain2022Polynom => new Geslain2022Polynom(this, techniqueInstance.redirectionLateness, techniqueInstance.controlPoint),
+				BRTechnique.None => new ResetBodyRedirection(),
+				BRTechnique.Azmandian2016Body => new Azmandian2016Body(),
+				BRTechnique.Han2018Instant => new Han2018Instant(),
+				BRTechnique.Han2018Continous => new Han2018Continous(),
+				BRTechnique.Cheng2017Sparse => new Cheng2017Sparse(),
+				BRTechnique.Geslain2022Polynom => new Geslain2022Polynom(techniqueInstance.redirectionLateness, techniqueInstance.controlPoint),
 				_ => null
 			};
 
