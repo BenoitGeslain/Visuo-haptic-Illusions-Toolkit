@@ -23,7 +23,6 @@ namespace BG.Logging {
 		}
 	}
 
-
 	public sealed class BodyRedirectionDataMap : ClassMap<BodyRedirectionData> {
 		public BodyRedirectionDataMap() {
 			Map(m => m.timeStamp).TypeConverterOption.Format("yyyy/MM/dd-HH:mm:ss.fff").Index(0).Name("TimeStamp");
