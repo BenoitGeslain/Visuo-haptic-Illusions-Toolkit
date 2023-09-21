@@ -1,5 +1,7 @@
 using UnityEngine;
 
+using BG.Redirection;
+
 class NewBRTechnique: BodyRedirectionTechnique {
 
 	public override void Redirect(Transform physicalTarget, Transform virtualTarget, Transform origin, Transform physicalHand, Transform virtualHand) {
