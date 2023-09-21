@@ -5,12 +5,12 @@ public class Controller : MonoBehaviour {
 
 	public float speed = 0.5f;
 
-	Camera camera;
+	Camera cam;
 	Vector3 previousMousePosition;
-	Transform clickedObject;
+	bool wasFocused;
 
 	void Awake() {
-		camera = Camera.main;
+		cam = Camera.main;
 	}
 
 	void Update() {
@@ -28,11 +28,15 @@ public class Controller : MonoBehaviour {
 		// MOUSE
 		Mouse mouse = Mouse.current;
 		// If left clic mouse button is pressed, apply the mouse displacement converted from camera space to world space to the transform
-		if (mouse.leftButton.isPressed) {
+		// if (mouse.leftButton.wasPressedThisFrame) {
+		// 	previousMousePosition = mouse.position.ReadValue();
+		// } else
+		if (mouse.leftButton.isPressed && wasFocused) {
 			Vector3 mousePosition = mouse.position.ReadValue();
 
-			transform.position += camera.ScreenToWorldPoint(mousePosition) - camera.ScreenToWorldPoint(previousMousePosition);
+			transform.position += cam.ScreenToWorldPoint(mousePosition) - cam.ScreenToWorldPoint(previousMousePosition);
 		}
 		previousMousePosition = mouse.position.ReadValue();
+		wasFocused = Application.isFocused;
     }
 }
