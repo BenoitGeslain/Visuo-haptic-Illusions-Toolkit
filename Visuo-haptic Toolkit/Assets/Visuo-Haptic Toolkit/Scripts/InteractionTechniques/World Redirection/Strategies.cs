@@ -20,7 +20,7 @@ namespace BG.Redirection {
 	public class SteerToCenter: WorldRedirectionStrategy {
 
 		public override Vector3 SteerTo(WorldRedirectionScene scene) {
-			return Vector3.ProjectOnPlane(scene.selectedTarget.position - scene.physicalHead.position, Vector3.up);
+			return scene.selectedTarget.position - scene.physicalHead.position;
 		}
 	}
 
@@ -32,10 +32,7 @@ namespace BG.Redirection {
 				Vector3 leftTarget = Quaternion.Euler(0f, Mathf.Rad2Deg * Mathf.PI/3, 0f) * Vector3.ProjectOnPlane(scene.selectedTarget.position - scene.physicalHead.position, Vector3.up);
 				Vector3 rightTarget = Quaternion.Euler(0f, - Mathf.Rad2Deg * Mathf.PI/3, 0f) * Vector3.ProjectOnPlane(scene.selectedTarget.position - scene.physicalHead.position, Vector3.up);
 
-				Debug.DrawRay(scene.physicalHead.position, leftTarget, Color.red);
-				Debug.DrawRay(scene.physicalHead.position, rightTarget, Color.green);
-
-				if (Vector3.Angle(leftTarget, scene.physicalHead.forward) > Vector3.Angle(scene.physicalHead.forward, rightTarget)) {
+				if (Vector3.Angle(leftTarget, scene.physicalHead.forward) < Vector3.Angle(scene.physicalHead.forward, rightTarget)) {
 					return leftTarget;
 				}
 				return rightTarget;
@@ -44,10 +41,7 @@ namespace BG.Redirection {
 				Vector3 leftTarget = Quaternion.Euler(0f, angleToTargets, 0f) * Vector3.ProjectOnPlane(scene.selectedTarget.position - scene.physicalHead.position, Vector3.up);
 				Vector3 rightTarget = Quaternion.Euler(0f, - angleToTargets, 0f) * Vector3.ProjectOnPlane(scene.selectedTarget.position - scene.physicalHead.position, Vector3.up);
 
-				Debug.DrawRay(scene.physicalHead.position, leftTarget, Color.red);
-				Debug.DrawRay(scene.physicalHead.position, rightTarget, Color.green);
-
-				if (Vector3.Angle(leftTarget, scene.physicalHead.forward) > Vector3.Angle(scene.physicalHead.forward, rightTarget)) {
+				if (Vector3.Angle(leftTarget, scene.physicalHead.forward) < Vector3.Angle(scene.physicalHead.forward, rightTarget)) {
 					return leftTarget;
 				}
 				return rightTarget;
@@ -59,16 +53,16 @@ namespace BG.Redirection {
 
 		public override Vector3 SteerTo(WorldRedirectionScene scene) {
 			float smallestBearing = 360f;
-			Transform target = scene.physicalHead;
+			Transform target = null;
 			foreach (Transform t in scene.targets) {
-				float a = Vector3.Angle(Vector3.ProjectOnPlane(scene.physicalHead.forward, Vector3.up), Vector3.ProjectOnPlane(scene.forwardTarget, Vector3.up));
+				float a = Vector3.Angle(Vector3.ProjectOnPlane(scene.physicalHead.forward, Vector3.up), Vector3.ProjectOnPlane(t.position - scene.physicalHead.position, Vector3.up));
 				if (a < smallestBearing) {
 					smallestBearing = a;
 					target = t;
 				}
 			}
 			scene.selectedTarget = target;
-			return target.position;
+			return target.position - scene.physicalHead.position;
 		}
 	}
 }

@@ -66,18 +66,10 @@ namespace BG.Redirection {
     /// </summary>
     public class WorldRedirectionTechnique {
 
-		public virtual void InitRedirection() {
-			Debug.LogError("Calling Redirect() virtual method. It should be overriden");
-		}
-
 		/// <summary>
 		/// Redirects the user towards the actual target. Should be overriden in subclasses.
 		/// </summary>
 		public virtual void Redirect(WorldRedirectionScene scene) {
-			Debug.LogError("Calling Redirect() virtual method. It should be overriden");
-		}
-
-		public virtual void EndRedirection() {
 			Debug.LogError("Calling Redirect() virtual method. It should be overriden");
 		}
 	}
