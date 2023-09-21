@@ -85,67 +85,47 @@ namespace BG.Logging {
 
         private void Start() {
 			createNewFile();
-
 			Application.targetFrameRate = 60;
 		}
 
 		private void Update() {
+            void writeRecords<Data, DataMap>(List<Data> records) where DataMap : ClassMap<Data> {
+                if (records.Count > 10) {
+					using var writer = new StreamWriter(fileName);
+					using var csv = new CsvWriter(writer, config);
+					csv.Context.RegisterClassMap<DataMap>();
+					csv.WriteRecords<Data>(records);
+					records.Clear();
+				}
+            }
             if (recordsBR != null) {
 				BodyRedirection rootScript = (BodyRedirection) Toolkit.Instance.rootScript;
 				recordsBR.Add(new BodyRedirectionData(DateTime.Now, rootScript));
-
-                if (recordsBR.Count > 10) {
-					using (var writer = new StreamWriter(fileName, append: true)) {
-						using (var csv = new CsvWriter(writer, config)) {
-							csv.Context.RegisterClassMap<BodyRedirectionDataMap>();
-							csv.WriteRecords<BodyRedirectionData>(recordsBR);
-							recordsBR.Clear();
-						}
-					}
-				}
+				writeRecords<BodyRedirectionData, BodyRedirectionDataMap>(recordsBR);
 			} else if (recordsWR != null) {
 				WorldRedirection rootScript = (WorldRedirection) Toolkit.Instance.rootScript;
 				recordsWR.Add(new WorldRedirectionData(DateTime.Now, rootScript));
-
-                if (recordsWR.Count > 10) {
-					using (var writer = new StreamWriter(fileName, append: true)) {
-						using (var csv = new CsvWriter(writer, config)) {
-							csv.Context.RegisterClassMap<WorldRedirectionDataMap>();
-							csv.WriteRecords<WorldRedirectionData>(recordsWR);
-							recordsWR.Clear();
-						}
-					}
-				}
+				writeRecords<WorldRedirectionData, WorldRedirectionDataMap>(recordsWR);
 			}
 		}
 
 		public void createNewFile() {
+			fileName = $"{pathToFile}{fileNamePrefix}{DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss")}.csv";
+            
+			void writeHeaders<Data, DataMap>(out List<Data> records) where DataMap : ClassMap<Data> {
+                using var writer = new StreamWriter(fileName);
+                using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
+				records = new List<Data>();
+                csv.Context.RegisterClassMap<DataMap>();
+                csv.WriteRecords<Data>(records);
+            }
 
-            fileName = $"{pathToFile}{fileNamePrefix}{DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss")}.csv";
-            try {
-				BodyRedirection rootScript = (BodyRedirection) Toolkit.Instance.rootScript;
-				recordsBR = new List<BodyRedirectionData>();
-				using (var writer = new StreamWriter(fileName)) {
-					using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture)) {
-						csv.Context.RegisterClassMap<BodyRedirectionDataMap>();
-						csv.WriteRecords<BodyRedirectionData>(recordsBR);
-					}
-				}
-			} catch (InvalidCastException) {
-				try {
-					WorldRedirection rootScript = (WorldRedirection) Toolkit.Instance.rootScript;
-					recordsWR = new List<WorldRedirectionData>();
-					using (var writer = new StreamWriter(fileName)) {
-						// TODO create a configuration to not write the header
-						using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture)) {
-							csv.Context.RegisterClassMap<WorldRedirectionDataMap>();
-							csv.WriteRecords<WorldRedirectionData>(recordsWR);
-						}
-					}
-				} catch (InvalidCastException) {
-					Debug.LogError("Could not cast the toolkit rootsctipt to a known type.");
-				}
-			}
+			var script = Toolkit.Instance.rootScript;
+            if (script is BodyRedirection) {
+                writeHeaders<BodyRedirectionData, BodyRedirectionDataMap>(out recordsBR);
+            } else if (script is WorldRedirection) {
+                writeHeaders<WorldRedirectionData, WorldRedirectionDataMap>(out recordsWR);
+            } else Debug.LogError("Could not cast the toolkit rootsctipt to a known type.");
 		}
 
         private string[] targetsToString(Transform[] targets) => targets.Select(t => t.name).ToArray();
