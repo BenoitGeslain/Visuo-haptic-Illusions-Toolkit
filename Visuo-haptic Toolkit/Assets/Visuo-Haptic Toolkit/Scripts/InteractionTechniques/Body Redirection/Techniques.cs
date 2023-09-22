@@ -100,13 +100,11 @@ namespace BG.Redirection {
 		}
 	}
 
-
     /// <summary>
     /// Class for redirecting the user's hand by an amount that has a degree-2 polynomial dependency on the hand-target distance.
     /// </summary>
     [Serializable]
 	public class Geslain2022Polynom: BodyRedirectionTechnique {
-
 
 		public Geslain2022Polynom(float redirectionLateness, Vector2 controlPoint): base() {
 			this.redirectionLateness = redirectionLateness;
