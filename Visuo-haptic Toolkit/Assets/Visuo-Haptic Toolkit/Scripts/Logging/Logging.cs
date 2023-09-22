@@ -13,18 +13,13 @@ using UnityEditor;
 
 namespace BG.Logging {
 
-	abstract public class RedirectionData {
+    public abstract record RedirectionData {
         public DateTime timeStamp = DateTime.Now;
     }
 
-    public class BodyRedirectionData : RedirectionData {
+    public record BodyRedirectionData : RedirectionData {
 		public BodyRedirection script = (BodyRedirection)Toolkit.Instance.rootScript;
-
-		public BodyRedirectionData(DateTime timeStamp, BodyRedirection script) {
-			this.timeStamp = timeStamp;
-			this.script = script;
-		}
-	}
+    }
 
 	public sealed class BodyRedirectionDataMap : ClassMap<BodyRedirectionData> {
 		public BodyRedirectionDataMap() {
@@ -46,14 +41,9 @@ namespace BG.Logging {
 		}
 	}
 
-	public class WorldRedirectionData : RedirectionData {
+	public record WorldRedirectionData : RedirectionData {
 		public WorldRedirection script = (WorldRedirection)Toolkit.Instance.rootScript;
-
-		public WorldRedirectionData(DateTime timeStamp, WorldRedirection script) {
-			this.timeStamp = timeStamp;
-			this.script = script;
-		}
-	}
+    }
 
 	public sealed class WorldRedirectionDataMap : ClassMap<WorldRedirectionData> {
 		public WorldRedirectionDataMap() {
@@ -78,8 +68,8 @@ namespace BG.Logging {
 		private string fileName;
 		private int bufferSize = 10; // number of records kept before writing to disk
 
-		private List<BodyRedirectionData> recordsBR;
-		private List<WorldRedirectionData> recordsWR;
+		private List<BodyRedirectionData> recordsBR = new();
+		private List<WorldRedirectionData> recordsWR = new();
 
         private CsvConfiguration config = new CsvConfiguration(CultureInfo.InvariantCulture) {
             HasHeaderRecord = false,
@@ -102,18 +92,12 @@ namespace BG.Logging {
             }
             var script = Toolkit.Instance.rootScript;
             if (script is BodyRedirection) {
-                if (recordsBR != null) {
-                    BodyRedirection rootScript = (BodyRedirection)Toolkit.Instance.rootScript;
-                    recordsBR.Add(new BodyRedirectionData(DateTime.Now, rootScript));
-                    writeRecords<BodyRedirectionData, BodyRedirectionDataMap>(recordsBR);
-                }
+                recordsBR.Add(new BodyRedirectionData());
+                writeRecords<BodyRedirectionData, BodyRedirectionDataMap>(recordsBR);
             }
             else if (script is WorldRedirection) {
-                if (recordsWR != null) {
-                    WorldRedirection rootScript = (WorldRedirection)Toolkit.Instance.rootScript;
-                    recordsWR.Add(new WorldRedirectionData(DateTime.Now, rootScript));
-                    writeRecords<WorldRedirectionData, WorldRedirectionDataMap>(recordsWR);
-                }
+                recordsWR.Add(new WorldRedirectionData());
+                writeRecords<WorldRedirectionData, WorldRedirectionDataMap>(recordsWR);
             }
             else Debug.LogError("Could not cast the toolkit rootscript to a known type.");
 		}
@@ -126,7 +110,7 @@ namespace BG.Logging {
                 using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
 				records = new List<Data>();
                 csv.Context.RegisterClassMap<DataMap>();
-                csv.WriteRecords<Data>(records);
+				csv.WriteHeader<Data>();
             }
 
 			var script = Toolkit.Instance.rootScript;

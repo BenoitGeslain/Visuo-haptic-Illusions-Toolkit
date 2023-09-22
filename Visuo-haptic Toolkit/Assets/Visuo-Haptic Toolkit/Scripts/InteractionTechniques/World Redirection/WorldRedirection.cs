@@ -73,6 +73,6 @@ namespace BG.Redirection {
 		public WRTechnique GetTechnique() => technique;
 
         public bool IsRedirecting() => scene.GetHeadToHeadDistance() < Vector3.kEpsilon &&
-                   Quaternion.Angle(scene.physicalHead.rotation, scene.virtualHead.rotation) < Vector3.kEpsilon;
+                   Quaternion.Dot(scene.physicalHead.rotation, scene.virtualHead.rotation) > 1 - Vector3.kEpsilon;
     }
 }
