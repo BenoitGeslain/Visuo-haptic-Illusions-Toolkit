@@ -64,7 +64,6 @@ namespace BG.Redirection {
         /// <summary>
         /// The position of the virtual hand is given by <c>physicalHand.position + Redirection</c>.
         /// </summary>
-        /// <param name="redirection"></param>
         public Vector3 Redirection {
 			get => virtualHand.position - physicalHand.position;
 			set => virtualHand.position = physicalHand.position + value;
