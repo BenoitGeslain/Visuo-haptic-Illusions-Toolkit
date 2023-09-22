@@ -1,8 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-using BG.Redirection;
-
 namespace BG.Visualisation {
 	public class Controller : MonoBehaviour {
 

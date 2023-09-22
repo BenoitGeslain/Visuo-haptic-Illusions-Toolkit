@@ -33,8 +33,6 @@ namespace BG.Redirection {
 	/// </summary>
 	public class Azmandian2016Body: BodyRedirectionTechnique {
 
-		public Azmandian2016Body(): base() {}
-
         public override void Redirect(Scene scene) => scene.Redirection = GetRedirection(scene);
 
         public Vector3 GetRedirection(Scene scene) {
@@ -52,11 +50,7 @@ namespace BG.Redirection {
     /// </summary>
     public class Azmandian2016Hybrid: BodyRedirectionTechnique {
 
-		public Azmandian2016Hybrid(): base() {}
-
 		public override void Redirect(Scene scene) {
-			// float angleBetweenTargets = Vector3.SignedAngle(Vector3.ProjectOnPlane(scene.physicalTarget.position - scene.origin.position, Vector3.up), scene.virtualTarget.position - scene.origin.position, Vector3.up);
-			// if ()
 		}
 	}
 
@@ -64,8 +58,6 @@ namespace BG.Redirection {
     /// Class for instantly redirecting the user's virtual hand.
     /// </summary>
     public class Han2018Instant: BodyRedirectionTechnique {
-
-		public Han2018Instant(): base() {}
 
         public override void Redirect(Scene scene) {
 			// If the hand is inside the redirection boundary, instantly applies the redirection
@@ -80,8 +72,6 @@ namespace BG.Redirection {
     /// </summary>
     public class Han2018Continous: BodyRedirectionTechnique {
 
-		public Han2018Continous(): base() {}
-
 		public override void Redirect(Scene scene) {
 			float D = scene.GetPhysicalHandTargetDistance();
 			float B = Vector3.Magnitude(scene.physicalTarget.position - scene.origin.position) + Toolkit.Instance.parameters.NoRedirectionBuffer;
@@ -90,8 +80,6 @@ namespace BG.Redirection {
 	}
 
 	public class Cheng2017Sparse: BodyRedirectionTechnique {
-
-		public Cheng2017Sparse(): base() {}
 
 		public override void Redirect(Scene scene) {
 			float Ds = scene.GetPhysicalHandOriginDistance();
@@ -131,8 +119,6 @@ namespace BG.Redirection {
 
 	// Reset the redirection over a short period of time
 	public class ResetBodyRedirection: BodyRedirectionTechnique {
-
-		public ResetBodyRedirection(): base() { }
 
 		public override void Redirect(Scene scene) {
 				scene.virtualHand.position += Vector3.ClampMagnitude((scene.physicalHand.position - scene.virtualHand.position) * Time.deltaTime, Toolkit.Instance.parameters.ResetRedirectionSpeed);
