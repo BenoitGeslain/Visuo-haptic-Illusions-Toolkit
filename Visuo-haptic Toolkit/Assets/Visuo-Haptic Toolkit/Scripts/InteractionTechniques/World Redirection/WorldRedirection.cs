@@ -14,7 +14,7 @@ namespace BG.Redirection {
 		public WRStrategy strategy;
 		public WorldRedirectionStrategy strategyInstance;
 
-		public WorldRedirectionScene scene;
+		public Scene scene;
 
 		private void updateTechnique() {
 			techniqueInstance = technique switch {

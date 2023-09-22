@@ -27,7 +27,7 @@ namespace BG.Visualisation {
 
 		private void Update() {
 			WorldRedirection rootScript = (WorldRedirection) Toolkit.Instance.rootScript;
-			WorldRedirectionScene scene = rootScript.scene;
+			Scene scene = rootScript.scene;
 
 			switch (rootScript.strategy) {
 				case WRStrategy.None:
@@ -62,11 +62,11 @@ namespace BG.Visualisation {
 			drawDirectionLines(scene);
 		}
 
-		private void drawDirectionLines(WorldRedirectionScene scene) {
+		private void drawDirectionLines(Scene scene) {
 			Debug.DrawRay(scene.physicalHead.position, scene.forwardTarget.normalized, colors[2]);
 		}
 
-		private void centerTargets(WorldRedirectionScene scene) {
+		private void centerTargets(Scene scene) {
 			if (targets.Count == 1) {
 				targets[0].transform.position = scene.selectedTarget.position;
 				targets[0].gameObject.SetActive(true);
@@ -82,8 +82,8 @@ namespace BG.Visualisation {
 			Debug.DrawLine(scene.physicalHead.position, scene.selectedTarget.position, colors[0]);
 		}
 
-		private void orbitTargets(WorldRedirectionScene scene) {
-			float distanceToTarget = scene.GetDistanceToTarget();
+		private void orbitTargets(Scene scene) {
+			float distanceToTarget = scene.GetHeadRedirectionDistance();
 			Vector3 vectorToTarget = Vector3.ProjectOnPlane(scene.selectedTarget.position - scene.physicalHead.position, Vector3.up).normalized;
 			if (distanceToTarget < scene.radius) {
 				Vector3 leftTarget = Quaternion.Euler(0f, Mathf.Rad2Deg * Mathf.PI/3, 0f) * vectorToTarget * Mathf.Abs(scene.radius / Mathf.Tan(Mathf.Rad2Deg * Mathf.PI/3 * Mathf.Rad2Deg));
@@ -113,7 +113,7 @@ namespace BG.Visualisation {
 			}
 		}
 
-		private void updateTargetsOrbit(WorldRedirectionScene scene, Vector3 leftTarget, Vector3 rightTarget) {
+		private void updateTargetsOrbit(Scene scene, Vector3 leftTarget, Vector3 rightTarget) {
 			if (targets.Count == 2) {
 				targets[0].position = scene.physicalHead.position + leftTarget;
 				targets[1].position = scene.physicalHead.position + rightTarget;
@@ -133,7 +133,7 @@ namespace BG.Visualisation {
 			}
 		}
 
-		private void multipleTargets(WorldRedirectionScene scene) {
+		private void multipleTargets(Scene scene) {
 			if (targets.Count == scene.targets.Length) {
 				for (int i = 0; i < scene.targets.Length; i++) {
 					targets[i].transform.position = scene.targets[i].position;

@@ -4,7 +4,7 @@ using UnityEngine;
 namespace BG.Redirection {
 	public class WorldRedirectionStrategy {
 
-		public virtual Vector3 SteerTo(WorldRedirectionScene scene) {
+		public virtual Vector3 SteerTo(Scene scene) {
 			Debug.LogError("Calling Redirect() virtual method. It should be overriden");
 			return Vector3.zero;
 		}
@@ -12,22 +12,22 @@ namespace BG.Redirection {
 
 	public class NoSteer: WorldRedirectionStrategy {
 
-		public override Vector3 SteerTo(WorldRedirectionScene scene) {
+		public override Vector3 SteerTo(Scene scene) {
 			return scene.physicalHead.forward;
 		}
 	}
 
 	public class SteerToCenter: WorldRedirectionStrategy {
 
-		public override Vector3 SteerTo(WorldRedirectionScene scene) {
+		public override Vector3 SteerTo(Scene scene) {
 			return scene.selectedTarget.position - scene.physicalHead.position;
 		}
 	}
 
 	public class SteerToOrbit: WorldRedirectionStrategy {
 
-		public override Vector3 SteerTo(WorldRedirectionScene scene) {
-			float distanceToTarget = scene.GetDistanceToTarget();
+		public override Vector3 SteerTo(Scene scene) {
+			float distanceToTarget = scene.GetHeadRedirectionDistance();
 			if (distanceToTarget < scene.radius) {
 				Vector3 leftTarget = Quaternion.Euler(0f, Mathf.Rad2Deg * Mathf.PI/3, 0f) * Vector3.ProjectOnPlane(scene.selectedTarget.position - scene.physicalHead.position, Vector3.up);
 				Vector3 rightTarget = Quaternion.Euler(0f, - Mathf.Rad2Deg * Mathf.PI/3, 0f) * Vector3.ProjectOnPlane(scene.selectedTarget.position - scene.physicalHead.position, Vector3.up);
@@ -51,7 +51,7 @@ namespace BG.Redirection {
 
 	public class SteerToMultipleTargets: WorldRedirectionStrategy {
 
-		public override Vector3 SteerTo(WorldRedirectionScene scene) {
+		public override Vector3 SteerTo(Scene scene) {
 			float smallestBearing = 360f;
 			Transform target = null;
 			foreach (Transform t in scene.targets) {

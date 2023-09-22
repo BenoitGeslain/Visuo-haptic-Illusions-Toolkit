@@ -12,7 +12,7 @@ namespace BG.Redirection {
 		public BRTechnique technique;
 		public BodyRedirectionTechnique techniqueInstance;
 
-        public BodyRedirectionScene scene;
+        public Scene scene;
 
 
 

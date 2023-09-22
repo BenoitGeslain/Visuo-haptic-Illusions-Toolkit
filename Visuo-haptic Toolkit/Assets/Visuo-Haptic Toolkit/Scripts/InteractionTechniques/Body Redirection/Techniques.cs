@@ -1,63 +1,10 @@
 using System;
 using System.Linq;
-using Unity.VisualScripting;
+
 using UnityEngine;
 
+
 namespace BG.Redirection {
-
-	/// <summary>
-	/// This class records the position of various objects of interest.
-	/// </summary>
-	/// <param name="physicalTarget">The physical target the hand should reach when the virtual hand reaches the virtual target.</param>
-	/// <param name="virtualTarget">The virtual target the user is reaching for.</param>
-	/// <param name="origin">The point of origin where no redirection is applied.</param>
-	/// <param name="physicalHand">The Transform representing the user's physical hand.</param>
-	/// <param name="virtualHand">The Transform representing the user's virtual hand, i.e. the user's avatar.</param>
-	[Serializable]
-	public record BodyRedirectionScene()
-    {
-		[Header("Technique Parameters")]
-        public Transform physicalTarget;
-        public Transform virtualTarget;
-        public Transform origin;
-        [Header("User Parameters")]
-        public Transform physicalHand;
-        public Transform virtualHand;
-
-        public BodyRedirectionScene(Transform physicalTarget, Transform virtualTarget, Transform origin, Transform physicalHand, Transform virtualHand):
-			this() {
-
-            this.physicalTarget = physicalTarget;
-            this.virtualTarget = virtualTarget;
-            this.origin = origin;
-            this.physicalHand = physicalHand;
-            this.virtualHand = virtualHand;
-        }
-        /// <summary>
-        /// Distance between the user's real and virtual hands.
-        /// </summary>
-        /// <returns></returns>
-        public float GetHandRedirectionDistance() => Vector3.Distance(physicalHand.position, virtualHand.position);
-		/// <summary>
-		/// Distance between the user's real hand and the physical target.
-		/// </summary>
-		/// <returns></returns>
-		public float GetPhysicalHandTargetDistance() => Vector3.Distance(physicalHand.position, physicalTarget.position);
-		/// <summary>
-		/// Distance between the user's real hand and the origin.
-		/// </summary>
-		/// <returns></returns>
-		public float GetPhysicalHandOriginDistance() => Vector3.Distance(physicalHand.position, origin.position);
-
-        /// <summary>
-        /// The position of the virtual hand is given by <c>physicalHand.position + Redirection</c>.
-        /// </summary>
-        /// <param name="redirection"></param>
-        public Vector3 Redirection {
-			get => virtualHand.position - physicalHand.position;
-			set => virtualHand.position = physicalHand.position + value;
-		}
-    }
 
     /// <summary>
     ///  This class is the most conceptual class of  body redirection defining the important
@@ -75,7 +22,7 @@ namespace BG.Redirection {
 		/// This virtual function applies the redirection to the virtualHand Transform according to the other parameters and the equations
 		/// defined in the corresponding techniques.
 		/// </summary>
-		public virtual void Redirect(BodyRedirectionScene scene) {
+		public virtual void Redirect(Scene scene) {
 			Debug.LogError("Calling Redirect() virtual method. It should be overriden");
 		}
 	}
@@ -88,9 +35,9 @@ namespace BG.Redirection {
 
 		public Azmandian2016Body(): base() {}
 
-        public override void Redirect(BodyRedirectionScene scene) => scene.Redirection = GetRedirection(scene);
+        public override void Redirect(Scene scene) => scene.Redirection = GetRedirection(scene);
 
-        public Vector3 GetRedirection(BodyRedirectionScene scene) {
+        public Vector3 GetRedirection(Scene scene) {
 			var d = scene.physicalTarget.position - scene.origin.position;
 			var warpingRatio = Mathf.Clamp(
 				Vector3.Dot(d, scene.physicalHand.position - scene.origin.position) / d.sqrMagnitude,
@@ -107,8 +54,9 @@ namespace BG.Redirection {
 
 		public Azmandian2016Hybrid(): base() {}
 
-		public override void Redirect(BodyRedirectionScene scene) {
-			Debug.Log("Method not implemented yet.");
+		public override void Redirect(Scene scene) {
+			// float angleBetweenTargets = Vector3.SignedAngle(Vector3.ProjectOnPlane(scene.physicalTarget.position - scene.origin.position, Vector3.up), scene.virtualTarget.position - scene.origin.position, Vector3.up);
+			// if ()
 		}
 	}
 
@@ -119,7 +67,7 @@ namespace BG.Redirection {
 
 		public Han2018Instant(): base() {}
 
-        public override void Redirect(BodyRedirectionScene scene) {
+        public override void Redirect(Scene scene) {
 			// If the hand is inside the redirection boundary, instantly applies the redirection
 			scene.Redirection = scene.GetPhysicalHandOriginDistance() > Toolkit.Instance.parameters.NoRedirectionBuffer
                 ? scene.virtualTarget.position - scene.physicalTarget.position
@@ -134,7 +82,7 @@ namespace BG.Redirection {
 
 		public Han2018Continous(): base() {}
 
-		public override void Redirect(BodyRedirectionScene scene) {
+		public override void Redirect(Scene scene) {
 			float D = scene.GetPhysicalHandTargetDistance();
 			float B = Vector3.Magnitude(scene.physicalTarget.position - scene.origin.position) + Toolkit.Instance.parameters.NoRedirectionBuffer;
 			scene.Redirection = Math.Max(1 - D / B, 0f) * (scene.virtualTarget.position- scene.physicalTarget.position);
@@ -145,7 +93,7 @@ namespace BG.Redirection {
 
 		public Cheng2017Sparse(): base() {}
 
-		public override void Redirect(BodyRedirectionScene scene) {
+		public override void Redirect(Scene scene) {
 			float Ds = scene.GetPhysicalHandOriginDistance();
 			float Dp = scene.GetPhysicalHandTargetDistance();
 			float alpha = Ds / (Ds + Dp);
@@ -166,7 +114,7 @@ namespace BG.Redirection {
 			this.controlPoint = controlPoint;
 		}
 
-		public override void Redirect(BodyRedirectionScene scene) {
+		public override void Redirect(Scene scene) {
 			// The redirection is a degree-2 polynomial function of the distance,
 			// f(d) = a_0 + a_1 * d + a_2 * d^2,
 			// with limit conditions f(0) = 1 (hence a_0 = 1) and f(D) = 0, where D is the origin - real target distance
@@ -186,7 +134,7 @@ namespace BG.Redirection {
 
 		public ResetBodyRedirection(): base() { }
 
-		public override void Redirect(BodyRedirectionScene scene) {
+		public override void Redirect(Scene scene) {
 				scene.virtualHand.position += Vector3.ClampMagnitude((scene.physicalHand.position - scene.virtualHand.position) * Time.deltaTime, Toolkit.Instance.parameters.ResetRedirectionSpeed);
 		}
 	}
