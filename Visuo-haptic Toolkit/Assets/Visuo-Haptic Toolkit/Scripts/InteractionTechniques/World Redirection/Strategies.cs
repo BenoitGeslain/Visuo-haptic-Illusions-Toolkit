@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 
 namespace BG.Redirection {
@@ -12,42 +13,33 @@ namespace BG.Redirection {
 
 	public class NoSteer: WorldRedirectionStrategy {
 
-		public override Vector3 SteerTo(Scene scene) {
-			return scene.physicalHead.forward;
-		}
-	}
+        public override Vector3 SteerTo(Scene scene) => scene.physicalHead.forward;
+    }
 
 	public class SteerToCenter: WorldRedirectionStrategy {
 
-		public override Vector3 SteerTo(Scene scene) {
-			return scene.selectedTarget.position - scene.physicalHead.position;
-		}
-	}
+        public override Vector3 SteerTo(Scene scene) => scene.selectedTarget.position - scene.physicalHead.position;
+    }
 
 	public class SteerToOrbit: WorldRedirectionStrategy {
 
 		public override Vector3 SteerTo(Scene scene) {
 			float distanceToTarget = scene.GetHeadRedirectionDistance();
+			Vector3 leftTarget, rightTarget;
 			if (distanceToTarget < scene.radius) {
-				Vector3 leftTarget = Quaternion.Euler(0f, Mathf.Rad2Deg * Mathf.PI/3, 0f) * Vector3.ProjectOnPlane(scene.selectedTarget.position - scene.physicalHead.position, Vector3.up);
-				Vector3 rightTarget = Quaternion.Euler(0f, - Mathf.Rad2Deg * Mathf.PI/3, 0f) * Vector3.ProjectOnPlane(scene.selectedTarget.position - scene.physicalHead.position, Vector3.up);
-
-				if (Vector3.Angle(leftTarget, scene.physicalHead.forward) < Vector3.Angle(scene.physicalHead.forward, rightTarget)) {
-					return leftTarget;
-				}
-				return rightTarget;
-			} else {
-				float angleToTargets = Mathf.Rad2Deg * Mathf.Asin(scene.radius / distanceToTarget);
-				Vector3 leftTarget = Quaternion.Euler(0f, angleToTargets, 0f) * Vector3.ProjectOnPlane(scene.selectedTarget.position - scene.physicalHead.position, Vector3.up);
-				Vector3 rightTarget = Quaternion.Euler(0f, - angleToTargets, 0f) * Vector3.ProjectOnPlane(scene.selectedTarget.position - scene.physicalHead.position, Vector3.up);
-
-				if (Vector3.Angle(leftTarget, scene.physicalHead.forward) < Vector3.Angle(scene.physicalHead.forward, rightTarget)) {
-					return leftTarget;
-				}
-				return rightTarget;
+				leftTarget = Quaternion.Euler(0f, Mathf.Rad2Deg * Mathf.PI / 3, 0f) * Vector3.ProjectOnPlane(scene.selectedTarget.position - scene.physicalHead.position, Vector3.up);
+				rightTarget = Quaternion.Euler(0f, -Mathf.Rad2Deg * Mathf.PI / 3, 0f) * Vector3.ProjectOnPlane(scene.selectedTarget.position - scene.physicalHead.position, Vector3.up);
 			}
-		}
-	}
+			else {
+				float angleToTargets = Mathf.Rad2Deg * Mathf.Asin(scene.radius / distanceToTarget);
+				leftTarget = Quaternion.Euler(0f, angleToTargets, 0f) * Vector3.ProjectOnPlane(scene.selectedTarget.position - scene.physicalHead.position, Vector3.up);
+				rightTarget = Quaternion.Euler(0f, -angleToTargets, 0f) * Vector3.ProjectOnPlane(scene.selectedTarget.position - scene.physicalHead.position, Vector3.up);
+			}
+            return Vector3.Angle(leftTarget, scene.physicalHead.forward) < Vector3.Angle(scene.physicalHead.forward, rightTarget)
+                ? leftTarget
+                : rightTarget;
+        }
+    }
 
 	public class SteerToMultipleTargets: WorldRedirectionStrategy {
 
