@@ -43,6 +43,7 @@ namespace BG.Redirection {
             this.physicalHand = physicalHand;
             this.virtualHand = virtualHand;
         }
+
         /// <summary>
         /// Distance between the user's real and virtual hands.
         /// </summary>
@@ -73,7 +74,10 @@ namespace BG.Redirection {
 		public float GetHeadToHeadDistance() => Vector3.Distance(physicalHead.position, virtualHead.position);
 		public float GetHeadRedirectionDistance() => Vector3.Distance(physicalHead.position, selectedTarget.position);	// TODO Implement target selectin in Strategy
         public float GetHeadAngleToTarget() => Vector3.SignedAngle(Vector3.ProjectOnPlane(physicalHead.forward, Vector3.up), forwardTarget, Vector3.up); // TODO Rendre 2 dimensions
-        public float GetHeadInstantRotation() => physicalHead.eulerAngles.y - previousRotation.eulerAngles.y;
+        public float GetHeadInstantRotation() {
+			float angularSpeed = (physicalHead.rotation * Quaternion.Inverse(previousRotation)).eulerAngles.y;
+			return (angularSpeed>180f)? 360 - angularSpeed : angularSpeed;
+		}
 
 		public Vector3 GetHeadInstantTranslation() => Vector3.Project(physicalHead.position - previousPosition, physicalHead.forward);
 
