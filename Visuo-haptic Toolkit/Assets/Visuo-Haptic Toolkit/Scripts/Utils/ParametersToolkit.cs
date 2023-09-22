@@ -10,6 +10,8 @@ namespace BG.Redirection {
 		public Vector3 MaxAngles;
 		[Tooltip("A buffer value where the hand redirection is not applied [Han et al., 2018].")]
 		public float NoRedirectionBuffer = 0.1f;
+		[Tooltip("A buffer value where the hand redirection is not applied [Han et al., 2018].")]
+		public float MaxRedirectionThreshold = 0.5f;
 		[Tooltip("Speed at which the hand redirection is reset when selecting the ResetRedirection technique. Value is in XXXX.")]
 		public float ResetRedirectionSpeed = 0.001f;
 

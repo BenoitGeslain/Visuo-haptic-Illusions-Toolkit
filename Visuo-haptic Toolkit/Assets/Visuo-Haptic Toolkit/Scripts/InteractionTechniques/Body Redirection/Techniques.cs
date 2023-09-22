@@ -1,6 +1,6 @@
 using System;
 using System.Linq;
-
+using UnityEditor;
 using UnityEngine;
 
 
@@ -35,7 +35,7 @@ namespace BG.Redirection {
 
         public override void Redirect(Scene scene) => scene.Redirection = GetRedirection(scene);
 
-        public Vector3 GetRedirection(Scene scene) {
+        public static Vector3 GetRedirection(Scene scene) {
 			var d = scene.physicalTarget.position - scene.origin.position;
 			var warpingRatio = Mathf.Clamp(
 				Vector3.Dot(d, scene.physicalHand.position - scene.origin.position) / d.sqrMagnitude,
@@ -51,6 +51,17 @@ namespace BG.Redirection {
     public class Azmandian2016Hybrid: BodyRedirectionTechnique {
 
 		public override void Redirect(Scene scene) {
+			scene.CopyHeadRotations();
+			scene.CopyHeadTranslations();
+
+			float handTargetDistance = Vector3.Dot(scene.origin.position - scene.physicalTarget.position, scene.physicalHand.position - scene.physicalTarget.position);
+			handTargetDistance = Mathf.Clamp(handTargetDistance, 0f, 1f);
+
+			Vector3 BRRedirection = (1 - handTargetDistance) * Azmandian2016Body.GetRedirection(scene);
+			float WRRedirection = handTargetDistance * Azmandian2016World.GetFrameOffset(scene);
+
+			scene.Redirection = BRRedirection;
+			scene.virtualHead.RotateAround(scene.origin.position, Vector3.up, WRRedirection);
 		}
 	}
 

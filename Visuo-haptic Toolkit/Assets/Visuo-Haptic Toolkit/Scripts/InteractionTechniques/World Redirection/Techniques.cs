@@ -120,24 +120,25 @@ namespace BG.Redirection {
 			scene.CopyHeadRotations();
 			scene.CopyHeadTranslations();
 
+			scene.virtualHead.RotateAround(scene.origin.position, Vector3.up, GetFrameOffset(scene));
+        }
+
+		public static float GetFrameOffset(Scene scene) {
 			float angleBetweenTargets = Vector3.SignedAngle(Vector3.ProjectOnPlane(scene.physicalTarget.position - scene.origin.position, Vector3.up), scene.virtualTarget.position - scene.origin.position, Vector3.up);
 			float angleBetweenHeads = Vector3.SignedAngle(Vector3.ProjectOnPlane(scene.physicalHead.forward, Vector3.up), scene.virtualHead.forward, Vector3.up);
+
 			if (Mathf.Abs(angleBetweenTargets - angleBetweenHeads) > Toolkit.Instance.parameters.RotationalEpsilon) {
 				float angle = angleBetweenTargets - angleBetweenHeads;
 				float instantRotation = scene.GetHeadInstantRotation();
 
-				Debug.Log(Mathf.Abs(angle) + ", " + Toolkit.Instance.parameters.RotationalEpsilon);
 				if (Mathf.Abs(instantRotation) > Toolkit.Instance.parameters.MinimumRotation && Mathf.Abs(angle) > Toolkit.Instance.parameters.RotationalEpsilon) {
-					if (Mathf.Sign(angle) == Mathf.Sign(instantRotation)) {
-						scene.virtualHead.RotateAround(scene.origin.position, Vector3.up,
-											(Mathf.Abs(angle) < instantRotation * Toolkit.Instance.parameters.GainsRotational.same)? angle : instantRotation * Toolkit.Instance.parameters.GainsRotational.same);
-					} else {
-						scene.virtualHead.RotateAround(scene.origin.position, Vector3.up,
-											(Mathf.Abs(angle) < instantRotation * Toolkit.Instance.parameters.GainsRotational.same)? angle : instantRotation * Toolkit.Instance.parameters.GainsRotational.opposite);
-					}
+					var gain = (Mathf.Sign(angle) == Mathf.Sign(instantRotation)) ? Toolkit.Instance.parameters.GainsRotational.same : Toolkit.Instance.parameters.GainsRotational.opposite;
+					var bound = Mathf.Abs(gain * instantRotation);
+					return Mathf.Clamp(angle, -bound, bound);
 				}
 			}
-        }
+			return 0f;
+		}
 	}
 
 	public class ResetWorldRedirection: WorldRedirectionTechnique {

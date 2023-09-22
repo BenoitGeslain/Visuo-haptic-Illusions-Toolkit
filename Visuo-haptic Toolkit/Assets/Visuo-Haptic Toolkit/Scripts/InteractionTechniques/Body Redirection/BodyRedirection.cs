@@ -20,6 +20,7 @@ namespace BG.Redirection {
 			techniqueInstance = technique switch {
 				BRTechnique.None => new ResetBodyRedirection(),
 				BRTechnique.Azmandian2016Body => new Azmandian2016Body(),
+				BRTechnique.Azmandian2016Hybrid => new Azmandian2016Hybrid(),
 				BRTechnique.Han2018Instant => new Han2018Instant(),
 				BRTechnique.Han2018Continous => new Han2018Continous(),
 				BRTechnique.Cheng2017Sparse => new Cheng2017Sparse(),
@@ -31,15 +32,19 @@ namespace BG.Redirection {
 				Debug.LogError("Error Unknown Redirection technique.");
 		}
 
-		private void Start()
-		{
+		private void Start() {
 			updateTechnique();
+			scene.previousPosition = scene.physicalHead.position;
+			scene.previousRotation = scene.physicalHead.rotation;
 		}
 
         private void Update() {
 			updateTechnique();
 			techniqueInstance?.Redirect(scene);
+
 			scene.virtualHand.rotation = scene.physicalHand.rotation;
+			scene.previousPosition = scene.physicalHead.position;
+			scene.previousRotation = scene.physicalHead.rotation;
 		}
 
 		public void SetTechnique(BRTechnique t) {

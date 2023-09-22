@@ -73,6 +73,7 @@ namespace BG.Redirection {
 
 		// World Redir functions
 		public float GetHeadToHeadDistance() => Vector3.Distance(physicalHead.position, virtualHead.position);
+		public Quaternion GetHeadToHeadRotation() => Quaternion.FromToRotation(physicalHead.forward, virtualHead.forward);
 		public float GetHeadRedirectionDistance() => Vector3.Distance(physicalHead.position, selectedTarget.position);	// TODO Implement target selectin in Strategy
         public float GetHeadAngleToTarget() => Vector3.SignedAngle(Vector3.ProjectOnPlane(physicalHead.forward, Vector3.up), forwardTarget, Vector3.up); // TODO Rendre 2 dimensions
         public float GetHeadInstantRotation() {

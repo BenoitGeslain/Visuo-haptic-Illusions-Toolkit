@@ -15,7 +15,7 @@ MonoBehaviour:
   MaxAngles: {x: 10, y: 10, z: 10}
   NoRedirectionBuffer: 0.1
   ResetRedirectionSpeed: 0.001
-  RotationalEpsilon: 0
+  RotationalEpsilon: 0.5
   MinimumRotation: 0.1
   WalkingThreshold: 0.2
   DistanceThreshold: 0.2
