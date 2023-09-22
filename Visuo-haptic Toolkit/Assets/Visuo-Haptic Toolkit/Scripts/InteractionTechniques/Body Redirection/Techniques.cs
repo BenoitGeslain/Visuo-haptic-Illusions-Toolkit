@@ -50,12 +50,12 @@ namespace BG.Redirection {
 		public float GetPhysicalHandOriginDistance() => Vector3.Distance(physicalHand.position, origin.position);
 
         /// <summary>
-        /// Reposition the virtual hand at the position given by <c>physicalHand.position + redirection</c>.
+        /// The position of the virtual hand is given by <c>physicalHand.position + Redirection</c>.
         /// </summary>
         /// <param name="redirection"></param>
-        public void SetRedirection(Vector3 redirection)
-		{
-			virtualHand.position = physicalHand.position + redirection;
+        public Vector3 Redirection {
+			get => virtualHand.position - physicalHand.position;
+			set => virtualHand.position = physicalHand.position + value;
 		}
     }
 
@@ -88,11 +88,9 @@ namespace BG.Redirection {
 
 		public Azmandian2016Body(): base() {}
 
-		public override void Redirect(BodyRedirectionScene scene) {
-			scene.SetRedirection(GetRedirection(scene));
-		}
+        public override void Redirect(BodyRedirectionScene scene) => scene.Redirection = GetRedirection(scene);
 
-		public Vector3 GetRedirection(BodyRedirectionScene scene) {
+        public Vector3 GetRedirection(BodyRedirectionScene scene) {
 			var d = scene.physicalTarget.position - scene.origin.position;
 			var warpingRatio = Mathf.Clamp(
 				Vector3.Dot(d, scene.physicalHand.position - scene.origin.position) / d.sqrMagnitude,
@@ -123,12 +121,10 @@ namespace BG.Redirection {
 
         public override void Redirect(BodyRedirectionScene scene) {
 			// If the hand is inside the redirection boundary, instantly applies the redirection
-			if (scene.GetPhysicalHandOriginDistance() > Toolkit.Instance.parameters.NoRedirectionBuffer) {
-				scene.SetRedirection(scene.virtualTarget.position - scene.physicalTarget.position);
-			} else {
-				scene.SetRedirection(Vector3.zero);
-			}
-		}
+			scene.Redirection = scene.GetPhysicalHandOriginDistance() > Toolkit.Instance.parameters.NoRedirectionBuffer
+                ? scene.virtualTarget.position - scene.physicalTarget.position
+                : Vector3.zero;
+        }
     }
 
     /// <summary>
@@ -141,7 +137,7 @@ namespace BG.Redirection {
 		public override void Redirect(BodyRedirectionScene scene) {
 			float D = scene.GetPhysicalHandTargetDistance();
 			float B = Vector3.Magnitude(scene.physicalTarget.position - scene.origin.position) + Toolkit.Instance.parameters.NoRedirectionBuffer;
-			scene.SetRedirection(Math.Max(1 - D / B, 0f) * (scene.virtualTarget.position- scene.physicalTarget.position));
+			scene.Redirection = Math.Max(1 - D / B, 0f) * (scene.virtualTarget.position- scene.physicalTarget.position);
 		}
 	}
 
@@ -153,7 +149,7 @@ namespace BG.Redirection {
 			float Ds = scene.GetPhysicalHandOriginDistance();
 			float Dp = scene.GetPhysicalHandTargetDistance();
 			float alpha = Ds / (Ds + Dp);
-			scene.SetRedirection(alpha * (scene.virtualTarget.position - scene.physicalTarget.position));
+			scene.Redirection = alpha * (scene.virtualTarget.position - scene.physicalTarget.position);
 		}
 	}
 
@@ -181,7 +177,7 @@ namespace BG.Redirection {
             float[] coeffsByIncreasingPower = { 1f, -1f / D - a2 * D, a2 };
 			float d = scene.GetPhysicalHandTargetDistance();
 			float ratio = (float) coeffsByIncreasingPower.Select((a, i) => a * Math.Pow(d, i)).Sum();
-			scene.SetRedirection(ratio * (scene.virtualTarget.position - scene.physicalTarget.position));
+			scene.Redirection = ratio * (scene.virtualTarget.position - scene.physicalTarget.position);
 		}
 	}
 
