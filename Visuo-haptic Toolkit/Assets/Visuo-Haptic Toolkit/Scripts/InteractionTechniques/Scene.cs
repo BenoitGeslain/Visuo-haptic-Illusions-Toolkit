@@ -76,8 +76,8 @@ namespace BG.Redirection {
 		public float GetHeadRedirectionDistance() => Vector3.Distance(physicalHead.position, selectedTarget.position);	// TODO Implement target selectin in Strategy
         public float GetHeadAngleToTarget() => Vector3.SignedAngle(Vector3.ProjectOnPlane(physicalHead.forward, Vector3.up), forwardTarget, Vector3.up); // TODO Rendre 2 dimensions
         public float GetHeadInstantRotation() {
-			float angularSpeed = (physicalHead.rotation * Quaternion.Inverse(previousRotation)).eulerAngles.y;
-			return (angularSpeed>180f)? 360 - angularSpeed : angularSpeed;
+			float instantaneousRotation = (physicalHead.rotation * Quaternion.Inverse(previousRotation)).eulerAngles.y;
+			return (instantaneousRotation > 180f)? 360 - instantaneousRotation : instantaneousRotation;
 		}
 
 		public Vector3 GetHeadInstantTranslation() => Vector3.Project(physicalHead.position - previousPosition, physicalHead.forward);

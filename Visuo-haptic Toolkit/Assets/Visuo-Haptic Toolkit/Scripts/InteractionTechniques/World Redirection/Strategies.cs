@@ -44,7 +44,11 @@ namespace BG.Redirection {
 	public class SteerToMultipleTargets: WorldRedirectionStrategy {
 
 		public override Vector3 SteerTo(Scene scene) {
-			float smallestBearing = 360f;
+            // Equivalent code in later .Net versions:
+            // Func<Transform, float> bearing = (Transform t) => Vector3.Angle(Vector3.ProjectOnPlane(scene.physicalHead.forward, Vector3.up), Vector3.ProjectOnPlane(t.position - scene.physicalHead.position, Vector3.up));
+            // Transform target = scene.targets.Min(bearing);
+
+            float smallestBearing = 360f;
 			Transform target = null;
 			foreach (Transform t in scene.targets) {
 				float a = Vector3.Angle(Vector3.ProjectOnPlane(scene.physicalHead.forward, Vector3.up), Vector3.ProjectOnPlane(t.position - scene.physicalHead.position, Vector3.up));
