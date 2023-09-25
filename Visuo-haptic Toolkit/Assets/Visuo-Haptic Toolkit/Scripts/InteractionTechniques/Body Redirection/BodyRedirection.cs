@@ -13,6 +13,7 @@ namespace BG.Redirection {
 	public class BodyRedirection: Interaction {
 
 		[SerializeField] private BRTechnique technique;
+		private BRTechnique previousTechnique;
 		[SerializeField] private BodyRedirectionTechnique techniqueInstance;
 
         public Scene scene;
@@ -43,6 +44,7 @@ namespace BG.Redirection {
 		/// </summary>
 		private void Start() {
 			updateTechnique();
+			previousTechnique = technique;
 			// In case the body redirection technique uses the head of the user (e.g. ),
 			// the previous position and rotation are stored to compute instant linear or angular velocity
 			scene.previousPosition = scene.physicalHead.position;
@@ -57,7 +59,10 @@ namespace BG.Redirection {
 		/// initializes the previous head positions.
 		/// </summary>
         private void Update() {
-			updateTechnique();	// A retirer et plutôt vérifier que l'enum a changé
+			if (previousTechnique != technique)
+				updateTechnique();
+			previousTechnique = technique;
+
 			techniqueInstance?.Redirect(scene);	// Computes and applies the redirection according to the selected redirection technique
 
 			// Copy the real hand rotation to the virtual hand to conserve tracking.
@@ -69,12 +74,11 @@ namespace BG.Redirection {
 		}
 
 		/// <summary>
-		/// Setter for the enumeration BRTechnique. Calls updateTechnique() to apply the correct redirection next frame.
+		/// Setter for the enumeration BRTechnique. updateTechnique() gets called on the next Update().
 		/// </summary>
 		/// <param name="t">The enumeration defining which technique to call Redirect(...) from.</param>
 		public void SetTechnique(BRTechnique t) {
 			technique = t;
-			updateTechnique();
 		}
 
 		/// <summary>
