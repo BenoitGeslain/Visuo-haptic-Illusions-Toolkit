@@ -9,6 +9,8 @@ namespace BG.Redirection {
 		SerializedProperty maxAngles;
 		SerializedProperty noRedirectionBuffer;
 		SerializedProperty resetRedirectionSpeed;
+		SerializedProperty goGoActivationDistance;
+		SerializedProperty goGoCoefficient;
 
 		SerializedProperty rotationalEpsilon;
 		SerializedProperty minimumRotation;
@@ -27,6 +29,8 @@ namespace BG.Redirection {
 			maxAngles = serializedObject.FindProperty("MaxAngles");
 			noRedirectionBuffer = serializedObject.FindProperty ("NoRedirectionBuffer");
 			resetRedirectionSpeed = serializedObject.FindProperty ("ResetRedirectionSpeed");
+			goGoActivationDistance = serializedObject.FindProperty ("GoGoActivationDistance");
+			goGoCoefficient = serializedObject.FindProperty ("GoGoCoefficient");
 
 			rotationalEpsilon = serializedObject.FindProperty("RotationalEpsilon");
 			minimumRotation = serializedObject.FindProperty("MinimumRotation");
@@ -46,9 +50,9 @@ namespace BG.Redirection {
 			if (defaultEditor) {
 				base.OnInspectorGUI();
 			} else {
-				// GUI.enabled = false;
-				// EditorGUILayout.ObjectField("Script:", MonoScript.FromScriptableObject((ParametersToolkit)target), typeof(ParametersToolkit), false);
-				// GUI.enabled = true;
+				GUI.enabled = false;
+				EditorGUILayout.ObjectField("Script:", MonoScript.FromScriptableObject((ParametersToolkit)target), typeof(ParametersToolkit), false);
+				GUI.enabled = true;
 
 				serializedObject.Update();
 
@@ -56,6 +60,8 @@ namespace BG.Redirection {
 				EditorGUILayout.PropertyField(maxAngles, new GUIContent ("Threshold Angles"));
 				EditorGUILayout.PropertyField(noRedirectionBuffer, new GUIContent ("No Redirection Buffer"));
 				EditorGUILayout.PropertyField(resetRedirectionSpeed, new GUIContent ("Reset Redirection Speed"));
+				EditorGUILayout.PropertyField(goGoActivationDistance, new GUIContent ("GoGo Activation Distance"));
+				EditorGUILayout.PropertyField(goGoCoefficient, new GUIContent ("GoGo Coefficient"));
 
 				// World Warping
 				EditorGUILayout.PropertyField(rotationalEpsilon, new GUIContent ("Rotational Epsilon"));

@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
-using UnityEditor;
+
+// using UnityEditor;
 using UnityEngine;
 
 
@@ -126,11 +127,26 @@ namespace BG.Redirection {
 		}
 	}
 
+    /// <summary>
+    /// TODO: Not an illusion but an interaction technique.
+    /// </summary>
+    [Serializable]
+	public class Poupyrev1996GoGo: BodyRedirectionTechnique {
+
+		public override void Redirect(Scene scene) {
+			// Offset the head poisition by 0.2m then compute the chest to hand vector
+			Vector3 chestToHand = scene.physicalHand.position - (scene.physicalHead.position - new Vector3(0f, +0.2f, 0f));
+			scene.Redirection = chestToHand.magnitude > Toolkit.Instance.parameters.GoGoActivationDistance
+                ? Toolkit.Instance.parameters.GoGoCoefficient * Mathf.Pow(chestToHand.magnitude - Toolkit.Instance.parameters.GoGoActivationDistance, 2) * chestToHand.normalized
+                : Vector3.zero;
+		}
+	}
+
 	// Reset the redirection over a short period of time
 	public class ResetBodyRedirection: BodyRedirectionTechnique {
 
 		public override void Redirect(Scene scene) {
-				scene.virtualHand.position += Vector3.ClampMagnitude((scene.physicalHand.position - scene.virtualHand.position) * Time.deltaTime, Toolkit.Instance.parameters.ResetRedirectionSpeed);
+			scene.virtualHand.position += Vector3.ClampMagnitude((scene.physicalHand.position - scene.virtualHand.position) * Time.deltaTime, Toolkit.Instance.parameters.ResetRedirectionSpeed);
 		}
 	}
 }

@@ -25,6 +25,7 @@ namespace BG.Redirection {
 				BRTechnique.Han2018Continous => new Han2018Continous(),
 				BRTechnique.Cheng2017Sparse => new Cheng2017Sparse(),
 				BRTechnique.Geslain2022Polynom => new Geslain2022Polynom(techniqueInstance.redirectionLateness, techniqueInstance.controlPoint),
+				BRTechnique.Poupyrev1996GoGo => new Poupyrev1996GoGo(),
 				_ => null
 			};
 

@@ -14,6 +14,10 @@ namespace BG.Redirection {
 		public float MaxRedirectionThreshold = 0.5f;
 		[Tooltip("Speed at which the hand redirection is reset when selecting the ResetRedirection technique. Value is in XXXX.")]
 		public float ResetRedirectionSpeed = 0.001f;
+		[Tooltip("")]
+		public float GoGoCoefficient = 1f;
+		[Tooltip("")]
+		public float GoGoActivationDistance = 0.167f;
 
 		[Header("World Warping")]
 		[Tooltip("The error in rotation where users are considered to be in the correct direction. Value is in °.")]
