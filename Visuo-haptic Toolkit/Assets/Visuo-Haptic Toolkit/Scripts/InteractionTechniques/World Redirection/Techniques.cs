@@ -47,7 +47,7 @@ namespace BG.Redirection {
 
 		public static float GetFrameOffset(Scene scene) {
 			float angleToTarget = scene.GetHeadAngleToTarget();
-			float instantRotation = scene.GetHeadInstantRotation();
+			float instantRotation = scene.GetHeadInstantRotationY();
 
 			if (Mathf.Abs(instantRotation) > Toolkit.Instance.parameters.MinimumRotation && Mathf.Abs(angleToTarget) > Toolkit.Instance.parameters.RotationalEpsilon) {
 				return instantRotation * ((Mathf.Sign(scene.GetHeadAngleToTarget()) == Mathf.Sign(instantRotation))
@@ -113,8 +113,8 @@ namespace BG.Redirection {
 
 		public float ApplyDampening(Scene scene, float angle) {
 			float dampenedAngle = angle * Mathf.Sin(Mathf.Min(scene.GetHeadAngleToTarget() / Toolkit.Instance.parameters.DampeningRange, 1f) * Mathf.PI/2);
-			float dampenedAngleDistance = dampenedAngle * Mathf.Min(scene.GetHeadRedirectionDistance() / Toolkit.Instance.parameters.DistanceThreshold, 1f);
-			return (scene.GetHeadRedirectionDistance() < Toolkit.Instance.parameters.DistanceThreshold)? dampenedAngleDistance : dampenedAngle;
+			float dampenedAngleDistance = dampenedAngle * Mathf.Min(scene.GetHeadToTargetDistance() / Toolkit.Instance.parameters.DistanceThreshold, 1f);
+			return (scene.GetHeadToTargetDistance() < Toolkit.Instance.parameters.DistanceThreshold)? dampenedAngleDistance : dampenedAngle;
 		}
 
         public float ApplySmooting(Scene scene, float angle) => (1 - Toolkit.Instance.parameters.SmoothingFactor) * scene.previousRedirection + Toolkit.Instance.parameters.SmoothingFactor * angle;
@@ -134,7 +134,7 @@ namespace BG.Redirection {
 
 			if (Mathf.Abs(angleBetweenTargets - angleBetweenHeads) > Toolkit.Instance.parameters.RotationalEpsilon) {
 				float angle = angleBetweenTargets - angleBetweenHeads;
-				float instantRotation = scene.GetHeadInstantRotation();
+				float instantRotation = scene.GetHeadInstantRotationY();
 
 				if (Mathf.Abs(instantRotation) > Toolkit.Instance.parameters.MinimumRotation && Mathf.Abs(angle) > Toolkit.Instance.parameters.RotationalEpsilon) {
 					var gain = (Mathf.Sign(angle) == Mathf.Sign(instantRotation)) ? Toolkit.Instance.parameters.GainsRotational.same : Toolkit.Instance.parameters.GainsRotational.opposite;

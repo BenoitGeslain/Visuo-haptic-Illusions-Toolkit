@@ -83,7 +83,7 @@ namespace BG.Visualisation {
 		}
 
 		private void orbitTargets(Scene scene) {
-			float distanceToTarget = scene.GetHeadRedirectionDistance();
+			float distanceToTarget = scene.GetHeadToTargetDistance();
 			Vector3 vectorToTarget = Vector3.ProjectOnPlane(scene.selectedTarget.position - scene.physicalHead.position, Vector3.up).normalized;
 			if (distanceToTarget < scene.radius) {
 				Vector3 leftTarget = Quaternion.Euler(0f, Mathf.Rad2Deg * Mathf.PI/3, 0f) * vectorToTarget * Mathf.Abs(scene.radius / Mathf.Tan(Mathf.Rad2Deg * Mathf.PI/3 * Mathf.Rad2Deg));

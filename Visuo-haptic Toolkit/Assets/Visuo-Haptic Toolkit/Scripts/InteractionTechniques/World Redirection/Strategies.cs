@@ -24,7 +24,7 @@ namespace BG.Redirection {
 	public class SteerToOrbit: WorldRedirectionStrategy {
 
 		public override Vector3 SteerTo(Scene scene) {
-			float distanceToTarget = scene.GetHeadRedirectionDistance();
+			float distanceToTarget = scene.GetHeadToTargetDistance();
 			Vector3 leftTarget, rightTarget;
 			if (distanceToTarget < scene.radius) {
 				leftTarget = Quaternion.Euler(0f, Mathf.Rad2Deg * Mathf.PI / 3, 0f) * Vector3.ProjectOnPlane(scene.selectedTarget.position - scene.physicalHead.position, Vector3.up);
