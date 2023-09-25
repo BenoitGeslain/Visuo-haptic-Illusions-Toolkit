@@ -8,7 +8,10 @@ namespace BG.Visualisation {
 
 		private static List<Color> colors;	// colors of the lines between the physical and virtual elements
 
-		// Calling Onenable instead of Start to support recompilation during play
+		/// <summary>
+		/// Onenable is called once at the start of the game similarily to Start().
+		/// Calling Onenable instead of Start to support recompilation during play (Hot reload)
+		/// </summary>
 		private void OnEnable() {
 			colors = new List<Color> () {
 				Color.white,	// Indicates the redirection is within the detection thresholds

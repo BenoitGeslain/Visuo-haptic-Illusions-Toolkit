@@ -24,7 +24,7 @@ namespace BG.Logging {
 	public sealed class BodyRedirectionDataMap : ClassMap<BodyRedirectionData> {
 		public BodyRedirectionDataMap() {
 			Map(m => m.timeStamp).TypeConverterOption.Format("yyyy/MM/dd-HH:mm:ss.fff").Index(0).Name("TimeStamp");
-			Map(m => m.script.technique).Index(1).Name("Technique");
+			Map(m => m.script.GetTechnique()).Index(1).Name("Technique");
 			Map(m => m.script.scene.physicalHand.position).Index(2).Name("PhysicalHandPosition");
 			Map(m => m.script.scene.physicalHand.rotation).Index(3).Name("PhysicalHandOrientation");
 			Map(m => m.script.scene.physicalHand.rotation.eulerAngles).Index(3).Name("PhysicalHandOrientationEuler");
@@ -48,7 +48,7 @@ namespace BG.Logging {
 	public sealed class WorldRedirectionDataMap : ClassMap<WorldRedirectionData> {
 		public WorldRedirectionDataMap() {
 			Map(m => m.timeStamp).TypeConverterOption.Format("yyyy/MM/dd-HH:mm:ss.fff").Index(0).Name("TimeStamp");
-			Map(m => m.script.technique).Index(1).Name("Technique");
+			Map(m => m.script.GetTechnique()).Index(1).Name("Technique");
 			Map(m => m.script.scene.physicalHead.position).Index(2).Name("PhysicalHeadPosition");
 			Map(m => m.script.scene.physicalHead.rotation).Index(3).Name("PhysicalHeadOrientation");
 			Map(m => m.script.scene.physicalHead.rotation.eulerAngles).Index(3).Name("PhysicalHeadOrientationEuler");
@@ -102,7 +102,7 @@ namespace BG.Logging {
 
 		public void createNewFile() {
 			fileName = $"{pathToFile}{fileNamePrefix}{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.csv";
-            
+
 			void writeHeaders<Data, DataMap>(out List<Data> records) where DataMap : ClassMap<Data> {
                 using StreamWriter writer = new(fileName);
                 using CsvWriter csv = new(writer, CultureInfo.InvariantCulture);
