@@ -626,11 +626,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8370519398523107162, guid: 41e5a7bac2f1a4a44926252b3dee138a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 8370519398523107162, guid: 41e5a7bac2f1a4a44926252b3dee138a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -29.5
+      value: -19.3
       objectReference: {fileID: 0}
     - target: {fileID: 8370519398523107162, guid: 41e5a7bac2f1a4a44926252b3dee138a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -887,11 +887,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1607897844603459841, guid: 5fb8647dcfba39f43976bd2e07bcddf6, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2542120560557277227, guid: 5fb8647dcfba39f43976bd2e07bcddf6, type: 3}
       propertyPath: strategy
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2542120560557277227, guid: 5fb8647dcfba39f43976bd2e07bcddf6, type: 3}
       propertyPath: m_Enabled
@@ -899,7 +899,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2542120560557277227, guid: 5fb8647dcfba39f43976bd2e07bcddf6, type: 3}
       propertyPath: technique
-      value: 6
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2542120560557277227, guid: 5fb8647dcfba39f43976bd2e07bcddf6, type: 3}
       propertyPath: virtualHead
@@ -1882,9 +1882,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: ToolkitBodyRedirection
       objectReference: {fileID: 0}
+    - target: {fileID: 1607897844603459841, guid: 04e531f9da6b5c640b2de2a8fa88a2fa, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2891068713693094246, guid: 04e531f9da6b5c640b2de2a8fa88a2fa, type: 3}
       propertyPath: technique
-      value: 4
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2891068713693094246, guid: 04e531f9da6b5c640b2de2a8fa88a2fa, type: 3}
       propertyPath: scene.origin
@@ -1989,7 +1993,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8370519398523107162, guid: 41e5a7bac2f1a4a44926252b3dee138a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -29.5
+      value: -19.3
       objectReference: {fileID: 0}
     - target: {fileID: 8370519398523107162, guid: 41e5a7bac2f1a4a44926252b3dee138a, type: 3}
       propertyPath: m_LocalPosition.z

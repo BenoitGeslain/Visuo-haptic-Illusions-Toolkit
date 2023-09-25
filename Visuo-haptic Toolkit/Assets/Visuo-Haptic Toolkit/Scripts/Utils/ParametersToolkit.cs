@@ -38,7 +38,7 @@ namespace BG.Redirection {
 		[Tooltip("The maximum rotation that can be applied to the user's point of view in rotation along the vertical axis (Y). Value is in °/s.")]
 		public float OverTimeRotation = 0.2f;
 		[Tooltip("The maximum gain in translation that can be applied to the user's point of view in translation (akin to a C/D ratio). Value has no unit and is not a percentage.")]
-		public Vector2Translation GainsTranslational;
+		public Vector3 GainsTranslational;
 		[Tooltip("The maximum gain in rotation that can be applied to the user's point of view in rotation. Value has no unit and is not a percentage. [Steinicke et al., 2010]")]
 		public Vector2Rotation GainsRotational;
 		[Tooltip("The maximum gain in translation that can be applied to the user's point of view in rotation. Value is in °/m and is not a percentage.")]

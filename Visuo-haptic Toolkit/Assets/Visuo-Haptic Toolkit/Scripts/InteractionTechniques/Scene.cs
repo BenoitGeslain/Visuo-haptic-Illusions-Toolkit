@@ -81,7 +81,8 @@ namespace BG.Redirection {
 			return (instantaneousRotation > 180f)? 360 - instantaneousRotation : instantaneousRotation;
 		}
 
-		public Vector3 GetHeadInstantTranslation() => Vector3.Project(physicalHead.position - previousPosition, physicalHead.forward);
+		public Vector3 GetHeadInstantTranslation() => physicalHead.position - previousPosition;
+		public Vector3 GetHeadInstantTranslationForward() => Vector3.Project(GetHeadInstantTranslation(), physicalHead.forward);
 
         /// <summary>
         /// Applies unaltered physical head rotations to the virtual head GameObject

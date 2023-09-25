@@ -69,7 +69,7 @@ namespace BG.Redirection {
         }
 
 		public static float GetFrameOffset(Scene scene) {
-			float instantTranslation = scene.GetHeadInstantTranslation().magnitude;
+			float instantTranslation = scene.GetHeadInstantTranslationForward().magnitude;
 
             return instantTranslation > Toolkit.Instance.parameters.WalkingThreshold * Time.deltaTime
                 ? Mathf.Sign(Vector3.Cross(scene.physicalHead.forward, scene.forwardTarget).y) * instantTranslation * Toolkit.Instance.CurvatureRadiusToRotationRate()
@@ -79,7 +79,13 @@ namespace BG.Redirection {
 
 	public class Steinicke2008Translational: WorldRedirectionTechnique {
         public override void Redirect(Scene scene) {
-            Debug.Log("Method not implemented yet.");
+			scene.CopyHeadRotations();
+
+			Vector3 instantTranslation = scene.GetHeadInstantTranslation();
+			Vector3 translation = new Vector3(instantTranslation.x * Toolkit.Instance.parameters.GainsTranslational.x,
+											  instantTranslation.y * Toolkit.Instance.parameters.GainsTranslational.y,
+											  instantTranslation.z * Toolkit.Instance.parameters.GainsTranslational.z);
+			scene.virtualHead.position += translation;
         }
 	}
 
