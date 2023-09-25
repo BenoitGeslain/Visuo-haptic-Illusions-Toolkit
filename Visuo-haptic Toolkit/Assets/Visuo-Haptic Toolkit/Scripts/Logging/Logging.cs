@@ -71,9 +71,7 @@ namespace BG.Logging {
 		private List<BodyRedirectionData> recordsBR = new();
 		private List<WorldRedirectionData> recordsWR = new();
 
-        private CsvConfiguration config = new CsvConfiguration(CultureInfo.InvariantCulture) {
-            HasHeaderRecord = false,
-        };
+        private readonly CsvConfiguration config = new(CultureInfo.InvariantCulture) { HasHeaderRecord = false };
 
         private void Start() {
 			createNewFile();
@@ -103,11 +101,11 @@ namespace BG.Logging {
 		}
 
 		public void createNewFile() {
-			fileName = $"{pathToFile}{fileNamePrefix}{DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss")}.csv";
+			fileName = $"{pathToFile}{fileNamePrefix}{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.csv";
             
 			void writeHeaders<Data, DataMap>(out List<Data> records) where DataMap : ClassMap<Data> {
-                using var writer = new StreamWriter(fileName);
-                using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
+                using StreamWriter writer = new(fileName);
+                using CsvWriter csv = new(writer, CultureInfo.InvariantCulture);
 				records = new List<Data>();
                 csv.Context.RegisterClassMap<DataMap>();
 				csv.WriteHeader<Data>();

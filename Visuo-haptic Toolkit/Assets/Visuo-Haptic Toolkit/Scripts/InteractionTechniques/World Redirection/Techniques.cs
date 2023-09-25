@@ -29,11 +29,10 @@ namespace BG.Redirection {
         public static float GetFrameOffset(Scene scene) {
 			float angleToTarget = scene.GetHeadAngleToTarget();
 
-            if (Mathf.Abs(angleToTarget) > Toolkit.Instance.parameters.RotationalEpsilon) {
-				return Mathf.Sign(angleToTarget) * Toolkit.Instance.parameters.OverTimeRotation * Time.deltaTime;
-			}
-			return 0f;
-		}
+            return Mathf.Abs(angleToTarget) > Toolkit.Instance.parameters.RotationalEpsilon
+                ? Mathf.Sign(angleToTarget) * Toolkit.Instance.parameters.OverTimeRotation * Time.deltaTime
+                : 0f;
+        }
     }
 
 	/// <summary>
