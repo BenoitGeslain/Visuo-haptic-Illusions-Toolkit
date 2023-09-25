@@ -80,7 +80,6 @@ Voir le [wiki](../../wikis) pour plus d'informations sur les tâches à réalise
 | [Argelaguet et al., 2013](https://doi.org/10.1145/2501599), Deformable materials   | &cross;   |
 | [Kasahara et al., 2017](http://doi.acm.org/10.1145/3025453.3025962), Malleable Embodiement   | &cross;   |
 | [Gomez Jauregui et al., 2014](http://ieeexplore.ieee.org/document/6777424/), Avatar Weight   | &cross;   |
-| [Rietzler et al., 2018](http://ieeexplore.ieee.org/document/6777424/), Breaking the Tracking   | &cross;   |
 | [Samad et al., 2019](http://ieeexplore.ieee.org/document/6777424/), Pseudo-Haptic Weight   | &cross;   |
 
 ## Outils de Visualisation
