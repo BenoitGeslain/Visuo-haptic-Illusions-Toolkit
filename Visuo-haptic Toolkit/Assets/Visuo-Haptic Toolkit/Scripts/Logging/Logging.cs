@@ -102,7 +102,7 @@ namespace BG.Logging {
 
 		public void createNewFile() {
 			fileName = $"{pathToFile}{fileNamePrefix}{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.csv";
-
+            
 			void writeHeaders<Data, DataMap>(out List<Data> records) where DataMap : ClassMap<Data> {
                 using StreamWriter writer = new(fileName);
                 using CsvWriter csv = new(writer, CultureInfo.InvariantCulture);
