@@ -5,7 +5,7 @@ using UnityEditor;
 
 namespace BG.Redirection {
 	/// <summary>
-	/// Custom editor for the body redirection scene.
+	/// Custom editor for the body redirection scene. Allows to show the Geslain2022Polynom parameters only if it is selected.
 	/// </summary>
 	[CustomEditor(typeof(BodyRedirection))]
 	public class BodyRedirectionEditor : Editor {

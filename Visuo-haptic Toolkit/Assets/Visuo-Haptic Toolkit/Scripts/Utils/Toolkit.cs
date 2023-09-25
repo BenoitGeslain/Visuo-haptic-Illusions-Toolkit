@@ -14,7 +14,8 @@ namespace BG.Redirection {
 		Azmandian2016Body,
 		Azmandian2016Hybrid,
 		Cheng2017Sparse,
-		Geslain2022Polynom
+		Geslain2022Polynom,
+		Poupyrev1996GoGo
 	}
     /// <summary>
     /// World redirection techniques.

@@ -3,6 +3,7 @@ using System;
 using UnityEngine;
 
 namespace BG.Redirection {
+	// TODO update
 	/// <summary>
 	/// This class records the position of various objects of interest.
 	/// </summary>
