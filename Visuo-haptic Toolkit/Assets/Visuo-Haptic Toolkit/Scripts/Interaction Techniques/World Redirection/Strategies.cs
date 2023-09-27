@@ -50,6 +50,7 @@ namespace BG.Redirection {
 			Transform target = null;
 			foreach (Transform t in scene.targets) {
 				float a = Vector3.Angle(Vector3.ProjectOnPlane(scene.physicalHead.forward, Vector3.up), Vector3.ProjectOnPlane(t.position - scene.physicalHead.position, Vector3.up));
+				// a *= (scene.physicalHead.position - t.position).sqrMagnitude;
 				if (a < smallestBearing) {
 					smallestBearing = a;
 					target = t;
