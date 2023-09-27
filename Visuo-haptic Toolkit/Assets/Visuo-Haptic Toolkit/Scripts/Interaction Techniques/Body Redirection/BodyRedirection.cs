@@ -12,7 +12,7 @@ namespace BG.Redirection {
 	/// </summary>
 	public class BodyRedirection: Interaction {
 
-		[SerializeField] private BRTechnique technique;
+		public BRTechnique technique;
 		private BRTechnique previousTechnique;
 		[SerializeField] private BodyRedirectionTechnique techniqueInstance;
 
