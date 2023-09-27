@@ -24,7 +24,7 @@ Voir le [wiki](../../wikis) pour plus d'informations sur les tâches à réalise
 | Body Redirection  | Status   |
 |:-------------- | :--------------: |
 | [Azmandian et al., 2016](https://doi.org/10.1145/2858036.2858226), Body Warping    | &check; |
-| [Azmandian et al., 2016](https://doi.org/10.1145/2858036.2858226), Hybrid Warping    | ~ |
+| [Azmandian et al., 2016](https://doi.org/10.1145/2858036.2858226), Hybrid Warping    | &check; |
 | [Han et al., 2019](http://ieeexplore.ieee.org/document/8260974/), Continous *    | &check; |
 | [Cheng et al., 2017](http://doi.acm.org/10.1145/3025453.3025753), Sparse Haptics   | &check;   |
 | [Geslain et al., 2022](https://doi.org/10.1145/3531073.3531100), 2<sup>nd</sup> order polynomials   | &check;   |
