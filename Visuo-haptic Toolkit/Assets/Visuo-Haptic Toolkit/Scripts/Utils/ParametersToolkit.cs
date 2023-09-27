@@ -14,7 +14,7 @@ namespace BG.Redirection {
 		[Tooltip("A buffer value where the hand redirection is not applied [Han et al., 2018].")]
 		public float MaxRedirectionThreshold = 0.5f;
 		[Tooltip("Speed at which the hand redirection is reset when selecting the ResetRedirection technique. Value is in XXXX.")]	// TODO check this
-		public float ResetRedirectionSpeed = 0.001f;
+		public float ResetRedirectionCoeff = 0.087f;
 		[Tooltip("This coefficient is applied to the PoupyrevGoGo1996 \"redirection\"")]
 		public float GoGoCoefficient = 1f;
 		[Tooltip("The activation distance  for which the PoupyrevGoGo1996 technique starts to remap the virtual hand's movement")]

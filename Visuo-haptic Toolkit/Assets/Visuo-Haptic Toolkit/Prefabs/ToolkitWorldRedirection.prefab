@@ -44,8 +44,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: def0fd96408763940a4daaa55934a833, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   technique: 0
   strategy: 0
   scene:
@@ -57,8 +57,8 @@ MonoBehaviour:
     applyDampening: 0
     applySmoothing: 0
     forwardTarget: {x: 0, y: 0, z: 0}
-    previousPosition: {x: 0, y: 0, z: 0}
-    previousRotation: {x: 0, y: 0, z: 0, w: 0}
+    previousHeadPosition: {x: 0, y: 0, z: 0}
+    previousHeadRotation: {x: 0, y: 0, z: 0, w: 0}
     previousRedirection: 0
 --- !u!114 &551704495323053107
 MonoBehaviour:
@@ -70,8 +70,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9825707130c9eb4a9c129292679e71c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   parameters: {fileID: 11400000, guid: c39097e50bc3898498d2edf378be3a21, type: 2}
   rootScript: {fileID: 0}
 --- !u!114 &4269787013998645211
@@ -84,6 +84,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 45db99859fe1b034db2ac3a0b70b43d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   targetPrefab: {fileID: 84340963187888445, guid: 786584c1c713db54b9cad6864b80089b, type: 3}

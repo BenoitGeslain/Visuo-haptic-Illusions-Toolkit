@@ -47,8 +47,10 @@ namespace BG.Redirection {
 			updateTechnique();
 
 			scene.selectedTarget = scene.targets[0];
-			scene.previousPosition = scene.physicalHead.position;
-			scene.previousRotation = scene.physicalHead.rotation;
+			scene.previousHandPosition = scene.physicalHand.position;
+			scene.previousHandRotation = scene.physicalHand.rotation;
+			scene.previousHeadPosition = scene.physicalHead.position;
+			scene.previousHeadRotation = scene.physicalHead.rotation;
 		}
 
 		private void Update() {
@@ -59,8 +61,10 @@ namespace BG.Redirection {
 				techniqueInstance.Redirect(scene);
 			}
 
-			scene.previousPosition = scene.physicalHead.position;
-			scene.previousRotation = scene.physicalHead.rotation;
+			scene.previousHandPosition = scene.physicalHand.position;
+			scene.previousHandRotation = scene.physicalHand.rotation;
+			scene.previousHeadPosition = scene.physicalHead.position;
+			scene.previousHeadRotation = scene.physicalHead.rotation;
 		}
 
 		public void SetTechnique(WRTechnique t) {

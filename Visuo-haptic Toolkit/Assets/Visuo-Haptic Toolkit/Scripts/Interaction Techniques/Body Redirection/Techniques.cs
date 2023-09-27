@@ -151,7 +151,7 @@ namespace BG.Redirection {
 
 		public override void Redirect(Scene scene) {
 			// Offset the head position by 0.2m to approximate the chest position then compute the chest to hand vector
-			Vector3 chestToHand = scene.physicalHand.position - (scene.physicalHead.position - new Vector3(0f, +0.2f, 0f));
+			Vector3 chestToHand = scene.physicalHand.position - (scene.physicalHead.position - new Vector3(0f, 0.2f, 0f));
 			scene.Redirection = chestToHand.magnitude > Toolkit.Instance.parameters.GoGoActivationDistance
                 ? Toolkit.Instance.parameters.GoGoCoefficient * Mathf.Pow(chestToHand.magnitude - Toolkit.Instance.parameters.GoGoActivationDistance, 2) * chestToHand.normalized
                 : Vector3.zero;
@@ -165,7 +165,8 @@ namespace BG.Redirection {
 	public class ResetBodyRedirection: BodyRedirectionTechnique {
 
 		public override void Redirect(Scene scene) {
-			scene.virtualHand.position += Vector3.ClampMagnitude((scene.physicalHand.position - scene.virtualHand.position) * Time.deltaTime, Toolkit.Instance.parameters.ResetRedirectionSpeed);
+			Vector3 instantTranslation = scene.GetHandInstantTranslation();
+			scene.virtualHand.position += instantTranslation + instantTranslation.magnitude * Toolkit.Instance.parameters.ResetRedirectionCoeff * (scene.physicalHand.position - scene.virtualHand.position).normalized;
 		}
 	}
 }

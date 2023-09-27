@@ -37,8 +37,10 @@ namespace BG.Redirection {
 
 		[HideInInspector] public Transform selectedTarget;
 		[HideInInspector] public Vector3 forwardTarget;
-		[HideInInspector] public Vector3 previousPosition;
-		[HideInInspector] public Quaternion previousRotation;
+		[HideInInspector] public Vector3 previousHandPosition;
+		[HideInInspector] public Quaternion previousHandRotation;
+		[HideInInspector] public Vector3 previousHeadPosition;
+		[HideInInspector] public Quaternion previousHeadRotation;
 		[HideInInspector] public float previousRedirection;
 
         /// <summary>
@@ -96,7 +98,7 @@ namespace BG.Redirection {
 		/// </summary>
 		/// <returns>Returns the instant angular velocity as a quaternion of the physical head using the last frame's rotation</returns>
         public Quaternion GetHeadInstantRotation() {
-			return physicalHead.rotation * Quaternion.Inverse(previousRotation);
+			return physicalHead.rotation * Quaternion.Inverse(previousHeadRotation);
 		}
 
 		/// <summary>
@@ -112,7 +114,7 @@ namespace BG.Redirection {
 		///
 		/// </summary>
 		/// <returns>Returns the instant linear velocity of the physical head using the last frame's position</returns>
-		public Vector3 GetHeadInstantTranslation() => physicalHead.position - previousPosition;
+		public Vector3 GetHeadInstantTranslation() => physicalHead.position - previousHeadPosition;
 
 		/// <summary>
 		///
@@ -120,18 +122,24 @@ namespace BG.Redirection {
 		/// <returns>Returns the instant linear velocity of the physical head using the last frame's position projected on the physical head forward vector.</returns>
 		public Vector3 GetHeadInstantTranslationForward() => Vector3.Project(GetHeadInstantTranslation(), physicalHead.forward);
 
+		/// <summary>
+		///
+		/// </summary>
+		/// <returns>Returns the instant linear velocity of the physical hand using the last frame's position</returns>
+		public Vector3 GetHandInstantTranslation() => physicalHand.position - previousHandPosition;
+
         /// <summary>
         /// Applies unaltered physical head rotations to the virtual head GameObject
         /// </summary>
         public void CopyHeadRotations() {
-            virtualHead.rotation = physicalHead.rotation * Quaternion.Inverse(previousRotation) * virtualHead.rotation;
+            virtualHead.rotation = physicalHead.rotation * Quaternion.Inverse(previousHeadRotation) * virtualHead.rotation;
 		}
 
         /// <summary>
         /// Applies unaltered physical head rotations to the virtual head GameObject
         /// </summary>
         public void CopyHeadTranslations() {
-            virtualHead.position += physicalHead.position - previousPosition;
+            virtualHead.position += physicalHead.position - previousHeadPosition;
 		}
 
 		/// <summary>

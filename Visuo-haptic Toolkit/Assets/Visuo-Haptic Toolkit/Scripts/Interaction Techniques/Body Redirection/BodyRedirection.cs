@@ -47,8 +47,10 @@ namespace BG.Redirection {
 			previousTechnique = technique;
 			// In case the body redirection technique uses the head of the user (e.g. ),
 			// the previous position and rotation are stored to compute instant linear or angular velocity
-			scene.previousPosition = scene.physicalHead.position;
-			scene.previousRotation = scene.physicalHead.rotation;
+			scene.previousHandPosition = scene.physicalHand.position;
+			scene.previousHandRotation = scene.physicalHand.rotation;
+			scene.previousHeadPosition = scene.physicalHead.position;
+			scene.previousHeadRotation = scene.physicalHead.rotation;
 		}
 
 		/// <summary>
@@ -69,8 +71,10 @@ namespace BG.Redirection {
 			scene.virtualHand.rotation = scene.physicalHand.rotation;	// TODO check Azmandian Body for rotation
 			// In case the body redirection technique uses the head of the user (e.g. ),
 			// the previous position and rotation are stored to compute instant linear or angular velocity
-			scene.previousPosition = scene.physicalHead.position;
-			scene.previousRotation = scene.physicalHead.rotation;
+			scene.previousHandPosition = scene.physicalHand.position;
+			scene.previousHandRotation = scene.physicalHand.rotation;
+			scene.previousHeadPosition = scene.physicalHead.position;
+			scene.previousHeadRotation = scene.physicalHead.rotation;
 		}
 
 		/// <summary>
