@@ -9,7 +9,7 @@ namespace BG.Redirection {
 		SerializedProperty maxAngles;
 		SerializedProperty noRedirectionBuffer;
 		SerializedProperty maxRedirectionThreshold;
-		SerializedProperty resetRedirectionSpeed;
+		SerializedProperty resetRedirectionCoeff;
 		SerializedProperty goGoActivationDistance;
 		SerializedProperty goGoCoefficient;
 
@@ -28,7 +28,7 @@ namespace BG.Redirection {
 			maxAngles = serializedObject.FindProperty("MaxAngles");
 			noRedirectionBuffer = serializedObject.FindProperty ("NoRedirectionBuffer");
 			maxRedirectionThreshold = serializedObject.FindProperty ("MaxRedirectionThreshold");
-			resetRedirectionSpeed = serializedObject.FindProperty ("ResetRedirectionSpeed");
+			resetRedirectionCoeff = serializedObject.FindProperty ("ResetRedirectionCoeff");
 			goGoActivationDistance = serializedObject.FindProperty ("GoGoActivationDistance");
 			goGoCoefficient = serializedObject.FindProperty ("GoGoCoefficient");
 
@@ -55,7 +55,7 @@ namespace BG.Redirection {
 			EditorGUILayout.PropertyField(maxAngles, new GUIContent ("Threshold Angles"));
 			EditorGUILayout.PropertyField(noRedirectionBuffer, new GUIContent ("No Redirection Buffer"));
 			EditorGUILayout.PropertyField(maxRedirectionThreshold, new GUIContent ("Max Redirection Threshold"));
-			EditorGUILayout.PropertyField(resetRedirectionSpeed, new GUIContent ("Reset Redirection Speed"));
+			EditorGUILayout.PropertyField(resetRedirectionCoeff, new GUIContent ("Reset Redirection Coefficient"));
 			EditorGUILayout.PropertyField(goGoActivationDistance, new GUIContent ("GoGo Activation Distance"));
 			EditorGUILayout.PropertyField(goGoCoefficient, new GUIContent ("GoGo Coefficient"));
 

@@ -15,7 +15,7 @@ MonoBehaviour:
   MaxAngles: {x: 10, y: 10, z: 10}
   NoRedirectionBuffer: 0.1
   MaxRedirectionThreshold: 0.5
-  ResetRedirectionSpeed: 0.001
+  ResetRedirectionCoeff: 0.087
   GoGoCoefficient: 1
   GoGoActivationDistance: 0.167
   RotationalEpsilon: 0.5
@@ -27,8 +27,8 @@ MonoBehaviour:
   OverTimeRotation: 0.2
   GainsTranslational: {x: 2, y: 1, z: 0.5}
   GainsRotational:
-    same: 0.3
-    opposite: -0.15
+    same: 1.3
+    opposite: 0.85
   CurvatureRadius: 7.5
   a: {x: 0, y: 0, z: 0}
   b: {x: 0, y: 0, z: 0}

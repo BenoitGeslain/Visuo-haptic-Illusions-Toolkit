@@ -58,7 +58,7 @@ namespace BG.Redirection {
 			handTargetDistance = Mathf.Clamp(handTargetDistance, 0f, 1f);
 
 			Vector3 BRRedirection = (1 - handTargetDistance) * Azmandian2016Body.GetRedirection(scene);
-			float WRRedirection = handTargetDistance * Azmandian2016World.GetFrameOffset(scene);
+			float WRRedirection = handTargetDistance * Azmandian2016World.GetRedirection(scene);
 
 			scene.Redirection = BRRedirection;
 			scene.virtualHead.RotateAround(scene.origin.position, Vector3.up, WRRedirection);

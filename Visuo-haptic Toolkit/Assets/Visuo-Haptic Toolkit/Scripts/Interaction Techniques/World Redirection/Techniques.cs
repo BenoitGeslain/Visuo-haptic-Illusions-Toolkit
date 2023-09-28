@@ -20,14 +20,25 @@ namespace BG.Redirection {
         public override void Redirect(Scene scene) {
 			scene.CopyHeadRotations();
 			scene.CopyHeadTranslations();
-			scene.virtualHead.Rotate(0f, GetFrameOffset(scene), 0f, Space.World);
+			scene.virtualHead.Rotate(0f, GetRedirection(scene), 0f, Space.World);
         }
 
-        public static float GetFrameOffset(Scene scene) {
+        public static float GetRedirection(Scene scene) {
 			float angleToTarget = scene.GetHeadAngleToTarget();
+			angleToTarget = (angleToTarget > 180f)? angleToTarget - 360 : angleToTarget;
 
             return Mathf.Abs(angleToTarget) > Toolkit.Instance.parameters.RotationalEpsilon
-                ? Mathf.Sign(angleToTarget) * Toolkit.Instance.parameters.OverTimeRotation * Time.deltaTime
+                ? - Mathf.Sign(angleToTarget) * Toolkit.Instance.parameters.OverTimeRotation * Time.deltaTime
+                : 0f;
+        }
+
+        public static float GetRedirectionReset(Scene scene) {
+			float angleToTarget = scene.GetHeadToHeadRotation().eulerAngles.y;
+			angleToTarget = (angleToTarget > 180f)? angleToTarget - 360 : angleToTarget;
+
+			Debug.Log(angleToTarget);
+            return Mathf.Abs(angleToTarget) > Toolkit.Instance.parameters.RotationalEpsilon
+                ? - Mathf.Sign(angleToTarget) * Toolkit.Instance.parameters.OverTimeRotation * Time.deltaTime
                 : 0f;
         }
     }
@@ -38,12 +49,24 @@ namespace BG.Redirection {
 	public class Razzaque2001Rotational: WorldRedirectionTechnique {
 		public override void Redirect(Scene scene) {
 			scene.CopyHeadRotations();
-			scene.RotateVirtualHeadY(GetFrameOffset(scene));
+			scene.RotateVirtualHeadY(GetRedirection(scene));
 			scene.CopyHeadTranslations();
         }
 
-		public static float GetFrameOffset(Scene scene) {
+		public static float GetRedirection(Scene scene) {
 			float angleToTarget = scene.GetHeadAngleToTarget();
+			float instantRotation = scene.GetHeadInstantRotationY();
+
+			if (Mathf.Abs(instantRotation) > Toolkit.Instance.parameters.MinimumRotation && Mathf.Abs(angleToTarget) > Toolkit.Instance.parameters.RotationalEpsilon) {
+				return instantRotation * ((Mathf.Sign(scene.GetHeadAngleToTarget()) == Mathf.Sign(instantRotation))
+					? Toolkit.Instance.parameters.GainsRotational.opposite
+					: Toolkit.Instance.parameters.GainsRotational.same);
+			}
+			return 0f;
+		}
+
+		public static float GetRedirectionReset(Scene scene) {
+			float angleToTarget = scene.GetHeadToHeadRotation().eulerAngles.y;
 			float instantRotation = scene.GetHeadInstantRotationY();
 
 			if (Mathf.Abs(instantRotation) > Toolkit.Instance.parameters.MinimumRotation && Mathf.Abs(angleToTarget) > Toolkit.Instance.parameters.RotationalEpsilon) {
@@ -61,15 +84,15 @@ namespace BG.Redirection {
 	public class Razzaque2001Curvature: WorldRedirectionTechnique {
         public override void Redirect(Scene scene) {
 			scene.CopyHeadRotations();
-			scene.RotateVirtualHeadY(GetFrameOffset(scene));
+			scene.RotateVirtualHeadY(GetRedirection(scene));
 			scene.CopyHeadTranslations();
         }
 
-		public static float GetFrameOffset(Scene scene) {
+		public static float GetRedirection(Scene scene) {
 			float instantTranslation = scene.GetHeadInstantTranslationForward().magnitude;
 
             return instantTranslation > Toolkit.Instance.parameters.WalkingThreshold * Time.deltaTime
-                ? Mathf.Sign(Vector3.Cross(scene.physicalHead.forward, scene.forwardTarget).y) * instantTranslation * Toolkit.Instance.CurvatureRadiusToRotationRate()
+                ? - Mathf.Sign(Vector3.Cross(scene.physicalHead.forward, scene.forwardTarget).y) * instantTranslation * Toolkit.Instance.CurvatureRadiusToRotationRate()
                 : 0f;
         }
     }
@@ -88,23 +111,29 @@ namespace BG.Redirection {
 
 	public class Razzaque2001Hybrid: WorldRedirectionTechnique {
         public override void Redirect(Scene scene) {
-            float angle = Mathf.Max(
-				Razzaque2001OverTimeRotation.GetFrameOffset(scene),
-				Razzaque2001Rotational.GetFrameOffset(scene),
-				Razzaque2001Curvature.GetFrameOffset(scene)
-			);
+            float[] angles = new float[] {
+				Razzaque2001OverTimeRotation.GetRedirection(scene),
+				Razzaque2001Rotational.GetRedirection(scene),
+				Razzaque2001Curvature.GetRedirection(scene)
+			};
+
+			for (int i = 1; i < angles.Length; i++) {
+				if (Mathf.Abs(angles[i]) > Mathf.Abs(angles[0])) {
+					angles[0] = angles[i];
+				}
+			}
 
 			if (scene.applyDampening) {
-				angle = ApplyDampening(scene, angle);
+				angles[0] = ApplyDampening(scene, angles[0]);
 			}
 			if (scene.applySmoothing) {
-				angle = ApplyDampening(scene, angle);
+				angles[0] = ApplyDampening(scene, angles[0]);
 			}
 
-			scene.previousRedirection = angle;
+			scene.previousRedirection = angles[0];
 
 			scene.CopyHeadRotations();
-			scene.RotateVirtualHeadY(angle);
+			scene.RotateVirtualHeadY(angles[0]);
 			scene.CopyHeadTranslations();
         }
 
@@ -122,10 +151,10 @@ namespace BG.Redirection {
 			scene.CopyHeadRotations();
 			scene.CopyHeadTranslations();
 
-			scene.virtualHead.RotateAround(scene.origin.position, Vector3.up, GetFrameOffset(scene));
+			scene.virtualHead.RotateAround(scene.origin.position, Vector3.up, GetRedirection(scene));
         }
 
-		public static float GetFrameOffset(Scene scene) {
+		public static float GetRedirection(Scene scene) {
 			float angleBetweenTargets = Vector3.SignedAngle(Vector3.ProjectOnPlane(scene.physicalTarget.position - scene.origin.position, Vector3.up), scene.virtualTarget.position - scene.origin.position, Vector3.up);
 			float angleBetweenHeads = Vector3.SignedAngle(Vector3.ProjectOnPlane(scene.physicalHead.forward, Vector3.up), scene.virtualHead.forward, Vector3.up);
 
@@ -145,7 +174,25 @@ namespace BG.Redirection {
 
 	public class ResetWorldRedirection: WorldRedirectionTechnique {
         public override void Redirect(Scene scene) {
-            Debug.Log("Method not implemented yet.");
+			if (Mathf.Abs(scene.GetHeadToHeadRotation().eulerAngles.y) > Toolkit.Instance.parameters.RotationalEpsilon) {
+					float[] angles = new float[] {
+					Razzaque2001OverTimeRotation.GetRedirectionReset(scene),
+					Razzaque2001Rotational.GetRedirectionReset(scene)
+				};
+
+				for (int i = 1; i < angles.Length; i++) {
+					if (Mathf.Abs(angles[i]) > Mathf.Abs(angles[0])) {
+						angles[0] = angles[i];
+					}
+				}
+
+				Debug.Log($"{angles[0]} {angles[1]} {angles[2]} ");
+				scene.previousRedirection = angles[0];
+				scene.RotateVirtualHeadY(angles[0]);
+			}
+
+			scene.CopyHeadRotations();
+			scene.CopyHeadTranslations();
         }
     }
 }

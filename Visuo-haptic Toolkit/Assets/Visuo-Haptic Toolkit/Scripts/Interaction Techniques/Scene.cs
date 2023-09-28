@@ -73,6 +73,12 @@ namespace BG.Redirection {
 		///
 		/// </summary>
 		/// <returns>Returns the distance between the user's physical and virtual head.</returns>
+		public Vector3 GetHeadToHeadTranslation() => virtualHead.position - physicalHead.position;
+
+		/// <summary>
+		///
+		/// </summary>
+		/// <returns>Returns the distance between the user's physical and virtual head.</returns>
 		public float GetHeadToHeadDistance() => Vector3.Distance(physicalHead.position, virtualHead.position);
 
 		/// <summary>
@@ -139,7 +145,7 @@ namespace BG.Redirection {
         /// Applies unaltered physical head rotations to the virtual head GameObject
         /// </summary>
         public void CopyHeadTranslations() {
-            virtualHead.position += physicalHead.position - previousHeadPosition;
+            virtualHead.position += GetHeadToHeadRotation() * (physicalHead.position - previousHeadPosition);
 		}
 
 		/// <summary>
