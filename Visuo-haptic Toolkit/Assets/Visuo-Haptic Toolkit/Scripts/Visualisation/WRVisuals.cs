@@ -29,7 +29,7 @@ namespace BG.Visualisation {
 			switch (rootScript.strategy) {
 				case WRStrategy.None:
 					fixTargetCounts(1);
-                    targets[0].transform.position = scene.selectedTarget.position + scene.physicalHead.forward;
+                    targets[0].position = scene.physicalHead.position + scene.physicalHead.forward;
                     targets[0].gameObject.SetActive(true);
                     break;
 				case WRStrategy.SteerToCenter:
@@ -39,15 +39,16 @@ namespace BG.Visualisation {
 					orbitTargets(scene);
 					break;
 				case WRStrategy.SteerToMultipleTargets:
-					multipleTargets(scene);
+                    multipleTargets(scene);
 					break;
 				default:
 					targets.Clear();
 					break;
 			}
+            targets.ForEach(t => t.gameObject.SetActive(true));
 
-			// draws threshold lines for the targets
-			drawDirectionLines(scene);
+            // draws threshold lines for the targets
+            drawDirectionLines(scene);
 		}
 
 		private void drawDirectionLines(Scene scene) {
@@ -56,23 +57,24 @@ namespace BG.Visualisation {
 
 		private void centerTargets(Scene scene) {
 			fixTargetCounts(1);
-            targets[0].transform.position = scene.selectedTarget.position;
-            targets[0].gameObject.SetActive(true);
+            targets[0].position = scene.selectedTarget.position;
 
             Debug.DrawLine(scene.physicalHead.position, scene.selectedTarget.position, colors[0]);
 		}
 
 		private void orbitTargets(Scene scene) {
 			float distanceToTarget = scene.GetHeadToTargetDistance();
-			Vector3 vectorToTarget = Vector3.ProjectOnPlane(scene.selectedTarget.position - scene.physicalHead.position, Vector3.up).normalized;
+			Vector3 vectorToTarget = Vector3.ProjectOnPlane(scene.selectedTarget.position - scene.physicalHead.position, Vector3.up);
 			Vector3 leftTarget, rightTarget;
 			if (distanceToTarget < scene.radius) {
-				leftTarget = Quaternion.Euler(0f, Mathf.Rad2Deg * Mathf.PI/3, 0f) * vectorToTarget * Mathf.Abs(scene.radius / Mathf.Tan(Mathf.Rad2Deg * Mathf.PI/3 * Mathf.Rad2Deg));
-				rightTarget = Quaternion.Euler(0f, - Mathf.Rad2Deg * Mathf.PI/3, 0f) * vectorToTarget * Mathf.Abs(scene.radius / Mathf.Tan(Mathf.Rad2Deg * Mathf.PI/3 * Mathf.Rad2Deg));
+				var length = 0.5f * (distanceToTarget + Mathf.Sqrt(4 * Mathf.Pow(scene.radius, 2f) - 3 * Mathf.Pow(distanceToTarget, 2f)));
+				leftTarget =  Quaternion.Euler(0f, 60, 0f) * (length * vectorToTarget.normalized);
+                rightTarget = Quaternion.Euler(0f, -60, 0f) * (length * vectorToTarget.normalized);
 			} else {
-				float angleToTargets = Mathf.Rad2Deg * Mathf.Asin(scene.radius / distanceToTarget);
-				leftTarget = Quaternion.Euler(0f, angleToTargets, 0f) * vectorToTarget * Mathf.Abs(scene.radius / Mathf.Tan(angleToTargets * Mathf.Deg2Rad));
-				rightTarget = Quaternion.Euler(0f, - angleToTargets, 0f) * vectorToTarget * Mathf.Abs(scene.radius / Mathf.Tan(angleToTargets * Mathf.Deg2Rad));
+				float angleToTargetsInRadians = Mathf.Rad2Deg * Mathf.Asin(scene.radius / distanceToTarget);
+				float angleToTargetsInDegrees = angleToTargetsInRadians * Mathf.Rad2Deg;
+				leftTarget = Quaternion.Euler(0f, angleToTargetsInDegrees, 0f) * vectorToTarget * Mathf.Cos(angleToTargetsInRadians);
+				rightTarget = Quaternion.Euler(0f, -angleToTargetsInDegrees, 0f) * vectorToTarget * Mathf.Cos(angleToTargetsInRadians);
 			}
             var targetColors = (Vector3.Angle(leftTarget, scene.physicalHead.forward) < Vector3.Angle(scene.physicalHead.forward, rightTarget)) ?
 				(colors[0], colors[1]) : (colors[1], colors[0]);
@@ -86,7 +88,6 @@ namespace BG.Visualisation {
 			fixTargetCounts(2);
             targets[0].position = scene.physicalHead.position + leftTarget;
 			targets[1].position = scene.physicalHead.position + rightTarget;
-			targets.ForEach(t => t.gameObject.SetActive(true));
 		}
 
 		private void multipleTargets(Scene scene) {
@@ -94,7 +95,6 @@ namespace BG.Visualisation {
             var targetsAndSceneTargets = targets.Zip(scene.targets, (a, b) => (a, b));
             foreach ((var first, var second) in targetsAndSceneTargets) {
                 first.transform.position = second.position;
-                first.gameObject.SetActive(true);
                 Debug.DrawLine(scene.physicalHead.position, first.position,
                 colors[(second == scene.selectedTarget) ? 0 : 1]);
             }
