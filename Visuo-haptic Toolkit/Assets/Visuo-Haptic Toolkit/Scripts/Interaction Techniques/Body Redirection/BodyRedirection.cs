@@ -61,9 +61,10 @@ namespace BG.Redirection {
 		/// initializes the previous head positions.
 		/// </summary>
         private void Update() {
-			if (previousTechnique != technique)
+			if (previousTechnique != technique) {
 				updateTechnique();
-			previousTechnique = technique;
+				previousTechnique = technique;
+			}
 
 			techniqueInstance?.Redirect(scene);	// Computes and applies the redirection according to the selected redirection technique
 

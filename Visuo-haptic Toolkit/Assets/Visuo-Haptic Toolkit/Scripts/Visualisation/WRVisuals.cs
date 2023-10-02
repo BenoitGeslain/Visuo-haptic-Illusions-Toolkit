@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using BG.Redirection;
 using System;
+using System.Linq;
 
 namespace BG.Visualisation {
 	public class WRVisuals : MonoBehaviour {
@@ -12,38 +13,25 @@ namespace BG.Visualisation {
 		public GameObject targetPrefab;
 		private List<Transform> targets;
 
-		// Calling Onenable instead of Start to support recompilation during play
-		private void OnEnable() {
-			colors = new List<Color> () {
-				Color.white,	// Indicates the selected target
+        // Calling OnEnable instead of Start to support recompilation during play
+        private void OnEnable() => colors = new List<Color>() {
+                Color.white,	// Indicates the selected target
 				Color.black,	// Indicates the other targets
 				Color.green	// Indicates the forward target vector
-			};
-		}
+		};
 
-		private void Start() {
-			targets = new List<Transform>();
-		}
+        private void Start() => targets = new List<Transform>();
 
-		private void Update() {
+        private void Update() {
 			WorldRedirection rootScript = (WorldRedirection) Toolkit.Instance.rootScript;
 			Scene scene = rootScript.scene;
 
 			switch (rootScript.strategy) {
 				case WRStrategy.None:
-					if (targets.Count == 1) {
-						targets[0].transform.position = scene.selectedTarget.position + scene.physicalHead.forward;
-						targets[0].gameObject.SetActive(true);
-					} else {
-						for (int i = 0; i < targets.Count; i++) {
-							Destroy(targets[i].gameObject);
-						}
-						targets.Clear();
-						targets.Add(Instantiate(targetPrefab, this.transform).transform);
-						targets[0].transform.position = scene.selectedTarget.position + scene.physicalHead.forward;
-						targets[0].gameObject.SetActive(true);
-					}
-					break;
+					fixTargetCounts(1);
+                    targets[0].transform.position = scene.selectedTarget.position + scene.physicalHead.forward;
+                    targets[0].gameObject.SetActive(true);
+                    break;
 				case WRStrategy.SteerToCenter:
 					centerTargets(scene);
 					break;
@@ -67,99 +55,60 @@ namespace BG.Visualisation {
 		}
 
 		private void centerTargets(Scene scene) {
-			if (targets.Count == 1) {
-				targets[0].transform.position = scene.selectedTarget.position;
-				targets[0].gameObject.SetActive(true);
-			} else {
-				for (int i = 0; i < targets.Count; i++) {
-					Destroy(targets[i].gameObject);
-				}
-				targets.Clear();
-				targets.Add(Instantiate(targetPrefab, this.transform).transform);
-				targets[0].transform.position = scene.selectedTarget.position;
-				targets[0].gameObject.SetActive(true);
-			}
-			Debug.DrawLine(scene.physicalHead.position, scene.selectedTarget.position, colors[0]);
+			fixTargetCounts(1);
+            targets[0].transform.position = scene.selectedTarget.position;
+            targets[0].gameObject.SetActive(true);
+
+            Debug.DrawLine(scene.physicalHead.position, scene.selectedTarget.position, colors[0]);
 		}
 
 		private void orbitTargets(Scene scene) {
 			float distanceToTarget = scene.GetHeadToTargetDistance();
 			Vector3 vectorToTarget = Vector3.ProjectOnPlane(scene.selectedTarget.position - scene.physicalHead.position, Vector3.up).normalized;
+			Vector3 leftTarget, rightTarget;
 			if (distanceToTarget < scene.radius) {
-				Vector3 leftTarget = Quaternion.Euler(0f, Mathf.Rad2Deg * Mathf.PI/3, 0f) * vectorToTarget * Mathf.Abs(scene.radius / Mathf.Tan(Mathf.Rad2Deg * Mathf.PI/3 * Mathf.Rad2Deg));
-				Vector3 rightTarget = Quaternion.Euler(0f, - Mathf.Rad2Deg * Mathf.PI/3, 0f) * vectorToTarget * Mathf.Abs(scene.radius / Mathf.Tan(Mathf.Rad2Deg * Mathf.PI/3 * Mathf.Rad2Deg));
-
-				if (Vector3.Angle(leftTarget, scene.physicalHead.forward) < Vector3.Angle(scene.physicalHead.forward, rightTarget)) {
-					Debug.DrawRay(scene.physicalHead.position, leftTarget, colors[0]);
-					Debug.DrawRay(scene.physicalHead.position, rightTarget, colors[1]);
-				} else {
-					Debug.DrawRay(scene.physicalHead.position, leftTarget, colors[1]);
-					Debug.DrawRay(scene.physicalHead.position, rightTarget, colors[0]);
-				}
-				updateTargetsOrbit(scene, leftTarget, rightTarget);
+				leftTarget = Quaternion.Euler(0f, Mathf.Rad2Deg * Mathf.PI/3, 0f) * vectorToTarget * Mathf.Abs(scene.radius / Mathf.Tan(Mathf.Rad2Deg * Mathf.PI/3 * Mathf.Rad2Deg));
+				rightTarget = Quaternion.Euler(0f, - Mathf.Rad2Deg * Mathf.PI/3, 0f) * vectorToTarget * Mathf.Abs(scene.radius / Mathf.Tan(Mathf.Rad2Deg * Mathf.PI/3 * Mathf.Rad2Deg));
 			} else {
 				float angleToTargets = Mathf.Rad2Deg * Mathf.Asin(scene.radius / distanceToTarget);
-				Vector3 leftTarget = Quaternion.Euler(0f, angleToTargets, 0f) * vectorToTarget * Mathf.Abs(scene.radius / Mathf.Tan(angleToTargets * Mathf.Deg2Rad));
-				Vector3 rightTarget = Quaternion.Euler(0f, - angleToTargets, 0f) * vectorToTarget * Mathf.Abs(scene.radius / Mathf.Tan(angleToTargets * Mathf.Deg2Rad));
-
-				if (Vector3.Angle(leftTarget, scene.physicalHead.forward) < Vector3.Angle(scene.physicalHead.forward, rightTarget)) {
-					Debug.DrawRay(scene.physicalHead.position, leftTarget, colors[0]);
-					Debug.DrawRay(scene.physicalHead.position, rightTarget, colors[1]);
-				} else {
-					Debug.DrawRay(scene.physicalHead.position, leftTarget, colors[1]);
-					Debug.DrawRay(scene.physicalHead.position, rightTarget, colors[0]);
-				}
-				updateTargetsOrbit(scene, leftTarget, rightTarget);
+				leftTarget = Quaternion.Euler(0f, angleToTargets, 0f) * vectorToTarget * Mathf.Abs(scene.radius / Mathf.Tan(angleToTargets * Mathf.Deg2Rad));
+				rightTarget = Quaternion.Euler(0f, - angleToTargets, 0f) * vectorToTarget * Mathf.Abs(scene.radius / Mathf.Tan(angleToTargets * Mathf.Deg2Rad));
 			}
-		}
+            var targetColors = (Vector3.Angle(leftTarget, scene.physicalHead.forward) < Vector3.Angle(scene.physicalHead.forward, rightTarget)) ?
+				(colors[0], colors[1]) : (colors[1], colors[0]);
+
+            Debug.DrawRay(scene.physicalHead.position, leftTarget, targetColors.Item1);
+            Debug.DrawRay(scene.physicalHead.position, rightTarget, targetColors.Item2);
+            updateTargetsOrbit(scene, leftTarget, rightTarget);
+        }
 
 		private void updateTargetsOrbit(Scene scene, Vector3 leftTarget, Vector3 rightTarget) {
-			if (targets.Count == 2) {
-				targets[0].position = scene.physicalHead.position + leftTarget;
-				targets[1].position = scene.physicalHead.position + rightTarget;
-				targets[0].gameObject.SetActive(true);
-				targets[1].gameObject.SetActive(true);
-			} else {
-				for (int i = 0; i < targets.Count; i++) {
-					Destroy(targets[i].gameObject);
-				}
-				targets.Clear();
-				targets.Add(Instantiate(targetPrefab, this.transform).transform);
-				targets.Add(Instantiate(targetPrefab, this.transform).transform);
-				targets[0].position = scene.physicalHead.position + leftTarget;
-				targets[1].position = scene.physicalHead.position + rightTarget;
-				targets[0].gameObject.SetActive(true);
-				targets[1].gameObject.SetActive(true);
-			}
+			fixTargetCounts(2);
+            targets[0].position = scene.physicalHead.position + leftTarget;
+			targets[1].position = scene.physicalHead.position + rightTarget;
+			targets.ForEach(t => t.gameObject.SetActive(true));
 		}
 
 		private void multipleTargets(Scene scene) {
-			if (targets.Count == scene.targets.Length) {
-				for (int i = 0; i < scene.targets.Length; i++) {
-					targets[i].transform.position = scene.targets[i].position;
-					targets[i].gameObject.SetActive(true);
-					if (scene.targets[i] == scene.selectedTarget) {
-						Debug.DrawLine(scene.physicalHead.position, targets[i].position, colors[0]);
-					} else {
-						Debug.DrawLine(scene.physicalHead.position, targets[i].position, colors[1]);
-					}
-				}
-			} else {
-				for (int i = 0; i < targets.Count; i++) {
-					Destroy(targets[i].gameObject);
-				}
-				targets.Clear();
-				for (int i = 0; i < scene.targets.Length; i++) {
-					targets.Add(Instantiate(targetPrefab, this.transform).transform);
-					targets[i].transform.position = scene.targets[i].position;
-					targets[i].gameObject.SetActive(true);
-					if (scene.targets[i] == scene.selectedTarget) {
-						Debug.DrawLine(scene.physicalHead.position, targets[i].position, colors[0]);
-					} else {
-						Debug.DrawLine(scene.physicalHead.position, targets[i].position, colors[1]);
-					}
-				}
-			}
+			fixTargetCounts(scene.targets.Length);
+            var targetsAndSceneTargets = targets.Zip(scene.targets, (a, b) => (a, b));
+            foreach ((var first, var second) in targetsAndSceneTargets) {
+                first.transform.position = second.position;
+                first.gameObject.SetActive(true);
+                Debug.DrawLine(scene.physicalHead.position, first.position,
+                colors[(second == scene.selectedTarget) ? 0 : 1]);
+            }
+        }
+
+		private void fixTargetCounts(int count) {
+			if (targets.Count != count) {
+                targets.ForEach(t => Destroy(t.gameObject));
+                targets.Clear();
+                targets.AddRange(
+                    Enumerable.Range(0, count).Select(_ => Instantiate(targetPrefab, this.transform).transform)
+                );
+            }
+			Debug.Assert(targets.Count == count);
 		}
 	}
 }

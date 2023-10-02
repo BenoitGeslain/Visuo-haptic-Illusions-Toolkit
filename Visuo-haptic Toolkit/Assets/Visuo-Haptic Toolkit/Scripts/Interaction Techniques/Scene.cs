@@ -99,18 +99,16 @@ namespace BG.Redirection {
 		/// <returns>Returns the signed angle (as per trigonometry standards) between the user's physical head and the forward target in degrees.</returns>
         public float GetHeadAngleToTarget() => Vector3.SignedAngle(Vector3.ProjectOnPlane(physicalHead.forward, Vector3.up), forwardTarget, Vector3.up);
 
-		/// <summary>
-		///
-		/// </summary>
-		/// <returns>Returns the instant angular velocity as a quaternion of the physical head using the last frame's rotation</returns>
-        public Quaternion GetHeadInstantRotation() {
-			return physicalHead.rotation * Quaternion.Inverse(previousHeadRotation);
-		}
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns>Returns the instant angular velocity as a quaternion of the physical head using the last frame's rotation</returns>
+        public Quaternion GetHeadInstantRotation() => physicalHead.rotation * Quaternion.Inverse(previousHeadRotation);
 
-		/// <summary>
-		///
-		/// </summary>
-		/// <returns>Returns the instant angular velocity around the up axis (Y) of the physical head using the last frame's position</returns>
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns>Returns the instant angular velocity around the up axis (Y) of the physical head using the last frame's position</returns>
         public float GetHeadInstantRotationY() {
 			float instantRotation = GetHeadInstantRotation().eulerAngles.y;
 			return (instantRotation > 180f)? 360 - instantRotation : instantRotation;
