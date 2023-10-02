@@ -9,8 +9,8 @@ namespace BG.Visualisation {
 		private static List<Color> colors;	// colors of the lines between the physical and virtual elements
 
 		/// <summary>
-		/// Onenable is called once at the start of the game similarily to Start().
-		/// Calling Onenable instead of Start to support recompilation during play (Hot reload)
+		/// OnEnable is called once at the start of the game similarily to Start().
+		/// Calling OnEnable instead of Start to support recompilation during play (Hot reload)
 		/// </summary>
 		private void OnEnable() {
 			colors = new List<Color> () {
@@ -37,16 +37,16 @@ namespace BG.Visualisation {
 		/// <param name="obj2">Vector3: The virtual corresponding GameObject's position</param>
 		/// <param name="rootScript"></param>
 		private void drawThresholdLines(Vector3 obj1, Vector3 obj2, BodyRedirection rootScript) {
-			// Computes the euler angles from the rotation matrix from obj1 to obj2 around the origin
-			Vector3 d = Quaternion.FromToRotation(rootScript.scene.origin.position - obj1, rootScript.scene.origin.position - obj2).eulerAngles;
-           // Compares the euler angles against the thresholds and applies the correct color
-		  	Color c = Mathf.Min(d.x, 360-d.x) < Toolkit.Instance.parameters.MaxAngles.x &&
-                Mathf.Min(d.y, 360-d.y) < Toolkit.Instance.parameters.MaxAngles.y &&
-                Mathf.Min(d.z, 360-d.z) < Toolkit.Instance.parameters.MaxAngles.z
-                ? colors[0]
-                : colors[1];
 
-            Debug.DrawLine(obj1, obj2, c);
+            if (Debug.isDebugBuild) {			
+				// Computes the euler angles from the rotation matrix from obj1 to obj2 around the origin
+				Vector3 d = Quaternion.FromToRotation(rootScript.scene.origin.position - obj1, rootScript.scene.origin.position - obj2).eulerAngles;
+				// Compares the euler angles against the thresholds and applies the correct color
+				var allAnglesBelowThreshold = Mathf.Min(d.x, 360 - d.x) < Toolkit.Instance.parameters.MaxAngles.x &&
+					 Mathf.Min(d.y, 360 - d.y) < Toolkit.Instance.parameters.MaxAngles.y &&
+					 Mathf.Min(d.z, 360 - d.z) < Toolkit.Instance.parameters.MaxAngles.z;
+				Debug.DrawLine(obj1, obj2, colors[allAnglesBelowThreshold ? 0 : 1]);
+			}
 		}
 	}
 }

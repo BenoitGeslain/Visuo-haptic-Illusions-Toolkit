@@ -10,7 +10,7 @@ namespace BG.Redirection {
 
 			position = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
 
-			// Don't make child fields be indented
+			// Don't indent child fields
 			var indent = EditorGUI.indentLevel;
 			EditorGUIUtility.labelWidth = 60;
 			EditorGUI.indentLevel = 0;
