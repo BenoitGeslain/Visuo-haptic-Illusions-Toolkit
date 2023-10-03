@@ -9,20 +9,12 @@ namespace BG.Redirection {
 	///  Information about the user such as the user's position or the targets are encapsulated inside Scene.
     /// </summary>
     [Serializable]
-	public class BodyRedirectionTechnique {
+	public class BodyRedirectionTechnique : RedirectionTechnique {
 
 		[Tooltip("If a2 = 0, then the redirection is linear and equivalent to Han et al., 2018. If a2 is -1/D²<a2<1/D², the redirectionfunction doesn't redirect in the opposite direction (-1/D^2) or over redirects (1/D^2).")]
 		[Range(-1f, 1f)]
         public float redirectionLateness;
 		public Vector2 controlPoint;
-
-		/// <summary>
-		/// This virtual function applies the redirection to the virtualHand Transform according to the other parameters and the equations
-		/// defined in the corresponding techniques. It needs to be overriden by a child class and it is called on Update() in BodyRedirection.
-		/// </summary>
-		public virtual void Redirect(Scene scene) {
-			Debug.LogError("Calling Redirect() virtual method. It should be overriden");
-		}
 	}
 
 	/// <summary>

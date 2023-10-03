@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace BG.Redirection {
 	/// <summary>
-	/// Body redirection techniques.
+	/// Available body redirection techniques.
 	/// </summary>
 	public enum BRTechnique {
 		None,
@@ -15,7 +15,7 @@ namespace BG.Redirection {
 		Poupyrev1996GoGo
 	}
     /// <summary>
-    /// World redirection techniques.
+    /// Available world redirection techniques.
     /// </summary>
     public enum WRTechnique {
 		None,
@@ -53,8 +53,8 @@ namespace BG.Redirection {
 			rootScript = this.gameObject.GetComponent<Interaction>();
 		}
 
-        public float CurvatureRadiusToRotationRate() => 360f / (2 * Mathf.PI * parameters.CurvatureRadius);
+        public float CurvatureRadiusToRotationRate() => CurvatureRadiusToRotationRate(parameters.CurvatureRadius);
 
-        public float CurvatureRadiusToRotationRate(float radius) => 360f / (2 * Mathf.PI * radius);
+        public static float CurvatureRadiusToRotationRate(float radius) => 360f / (2 * Mathf.PI * radius);
     }
 }

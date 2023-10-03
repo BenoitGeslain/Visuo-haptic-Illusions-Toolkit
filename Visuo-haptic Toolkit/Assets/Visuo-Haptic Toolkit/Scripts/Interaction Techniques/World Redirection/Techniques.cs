@@ -7,15 +7,7 @@ namespace BG.Redirection {
     ///  This class is the most conceptual class of  world redirection defining the important
     ///  functions to call: Redirect()
     /// </summary>
-    public class WorldRedirectionTechnique {
-
-		/// <summary>
-		/// Redirects the user towards the actual target. Should be overriden in subclasses.
-		/// </summary>
-		public virtual void Redirect(Scene scene) {
-			Debug.LogError("Calling Redirect() virtual method. It should be overriden");
-		}
-	}
+    public class WorldRedirectionTechnique : RedirectionTechnique { }
 
 	public class Razzaque2001OverTimeRotation: WorldRedirectionTechnique {
         public override void Redirect(Scene scene) {
@@ -138,13 +130,13 @@ namespace BG.Redirection {
 			scene.CopyHeadTranslations();
         }
 
-		public float ApplyDampening(Scene scene, float angle) {
+		private float ApplyDampening(Scene scene, float angle) {
 			float dampenedAngle = angle * Mathf.Sin(Mathf.Min(scene.GetHeadAngleToTarget() / Toolkit.Instance.parameters.DampeningRange, 1f) * Mathf.PI/2);
 			float dampenedAngleDistance = dampenedAngle * Mathf.Min(scene.GetHeadToTargetDistance() / Toolkit.Instance.parameters.DistanceThreshold, 1f);
 			return (scene.GetHeadToTargetDistance() < Toolkit.Instance.parameters.DistanceThreshold)? dampenedAngleDistance : dampenedAngle;
 		}
 
-        public float ApplySmooting(Scene scene, float angle) => (1 - Toolkit.Instance.parameters.SmoothingFactor) * scene.previousRedirection + Toolkit.Instance.parameters.SmoothingFactor * angle;
+        public float ApplySmoothing(Scene scene, float angle) => (1 - Toolkit.Instance.parameters.SmoothingFactor) * scene.previousRedirection + Toolkit.Instance.parameters.SmoothingFactor * angle;
     }
 
 	public class Azmandian2016World: WorldRedirectionTechnique {
