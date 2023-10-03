@@ -71,7 +71,7 @@ namespace BG.Visualisation {
 				leftTarget =  Quaternion.Euler(0f, 60, 0f) * (length * vectorToTarget.normalized);
                 rightTarget = Quaternion.Euler(0f, -60, 0f) * (length * vectorToTarget.normalized);
 			} else {
-				float angleToTargetsInRadians = Mathf.Rad2Deg * Mathf.Asin(scene.radius / distanceToTarget);
+				float angleToTargetsInRadians = Mathf.Asin(scene.radius / distanceToTarget);
 				float angleToTargetsInDegrees = angleToTargetsInRadians * Mathf.Rad2Deg;
 				leftTarget = Quaternion.Euler(0f, angleToTargetsInDegrees, 0f) * vectorToTarget * Mathf.Cos(angleToTargetsInRadians);
 				rightTarget = Quaternion.Euler(0f, -angleToTargetsInDegrees, 0f) * vectorToTarget * Mathf.Cos(angleToTargetsInRadians);

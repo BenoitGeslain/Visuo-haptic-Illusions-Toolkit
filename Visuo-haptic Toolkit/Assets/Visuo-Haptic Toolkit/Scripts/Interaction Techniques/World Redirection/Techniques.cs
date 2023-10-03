@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 namespace BG.Redirection {
@@ -186,7 +187,6 @@ namespace BG.Redirection {
 					}
 				}
 
-				Debug.Log($"{angles[0]} {angles[1]} {angles[2]} ");
 				scene.previousRedirection = angles[0];
 				scene.RotateVirtualHeadY(angles[0]);
 			}
