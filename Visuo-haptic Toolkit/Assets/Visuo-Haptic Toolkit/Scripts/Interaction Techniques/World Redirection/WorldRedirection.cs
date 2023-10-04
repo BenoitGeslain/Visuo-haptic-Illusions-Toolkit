@@ -10,12 +10,16 @@ namespace BG.Redirection {
 	public class WorldRedirection : Interaction {
 
 		public WRTechnique technique;
+		private WRTechnique previousTechnique;
 		public WorldRedirectionTechnique techniqueInstance;
 		public WRStrategy strategy;
 		public WorldRedirectionStrategy strategyInstance;
 
 		public Scene scene;
 
+		/// <summary>
+		/// Updates the techniqueInstance according to the enumeration technique chosen.
+		/// </summary>
 		private void updateTechnique() {
 			techniqueInstance = technique switch {
 				WRTechnique.None => new ResetWorldRedirection(),
@@ -43,8 +47,13 @@ namespace BG.Redirection {
 				Debug.LogError("Error Unknown Redirection strategy.");
 		}
 
+		/// <summary>
+		/// Start function called once when the game is starting. This fucntion calls updateTechnique() to instantiate the technique class and
+		/// initializes the previous head positions.
+		/// </summary>
 		private void Start() {
 			updateTechnique();
+			previousTechnique = technique;
 
 			scene.selectedTarget = scene.targets[0];
 			scene.previousHandPosition = scene.physicalHand.position;
@@ -53,13 +62,23 @@ namespace BG.Redirection {
 			scene.previousHeadRotation = scene.physicalHead.rotation;
 		}
 
+		/// <summary>
+		/// Update function called once per frame. This function
+		/// calls updateTechnique() to instantiate the technique class,
+		/// calls Redirect(...) from the BodyRedirection class to apply the redirection,
+		/// applies rotations to the physical hand and
+		/// initializes the previous head positions.
+		/// </summary>
 		private void Update() {
-			updateTechnique();
-
-			if (techniqueInstance is not null && strategyInstance is not null) {
-				scene.forwardTarget = strategyInstance.SteerTo(scene);
-				techniqueInstance.Redirect(scene);
+			if (previousTechnique != technique) {
+				updateTechnique();
+				previousTechnique = technique;
 			}
+
+			if (strategyInstance is not null)
+				scene.forwardTarget = strategyInstance.SteerTo(scene);
+
+			techniqueInstance?.Redirect(scene);
 
 			scene.previousHandPosition = scene.physicalHand.position;
 			scene.previousHandRotation = scene.physicalHand.rotation;
@@ -67,15 +86,31 @@ namespace BG.Redirection {
 			scene.previousHeadRotation = scene.physicalHead.rotation;
 		}
 
+		/// <summary>
+		/// Setter for the enumeration BRTechnique. updateTechnique() gets called on the next Update().
+		/// </summary>
+		/// <param name="t">The enumeration defining which technique to call Redirect(...) from.</param>
 		public void SetTechnique(WRTechnique t) {
 			technique = t;
-			updateTechnique();
 		}
 
+		/// <summary>
+		/// A wrapper around SetTechnique(BRTechnique t) to use the ResetRedirection technique.
+		/// </summary>
         public void ResetRedirection() => SetTechnique(WRTechnique.None);
 
+		/// <summary>
+		/// Getter for the enumeration technique.
+		/// </summary>
+		/// <returns>Returns the enumeration technique</returns>
 		public WRTechnique GetTechnique() => technique;
 
+		/// <summary>
+		/// Returns whether a redirection is applied to the user's virtual and physical head
+		/// </summary>
+		/// <returns>Returns a bool:
+		/// - true if the virtual hand of the user is not co-localised to the physical head.
+		/// - false otherwise.</returns>
 		public bool IsRedirecting() => scene.GetHeadToHeadDistance() < Vector3.kEpsilon &&
 				   Quaternion.Dot(scene.physicalHead.rotation, scene.virtualHead.rotation) > 1 - Vector3.kEpsilon;
     }
