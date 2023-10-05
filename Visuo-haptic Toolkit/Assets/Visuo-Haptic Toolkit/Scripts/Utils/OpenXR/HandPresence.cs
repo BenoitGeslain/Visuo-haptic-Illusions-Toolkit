@@ -15,11 +15,9 @@ public class HandModelsManager: MonoBehaviour {
 	[SerializeField] private List<GameObject> modelPrefabs;
 	[SerializeField] private Transform trackedHand;
 
-	private void Start() {
-		TryInitialize();
-	}
+    private void Start() => TryInitialize();
 
-	private void Update() {
+    private void Update() {
         if (targetDevice.isValid) {
             intantiatedController.SetActive(showController);
             instantiatedHand.SetActive(!showController);
@@ -28,9 +26,11 @@ public class HandModelsManager: MonoBehaviour {
             TryInitialize();
         }
     }
-
+	/// <summary>
+	/// Search for a controller prefab corresponding to the first detected device, if any.
+	/// </summary>
 	private void TryInitialize() {
-		List<InputDevice> devices = new List<InputDevice>();
+		List<InputDevice> devices = new();
 		InputDevices.GetDevicesWithCharacteristics(deviceCharacteristics, devices); // Populates devices with all connected devices
 
 		devices.ForEach(device => Debug.Log($"Detected device: {device.name}"));

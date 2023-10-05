@@ -76,6 +76,9 @@ namespace BG.Redirection {
 
 		public WRTechnique GetTechnique() => technique;
 
+		/// <summary>
+		/// Determine whether the virtual and physical heads have the same position and orientation (up to numerical errors).
+		/// </summary>
 		public bool IsRedirecting() => scene.GetHeadToHeadDistance() < Vector3.kEpsilon &&
 				   Quaternion.Dot(scene.physicalHead.rotation, scene.virtualHead.rotation) > 1 - Vector3.kEpsilon;
     }
