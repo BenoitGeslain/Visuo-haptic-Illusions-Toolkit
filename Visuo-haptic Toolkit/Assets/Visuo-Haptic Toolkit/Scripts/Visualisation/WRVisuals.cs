@@ -13,6 +13,8 @@ namespace BG.Visualisation {
 		public GameObject targetPrefab;
 		private List<Transform> targets;
 
+		public Material active, inactive;
+
         // Calling OnEnable instead of Start to support recompilation during play
         private void OnEnable() => colors = new List<Color>() {
                 Color.white,	// Indicates the selected target
@@ -33,7 +35,7 @@ namespace BG.Visualisation {
                     targets[0].gameObject.SetActive(true);
                     break;
 				case WRStrategy.SteerToCenter:
-					centerTargets(scene);
+					centerTarget(scene);
 					break;
 				case WRStrategy.SteerToOrbit:
 					orbitTargets(scene);
@@ -46,20 +48,13 @@ namespace BG.Visualisation {
 					break;
 			}
             targets.ForEach(t => t.gameObject.SetActive(true));
-
-            // draws threshold lines for the targets
-            drawDirectionLines(scene);
 		}
 
-		private void drawDirectionLines(Scene scene) {
-			Debug.DrawRay(scene.physicalHead.position, scene.forwardTarget.normalized, colors[2]);
-		}
-
-		private void centerTargets(Scene scene) {
+		private void centerTarget(Scene scene) {
 			fixTargetCounts(1);
             targets[0].position = scene.selectedTarget.position;
-
-            Debug.DrawLine(scene.physicalHead.position, scene.selectedTarget.position, colors[0]);
+            targets[0].GetComponent<Renderer>().material = active;
+			Debug.DrawLine(scene.physicalHead.position, scene.selectedTarget.position, colors[2]);
 		}
 
 		private void orbitTargets(Scene scene) {
@@ -79,13 +74,20 @@ namespace BG.Visualisation {
             var targetColors = (Vector3.Angle(leftTarget, scene.physicalHead.forward) < Vector3.Angle(scene.physicalHead.forward, rightTarget)) ?
 				(colors[0], colors[1]) : (colors[1], colors[0]);
 
-            Debug.DrawRay(scene.physicalHead.position, leftTarget, targetColors.Item1);
-            Debug.DrawRay(scene.physicalHead.position, rightTarget, targetColors.Item2);
             updateTargetsOrbit(scene, leftTarget, rightTarget);
         }
 
 		private void updateTargetsOrbit(Scene scene, Vector3 leftTarget, Vector3 rightTarget) {
 			fixTargetCounts(2);
+			if (Vector3.Angle(leftTarget, scene.physicalHead.forward) < Vector3.Angle(scene.physicalHead.forward, rightTarget)) {
+            	targets[0].GetComponent<Renderer>().material = active;
+            	targets[1].GetComponent<Renderer>().material = inactive;
+				Debug.DrawRay(scene.physicalHead.position, leftTarget, colors[2]);
+			} else {
+            	targets[0].GetComponent<Renderer>().material = inactive;
+            	targets[1].GetComponent<Renderer>().material = active;
+				Debug.DrawRay(scene.physicalHead.position, rightTarget, colors[2]);
+			}
             targets[0].position = scene.physicalHead.position + leftTarget;
 			targets[1].position = scene.physicalHead.position + rightTarget;
 		}
@@ -95,8 +97,12 @@ namespace BG.Visualisation {
             var targetsAndSceneTargets = targets.Zip(scene.targets, (a, b) => (a, b));
             foreach ((var first, var second) in targetsAndSceneTargets) {
                 first.transform.position = second.position;
-                Debug.DrawLine(scene.physicalHead.position, first.position,
-                colors[(second == scene.selectedTarget) ? 0 : 1]);
+				if (second == scene.selectedTarget) {
+                	Debug.DrawLine(scene.physicalHead.position, first.position, colors[2]);
+            		first.GetComponent<Renderer>().material = active;
+				} else {
+            		first.GetComponent<Renderer>().material = inactive;
+				}
             }
         }
 
