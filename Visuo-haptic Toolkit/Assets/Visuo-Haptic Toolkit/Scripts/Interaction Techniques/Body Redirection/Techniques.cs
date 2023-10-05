@@ -150,11 +150,11 @@ namespace BG.Redirection {
 		}
 	}
 
-	/// <summary>
-	/// This class does not implement a redirection technique but reset the redirection currently applied the the user's hand by slowly reducing the virtual to
-	/// physical distance to 0.
-	/// </summary>
-	public class ResetBodyRedirection: BodyRedirectionTechnique {
+    /// <summary>
+    /// This class does not implement a redirection technique but resets the redirection currently applied to the user's hand by slowly reducing the virtual to
+    /// physical distance to 0.
+    /// </summary>
+    public class ResetBodyRedirection : BodyRedirectionTechnique {
 
 		public override void Redirect(Scene scene) {
 			Vector3 instantTranslation = scene.GetHandInstantTranslation();

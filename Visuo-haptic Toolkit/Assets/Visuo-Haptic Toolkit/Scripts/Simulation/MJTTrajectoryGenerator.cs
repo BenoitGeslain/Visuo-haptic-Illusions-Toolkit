@@ -11,8 +11,11 @@ namespace BG.Trajectory {
 		float movementTime = 2f;
 
 		public bool movementInProgress = false;
+		[Range(0f, 1f)]
+		public float ballisticAdjustementPhase = 0.5f;
 		Vector3 initialPosition;
-		Vector3 finalPosition;
+		Vector3 finalPositionPhysical;
+		Vector3 finalPositionVirtual;
 		Vector3 currentPosition;
 
 		private void Start() {
@@ -20,17 +23,14 @@ namespace BG.Trajectory {
 
 			initialPosition = scene.origin.position;
 			currentPosition = scene.origin.position;
-			finalPosition = scene.physicalTarget.position;
+			finalPositionPhysical = scene.physicalTarget.position;
+			finalPositionVirtual = scene.virtualTarget.position;
 
-			Debug.Log($"{initialPosition} {finalPosition}");
-			Debug.Log($"{MJTEquation(initialPosition.x, finalPosition.x, 0f)} {MJTEquation(initialPosition.x, finalPosition.x, 0.5f)} {MJTEquation(initialPosition.x, finalPosition.x, 1f)}");
-			Debug.Log($"{MJTEquation(initialPosition.y, finalPosition.y, 0f)} {MJTEquation(initialPosition.y, finalPosition.y, 0.5f)} {MJTEquation(initialPosition.y, finalPosition.y, 1f)}");
-			Debug.Log($"{MJTEquation(initialPosition.z, finalPosition.z, 0f)} {MJTEquation(initialPosition.z, finalPosition.z, 0.5f)} {MJTEquation(initialPosition.z, finalPosition.z, 1f)}");
 		}
 
 		private void Update() {
 			if (movementInProgress) {
-				currentPosition = ComputeMJTPosition(currentTime / movementTime);
+				currentPosition = ComputeMJTPosition(currentTime / movementTime, currentTime / movementTime > ballisticAdjustementPhase);
 				currentPosition.y = scene.physicalHand.position.y;
 				scene.physicalHand.position = currentPosition;
 
@@ -43,10 +43,13 @@ namespace BG.Trajectory {
 			}
 		}
 
-		private Vector3 ComputeMJTPosition(float normailzedTime) {
-			return new Vector3(MJTEquation(initialPosition.x, finalPosition.x, normailzedTime),
+		private Vector3 ComputeMJTPosition(float normailzedTime, bool virtualTarget) {
+			float offset = (virtualTarget) ? (finalPositionPhysical.x - finalPositionVirtual.x) *
+											 (normailzedTime - ballisticAdjustementPhase) * (ballisticAdjustementPhase / (1f - ballisticAdjustementPhase) + 1) : 0f;
+			Debug.Log($"{normailzedTime} {offset} {normailzedTime - ballisticAdjustementPhase}");
+			return new Vector3(MJTEquation(initialPosition.x, finalPositionVirtual.x, normailzedTime) + offset,
 							   0f,
-							   MJTEquation(initialPosition.z, finalPosition.z, normailzedTime));
+							   MJTEquation(initialPosition.z, finalPositionVirtual.z, normailzedTime));
 		}
 
 		private float MJTEquation(float initial, float final, float t) {
