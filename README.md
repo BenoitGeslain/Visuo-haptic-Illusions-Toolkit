@@ -9,6 +9,8 @@ Ajouter description du projet
     - le Minimum Jerk Model
     - une courbe de Bézier?
   - Générer trajectoire de marche avec ???
+- Cacher les éléments non pertinents en fonction de la méthode sélectionnée
+- Fonctionnalité: Avoir plusieurs ToolkitXXXRedirection in the scene pour combiner World et Body Warping
 
 ## Dependancies
 
