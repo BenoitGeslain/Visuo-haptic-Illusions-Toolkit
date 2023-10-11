@@ -11,6 +11,8 @@ Ajouter description du projet
   - Générer trajectoire de marche avec ???
 - Redirection
   - Cacher les éléments non pertinents en fonction de la méthode sélectionnée
+- User Input
+  - Ajouter déplacements et rotation de la tête
 - Fonctionnalité: Avoir plusieurs ToolkitXXXRedirection in the scene pour combiner World et Body Warping
 
 ## Dependancies
