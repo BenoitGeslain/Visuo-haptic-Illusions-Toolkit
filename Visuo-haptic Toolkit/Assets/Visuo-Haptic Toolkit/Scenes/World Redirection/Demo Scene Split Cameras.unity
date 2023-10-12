@@ -893,6 +893,10 @@ PrefabInstance:
       propertyPath: inactive
       value: 
       objectReference: {fileID: 2100000, guid: bde54e5eb356bff4c849b24c533b6391, type: 2}
+    - target: {fileID: 4269787013998645211, guid: 5fb8647dcfba39f43976bd2e07bcddf6, type: 3}
+      propertyPath: orbitResolution
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
