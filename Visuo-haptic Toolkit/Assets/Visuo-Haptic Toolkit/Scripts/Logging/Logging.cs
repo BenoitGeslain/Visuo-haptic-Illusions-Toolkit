@@ -48,11 +48,9 @@ namespace BG.Logging {
 		private List<RedirectionData> records = new();
         private readonly CsvConfiguration config = new(CultureInfo.InvariantCulture) { HasHeaderRecord = false };
 
-        private void Start() {
-			createNewFile();
-		}
+        private void Start() => createNewFile();
 
-		private void Update() {
+        private void Update() {
             void writeRecords<Data, DataMap>(List<Data> records) where DataMap : ClassMap<Data> {
                 if (records.Count > bufferSize) {
 					using var writer = new StreamWriter(fileName, append: true);
@@ -80,7 +78,5 @@ namespace BG.Logging {
 
 			writeHeaders<RedirectionData, RedirectionDataMap>(out records);
 		}
-
-        private string[] targetsToString(Transform[] targets) => targets.Select(t => t.name).ToArray();
     }
 }

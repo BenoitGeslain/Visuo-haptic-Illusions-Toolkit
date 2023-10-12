@@ -1,6 +1,19 @@
 # Visuo-haptic Illusions
 
-TODO: Ajouter description
+TODO:
+Ajouter description du projet
+- Logging
+  - Automatiquement logger tous les champs de scene pour qu'on est uniquement à modifier la class sans aller dans logging.
+- Simulation
+  - Générer trajectoire de main avec
+    - le Minimum Jerk Model
+    - une courbe de Bézier?
+  - Générer trajectoire de marche avec ???
+- Redirection
+  - Cacher les éléments non pertinents en fonction de la méthode sélectionnée
+- User Input
+  - Ajouter déplacements et rotation de la tête
+- Fonctionnalité: Avoir plusieurs ToolkitXXXRedirection in the scene pour combiner World et Body Warping
 
 ## Dependancies
 

@@ -106,7 +106,7 @@ namespace BG.Redirection {
 		public WRTechnique GetTechnique() => technique;
 
 		/// <summary>
-		/// Returns whether a redirection is applied to the user's virtual and physical head
+		/// Determine whether a redirection is applied to the user's virtual and physical head
 		/// </summary>
 		/// <returns>Returns a bool:
 		/// - true if the virtual hand of the user is not co-localised to the physical head.
