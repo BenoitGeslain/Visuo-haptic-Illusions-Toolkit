@@ -109,18 +109,19 @@ namespace BG.Redirection {
 	/// </summary>
 	public class Razzaque2001Hybrid: WorldRedirectionTechnique {
 
-        public override void Redirect(Scene scene) {
-            static float maxByAbs(float a, float b, float c) {
-                return (new float[] { a, b, c }).AsReadOnlyList().OrderByDescending(Mathf.Abs).First();
-			}
-			Redirect(scene, maxByAbs);
-        }
+		Func<float, float, float, float> aggregate;
+
 		/// <summary>
-		/// The optional parameter describes how the three rotation components should be aggregated.
+		/// By default, the aggregation function is the maximum by absolute value.
 		/// </summary>
-		/// <param name="scene"></param>
-		/// <param name="aggregate">aggregation function (float, float, float) -> float</param>
-        public void Redirect(Scene scene, Func<float, float, float, float> aggregate) {
+        public Razzaque2001Hybrid() : base() {
+            this.aggregate = (a, b, c) => (new float[] { a, b, c }).AsReadOnlyList().OrderByDescending(Mathf.Abs).First();
+        }
+        public Razzaque2001Hybrid(Func<float, float, float, float> aggregate) : base() {
+            this.aggregate = aggregate;
+        }
+
+        public void Redirect(Scene scene) {
             float angle = aggregate(
 				Razzaque2001OverTimeRotation.GetRedirection(scene),
 				Razzaque2001Rotational.GetRedirection(scene),
