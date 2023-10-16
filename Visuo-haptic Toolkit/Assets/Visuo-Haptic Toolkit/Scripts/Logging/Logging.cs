@@ -20,6 +20,7 @@ namespace BG.Logging {
 
 	public sealed class RedirectionDataMap : ClassMap<RedirectionData> {
 		public RedirectionDataMap() {
+			AutoMap(CultureInfo.InvariantCulture);
 			Map(m => m.timeStamp).TypeConverterOption.Format("yyyy/MM/dd-HH:mm:ss.fff").Index(0).Name("TimeStamp");
 			Map(m => m.script.technique).Index(1).Name("Technique");
 			Map(m => m.script.scene.physicalHand.position).Index(2).Name("PhysicalHandPosition");
