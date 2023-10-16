@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3169019813816358605}
   - component: {fileID: 2891068713693094246}
-  - component: {fileID: 551704495323053107}
   - component: {fileID: 4389313314016028775}
+  - component: {fileID: 2713608614238546106}
+  - component: {fileID: 551704495323053107}
   m_Layer: 0
   m_Name: ToolkitBodyRedirection
   m_TagString: Untagged
@@ -50,11 +51,52 @@ MonoBehaviour:
   techniqueInstance:
     redirectionLateness: 0
     controlPoint: {x: 0, y: 0}
-  physicalHand: {fileID: 0}
-  virtualHand: {fileID: 0}
-  origin: {fileID: 0}
-  physicalTarget: {fileID: 0}
-  virtualTarget: {fileID: 0}
+  scene:
+    physicalHand: {fileID: 0}
+    virtualHand: {fileID: 0}
+    physicalHead: {fileID: 0}
+    virtualHead: {fileID: 0}
+    physicalTarget: {fileID: 0}
+    virtualTarget: {fileID: 0}
+    origin: {fileID: 0}
+    targets: []
+    radius: 5
+    applyDampening: 0
+    applySmoothing: 0
+    selectedTarget: {fileID: 0}
+    forwardTarget: {x: 0, y: 0, z: 0}
+    previousHandPosition: {x: 0, y: 0, z: 0}
+    previousHandRotation: {x: 0, y: 0, z: 0, w: 0}
+    previousHeadPosition: {x: 0, y: 0, z: 0}
+    previousHeadRotation: {x: 0, y: 0, z: 0, w: 0}
+    previousRedirection: 0
+--- !u!114 &4389313314016028775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1607897844603459841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a83050ac92ff0f4ba973c4bbc1fcdfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showThersholdLines: 0
+--- !u!114 &2713608614238546106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1607897844603459841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc338c50cd7fd2c4a86cea68899a2fb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pathToFile: LoggedData\
+  fileNamePrefix: 
 --- !u!114 &551704495323053107
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69,15 +111,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parameters: {fileID: 11400000, guid: c39097e50bc3898498d2edf378be3a21, type: 2}
   rootScript: {fileID: 0}
---- !u!114 &4389313314016028775
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1607897844603459841}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a83050ac92ff0f4ba973c4bbc1fcdfd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

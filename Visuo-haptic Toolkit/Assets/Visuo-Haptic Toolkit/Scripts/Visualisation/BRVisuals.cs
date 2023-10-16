@@ -6,6 +6,8 @@ using BG.Redirection;
 namespace BG.Visualisation {
 	public class BRVisuals : MonoBehaviour {
 
+		[SerializeField] private bool showThersholdLines;
+
 		private static List<Color> colors;	// colors of the lines between the physical and virtual elements
 
 		/// <summary>
@@ -38,7 +40,7 @@ namespace BG.Visualisation {
 		/// <param name="rootScript"></param>
 		private void drawThresholdLines(Vector3 obj1, Vector3 obj2, BodyRedirection rootScript) {
 
-            if (Debug.isDebugBuild) {			
+            if (Debug.isDebugBuild) {
 				// Computes the euler angles from the rotation matrix from obj1 to obj2 around the origin
 				Vector3 d = Quaternion.FromToRotation(rootScript.scene.origin.position - obj1, rootScript.scene.origin.position - obj2).eulerAngles;
 				// Compares the euler angles against the thresholds and applies the correct color

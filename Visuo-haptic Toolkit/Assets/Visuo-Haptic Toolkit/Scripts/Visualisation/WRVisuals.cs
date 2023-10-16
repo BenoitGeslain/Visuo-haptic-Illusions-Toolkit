@@ -2,7 +2,6 @@ using System.Collections.Generic;
 
 using UnityEngine;
 using BG.Redirection;
-using System;
 using System.Linq;
 
 namespace BG.Visualisation {
@@ -14,6 +13,9 @@ namespace BG.Visualisation {
 		private List<Transform> targets;
 
 		public Material active, inactive;
+
+		[Range(3, 100)]
+		[SerializeField] private int orbitResolution;
 
         // Calling OnEnable instead of Start to support recompilation during play
         private void OnEnable() => colors = new List<Color>() {
@@ -38,6 +40,7 @@ namespace BG.Visualisation {
 					centerTarget(scene);
 					break;
 				case WRStrategy.SteerToOrbit:
+					showOrbit(scene);
 					orbitTargets(scene);
 					break;
 				case WRStrategy.SteerToMultipleTargets:
@@ -90,6 +93,17 @@ namespace BG.Visualisation {
 			}
             targets[0].position = scene.physicalHead.position + leftTarget;
 			targets[1].position = scene.physicalHead.position + rightTarget;
+		}
+
+		private void showOrbit(Scene scene) {
+			Vector3 previousRadius = new Vector3(0f, 0f, scene.radius);
+			Vector3 currentRadius;
+			Quaternion stepRotation = Quaternion.Euler(0f, 360f/orbitResolution, 0f);
+			for (int angle = 0; angle < orbitResolution; angle++) {
+				currentRadius = stepRotation * previousRadius;
+				Debug.DrawLine(scene.selectedTarget.position + previousRadius, scene.selectedTarget.position + currentRadius);
+				previousRadius = currentRadius;
+			}
 		}
 
 		private void multipleTargets(Scene scene) {
