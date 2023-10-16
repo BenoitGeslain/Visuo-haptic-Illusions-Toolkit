@@ -109,7 +109,7 @@ namespace BG.Redirection {
 	/// </summary>
 	public class Razzaque2001Hybrid: WorldRedirectionTechnique {
 
-		Func<float, float, float, float> aggregate;
+        readonly Func<float, float, float, float> aggregate;
 
 		/// <summary>
 		/// By default, the aggregation function is the maximum by absolute value.
@@ -121,8 +121,8 @@ namespace BG.Redirection {
             this.aggregate = aggregate;
         }
 
-        static Razzaque2001Hybrid SumWeights() => new((a, b, c) => a + b + c);
-
+        static Razzaque2001Hybrid Sum() => new((a, b, c) => a + b + c);
+        static Razzaque2001Hybrid Weighted(float x, float y, float z) => new((a, b, c) => a * x + b * y + c * z);
         public void Redirect(Scene scene) {
             float angle = aggregate(
 				Razzaque2001OverTimeRotation.GetRedirection(scene),
