@@ -2,6 +2,7 @@
 
 Ce projet est un toolkit pour l'emploi et le développement d'illusions visuo-haptiques en réalité virtuelle, conçu comme un plugin Unity.
 
+- Ajouter licence MIT
 - Logging
   - Automatiquement logger tous les champs de scene pour n'avoir qu'à modifier la classe sans aller dans logging.
 - Simulation
@@ -69,7 +70,7 @@ Voir le [wiki](../../wikis) pour plus d'informations sur les tâches à réalise
 |:-------------- | -------------- |
 | [Han et al., 2019](http://ieeexplore.ieee.org/document/8260974/), Instant    | &check; |
 | Pseudo-Haptic   |     |
-| [Lécuyer et al., 2000](https://doi.org/10.1109/VR.2000.840369), Swamp Illusion   | &cross;   |
+| [Lécuyer et al., 2000](https://doi.org/10.1109/VR.2000.840369), Swamp Illusion   | ?   |
 | [Samad et al., 2019](https://dl.acm.org/doi/10.1145/3290605.3300550), Pseudo-haptic weight   | &cross;   |
 
 <!-- | World Redirection   | Status    |
@@ -84,7 +85,7 @@ Voir le [wiki](../../wikis) pour plus d'informations sur les tâches à réalise
 
 | Body Redirection  | Status   |
 |:-------------- | -------------- |
-| [Poupyrev et al., 1996](https://dl.acm.org/doi/10.1145/237091.237102), The Go-Go   | &cross;   |
+| [Poupyrev et al., 1996](https://dl.acm.org/doi/10.1145/237091.237102), The Go-Go   | &check;   |
 | World Redirection   |     |
 | [Abtahi and Follmer, 2019](https://dl.acm.org/doi/10.1145/3290605.3300752), World-in-miniature   | &cross;   |
 | Interpolation   |    |
