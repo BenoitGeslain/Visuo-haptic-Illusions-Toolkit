@@ -110,3 +110,14 @@ Voir le [wiki](../../wikis) pour plus d'informations sur les tâches à réalise
 - Profil de vitesse
 	- Minimum jerk model
 - Lecture à partir d'un fichier? Rejouer une scène à partir d'un csv (ou autre)
+
+
+### Authors 
+Benoît Geslain (benoit.geslain@sii.fr)
+Bruno Jartoux (bruno.jartoux@sii.fr)
+
+### Copyright and licensing
+Copyright (c) 2023 SII Société pour l’Informatique Industrielle
+This project is licensed under the open-source MIT X11 license, see the LICENSE file.
+In particular, you may not distribute any copy or substantial portion of this project
+without the contents of the LICENSE file.
