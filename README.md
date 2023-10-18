@@ -1,21 +1,21 @@
 # Visuo-haptic Illusions
 
-TODO:
-Ajouter description du projet
+Ce projet est un toolkit pour l'emploi et le développement d'illusions visuo-haptiques en réalité virtuelle, conçu comme un plugin Unity.
+
 - Logging
-  - Automatiquement logger tous les champs de scene pour qu'on est uniquement à modifier la class sans aller dans logging.
+  - Automatiquement logger tous les champs de scene pour n'avoir qu'à modifier la classe sans aller dans logging.
 - Simulation
   - Générer trajectoire de main avec
     - le Minimum Jerk Model
-    - une courbe de Bézier?
+    - une courbe de Bézier ?
   - Générer trajectoire de marche avec ???
 - Redirection
   - Cacher les éléments non pertinents en fonction de la méthode sélectionnée
 - User Input
   - Ajouter déplacements et rotation de la tête
-- Fonctionnalité: Avoir plusieurs ToolkitXXXRedirection in the scene pour combiner World et Body Warping
+- Fonctionnalité : Avoir plusieurs ToolkitXXXRedirection in the scene pour combiner World et Body Warping
 
-## Dependancies
+## Dependencies
 
 - [Unity XR Plugin](https://github.com/ValveSoftware/unity-xr-plugin)
 - Text Mesh Pro
