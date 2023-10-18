@@ -23,16 +23,10 @@ namespace BG.Redirection {
 
 		public override Vector3 SteerTo(Scene scene) {
 			float distanceToTarget = scene.GetHeadToTargetDistance();
-			Vector3 leftTarget, rightTarget;
-			if (distanceToTarget < scene.radius) {
-				leftTarget = Quaternion.Euler(0f, Mathf.Rad2Deg * Mathf.PI / 3, 0f) * Vector3.ProjectOnPlane(scene.selectedTarget.position - scene.physicalHead.position, Vector3.up);
-				rightTarget = Quaternion.Euler(0f, -Mathf.Rad2Deg * Mathf.PI / 3, 0f) * Vector3.ProjectOnPlane(scene.selectedTarget.position - scene.physicalHead.position, Vector3.up);
-			}
-			else {
-				float angleToTargets = Mathf.Rad2Deg * Mathf.Asin(scene.radius / distanceToTarget);
-				leftTarget = Quaternion.Euler(0f, angleToTargets, 0f) * Vector3.ProjectOnPlane(scene.selectedTarget.position - scene.physicalHead.position, Vector3.up);
-				rightTarget = Quaternion.Euler(0f, -angleToTargets, 0f) * Vector3.ProjectOnPlane(scene.selectedTarget.position - scene.physicalHead.position, Vector3.up);
-			}
+			float angleToTargets = (distanceToTarget < scene.radius ? Mathf.PI / 3 : Mathf.Asin(scene.radius / distanceToTarget)) * Mathf.Rad2Deg;
+			var v = Vector3.ProjectOnPlane(scene.selectedTarget.position - scene.physicalHead.position, Vector3.up);
+            Vector3 leftTarget = Quaternion.Euler(0f, angleToTargets, 0f) * v;
+			Vector3 rightTarget = Quaternion.Euler(0f, -angleToTargets, 0f) * v;
             return Vector3.Angle(leftTarget, scene.physicalHead.forward) < Vector3.Angle(scene.physicalHead.forward, rightTarget)
                 ? leftTarget
                 : rightTarget;
@@ -40,7 +34,12 @@ namespace BG.Redirection {
     }
 
 	public class SteerToMultipleTargets: WorldRedirectionStrategy {
-
+		/// <summary>
+		/// Select the target that has the smallest bearing with the orientation of the user's head. 
+		/// Return a vector pointing from the physical head in the direction of the selected target.
+		/// </summary>
+		/// <param name="scene"></param>
+		/// <returns></returns>
 		public override Vector3 SteerTo(Scene scene) {
             // Equivalent code in later .Net versions:
             // Func<Transform, float> bearing = (Transform t) => Vector3.Angle(Vector3.ProjectOnPlane(scene.physicalHead.forward, Vector3.up), Vector3.ProjectOnPlane(t.position - scene.physicalHead.position, Vector3.up));
