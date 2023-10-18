@@ -25,17 +25,17 @@ namespace BG.Logging {
 			Map(m => m.script.technique).Index(1).Name("Technique");
 			Map(m => m.script.scene.physicalHand.position).Index(2).Name("PhysicalHandPosition");
 			Map(m => m.script.scene.physicalHand.rotation).Index(3).Name("PhysicalHandOrientation");
-			Map(m => m.script.scene.physicalHand.rotation.eulerAngles).Index(3).Name("PhysicalHandOrientationEuler");
-			Map(m => m.script.scene.virtualHand.position).Index(4).Name("VirtualHandPosition");
-			Map(m => m.script.scene.virtualHand.rotation).Index(5).Name("VirtualHandOrientation");
-			Map(m => m.script.scene.virtualHand.rotation.eulerAngles).Index(5).Name("VirtualHandOrientationEuler");
-			Map(m => m.script.scene.physicalTarget.position).Index(6).Name("PhysicalTargetPosition");
-			Map(m => m.script.scene.physicalTarget.rotation).Index(7).Name("PhysicalTargetOrientation");
-			Map(m => m.script.scene.physicalTarget.rotation.eulerAngles).Index(7).Name("PhysicalTargetOrientationEuler");
-			Map(m => m.script.scene.virtualTarget.position).Index(8).Name("VirtualTargetPosition");
-			Map(m => m.script.scene.virtualTarget.rotation).Index(9).Name("VirtualTargetOrientation");
-			Map(m => m.script.scene.virtualTarget.rotation.eulerAngles).Index(9).Name("VirtualTargetOrientationEuler");
-			Map(m => m.script.scene.origin.position).Index(10).Name("OriginPosition");
+			Map(m => m.script.scene.physicalHand.rotation.eulerAngles).Index(4).Name("PhysicalHandOrientationEuler");
+			Map(m => m.script.scene.virtualHand.position).Index(5).Name("VirtualHandPosition");
+			Map(m => m.script.scene.virtualHand.rotation).Index(6).Name("VirtualHandOrientation");
+			Map(m => m.script.scene.virtualHand.rotation.eulerAngles).Index(7).Name("VirtualHandOrientationEuler");
+			Map(m => m.script.scene.physicalTarget.position).Index(8).Name("PhysicalTargetPosition");
+			Map(m => m.script.scene.physicalTarget.rotation).Index(9).Name("PhysicalTargetOrientation");
+			Map(m => m.script.scene.physicalTarget.rotation.eulerAngles).Index(10).Name("PhysicalTargetOrientationEuler");
+			Map(m => m.script.scene.virtualTarget.position).Index(11).Name("VirtualTargetPosition");
+			Map(m => m.script.scene.virtualTarget.rotation).Index(12).Name("VirtualTargetOrientation");
+			Map(m => m.script.scene.virtualTarget.rotation.eulerAngles).Index(13).Name("VirtualTargetOrientationEuler");
+			Map(m => m.script.scene.origin.position).Index(14).Name("OriginPosition");
 		}
 	}
 
