@@ -1,3 +1,7 @@
+using System;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace BG.Redirection {
@@ -104,30 +108,51 @@ namespace BG.Redirection {
 	/// to the user's head.
 	/// </summary>
 	public class Razzaque2001Hybrid: WorldRedirectionTechnique {
-        public override void Redirect(Scene scene) {
-            float[] angles = new float[] {
+
+        readonly Func<float, float, float, float> aggregate;
+
+		/// <summary>
+		/// By default, the aggregation function is the maximum by absolute value.
+		/// </summary>
+        public Razzaque2001Hybrid() : base() {
+            this.aggregate = (a, b, c) => (new float[] { a, b, c }).AsReadOnlyList().OrderByDescending(Mathf.Abs).First();
+        }
+
+		/// <summary>
+		/// Constructor taking a parameter, an aggregation function (float, float, float) -> float.
+		/// </summary>
+		/// <param name="aggregate"></param>
+        public Razzaque2001Hybrid(Func<float, float, float, float> aggregate) : base() {
+            this.aggregate = aggregate;
+        }
+
+        /// <summary>
+        /// Static factory method for using sum-aggregation.
+        /// </summary>
+        /// <param name="aggregate"></param>
+        static Razzaque2001Hybrid Sum() => new((a, b, c) => a + b + c);
+
+        /// <summary>
+        /// Static factory method for using weighted-sum-aggregation.
+        /// </summary>
+        static Razzaque2001Hybrid Weighted(float x, float y, float z) => new((a, b, c) => a * x + b * y + c * z);
+        public void Redirect(Scene scene) {
+            float angle = aggregate(
 				Razzaque2001OverTimeRotation.GetRedirection(scene),
 				Razzaque2001Rotational.GetRedirection(scene),
 				Razzaque2001Curvature.GetRedirection(scene)
-			};
-
-			for (int i = 1; i < angles.Length; i++) {
-				if (Mathf.Abs(angles[i]) > Mathf.Abs(angles[0])) {
-					angles[0] = angles[i];
-				}
-			}
-
+			);
 			if (scene.applyDampening) {
-				angles[0] = ApplyDampening(scene, angles[0]);
+				angle = ApplyDampening(scene, angle);
 			}
 			if (scene.applySmoothing) {
-				angles[0] = ApplyDampening(scene, angles[0]);
+				angle = ApplySmoothing(scene, angle);
 			}
 
-			scene.previousRedirection = angles[0];
+			scene.previousRedirection = angle;
 
 			scene.CopyHeadRotations();
-			scene.RotateVirtualHeadY(angles[0]);
+			scene.RotateVirtualHeadY(angle);
 			scene.CopyHeadTranslations();
         }
 

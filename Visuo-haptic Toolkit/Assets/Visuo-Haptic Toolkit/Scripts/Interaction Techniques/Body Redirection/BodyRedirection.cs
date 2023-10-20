@@ -3,17 +3,26 @@ using UnityEngine;
 namespace BG.Redirection {
 	/// <summary>
 	/// This class allows users to select which body redirection technique to use as well as the relevant parameters.
-	/// The enumeration BRTechnique allows users to select dynamically which technique they desire.
-	/// The class reference BodyRedirectionTechnique contains the redirect function that is used to apply redirection with the Redirect(...) function.
-	/// The scene parameter contains all the information necessary for the redirection like the hand physical and virtual GameObjects or the targets GameObjects.
+	/// The enumeration BRTechnique allows for dynamic selection of the technique.
+	/// The class reference BodyRedirectionTechnique contains the redirect function that is used to apply redirection with the Redirect() function.
+	/// The scene parameter contains all the information necessary for the redirection such as the GameObjects representing the hand (physical and virtual) or the targets.
 	///
-	/// Every frame, the technique calls the Redirect(...) function of techniqueInstance.
+	/// Every frame, the technique calls the Redirect() method of techniqueInstance.
 	/// To add a new redirection function [TODO complete this section]
 	/// </summary>
 	public class BodyRedirection: Interaction {
 
+		/// <summary>
+		/// Currently selected technique, if any.
+		/// </summary>
 		public BRTechnique technique;
+
+		/// <summary>
+		/// Previously selected technique, if any.
+		/// </summary>
 		private BRTechnique previousTechnique;
+
+
 		[SerializeField] private BodyRedirectionTechnique techniqueInstance;
 
         public Scene scene;
@@ -45,8 +54,7 @@ namespace BG.Redirection {
 		private void Start() {
 			updateTechnique();
 			previousTechnique = technique;
-			// In case the body redirection technique uses the head of the user (e.g. ),
-			// the previous position and rotation are stored to compute instant linear or angular velocity
+			// Store thhe previous hand and head position and rotation to compute instant linear or angular velocity
 			scene.previousHandPosition = scene.physicalHand.position;
 			scene.previousHandRotation = scene.physicalHand.rotation;
 			scene.previousHeadPosition = scene.physicalHead.position;

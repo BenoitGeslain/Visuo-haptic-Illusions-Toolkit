@@ -10,7 +10,10 @@ namespace BG.Redirection {
 	public class WorldRedirection : Interaction {
 
 		public WRTechnique technique;
-		private WRTechnique previousTechnique;
+        /// <summary>
+        /// Previously selected technique, if any.
+        /// </summary>
+        private WRTechnique previousTechnique;
 		public WorldRedirectionTechnique techniqueInstance;
 		public WRStrategy strategy;
 		public WorldRedirectionStrategy strategyInstance;
@@ -48,7 +51,7 @@ namespace BG.Redirection {
 		}
 
 		/// <summary>
-		/// Start function called once when the game is starting. This fucntion calls updateTechnique() to instantiate the technique class and
+		/// Start function called once when the game is starting. This function calls updateTechnique() to instantiate the technique class and
 		/// initializes the previous head positions.
 		/// </summary>
 		private void Start() {
@@ -86,17 +89,15 @@ namespace BG.Redirection {
 			scene.previousHeadRotation = scene.physicalHead.rotation;
 		}
 
-		/// <summary>
-		/// Setter for the enumeration BRTechnique. updateTechnique() gets called on the next Update().
-		/// </summary>
-		/// <param name="t">The enumeration defining which technique to call Redirect(...) from.</param>
-		public void SetTechnique(WRTechnique t) {
-			technique = t;
-		}
+        /// <summary>
+        /// Setter for the enumeration BRTechnique. updateTechnique() gets called on the next Update().
+        /// </summary>
+        /// <param name="t">The enumeration defining which technique to call Redirect(...) from.</param>
+        public void SetTechnique(WRTechnique t) => technique = t;
 
-		/// <summary>
-		/// A wrapper around SetTechnique(BRTechnique t) to use the ResetRedirection technique.
-		/// </summary>
+        /// <summary>
+        /// A wrapper around SetTechnique(BRTechnique t) to use the ResetRedirection technique.
+        /// </summary>
         public void ResetRedirection() => SetTechnique(WRTechnique.None);
 
 		/// <summary>

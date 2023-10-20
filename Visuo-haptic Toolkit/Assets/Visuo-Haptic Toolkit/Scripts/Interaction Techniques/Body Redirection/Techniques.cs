@@ -150,15 +150,30 @@ namespace BG.Redirection {
 		}
 	}
 
-	/// <summary>
-	/// This class does not implement a redirection technique but reset the redirection currently applied the the user's hand by slowly reducing the virtual to
-	/// physical distance to 0.
-	/// </summary>
-	public class ResetBodyRedirection: BodyRedirectionTechnique {
+    /// <summary>
+    /// This class implements the Swamp Illusion by Lécuyer et al., 2000. It is not a visuo-haptic illusion but a pseudo-haptic interaction techique.
+    /// </summary>
+    public class Lecuyer2000Swamp : BodyRedirectionTechnique {
 
-		public override void Redirect(Scene scene) {
-			Vector3 instantTranslation = scene.GetHandInstantTranslation();
-			scene.virtualHand.position += instantTranslation + instantTranslation.magnitude * Toolkit.Instance.parameters.ResetRedirectionCoeff * (scene.physicalHand.position - scene.virtualHand.position).normalized;
-		}
-	}
+        public override void Redirect(Scene scene) {
+			// TODO use specific parameters, other gains
+			Vector3 distanceToOrigin = scene.physicalHand.position - scene.origin.position;
+			scene.Redirection = MathF.Max(distanceToOrigin[0], distanceToOrigin[2]) > Toolkit.Instance.parameters.DistanceThreshold ?
+				-scene.GetHandInstantTranslation() / 2
+				: Vector3.zero
+				;
+        }
+    }
+
+    /// <summary>
+    /// This class does not implement a redirection technique but resets the redirection currently applied to the user's hand by slowly reducing the virtual to
+    /// physical distance to 0.
+    /// </summary>
+    public class ResetBodyRedirection : BodyRedirectionTechnique {
+
+        public override void Redirect(Scene scene) {
+            Vector3 instantTranslation = scene.GetHandInstantTranslation();
+            scene.virtualHand.position += instantTranslation + instantTranslation.magnitude * Toolkit.Instance.parameters.ResetRedirectionCoeff * (scene.physicalHand.position - scene.virtualHand.position).normalized;
+        }
+    }
 }

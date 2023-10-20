@@ -1,21 +1,22 @@
 # Visuo-haptic Illusions
 
-TODO:
-Ajouter description du projet
+Ce projet est un toolkit pour l'emploi et le développement d'illusions visuo-haptiques en réalité virtuelle, conçu comme un plugin Unity.
+
+- Ajouter licence MIT
 - Logging
-  - Automatiquement logger tous les champs de scene pour qu'on est uniquement à modifier la class sans aller dans logging.
+  - Automatiquement logger tous les champs de scene pour n'avoir qu'à modifier la classe sans aller dans logging.
 - Simulation
   - Générer trajectoire de main avec
     - le Minimum Jerk Model
-    - une courbe de Bézier?
+    - une courbe de Bézier ?
   - Générer trajectoire de marche avec ???
 - Redirection
   - Cacher les éléments non pertinents en fonction de la méthode sélectionnée
 - User Input
   - Ajouter déplacements et rotation de la tête
-- Fonctionnalité: Avoir plusieurs ToolkitXXXRedirection in the scene pour combiner World et Body Warping
+- Fonctionnalité : Avoir plusieurs ToolkitXXXRedirection in the scene pour combiner World et Body Warping
 
-## Dependancies
+## Dependencies
 
 - [Unity XR Plugin](https://github.com/ValveSoftware/unity-xr-plugin)
 - Text Mesh Pro
@@ -69,7 +70,7 @@ Voir le [wiki](../../wikis) pour plus d'informations sur les tâches à réalise
 |:-------------- | -------------- |
 | [Han et al., 2019](http://ieeexplore.ieee.org/document/8260974/), Instant    | &check; |
 | Pseudo-Haptic   |     |
-| [Lécuyer et al., 2000](https://doi.org/10.1109/VR.2000.840369), Swamp Illusion   | &cross;   |
+| [Lécuyer et al., 2000](https://doi.org/10.1109/VR.2000.840369), Swamp Illusion   | ?   |
 | [Samad et al., 2019](https://dl.acm.org/doi/10.1145/3290605.3300550), Pseudo-haptic weight   | &cross;   |
 
 <!-- | World Redirection   | Status    |
@@ -84,7 +85,7 @@ Voir le [wiki](../../wikis) pour plus d'informations sur les tâches à réalise
 
 | Body Redirection  | Status   |
 |:-------------- | -------------- |
-| [Poupyrev et al., 1996](https://dl.acm.org/doi/10.1145/237091.237102), The Go-Go   | &cross;   |
+| [Poupyrev et al., 1996](https://dl.acm.org/doi/10.1145/237091.237102), The Go-Go   | &check;   |
 | World Redirection   |     |
 | [Abtahi and Follmer, 2019](https://dl.acm.org/doi/10.1145/3290605.3300752), World-in-miniature   | &cross;   |
 | Interpolation   |    |
@@ -109,3 +110,14 @@ Voir le [wiki](../../wikis) pour plus d'informations sur les tâches à réalise
 - Profil de vitesse
 	- Minimum jerk model
 - Lecture à partir d'un fichier? Rejouer une scène à partir d'un csv (ou autre)
+
+
+### Authors 
+Benoît Geslain (benoit.geslain@sii.fr)
+Bruno Jartoux (bruno.jartoux@sii.fr)
+
+### Copyright and licensing
+Copyright (c) 2023 SII Société pour l’Informatique Industrielle
+This project is licensed under the open-source MIT X11 license, see the LICENSE file.
+In particular, you may not distribute any copy or substantial portion of this project
+without the contents of the LICENSE file.
