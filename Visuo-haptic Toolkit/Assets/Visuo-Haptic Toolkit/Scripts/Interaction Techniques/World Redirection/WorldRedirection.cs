@@ -18,8 +18,6 @@ namespace BG.Redirection {
 		public WRStrategy strategy;
 		public WorldRedirectionStrategy strategyInstance;
 
-		public Scene scene;
-
 		/// <summary>
 		/// Updates the techniqueInstance according to the enumeration technique chosen.
 		/// </summary>

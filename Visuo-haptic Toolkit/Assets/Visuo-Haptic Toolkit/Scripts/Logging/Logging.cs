@@ -7,22 +7,21 @@ using CsvHelper;
 using CsvHelper.Configuration;
 
 using UnityEngine;
+
 using BG.Redirection;
-using System.Linq;
-using UnityEditor;
 
 namespace BG.Logging {
 
     public record RedirectionData {
         public DateTime timeStamp = DateTime.Now;
-		public BodyRedirection script = (BodyRedirection)Toolkit.Instance.rootScript;
+		public Interaction script = Toolkit.Instance.rootScript;
     }
 
 	public sealed class RedirectionDataMap : ClassMap<RedirectionData> {
 		public RedirectionDataMap() {
 			AutoMap(CultureInfo.InvariantCulture);
 			Map(m => m.timeStamp).TypeConverterOption.Format("yyyy/MM/dd-HH:mm:ss.fff").Index(0).Name("TimeStamp");
-			Map(m => m.script.technique).Index(1).Name("Technique");
+			// Map(m => m.script.technique).Index(1).Name("Technique");
 			Map(m => m.script.scene.physicalHand.position).Index(2).Name("PhysicalHandPosition");
 			Map(m => m.script.scene.physicalHand.rotation).Index(3).Name("PhysicalHandOrientation");
 			Map(m => m.script.scene.physicalHand.rotation.eulerAngles).Index(4).Name("PhysicalHandOrientationEuler");

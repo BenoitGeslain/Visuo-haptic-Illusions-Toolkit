@@ -795,7 +795,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2542120560557277227, guid: 5fb8647dcfba39f43976bd2e07bcddf6, type: 3}
       propertyPath: technique
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2542120560557277227, guid: 5fb8647dcfba39f43976bd2e07bcddf6, type: 3}
       propertyPath: scene.origin
@@ -917,7 +917,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 532343569}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc338c50cd7fd2c4a86cea68899a2fb0, type: 3}
   m_Name: 
