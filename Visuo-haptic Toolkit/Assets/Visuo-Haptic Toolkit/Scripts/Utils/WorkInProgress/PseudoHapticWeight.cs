@@ -7,9 +7,9 @@ using UnityEngine;
 // TODO handle offset reduction
 namespace Assets.Visuo_Haptic_Toolkit.Scripts.Utils.WorkInProgress {
     public class Samad2019PseudoHapticWeight : BodyRedirectionTechnique {
-        public void Redirect(Scene scene) {
+        public override void Redirect(Scene scene) {
             float ratio = 0.65f;
-            float normalizedMass = 5f; // above 1 is heavy, below 1 is light (though what this means is unclear) 
+            float normalizedMass = 5f; // high is heavy, low is light (though what this means is unclear) 
             float verticalGain = 1 / normalizedMass;
             float horizontalGain = verticalGain * ratio;
             var v = scene.GetHandInstantTranslation();
