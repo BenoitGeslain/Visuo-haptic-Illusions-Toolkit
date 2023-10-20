@@ -3,7 +3,7 @@ using System;
 using UnityEngine;
 
 namespace BG.Redirection {
-	[CreateAssetMenu(fileName = "Data", menuName = "VR Toolkit/Interaction Techniques Parameters", order = 1)]
+	[CreateAssetMenu(fileName = "Data", menuName = "VR Illusions Toolkit/Interaction Techniques Parameters", order = 1)]
 	public class ParametersToolkit: ScriptableObject {
 
 		[Header("Body Warping")]
