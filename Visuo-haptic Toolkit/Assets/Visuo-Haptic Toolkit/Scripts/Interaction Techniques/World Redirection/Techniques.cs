@@ -136,7 +136,7 @@ namespace BG.Redirection {
         /// Static factory method for using weighted-sum-aggregation.
         /// </summary>
         static Razzaque2001Hybrid Weighted(float x, float y, float z) => new((a, b, c) => a * x + b * y + c * z);
-        public void Redirect(Scene scene) {
+        public override void Redirect(Scene scene) {
             float angle = aggregate(
 				Razzaque2001OverTimeRotation.GetRedirection(scene),
 				Razzaque2001Rotational.GetRedirection(scene),
