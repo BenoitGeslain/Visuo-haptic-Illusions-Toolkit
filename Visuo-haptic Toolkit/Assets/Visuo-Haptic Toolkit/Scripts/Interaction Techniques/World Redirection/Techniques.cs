@@ -174,10 +174,10 @@ namespace BG.Redirection {
 			scene.CopyHeadRotations();
 
 			Vector3 instantTranslation = scene.GetHeadInstantTranslation();
-			Vector3 translation = new Vector3(instantTranslation.x * Toolkit.Instance.parameters.GainsTranslational.x,
-											  instantTranslation.y * Toolkit.Instance.parameters.GainsTranslational.y,
-											  instantTranslation.z * Toolkit.Instance.parameters.GainsTranslational.z);
-			scene.virtualHead.position += translation;
+            scene.virtualHead.Translate(
+				instantTranslation.x * Toolkit.Instance.parameters.GainsTranslational.x,
+	            instantTranslation.y * Toolkit.Instance.parameters.GainsTranslational.y,
+                instantTranslation.z * Toolkit.Instance.parameters.GainsTranslational.z);
         }
 	}
 
