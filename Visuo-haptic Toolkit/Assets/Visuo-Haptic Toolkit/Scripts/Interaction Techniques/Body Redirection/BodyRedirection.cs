@@ -25,8 +25,6 @@ namespace BG.Redirection {
 
 		[SerializeField] private BodyRedirectionTechnique techniqueInstance;
 
-        public Scene scene;
-
 		/// <summary>
 		/// Updates the techniqueInstance according to the enumeration technique chosen.
 		/// </summary>

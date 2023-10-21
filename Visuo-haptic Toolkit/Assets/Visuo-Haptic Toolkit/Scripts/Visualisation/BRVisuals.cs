@@ -44,9 +44,13 @@ namespace BG.Visualisation {
 				// Computes the euler angles from the rotation matrix from obj1 to obj2 around the origin
 				Vector3 d = Quaternion.FromToRotation(rootScript.scene.origin.position - obj1, rootScript.scene.origin.position - obj2).eulerAngles;
 				// Compares the euler angles against the thresholds and applies the correct color
-				var allAnglesBelowThreshold = Mathf.Min(d.x, 360 - d.x) < Toolkit.Instance.parameters.MaxAngles.x &&
-					 Mathf.Min(d.y, 360 - d.y) < Toolkit.Instance.parameters.MaxAngles.y &&
-					 Mathf.Min(d.z, 360 - d.z) < Toolkit.Instance.parameters.MaxAngles.z;
+				//TODO faux tel quel, il faut regarder si c'est à gauche ou à droite par rapport à l'axe origine-target
+				var allAnglesBelowThreshold = 360 - d.x < Toolkit.Instance.parameters.HorizontalAngles.left &&
+											  d.x < Toolkit.Instance.parameters.HorizontalAngles.right &&
+											  360 - d.y < Toolkit.Instance.parameters.VerticalAngles.up &&
+											  d.y < Toolkit.Instance.parameters.VerticalAngles.down &&
+											  360 - d.z < Toolkit.Instance.parameters.Gain.faster &&
+											  d.z < Toolkit.Instance.parameters.Gain.slower;
 				Debug.DrawLine(obj1, obj2, colors[allAnglesBelowThreshold ? 0 : 1]);
 			}
 		}
