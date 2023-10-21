@@ -47,7 +47,10 @@ namespace BG.Logging {
 		private int bufferSize = 10; // number of records kept before writing to disk
 
 		private List<RedirectionData> records = new();
-        private readonly CsvConfiguration config = new(CultureInfo.InvariantCulture) { HasHeaderRecord = false };
+		private readonly CsvConfiguration config = new(CultureInfo.InvariantCulture) {
+			HasHeaderRecord = false,
+			MemberTypes = MemberTypes.Fields
+		};
 
         private void Start() => createNewFile();
 
