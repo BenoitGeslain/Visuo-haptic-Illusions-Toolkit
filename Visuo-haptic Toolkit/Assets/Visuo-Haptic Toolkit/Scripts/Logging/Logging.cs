@@ -16,6 +16,7 @@ namespace BG.Logging {
     public record RedirectionData {
         public DateTime timeStamp = DateTime.Now;
 		public BodyRedirection script = (BodyRedirection)Toolkit.Instance.rootScript;
+		public float foo = 5f; // TODO remove, testing purposes
     }
 
 	public sealed class RedirectionDataMap : ClassMap<RedirectionData> {
@@ -75,6 +76,7 @@ namespace BG.Logging {
 				records = new List<Data>();
                 csv.Context.RegisterClassMap<DataMap>();
 				csv.WriteHeader<Data>();
+				csv.NextRecord();
             }
 
 			writeHeaders<RedirectionData, RedirectionDataMap>(out records);
