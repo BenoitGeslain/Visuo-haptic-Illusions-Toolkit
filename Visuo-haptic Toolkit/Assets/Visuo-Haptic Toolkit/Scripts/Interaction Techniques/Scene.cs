@@ -1,5 +1,7 @@
 using System;
 
+using CsvHelper.Configuration.Attributes;
+
 using UnityEngine;
 
 namespace BG.Redirection {
@@ -21,32 +23,35 @@ namespace BG.Redirection {
 	[Serializable]
 	public record Scene() {
         [Header("User Parameters")]
-        public Transform physicalHand;
-        public Transform virtualHand;
-        public Transform physicalHead;
-		public Transform virtualHead;
+        [Ignore] public Transform physicalHand;
+        [Ignore] public Transform virtualHand;
+        [Ignore] public Transform physicalHead;
+		[Ignore] public Transform virtualHead;
+
+		public float f = 1f;
+
 
 		[Header("Technique Parameters")]
-        public Transform physicalTarget;
-        public Transform virtualTarget;
-        public Transform origin;
-		public Transform[] targets;
-		public float radius = 5f;
-		public bool applyDampening = false;
-		public bool applySmoothing = false;
+        [Ignore] public Transform physicalTarget;
+        [Ignore] public Transform virtualTarget;
+        [Ignore] public Transform origin;
+		[Ignore] public Transform[] targets;
+		[Ignore] public float radius = 5f;
+		[Ignore] public bool applyDampening = false;
+		[Ignore] public bool applySmoothing = false;
 
-		[HideInInspector] public Transform selectedTarget;
-		[HideInInspector] public Vector3 forwardTarget;
-		[HideInInspector] public Vector3 previousHandPosition;
-		[HideInInspector] public Quaternion previousHandRotation;
-		[HideInInspector] public Vector3 previousHeadPosition;
-		[HideInInspector] public Quaternion previousHeadRotation;
-		[HideInInspector] public float previousRedirection;
+		[Ignore] [HideInInspector] public Transform selectedTarget;
+		[Ignore] [HideInInspector] public Vector3 forwardTarget;
+		[Ignore] [HideInInspector] public Vector3 previousHandPosition;
+		[Ignore] [HideInInspector] public Quaternion previousHandRotation;
+		[Ignore] [HideInInspector] public Vector3 previousHeadPosition;
+		[Ignore] [HideInInspector] public Quaternion previousHeadRotation;
+		[Ignore] [HideInInspector] public float previousRedirection;
 
         /// <summary>
         /// The position of the virtual hand is given by <c>physicalHand.position + Redirection</c>.
         /// </summary>
-        public Vector3 Redirection {
+        [Ignore] public Vector3 Redirection {
 			get => virtualHand.position - physicalHand.position;
 			set => virtualHand.position = physicalHand.position + value;
 		}
@@ -130,7 +135,7 @@ namespace BG.Redirection {
         /// Applies unaltered physical head rotations to the virtual head GameObject
         /// </summary>
         public void CopyHeadRotations() {
-            virtualHead.rotation = physicalHead.rotation * Quaternion.Inverse(previousHeadRotation) * virtualHead.rotation;
+            virtualHead.rotation = (physicalHead.rotation * Quaternion.Inverse(previousHeadRotation)) * virtualHead.rotation;
 		}
 
         /// <summary>
