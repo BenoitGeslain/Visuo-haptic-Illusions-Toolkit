@@ -28,9 +28,6 @@ namespace BG.Redirection {
         [Ignore] public Transform physicalHead;
 		[Ignore] public Transform virtualHead;
 
-		public float f = 1f;
-
-
 		[Header("Technique Parameters")]
         [Ignore] public Transform physicalTarget;
         [Ignore] public Transform virtualTarget;
@@ -142,7 +139,7 @@ namespace BG.Redirection {
         /// Applies unaltered physical head translations to the virtual head GameObject
         /// </summary>
         public void CopyHeadTranslations() {
-            virtualHead.Translate(GetHeadToHeadRotation() * (physicalHead.position - previousHeadPosition));
+            virtualHead.position += GetHeadToHeadRotation() * (physicalHead.position - previousHeadPosition);
 		}
 
 		/// <summary>

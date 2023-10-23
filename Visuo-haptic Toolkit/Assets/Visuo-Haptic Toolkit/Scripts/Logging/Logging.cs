@@ -15,27 +15,36 @@ namespace BG.Logging {
     public record RedirectionData {
         public DateTime timeStamp = DateTime.Now;
 		public Interaction script = Toolkit.Instance.rootScript;
-		public float foo = 5f; // TODO remove, testing purposes
     }
 
 	public sealed class RedirectionDataMap : ClassMap<RedirectionData> {
+		public sealed class SceneClassMap : ClassMap<Scene> {
+			public SceneClassMap() {
+				// Warning! Non-logged attributes in Scene MUST be ignored ([Ignore])
+				AutoMap(new CsvConfiguration(CultureInfo.InvariantCulture) {MemberTypes = MemberTypes.Fields});
+				Map(m => m.physicalHand.position).Name("PhysicalHandPosition");
+				Map(m => m.physicalHand.rotation).Name("PhysicalHandOrientation");
+				Map(m => m.physicalHand.rotation.eulerAngles).Name("PhysicalHandOrientationEuler");
+				Map(m => m.virtualHand.position).Name("VirtualHandPosition");
+				Map(m => m.virtualHand.rotation).Name("VirtualHandOrientation");
+				Map(m => m.virtualHand.rotation.eulerAngles).Name("VirtualHandOrientationEuler");
+				Map(m => m.physicalTarget.position).Name("PhysicalTargetPosition");
+				Map(m => m.physicalTarget.rotation).Name("PhysicalTargetOrientation");
+				Map(m => m.physicalTarget.rotation.eulerAngles).Name("PhysicalTargetOrientationEuler");
+				Map(m => m.virtualTarget.position).Name("VirtualTargetPosition");
+				Map(m => m.virtualTarget.rotation).Name("VirtualTargetOrientation");
+				Map(m => m.virtualTarget.rotation.eulerAngles).Name("VirtualTargetOrientationEuler");
+				Map(m => m.origin.position).Name("OriginPosition");
+			}
+		}
+		public sealed class InteractionClassMap : ClassMap<Interaction> {
+			public InteractionClassMap() {
+				References<SceneClassMap>(m => m.scene);
+			}
+		}
 		public RedirectionDataMap() {
-			AutoMap(CultureInfo.InvariantCulture);
+			References<InteractionClassMap>(m => m.script);
 			Map(m => m.timeStamp).TypeConverterOption.Format("yyyy/MM/dd-HH:mm:ss.fff").Index(0).Name("TimeStamp");
-			// Map(m => m.script.technique).Index(1).Name("Technique");
-			Map(m => m.script.scene.physicalHand.position).Index(2).Name("PhysicalHandPosition");
-			Map(m => m.script.scene.physicalHand.rotation).Index(3).Name("PhysicalHandOrientation");
-			Map(m => m.script.scene.physicalHand.rotation.eulerAngles).Index(4).Name("PhysicalHandOrientationEuler");
-			Map(m => m.script.scene.virtualHand.position).Index(5).Name("VirtualHandPosition");
-			Map(m => m.script.scene.virtualHand.rotation).Index(6).Name("VirtualHandOrientation");
-			Map(m => m.script.scene.virtualHand.rotation.eulerAngles).Index(7).Name("VirtualHandOrientationEuler");
-			Map(m => m.script.scene.physicalTarget.position).Index(8).Name("PhysicalTargetPosition");
-			Map(m => m.script.scene.physicalTarget.rotation).Index(9).Name("PhysicalTargetOrientation");
-			Map(m => m.script.scene.physicalTarget.rotation.eulerAngles).Index(10).Name("PhysicalTargetOrientationEuler");
-			Map(m => m.script.scene.virtualTarget.position).Index(11).Name("VirtualTargetPosition");
-			Map(m => m.script.scene.virtualTarget.rotation).Index(12).Name("VirtualTargetOrientation");
-			Map(m => m.script.scene.virtualTarget.rotation.eulerAngles).Index(13).Name("VirtualTargetOrientationEuler");
-			Map(m => m.script.scene.origin.position).Index(14).Name("OriginPosition");
 		}
 	}
 
@@ -47,10 +56,7 @@ namespace BG.Logging {
 		private int bufferSize = 10; // number of records kept before writing to disk
 
 		private List<RedirectionData> records = new();
-		private readonly CsvConfiguration config = new(CultureInfo.InvariantCulture) {
-			HasHeaderRecord = false,
-			MemberTypes = MemberTypes.Fields
-		};
+        private readonly CsvConfiguration config = new(CultureInfo.InvariantCulture) { HasHeaderRecord = false, MemberTypes = MemberTypes.Fields };
 
         private void Start() => createNewFile();
 
