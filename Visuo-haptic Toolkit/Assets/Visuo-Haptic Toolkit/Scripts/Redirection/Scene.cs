@@ -28,9 +28,6 @@ namespace BG.Redirection {
         [Ignore] public Transform physicalHead;
 		[Ignore] public Transform virtualHead;
 
-		public float f = 1f;
-
-
 		[Header("Technique Parameters")]
         [Ignore] public Transform physicalTarget;
         [Ignore] public Transform virtualTarget;
