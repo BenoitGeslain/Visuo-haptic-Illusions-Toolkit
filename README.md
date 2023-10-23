@@ -1,8 +1,7 @@
 # Visuo-haptic Illusions
 
-Ce projet est un toolkit pour l'emploi et le développement d'illusions visuo-haptiques en réalité virtuelle, conçu comme un plugin Unity.
+This project is a Unity plugin for using and developing visuo-haptic illusions in virtual reality.
 
-- Ajouter licence MIT
 - Logging
   - Automatiquement logger tous les champs de scene pour n'avoir qu'à modifier la classe sans aller dans logging.
 - Simulation
@@ -20,16 +19,6 @@ Ce projet est un toolkit pour l'emploi et le développement d'illusions visuo-ha
 
 - [Unity XR Plugin](https://github.com/ValveSoftware/unity-xr-plugin)
 - Text Mesh Pro
-
-## Contribuer
-
-Nous sommes nombreux à travailler sur le projet, pour que le code soit toujours formaté de la même manière et reste facile à lire, on va utiliser le format [The One True Brace Style](https://en.wikipedia.org/wiki/Indentation_style#Variant:_1TBS_(OTBS)) pour structurer le code et le [camelCase](https://fr.wikipedia.org/wiki/Camel_case) pour nommer les variables. Le One True Brace Style n'est pas le format que Unity et VS utilisent par défaut donc essayez de faire attention. Si vous êtes sur VSCode, je peux vous montrer comment le configurer pour que ça soit le défaut.
-
-Le rendu final de votre participation au projet est un rapport à réaliser au fur et à mesure que vous avancez. Toutes les informations sont disponibles [ici](../../wikis).
-
-Je vous recommande de créer une branche avec votre nom ou prénom à partir de la branche qui vous a été assignée et de merge régulièrement.
-
-Voir le [wiki](../../wikis) pour plus d'informations sur les tâches à réaliser et les instructions d'installation Unity.
 
 ## Techniques d'interaction
 
@@ -71,7 +60,7 @@ Voir le [wiki](../../wikis) pour plus d'informations sur les tâches à réalise
 | [Han et al., 2019](http://ieeexplore.ieee.org/document/8260974/), Instant    | &check; |
 | Pseudo-Haptic   |     |
 | [Lécuyer et al., 2000](https://doi.org/10.1109/VR.2000.840369), Swamp Illusion   | ?   |
-| [Samad et al., 2019](https://dl.acm.org/doi/10.1145/3290605.3300550), Pseudo-haptic weight   | &cross;   |
+| [Samad et al., 2019](https://dl.acm.org/doi/10.1145/3290605.3300550), Pseudo-haptic weight   | ?;   |
 
 <!-- | World Redirection   | Status    |
 |--------------- | --------------- |
@@ -93,8 +82,7 @@ Voir le [wiki](../../wikis) pour plus d'informations sur les tâches à réalise
 | Pseudo-Haptic   |     |
 | [Argelaguet et al., 2013](https://doi.org/10.1145/2501599), Deformable materials   | &cross;   |
 | [Kasahara et al., 2017](http://doi.acm.org/10.1145/3025453.3025962), Malleable Embodiement   | &cross;   |
-| [Gomez Jauregui et al., 2014](http://ieeexplore.ieee.org/document/6777424/), Avatar Weight   | &cross;   |
-| [Samad et al., 2019](http://ieeexplore.ieee.org/document/6777424/), Pseudo-Haptic Weight   | &cross;   |
+| [Gomez Jauregui et al., 2014](http://ieeexplore.ieee.org/document/6777424/), Avatar Weight   | &cross;   
 
 ## Outils de Visualisation
 
@@ -113,11 +101,12 @@ Voir le [wiki](../../wikis) pour plus d'informations sur les tâches à réalise
 
 
 ### Authors 
-Benoît Geslain (benoit.geslain@sii.fr)
-Bruno Jartoux (bruno.jartoux@sii.fr)
+Benoît Geslain (benoit.geslain@sii.fr, https://github.com/BenoitGeslain), Bruno Jartoux (bruno.jartoux@sii.fr, https://github.com/bjrtx)
 
 ### Copyright and licensing
 Copyright (c) 2023 SII Société pour l’Informatique Industrielle
+
+
 This project is licensed under the open-source MIT X11 license, see the LICENSE file.
 In particular, you may not distribute any copy or substantial portion of this project
 without the contents of the LICENSE file.

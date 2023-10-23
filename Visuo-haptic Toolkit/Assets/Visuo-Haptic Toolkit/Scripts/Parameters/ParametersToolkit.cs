@@ -7,8 +7,12 @@ namespace BG.Redirection {
 	public class ParametersToolkit: ScriptableObject {
 
 		[Header("Body Warping")]
-		[Tooltip("The detection thresholds measured by Zenner et al., 2019 also called Just Noticeable Difference or Intervals of Non-detection. The coordinate system is that of Unity, i.e. X: Letf/Right, Y: Up/Down, Z: Forward/Backward. Values are in degrees.")]
-		public Vector3 MaxAngles;
+		[Tooltip("The thresholds for the left and right direction. These values are used to show whether the targets or the hands are further apart than these value.\n\nThe recommended values are [-4.38°, 3.81°] from the measures made by Zenner et al., 2019 using the 75% detection rate. They are also called Just Noticeable Difference or Intervals of Non-detection.\n\nThis wiki page gives more details and a link to the paper referenced: Anonimized. Values are in degrees.")]
+		public Vector2Horizontal HorizontalAngles;
+		[Tooltip("The thresholds for the up and down direction. These values are used to show whether the targets or the hands are further apart than these value.\nThe recommended values are [] from the measures made by Zenner et al., 2019 using the 75% detection rate. They are also called Just Noticeable Difference or Intervals of Non-detection.\nThis wiki page gives more details and a link to the paper referenced: Anonimized. Values are in degrees.")]
+		public Vector2Vertical VerticalAngles;
+		[Tooltip("The thresholds for the forward (faster) and backward (slower) direction. These values are used to show whether the targets or the hands are further apart than these value.\nThe recommended values are [] from the measures made by Zenner et al., 2019 using the 75% detection rate. They are also called Just Noticeable Difference or Intervals of Non-detection.\nThis wiki page gives more details and a link to the paper referenced: Anonimized. Values are unitless.")]
+		public Vector2Gain Gain;
 		[Tooltip("A buffer value where the hand redirection is not applied [Han et al., 2018].")]
 		public float NoRedirectionBuffer = 0.1f;
 		[Tooltip("A buffer value where the hand redirection is not applied [Han et al., 2018].")]

@@ -28,8 +28,7 @@ namespace BG.Visualisation {
 			Mouse mouse = Mouse.current;
 			if (mouse.leftButton.isPressed && wasFocused) {
 				Vector3 mousePosition = mouse.position.ReadValue();
-
-				transform.position += cam.ScreenToWorldPoint(mousePosition) - cam.ScreenToWorldPoint(previousMousePosition);
+				transform.Translate(cam.ScreenToWorldPoint(mousePosition) - cam.ScreenToWorldPoint(previousMousePosition));
 			}
 			previousMousePosition = mouse.position.ReadValue();
 			wasFocused = Application.isFocused;
