@@ -1,12 +1,10 @@
 ﻿using System.Linq;
-using UnityEditor;
+
 using UnityEngine;
-using UnityEngine.UI;
 
 // TODO fix namespace issues
 
 namespace Assets.Visuo_Haptic_Toolkit.Scripts.Logging.UserTrajectorySimulation {
-
 
     public class MinJerkTrajectory {
         /// <summary>

@@ -217,21 +217,21 @@ namespace BG.Redirection {
 	/// </summary>
 	public class ResetWorldRedirection: WorldRedirectionTechnique {
         public override void Redirect(Scene scene) {
-			if (Mathf.Abs(scene.GetHeadToHeadRotation().eulerAngles.y) > Toolkit.Instance.parameters.RotationalEpsilon) {
-					float[] angles = new float[] {
-					Razzaque2001OverTimeRotation.GetRedirectionReset(scene),
-					Razzaque2001Rotational.GetRedirectionReset(scene)
-				};
+			// if (Mathf.Abs(scene.GetHeadToHeadRotation().eulerAngles.y) > Toolkit.Instance.parameters.RotationalEpsilon) {
+			// 		float[] angles = new float[] {
+			// 		Razzaque2001OverTimeRotation.GetRedirectionReset(scene),
+			// 		Razzaque2001Rotational.GetRedirectionReset(scene)
+			// 	};
 
-				for (int i = 1; i < angles.Length; i++) {
-					if (Mathf.Abs(angles[i]) > Mathf.Abs(angles[0])) {
-						angles[0] = angles[i];
-					}
-				}
+			// 	for (int i = 1; i < angles.Length; i++) {
+			// 		if (Mathf.Abs(angles[i]) > Mathf.Abs(angles[0])) {
+			// 			angles[0] = angles[i];
+			// 		}
+			// 	}
 
-				scene.previousRedirection = angles[0];
-				scene.RotateVirtualHeadY(angles[0]);
-			}
+			// 	scene.previousRedirection = angles[0];
+			// 	scene.RotateVirtualHeadY(angles[0]);
+			// }
 
 			scene.CopyHeadRotations();
 			scene.CopyHeadTranslations();
