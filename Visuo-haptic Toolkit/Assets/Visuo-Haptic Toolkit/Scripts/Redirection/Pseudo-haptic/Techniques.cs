@@ -14,12 +14,10 @@ namespace VHToolkit.Redirection {
         public override void Redirect(Scene scene) {
 			// TODO use specific parameters, other gains
 			Vector3 distanceToOrigin = scene.virtualHand.position - scene.origin.position;
-			Vector3 instantTranslation = scene.GetHandInstantTranslation();
-			if (MathF.Max(MathF.Abs(distanceToOrigin[0]), MathF.Abs(distanceToOrigin[2])) < Toolkit.Instance.parameters.SwampSquareDistance/2) {
-				scene.virtualHand.position += instantTranslation * Toolkit.Instance.parameters.SwampCDRatio;
-			} else {
-				scene.virtualHand.position += instantTranslation;
-			}
+            bool isInsideTheSquare = (MathF.Max(MathF.Abs(distanceToOrigin[0]), MathF.Abs(distanceToOrigin[2])) < Toolkit.Instance.parameters.SwampSquareDistance / 2);
+            scene.virtualHand.Translate(
+                isInsideTheSquare ? 
+                scene.GetHandInstantTranslation() * Toolkit.Instance.parameters.SwampCDRatio : scene.GetHandInstantTranslation());
         }
     }
 
@@ -32,9 +30,8 @@ namespace VHToolkit.Redirection {
             float normalizedMass = 1.5f; // high is heavy, low is light (though what this means is unclear)
             float verticalGain = 1 / normalizedMass;
             float horizontalGain = verticalGain * ratio;
-            var v = scene.GetHandInstantTranslation();
-            v[0] *= horizontalGain; v[1] *= verticalGain; v[2] *= horizontalGain;
-            scene.virtualHand.Translate(v);
+            Vector3 gainVector = new(horizontalGain, verticalGain, horizontalGain);
+            scene.virtualHand.Translate(Vector3.Scale(scene.GetHandInstantTranslation(), gainVector));
         }
     }
 }
