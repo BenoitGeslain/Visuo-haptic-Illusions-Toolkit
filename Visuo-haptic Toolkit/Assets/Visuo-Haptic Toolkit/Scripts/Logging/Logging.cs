@@ -15,13 +15,11 @@ namespace BG.Logging {
     public record RedirectionData {
         public DateTime timeStamp = DateTime.Now;
 		public Interaction script = Toolkit.Instance.rootScript;
-		public string TechniqueName {
-			get {
-				if (script is WorldRedirection) return (script as WorldRedirection).technique.ToString();
-				else if (script is BodyRedirection) return (script as BodyRedirection).technique.ToString();
-				else return "";
-			}
-		}
+        public string TechniqueName => script switch {
+            WorldRedirection => (script as WorldRedirection).technique.ToString(),
+            BodyRedirection => (script as BodyRedirection).technique.ToString(),
+            _ => ""
+        };
 
         public RedirectionData(Interaction script) {
             this.script = script;
@@ -55,7 +53,7 @@ namespace BG.Logging {
 		}
 		public RedirectionDataMap() {
 			References<InteractionClassMap>(m => m.script);
-			Map(m => m.TechniqueName);
+			Map(m => m.TechniqueName).Index(1);
 			Map(m => m.timeStamp).TypeConverterOption.Format("yyyy/MM/dd-HH:mm:ss.fff").Index(0).Name("TimeStamp");
 		}
 	}
