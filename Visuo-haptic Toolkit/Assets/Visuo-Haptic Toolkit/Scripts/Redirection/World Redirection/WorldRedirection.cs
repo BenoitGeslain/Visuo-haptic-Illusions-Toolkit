@@ -23,7 +23,7 @@ namespace BG.Redirection {
 		/// </summary>
 		private void updateTechnique() {
 			techniqueInstance = technique switch {
-				WRTechnique.None => new ResetWorldRedirection(),
+				WRTechnique.Reset => new ResetWorldRedirection(),
 				WRTechnique.Razzaque2001OverTimeRotation => new Razzaque2001OverTimeRotation(),
 				WRTechnique.Steinicke2008Translational => new Steinicke2008Translational(),
 				WRTechnique.Razzaque2001Rotational => new Razzaque2001Rotational(),
@@ -96,7 +96,7 @@ namespace BG.Redirection {
         /// <summary>
         /// A wrapper around SetTechnique(BRTechnique t) to use the ResetRedirection technique.
         /// </summary>
-        public void ResetRedirection() => SetTechnique(WRTechnique.None);
+        public void ResetRedirection() => SetTechnique(WRTechnique.Reset);
 
 		/// <summary>
 		/// Getter for the enumeration technique.

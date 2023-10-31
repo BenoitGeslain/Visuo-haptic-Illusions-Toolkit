@@ -32,7 +32,7 @@ namespace BG.Redirection {
 			goGoActivationDistance = serializedObject.FindProperty ("GoGoActivationDistance");
 			goGoCoefficient = serializedObject.FindProperty ("GoGoCoefficient");
 
-			rotationalEpsilon = serializedObject.FindProperty("RotationalEpsilon");
+			rotationalEpsilon = serializedObject.FindProperty("RotationalError");
 			minimumRotation = serializedObject.FindProperty("MinimumRotation");
 			walkingThreshold = serializedObject.FindProperty("WalkingThreshold");
 			distanceThreshold = serializedObject.FindProperty("DistanceThreshold");

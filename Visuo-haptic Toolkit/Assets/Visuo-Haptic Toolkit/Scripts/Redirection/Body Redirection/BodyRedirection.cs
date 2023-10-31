@@ -22,7 +22,6 @@ namespace BG.Redirection {
 		/// </summary>
 		private BRTechnique previousTechnique;
 
-
 		[SerializeField] private BodyRedirectionTechnique techniqueInstance;
 
 		/// <summary>
@@ -30,11 +29,11 @@ namespace BG.Redirection {
 		/// </summary>
         private void updateTechnique() {
 			techniqueInstance = technique switch {
-				BRTechnique.None => new ResetBodyRedirection(),
+				BRTechnique.Reset => new ResetBodyRedirection(),
 				BRTechnique.Azmandian2016Body => new Azmandian2016Body(),
 				BRTechnique.Azmandian2016Hybrid => new Azmandian2016Hybrid(),
-				BRTechnique.Han2018Instant => new Han2018Instant(),
-				BRTechnique.Han2018Continous => new Han2018Continous(),
+				BRTechnique.Han2018TranslationalShift => new Han2018Instant(),
+				BRTechnique.Han2018InterpolatedReach => new Han2018Continuous(),
 				BRTechnique.Cheng2017Sparse => new Cheng2017Sparse(),
 				BRTechnique.Geslain2022Polynom => new Geslain2022Polynom(techniqueInstance.redirectionLateness, techniqueInstance.controlPoint),
 				BRTechnique.Poupyrev1996GoGo => new Poupyrev1996GoGo(),
@@ -95,7 +94,7 @@ namespace BG.Redirection {
 		/// <summary>
 		/// A wrapper around SetTechnique(BRTechnique t) to use the ResetRedirection technique.
 		/// </summary>
-        public void ResetRedirection() => SetTechnique(BRTechnique.None);
+        public void ResetRedirection() => SetTechnique(BRTechnique.Reset);
 
 		/// <summary>
 		/// Getter for the enumeration technique.

@@ -21,13 +21,13 @@ MonoBehaviour:
   Gain:
     faster: 1.07
     slower: 0.88
-  NoRedirectionBuffer: 0.1
+  RedirectionBuffer: 0.1
   MaxRedirectionThreshold: 0.5
-  ResetRedirectionCoeff: 0.087
   GoGoCoefficient: 1
   GoGoActivationDistance: 0.167
-  RotationalEpsilon: 0.5
-  MinimumRotation: 0.1
+  ResetRedirectionCoeff: 0.087
+  RotationalError: 0.5
+  RotationThreshold: 0
   WalkingThreshold: 0.2
   DistanceThreshold: 0.2
   DampeningRange: 1.57
