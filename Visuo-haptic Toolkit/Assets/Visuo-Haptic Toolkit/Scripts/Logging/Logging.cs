@@ -15,14 +15,11 @@ namespace BG.Logging {
     public record RedirectionData {
         public DateTime timeStamp = DateTime.Now;
 		public Interaction script;
-
-		public string Technique {
-			get {
-				if (script is WorldRedirection) return (script as WorldRedirection).technique.ToString();
-				else if (script is BodyRedirection) return (script as BodyRedirection).technique.ToString();
-				else return "";
-			}
-		}
+        public string Technique => script switch {
+            WorldRedirection => (script as WorldRedirection).technique.ToString(),
+            BodyRedirection => (script as BodyRedirection).technique.ToString(),
+            _ => ""
+        };
 
         public RedirectionData(Interaction script) {
             this.script = script;
