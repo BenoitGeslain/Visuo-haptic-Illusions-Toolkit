@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace BG.Redirection {
+namespace VHToolkit.Redirection {
 	/// <summary>
 	/// Available body redirection techniques.
 	/// </summary>
@@ -12,8 +12,12 @@ namespace BG.Redirection {
 		Azmandian2016Hybrid,
 		Cheng2017Sparse,
 		Geslain2022Polynom,
-		Poupyrev1996GoGo
+		Poupyrev1996GoGo,
+		_,
+		Lecuyer2000Swamp,
+		Samad2019Weight
 	}
+
     /// <summary>
     /// Available world redirection techniques.
     /// </summary>

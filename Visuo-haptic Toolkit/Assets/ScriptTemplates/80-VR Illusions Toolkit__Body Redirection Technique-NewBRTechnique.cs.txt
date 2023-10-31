@@ -1,6 +1,6 @@
 using UnityEngine;
 
-using BG.Redirection;
+using VHToolkit.Redirection;
 
 class NewBRTechnique: BodyRedirectionTechnique {
 

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 
-namespace BG.Redirection {
+namespace VHToolkit.Redirection {
 	[CanEditMultipleObjects]
 	[CustomPropertyDrawer(typeof(Vector2Horizontal))]
 	public class Vector2HorizontalPropertyDrawer: PropertyDrawer {

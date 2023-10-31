@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace BG.Redirection {
+namespace VHToolkit.Redirection {
     abstract public class RedirectionTechnique {
         /// <summary>
         /// This virtual function redirects the Scene transforms according to the other parameters and the equations

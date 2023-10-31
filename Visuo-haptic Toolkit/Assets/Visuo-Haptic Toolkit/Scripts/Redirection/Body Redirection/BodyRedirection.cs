@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace BG.Redirection {
+namespace VHToolkit.Redirection {
 	/// <summary>
 	/// This class allows users to select which body redirection technique to use as well as the relevant parameters.
 	/// The enumeration BRTechnique allows for dynamic selection of the technique.
@@ -37,6 +37,8 @@ namespace BG.Redirection {
 				BRTechnique.Cheng2017Sparse => new Cheng2017Sparse(),
 				BRTechnique.Geslain2022Polynom => new Geslain2022Polynom(techniqueInstance.redirectionLateness, techniqueInstance.controlPoint),
 				BRTechnique.Poupyrev1996GoGo => new Poupyrev1996GoGo(),
+				BRTechnique.Lecuyer2000Swamp => new Lecuyer2000Swamp(),
+				BRTechnique.Samad2019Weight => new Samad2019Weight(),
 				_ => null
 			};
 

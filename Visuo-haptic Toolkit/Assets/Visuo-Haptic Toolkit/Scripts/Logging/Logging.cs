@@ -8,9 +8,9 @@ using CsvHelper.Configuration;
 
 using UnityEngine;
 
-using BG.Redirection;
+using VHToolkit.Redirection;
 
-namespace BG.Logging {
+namespace VHToolkit.Logging {
 
     public record RedirectionData {
         public DateTime timeStamp = DateTime.Now;
@@ -52,8 +52,8 @@ namespace BG.Logging {
 				References<SceneClassMap>(m => m.scene);
 			}
 		}
-		public RedirectionDataMap() {		
-			Map(m => m.timeStamp).TypeConverterOption.Format("yyyy/MM/dd-HH:mm:ss.fff").Index(0).Name("TimeStamp");	
+		public RedirectionDataMap() {
+			Map(m => m.timeStamp).TypeConverterOption.Format("yyyy/MM/dd-HH:mm:ss.fff").Index(0).Name("TimeStamp");
 			Map(m => m.Technique).Index(1);
 			References<InteractionClassMap>(m => m.script);
 		}

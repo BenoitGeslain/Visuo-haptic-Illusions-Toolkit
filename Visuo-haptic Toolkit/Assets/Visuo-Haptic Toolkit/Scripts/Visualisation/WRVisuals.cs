@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 
 using UnityEngine;
-using BG.Redirection;
+using VHToolkit.Redirection;
 using System.Linq;
 
-namespace BG.Visualisation {
+namespace VHToolkit.Visualisation {
 	public class WRVisuals : MonoBehaviour {
 
 		private static List<Color> colors;	// colors of the lines between the physical and virtual elements

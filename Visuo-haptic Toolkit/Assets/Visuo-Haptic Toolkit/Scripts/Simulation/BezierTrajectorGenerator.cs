@@ -1,8 +1,8 @@
 using UnityEngine;
 
-using BG.Redirection;
+using VHToolkit.Redirection;
 
-namespace BG.Trajectory {
+namespace VHToolkit.Trajectory {
 
 	public class BezierTrajectorGenerator : MonoBehaviour {
 

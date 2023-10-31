@@ -3,7 +3,7 @@ using System.Linq;
 
 using UnityEngine;
 
-namespace BG.Redirection {
+namespace VHToolkit.Redirection {
     /// <summary>
     ///  This class is the most conceptual class of body interaction techniques defining the important function to call: Redirect().
 	///  Information about the user such as the user's position or the targets are encapsulated inside Scene.
@@ -149,21 +149,6 @@ namespace BG.Redirection {
                 : Vector3.zero;
 		}
 	}
-
-    /// <summary>
-    /// This class implements the Swamp Illusion by Lécuyer et al., 2000. It is not a visuo-haptic illusion but a pseudo-haptic interaction techique.
-    /// </summary>
-    public class Lecuyer2000Swamp : BodyRedirectionTechnique {
-
-        public override void Redirect(Scene scene) {
-			// TODO use specific parameters, other gains
-			Vector3 distanceToOrigin = scene.physicalHand.position - scene.origin.position;
-			scene.Redirection = MathF.Max(distanceToOrigin[0], distanceToOrigin[2]) > Toolkit.Instance.parameters.DistanceThreshold ?
-				-scene.GetHandInstantTranslation() / 2
-				: Vector3.zero
-				;
-        }
-    }
 
     /// <summary>
     /// This class does not implement a redirection technique but resets the redirection currently applied to the user's hand by slowly reducing the virtual to

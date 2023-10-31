@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace BG.Visualisation {
+namespace VHToolkit.Visualisation {
 	public class ControllerWR : MonoBehaviour {
 
 		[SerializeField] private float speed = 0.5f, sensitivity = 1f;

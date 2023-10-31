@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace BG.Redirection {
+namespace VHToolkit.Redirection {
 
 	/// <summary>
 	/// This class allows users to select through the inspector or set through the API which

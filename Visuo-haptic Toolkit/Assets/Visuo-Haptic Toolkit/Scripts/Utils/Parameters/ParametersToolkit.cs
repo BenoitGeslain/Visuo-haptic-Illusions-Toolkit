@@ -2,7 +2,7 @@ using System;
 
 using UnityEngine;
 
-namespace BG.Redirection {
+namespace VHToolkit.Redirection {
 	[CreateAssetMenu(fileName = "Data", menuName = "VR Illusions Toolkit/Interaction Techniques Parameters", order = 1)]
 	public class ParametersToolkit: ScriptableObject {
 
@@ -32,8 +32,8 @@ namespace BG.Redirection {
 		[Tooltip("The speed threshold defining if the user is considered to be standing still or walking. Value is in m/s. [Hogson and Bachmann, 2013]")]
 		public float WalkingThreshold = 0.2f;
 
-		[Tooltip("The speed threshold defining if the user is considered to be standing still or walking. Value is in m/s. [Hogson and Bachmann, 2013]")]
-		public float DistanceThreshold = 1.25f;
+		[Tooltip("The distance within which the dampening effect is applied on Redirected Walking (Hybrid). Value is in m. [Hogson and Bachmann, 2013]")]
+		public float DampeningDistanceThreshold = 1.25f;
 		[Tooltip("The dampening range. Value is in °.")]
 		public float DampeningRange = 1.57f;
 		[Range(0,1)]
@@ -54,7 +54,9 @@ namespace BG.Redirection {
 		public Vector3 a;
 
 		[Header("Pseudo-Haptic")]
-		[Tooltip("")]
-		public Vector3 b;
+		[Tooltip("The size of the area around the origin where the Swamp illusion defined by [Lécuyer et al., 2000] is applied. Value is in m.")]
+		public float SwampSquareDistance = 0.25f;
+		[Tooltip("The C/D ratio inside the swamp area. Value is in m. [Lécuyer et al., 2000]")]
+		public float SwampCDRatio = 0.75f;
 	}
 }

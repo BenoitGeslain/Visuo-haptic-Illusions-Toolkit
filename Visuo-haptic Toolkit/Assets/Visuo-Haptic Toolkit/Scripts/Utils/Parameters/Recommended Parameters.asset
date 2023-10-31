@@ -29,7 +29,7 @@ MonoBehaviour:
   RotationalError: 0.5
   RotationThreshold: 0
   WalkingThreshold: 0.2
-  DistanceThreshold: 0.2
+  DampeningDistanceThreshold: 1.25
   DampeningRange: 1.57
   SmoothingFactor: 0.2
   OverTimeRotation: 0.2
@@ -39,4 +39,5 @@ MonoBehaviour:
     opposite: 0.85
   CurvatureRadius: 7.5
   a: {x: 0, y: 0, z: 0}
-  b: {x: 0, y: 0, z: 0}
+  SwampSquareDistance: 0.25
+  SwampCDRatio: 0.75

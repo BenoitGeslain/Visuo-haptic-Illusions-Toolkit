@@ -3,20 +3,20 @@
 This project is a Unity plugin for using and developing visuo-haptic illusions in virtual reality.
 
 - Logging
-  - [Done] Automatiquement logger tous les champs de scene pour n'avoir qu'à modifier la classe sans aller dans logging.
+	- [Done] Automatiquement logger tous les champs de scene pour n'avoir qu'à modifier la classe sans aller dans logging.
 - Simulation
-  - Générer trajectoire de main avec
-    - le Minimum Jerk Model
-    - une courbe de Bézier ?
-  - Générer trajectoire de marche avec ???
+	- Générer trajectoire de main avec
+		- le Minimum Jerk Model
+		- une courbe de Bézier ?
+	- Générer trajectoire de marche avec ???
 - Redirection
-  - [Done] Cacher les éléments non pertinents en fonction de la méthode sélectionnée
-  - [Done] Avoir plusieurs ToolkitXXXRedirection in the scene pour combiner World et Body Warping
-  - Tester chaque fonction de redirection
+	- [Done] Cacher les éléments non pertinents en fonction de la méthode sélectionnée
+	- [Done] Avoir plusieurs ToolkitXXXRedirection in the scene pour combiner World et Body Warping
+	- Tester chaque fonction de redirection
 - User Input
-  - [Done] Ajouter déplacements et rotation de la tête
+	- [Done] Ajouter déplacements et rotation de la tête
 - Pseudo-haptique
-  - Ajouter les paramètres à ParametersToolkit
+	- Ajouter les paramètres à ParametersToolkit
 
 ## Dependencies
 
@@ -48,9 +48,9 @@ This project is a Unity plugin for using and developing visuo-haptic illusions i
 | [Kohli et al., 2010](https://doi.org/10.1109/3DUI.2010.5444703), Redirected Touching<br />[Kohli, 2013](https://doi.org/10.17615/34cy-pt44)   | &cross;   |
 | [Zhao et Follmer et al., 2018](https://dl.acm.org/doi/10.1145/3173574.3174118), Complex Boundaries   | &cross;   |
 | Pseudo-Haptic   |     |
-| [Lécuyer et al., 2000](https://doi.org/10.1109/VR.2000.840369), Swamp Illusion   | ?   |
+| [Lécuyer et al., 2000](https://doi.org/10.1109/VR.2000.840369), Swamp Illusion   | &check;   |
 | [Lécuyer et al., 2000](https://doi.org/10.1109/VR.2000.840369), Spring stiffness   | &cross;   |
-| [Samad et al., 2019](https://dl.acm.org/doi/10.1145/3290605.3300550), Pseudo-haptic weight   | ?;   |
+| [Samad et al., 2019](https://dl.acm.org/doi/10.1145/3290605.3300550), Pseudo-haptic weight   | &check;   |
 | [Rietzler et al., 2018](https://dl.acm.org/doi/10.1145/3173574.3173702), Breaking the tracking, weight   | &cross;   |
 | [Gomez Jauregui et al., 2014](http://ieeexplore.ieee.org/document/6777424/), Avatar Weight   | &cross;   |
 | [Argelaguet et al., 2013](https://doi.org/10.1145/2501599), Deformable materials   | &cross;   |
@@ -73,9 +73,9 @@ This project is a Unity plugin for using and developing visuo-haptic illusions i
 
 ### Logging
 - Position et orientation de chaque élément à chaque instant (.csv)
-  - Mains et/ou tête réelle et virtuelle
-  - Environnement réel et virtuel
-  - Objets importants à la technique d'interaction
+	- Mains et/ou tête réelle et virtuelle
+	- Environnement réel et virtuel
+	- Objets importants à la technique d'interaction
 - Profil de vitesse
 	- Minimum jerk model
 - Lecture à partir d'un fichier? Rejouer une scène à partir d'un csv (ou autre)

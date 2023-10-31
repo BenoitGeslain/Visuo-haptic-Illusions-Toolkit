@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace BG.Redirection {
+namespace VHToolkit.Redirection {
 
 	public class Interaction : MonoBehaviour {
 		public Scene scene;

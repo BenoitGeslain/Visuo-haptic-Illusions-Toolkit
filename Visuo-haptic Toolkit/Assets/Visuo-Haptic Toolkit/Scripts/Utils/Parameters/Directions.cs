@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace BG.Redirection {
+namespace VHToolkit.Redirection {
 	[System.Serializable]
 	public class Vector2Horizontal {
 		public float left;

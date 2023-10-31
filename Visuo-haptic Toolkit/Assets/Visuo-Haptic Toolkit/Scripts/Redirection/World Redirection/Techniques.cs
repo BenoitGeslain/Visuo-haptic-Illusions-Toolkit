@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 
-namespace BG.Redirection {
+namespace VHToolkit.Redirection {
 
 	/// <summary>
 	///  This class is the most conceptual class of  world redirection defining the important function to call: Redirect().
@@ -159,8 +159,8 @@ namespace BG.Redirection {
 
 		private float ApplyDampening(Scene scene, float angle) {
 			float dampenedAngle = angle * Mathf.Sin(Mathf.Min(scene.GetHeadAngleToTarget() / Toolkit.Instance.parameters.DampeningRange, 1f) * Mathf.PI/2);
-			float dampenedAngleDistance = dampenedAngle * Mathf.Min(scene.GetHeadToTargetDistance() / Toolkit.Instance.parameters.DistanceThreshold, 1f);
-			return (scene.GetHeadToTargetDistance() < Toolkit.Instance.parameters.DistanceThreshold)? dampenedAngleDistance : dampenedAngle;
+			float dampenedAngleDistance = dampenedAngle * Mathf.Min(scene.GetHeadToTargetDistance() / Toolkit.Instance.parameters.DampeningDistanceThreshold, 1f);
+			return (scene.GetHeadToTargetDistance() < Toolkit.Instance.parameters.DampeningDistanceThreshold)? dampenedAngleDistance : dampenedAngle;
 		}
 
 		public float ApplySmoothing(Scene scene, float angle) => (1 - Toolkit.Instance.parameters.SmoothingFactor) * scene.previousRedirection + Toolkit.Instance.parameters.SmoothingFactor * angle;

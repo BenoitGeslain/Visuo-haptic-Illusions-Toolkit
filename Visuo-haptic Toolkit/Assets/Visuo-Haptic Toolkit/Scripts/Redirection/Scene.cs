@@ -4,7 +4,7 @@ using CsvHelper.Configuration.Attributes;
 
 using UnityEngine;
 
-namespace BG.Redirection {
+namespace VHToolkit.Redirection {
 	/// <summary>
 	/// This class records the position of various objects of interest.
 	/// </summary>

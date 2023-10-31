@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 
-namespace BG.Redirection {
+namespace VHToolkit.Redirection {
 	// [CanEditMultipleObjects]
 	[CustomEditor(typeof(ParametersToolkit))]
 	public class ParametersToolkitEditor: Editor {
