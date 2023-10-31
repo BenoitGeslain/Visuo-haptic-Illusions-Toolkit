@@ -12,7 +12,6 @@ namespace BG.Redirection {
 		SerializedProperty technique;
 		SerializedProperty techniqueInstance;
 
-		SerializedProperty scene;
 		SerializedProperty physicalHand;
 		SerializedProperty virtualHand;
 		SerializedProperty physicalHead;
@@ -20,16 +19,12 @@ namespace BG.Redirection {
 		SerializedProperty physicalTarget;
 		SerializedProperty virtualTarget;
 		SerializedProperty origin;
-		SerializedProperty targetsScene;
-		SerializedProperty radius;
-		SerializedProperty applyDampening;
-		SerializedProperty applySmoothing;
 
 		private void OnEnable() {
+
 			technique = serializedObject.FindProperty("technique");
             techniqueInstance = serializedObject.FindProperty("techniqueInstance");
 
-			scene = serializedObject.FindProperty("scene");
 			physicalHand = serializedObject.FindProperty("scene.physicalHand");
 			virtualHand = serializedObject.FindProperty("scene.virtualHand");
 			physicalHead = serializedObject.FindProperty("scene.physicalHead");
@@ -37,26 +32,34 @@ namespace BG.Redirection {
 			physicalTarget = serializedObject.FindProperty("scene.physicalTarget");
 			virtualTarget = serializedObject.FindProperty("scene.virtualTarget");
 			origin = serializedObject.FindProperty("scene.origin");
-			targetsScene = serializedObject.FindProperty("scene.targets");
-			radius = serializedObject.FindProperty("scene.radius");
-			applyDampening = serializedObject.FindProperty("scene.applyDampening");
-			applySmoothing = serializedObject.FindProperty("scene.applySmoothing");
 		}
 
 		public override void OnInspectorGUI() {
+			GUI.enabled = false;
+			EditorGUILayout.ObjectField("Script:", MonoScript.FromMonoBehaviour((BodyRedirection)target), typeof(BodyRedirection), false);
+			GUI.enabled = true;
+
 			serializedObject.Update();
 
+			Debug.Log(technique);
 			EditorGUILayout.PropertyField(technique, new GUIContent ("Technique"));
+
+			// Scene
+			EditorGUILayout.PropertyField(physicalHand, new GUIContent("Physical Hand"));
+			EditorGUILayout.PropertyField(virtualHand, new GUIContent("Virtual Hand"));
+			if (technique.enumNames[technique.enumValueIndex] == "Azmandian2016Hybrid") {
+				EditorGUILayout.PropertyField(physicalHead, new GUIContent("Physical Head"));
+				EditorGUILayout.PropertyField(virtualHead, new GUIContent("Virtual Head"));
+			}
+
+			EditorGUILayout.PropertyField(physicalTarget, new GUIContent("Physical Target"));
+			EditorGUILayout.PropertyField(virtualTarget, new GUIContent("Virtual Target"));
+			EditorGUILayout.PropertyField(origin, new GUIContent("Origin"));
 
 			// Hides redirectionLateness and controlpoint fields if the technique is not Geslain2022Polynom
 			if (technique.enumNames[technique.enumValueIndex] == "Geslain2022Polynom") {
 				EditorGUILayout.PropertyField(techniqueInstance, new GUIContent ("Parameters"));
 			}
-
-			// Scene
-			// EditorGUILayout.PropertyField(scene, new GUIContent("Scene"));
-			EditorGUILayout.PropertyField(physicalHand, new GUIContent("Physical Hand"));
-			EditorGUILayout.PropertyField(virtualHand, new GUIContent("Virtual Hand"));
 
 			serializedObject.ApplyModifiedProperties();
 		}
