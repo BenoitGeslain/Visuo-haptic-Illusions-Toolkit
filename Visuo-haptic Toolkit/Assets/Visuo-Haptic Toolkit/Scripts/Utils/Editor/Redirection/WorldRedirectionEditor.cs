@@ -62,6 +62,8 @@ namespace BG.Redirection {
 
 			// Hides redirectionLateness and controlpoint fields if the technique is not Geslain2022Polynom
 			if (technique.enumNames[technique.enumValueIndex] == "Razzaque2001Hybrid") {
+				// if (technique.enumNames[technique.enumValueIndex] == ) {
+
 				EditorGUILayout.PropertyField(targetsScene, new GUIContent ("Targets"));
 				EditorGUILayout.PropertyField(radius, new GUIContent ("Radius"));
 				EditorGUILayout.PropertyField(applyDampening, new GUIContent ("Apply Dampening"));

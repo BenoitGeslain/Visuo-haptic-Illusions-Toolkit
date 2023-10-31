@@ -41,7 +41,6 @@ namespace BG.Redirection {
 
 			serializedObject.Update();
 
-			Debug.Log(technique);
 			EditorGUILayout.PropertyField(technique, new GUIContent ("Technique"));
 
 			// Scene
