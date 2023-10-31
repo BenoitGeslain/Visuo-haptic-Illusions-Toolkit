@@ -9,7 +9,7 @@ namespace BG.Redirection {
 		}
 	}
 
-	public class NoSteer: WorldRedirectionStrategy {
+	public class NoSteering: WorldRedirectionStrategy {
 
         public override Vector3 SteerTo(Scene scene) => scene.physicalHead.forward;
     }
@@ -35,7 +35,7 @@ namespace BG.Redirection {
 
 	public class SteerToMultipleTargets: WorldRedirectionStrategy {
 		/// <summary>
-		/// Select the target that has the smallest bearing with the orientation of the user's head. 
+		/// Select the target that has the smallest bearing with the orientation of the user's head.
 		/// Return a vector pointing from the physical head in the direction of the selected target.
 		/// </summary>
 		/// <param name="scene"></param>

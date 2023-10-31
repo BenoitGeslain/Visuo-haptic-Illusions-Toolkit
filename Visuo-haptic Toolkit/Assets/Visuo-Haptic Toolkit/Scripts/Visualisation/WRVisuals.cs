@@ -35,7 +35,7 @@ namespace BG.Visualisation {
 			Scene scene = WRMainScript.scene;
 
 			switch (WRMainScript.strategy) {
-				case WRStrategy.None:
+				case WRStrategy.NoSteering:
 					fixTargetCounts(1);
                     targets[0].position = scene.physicalHead.position + scene.physicalHead.forward;
                     targets[0].gameObject.SetActive(true);

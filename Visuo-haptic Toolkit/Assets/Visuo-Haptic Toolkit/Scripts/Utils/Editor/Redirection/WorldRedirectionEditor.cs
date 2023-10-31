@@ -24,6 +24,7 @@ namespace BG.Redirection {
 		SerializedProperty applySmoothing;
 
         readonly string[] strategyTechniques = { "Razzaque2001OverTimeRotation", "Razzaque2001Rotational", "Razzaque2001Curvature", "Razzaque2001Hybrid" };
+        readonly string[] targetsStrategies = { "SteerToCenter", "SteerToMultipleTargets" };
 
 		private void OnEnable() {
 			technique = serializedObject.FindProperty("technique");
@@ -61,11 +62,13 @@ namespace BG.Redirection {
 			EditorGUILayout.PropertyField(origin, new GUIContent("Origin"));
 
 			// Hides redirectionLateness and controlpoint fields if the technique is not Geslain2022Polynom
-			if (technique.enumNames[technique.enumValueIndex] == "Razzaque2001Hybrid") {
-				// if (technique.enumNames[technique.enumValueIndex] == ) {
+			if (technique.enumNames[technique.enumValueIndex] == "Razzaque2001Hybrid" && strategy.enumNames[strategy.enumValueIndex] != "NoSteering") {
+				if (targetsStrategies.Contains(strategy.enumNames[strategy.enumValueIndex])) {
+					EditorGUILayout.PropertyField(targetsScene, new GUIContent ("Targets"));
+				} else if (strategy.enumNames[strategy.enumValueIndex] == "SteerToOrbit") {
+					EditorGUILayout.PropertyField(radius, new GUIContent ("Radius"));
+				}
 
-				EditorGUILayout.PropertyField(targetsScene, new GUIContent ("Targets"));
-				EditorGUILayout.PropertyField(radius, new GUIContent ("Radius"));
 				EditorGUILayout.PropertyField(applyDampening, new GUIContent ("Apply Dampening"));
 				EditorGUILayout.PropertyField(applySmoothing, new GUIContent ("Apply Smoothing"));
 			}

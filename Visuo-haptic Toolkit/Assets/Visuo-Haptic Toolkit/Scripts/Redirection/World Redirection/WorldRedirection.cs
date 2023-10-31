@@ -37,7 +37,7 @@ namespace BG.Redirection {
 				Debug.LogError("Error Unknown Redirection technique.");
 
 			strategyInstance = strategy switch {
-				WRStrategy.None => new NoSteer(),
+				WRStrategy.NoSteering => new NoSteering(),
 				WRStrategy.SteerToCenter => new SteerToCenter(),
 				WRStrategy.SteerToOrbit => new SteerToOrbit(),
 				WRStrategy.SteerToMultipleTargets => new SteerToMultipleTargets(),
