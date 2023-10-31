@@ -53,7 +53,7 @@ namespace BG.Logging {
 		}
 		public RedirectionDataMap() {
 			References<InteractionClassMap>(m => m.script);
-			Map(m => m.Technique);
+			Map(m => m.Technique).Index(1);
 			Map(m => m.timeStamp).TypeConverterOption.Format("yyyy/MM/dd-HH:mm:ss.fff").Index(0).Name("TimeStamp");
 		}
 	}
