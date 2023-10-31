@@ -3,17 +3,18 @@
 This project is a Unity plugin for using and developing visuo-haptic illusions in virtual reality.
 
 - Logging
-  - Automatiquement logger tous les champs de scene pour n'avoir qu'à modifier la classe sans aller dans logging.
+  - [Done] Automatiquement logger tous les champs de scene pour n'avoir qu'à modifier la classe sans aller dans logging.
 - Simulation
   - Générer trajectoire de main avec
     - le Minimum Jerk Model
     - une courbe de Bézier ?
   - Générer trajectoire de marche avec ???
 - Redirection
-  - Cacher les éléments non pertinents en fonction de la méthode sélectionnée
+  - [Done] Cacher les éléments non pertinents en fonction de la méthode sélectionnée
+  - [Done] Avoir plusieurs ToolkitXXXRedirection in the scene pour combiner World et Body Warping
+  - Tester chaque fonction de redirection
 - User Input
-  - Ajouter déplacements et rotation de la tête
-- Fonctionnalité : Avoir plusieurs ToolkitXXXRedirection in the scene pour combiner World et Body Warping
+  - [Done] Ajouter déplacements et rotation de la tête
 - Pseudo-haptique
   - Ajouter les paramètres à ParametersToolkit
 
