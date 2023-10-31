@@ -31,21 +31,30 @@ This project is a Unity plugin for using and developing visuo-haptic illusions i
 |:-------------- | :--------------: |
 | [Azmandian et al., 2016](https://doi.org/10.1145/2858036.2858226), Body Warping    | &check; |
 | [Azmandian et al., 2016](https://doi.org/10.1145/2858036.2858226), Hybrid Warping    | &check; |
-| [Han et al., 2019](http://ieeexplore.ieee.org/document/8260974/), Continous *    | &check; |
+| [Han et al., 2019](http://ieeexplore.ieee.org/document/8260974/), Translational Shift    | &check; |
+| [Han et al., 2019](http://ieeexplore.ieee.org/document/8260974/), Interpolated Reach *    | &check; |
 | [Cheng et al., 2017](http://doi.acm.org/10.1145/3025453.3025753), Sparse Haptics   | &check;   |
 | [Geslain et al., 2022](https://doi.org/10.1145/3531073.3531100), 2<sup>nd</sup> order polynomials   | &check;   |
+| [Poupyrev et al., 1996](https://dl.acm.org/doi/10.1145/237091.237102), The Go-Go   | &check;   |
 | World Redirection   |     |
-| [Azmandian et al., 2016](https://doi.org/10.1145/2858036.2858226), World Warping    | &check; |
 | [Razzaque et al., 2001](http://dx.doi.org/10.2312/egs.20011036), Over Time Rotation    | &check;   |
-| [Williams et al., 2006](https://dl.acm.org/doi/10.1145/1140491.1140495), Translational <br />[Steinicke et al., 2008](http://ieeexplore.ieee.org/document/4741303/),    | &check;   |
 | [Razzaque et al., 2001](https://diglib.eg.org:443/xmlui/handle/10.2312/egs20011036), Rotational <br />[Steinicke et al., 2008](http://ieeexplore.ieee.org/document/4741303/)    | &check;   |
 | [Razzaque et al., 2001](https://diglib.eg.org:443/xmlui/handle/10.2312/egs20011036), Curvature <br />[Steinicke et al., 2008](http://ieeexplore.ieee.org/document/4741303/)    | &check;   |
 | [Razzaque et al., 2001](https://diglib.eg.org:443/xmlui/handle/10.2312/egs20011036), Redirected Walking Hybrid    | &check;   |
+| [Azmandian et al., 2016](https://doi.org/10.1145/2858036.2858226), World Warping    | &check; |
+| [Williams et al., 2006](https://dl.acm.org/doi/10.1145/1140491.1140495), Translational <br />[Steinicke et al., 2008](http://ieeexplore.ieee.org/document/4741303/),    | &check;   |
+| [Abtahi and Follmer, 2019](https://dl.acm.org/doi/10.1145/3290605.3300752), World-in-miniature   | &cross;   |
 | Interpolation   |     |
 | [Kohli et al., 2010](https://doi.org/10.1109/3DUI.2010.5444703), Redirected Touching<br />[Kohli, 2013](https://doi.org/10.17615/34cy-pt44)   | &cross;   |
+| [Zhao et Follmer et al., 2018](https://dl.acm.org/doi/10.1145/3173574.3174118), Complex Boundaries   | &cross;   |
 | Pseudo-Haptic   |     |
+| [Lécuyer et al., 2000](https://doi.org/10.1109/VR.2000.840369), Swamp Illusion   | ?   |
 | [Lécuyer et al., 2000](https://doi.org/10.1109/VR.2000.840369), Spring stiffness   | &cross;   |
+| [Samad et al., 2019](https://dl.acm.org/doi/10.1145/3290605.3300550), Pseudo-haptic weight   | ?;   |
 | [Rietzler et al., 2018](https://dl.acm.org/doi/10.1145/3173574.3173702), Breaking the tracking, weight   | &cross;   |
+| [Gomez Jauregui et al., 2014](http://ieeexplore.ieee.org/document/6777424/), Avatar Weight   | &cross;   |
+| [Argelaguet et al., 2013](https://doi.org/10.1145/2501599), Deformable materials   | &cross;   |
+| [Kasahara et al., 2017](http://doi.acm.org/10.1145/3025453.3025962), Malleable Embodiement   | &cross;   |
 
 \* Erreur de signe dans l'équation à 3.3, la technique redirige dans la direction opposée. + B est faux
 
@@ -55,37 +64,6 @@ This project is a Unity plugin for using and developing visuo-haptic illusions i
 | [Langbehn and Steinicke, 2013](https://link.springer.com/referenceworkentry/10.1007/978-3-319-08234-9_253-1), Steer To Orbit    | &check; |
 | [Langbehn and Steinicke, 2013](https://link.springer.com/referenceworkentry/10.1007/978-3-319-08234-9_253-1), Steer To Targets    | &check; |
 | [Langbehn and Steinicke, 2013](https://link.springer.com/referenceworkentry/10.1007/978-3-319-08234-9_253-1), Steer To Targets + Center    | &check; |
-
-### Good Contribution
-
-| Body Redirection  | Status   |
-|:-------------- | -------------- |
-| [Han et al., 2019](http://ieeexplore.ieee.org/document/8260974/), Instant    | &check; |
-| Pseudo-Haptic   |     |
-| [Lécuyer et al., 2000](https://doi.org/10.1109/VR.2000.840369), Swamp Illusion   | ?   |
-| [Samad et al., 2019](https://dl.acm.org/doi/10.1145/3290605.3300550), Pseudo-haptic weight   | ?;   |
-
-<!-- | World Redirection   | Status    |
-|--------------- | --------------- |
-| []()   | &cross;   |
-
-| Interpolation   | Status    |
-|--------------- | --------------- |
-| []()   | &cross;   | -->
-
-### Nice to Have
-
-| Body Redirection  | Status   |
-|:-------------- | -------------- |
-| [Poupyrev et al., 1996](https://dl.acm.org/doi/10.1145/237091.237102), The Go-Go   | &check;   |
-| World Redirection   |     |
-| [Abtahi and Follmer, 2019](https://dl.acm.org/doi/10.1145/3290605.3300752), World-in-miniature   | &cross;   |
-| Interpolation   |    |
-| [Zhao et Follmer et al., 2018](https://dl.acm.org/doi/10.1145/3173574.3174118), Complex Boundaries   | &cross;   |
-| Pseudo-Haptic   |     |
-| [Argelaguet et al., 2013](https://doi.org/10.1145/2501599), Deformable materials   | &cross;   |
-| [Kasahara et al., 2017](http://doi.acm.org/10.1145/3025453.3025962), Malleable Embodiement   | &cross;   |
-| [Gomez Jauregui et al., 2014](http://ieeexplore.ieee.org/document/6777424/), Avatar Weight   | &cross;
 
 ## Outils de Visualisation
 
