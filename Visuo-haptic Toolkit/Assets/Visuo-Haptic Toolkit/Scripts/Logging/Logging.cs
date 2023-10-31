@@ -14,8 +14,8 @@ namespace BG.Logging {
 
     public record RedirectionData {
         public DateTime timeStamp = DateTime.Now;
-		public Interaction script = Toolkit.Instance.rootScript;
-        public string TechniqueName => script switch {
+		public Interaction script;
+        public string Technique => script switch {
             WorldRedirection => (script as WorldRedirection).technique.ToString(),
             BodyRedirection => (script as BodyRedirection).technique.ToString(),
             _ => ""
