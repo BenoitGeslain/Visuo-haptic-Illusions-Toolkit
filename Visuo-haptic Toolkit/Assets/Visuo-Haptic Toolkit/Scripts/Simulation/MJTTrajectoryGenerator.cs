@@ -19,7 +19,7 @@ namespace BG.Trajectory {
 		Vector3 currentPosition;
 
 		private void Start() {
-			scene = ((BodyRedirection)Toolkit.Instance.rootScript).scene;
+			scene = GetComponent<BodyRedirection>().scene;
 
 			initialPosition = scene.origin.position;
 			currentPosition = scene.origin.position;
@@ -30,7 +30,8 @@ namespace BG.Trajectory {
 
 		private void Update() {
 			if (movementInProgress) {
-				currentPosition = ComputeMJTPosition(currentTime / movementTime, currentTime / movementTime > ballisticAdjustementPhase);
+				// currentPosition = ComputeMJTPosition(currentTime / movementTime);
+				currentPosition = 0.25f * quadraticTrajectory(currentTime / movementTime) + ComputeMJTPosition(currentTime / movementTime);
 				currentPosition.y = scene.physicalHand.position.y;
 				scene.physicalHand.position = currentPosition;
 
@@ -43,17 +44,14 @@ namespace BG.Trajectory {
 			}
 		}
 
-		private Vector3 ComputeMJTPosition(float normailzedTime, bool virtualTarget) {
-			float offset = (virtualTarget) ? (finalPositionPhysical.x - finalPositionVirtual.x) *
-											 (normailzedTime - ballisticAdjustementPhase) * (ballisticAdjustementPhase / (1f - ballisticAdjustementPhase) + 1) : 0f;
-			Debug.Log($"{normailzedTime} {offset} {normailzedTime - ballisticAdjustementPhase}");
-			return new Vector3(MJTEquation(initialPosition.x, finalPositionVirtual.x, normailzedTime) + offset,
-							   0f,
-							   MJTEquation(initialPosition.z, finalPositionVirtual.z, normailzedTime));
-		}
+        private Vector3 quadraticTrajectory(float normailzedTime) => new Vector3(normailzedTime - Mathf.Pow(normailzedTime, 2), 0f, 0f);
 
-		private float MJTEquation(float initial, float final, float t) {
-			return initial + (final - initial) * (6 * Mathf.Pow(t, 5) - 15 * Mathf.Pow(t, 4) + 10 * Mathf.Pow(t, 3));
-		}
-	}
+        private Vector3 ComputeMJTPosition(float normailzedTime) =>
+			new (MJTEquation(initialPosition.x, finalPositionPhysical.x, normailzedTime),
+				 0f,
+				 MJTEquation(initialPosition.z, finalPositionPhysical.z, normailzedTime));
+
+        private float MJTEquation(float initial, float final, float t) =>
+			Mathf.LerpUnclamped(initial, final, 6 * Mathf.Pow(t, 5) - 15 * Mathf.Pow(t, 4) + 10 * Mathf.Pow(t, 3));
+    }
 }

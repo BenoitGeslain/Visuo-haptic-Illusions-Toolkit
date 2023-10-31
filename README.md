@@ -14,6 +14,8 @@ This project is a Unity plugin for using and developing visuo-haptic illusions i
 - User Input
   - Ajouter déplacements et rotation de la tête
 - Fonctionnalité : Avoir plusieurs ToolkitXXXRedirection in the scene pour combiner World et Body Warping
+- Pseudo-haptique
+  - Ajouter les paramètres à ParametersToolkit
 
 ## Dependencies
 
@@ -82,7 +84,7 @@ This project is a Unity plugin for using and developing visuo-haptic illusions i
 | Pseudo-Haptic   |     |
 | [Argelaguet et al., 2013](https://doi.org/10.1145/2501599), Deformable materials   | &cross;   |
 | [Kasahara et al., 2017](http://doi.acm.org/10.1145/3025453.3025962), Malleable Embodiement   | &cross;   |
-| [Gomez Jauregui et al., 2014](http://ieeexplore.ieee.org/document/6777424/), Avatar Weight   | &cross;   
+| [Gomez Jauregui et al., 2014](http://ieeexplore.ieee.org/document/6777424/), Avatar Weight   | &cross;
 
 ## Outils de Visualisation
 
@@ -100,7 +102,7 @@ This project is a Unity plugin for using and developing visuo-haptic illusions i
 - Lecture à partir d'un fichier? Rejouer une scène à partir d'un csv (ou autre)
 
 
-### Authors 
+### Authors
 Benoît Geslain (benoit.geslain@sii.fr, https://github.com/BenoitGeslain), Bruno Jartoux (bruno.jartoux@sii.fr, https://github.com/bjrtx)
 
 ### Copyright and licensing

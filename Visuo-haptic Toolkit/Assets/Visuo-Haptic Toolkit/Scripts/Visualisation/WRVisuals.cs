@@ -9,6 +9,8 @@ namespace BG.Visualisation {
 
 		private static List<Color> colors;	// colors of the lines between the physical and virtual elements
 
+		private WorldRedirection WRMainScript;
+
 		public GameObject targetPrefab;
 		private List<Transform> targets;
 
@@ -18,19 +20,21 @@ namespace BG.Visualisation {
 		[SerializeField] private int orbitResolution;
 
         // Calling OnEnable instead of Start to support recompilation during play
-        private void OnEnable() => colors = new List<Color>() {
+        private void OnEnable() {
+			colors = new List<Color>() {
                 Color.white,	// Indicates the selected target
 				Color.black,	// Indicates the other targets
 				Color.green	// Indicates the forward target vector
-		};
+			};
+			WRMainScript = GetComponent<WorldRedirection>();
+		}
 
         private void Start() => targets = new List<Transform>();
 
         private void Update() {
-			WorldRedirection rootScript = (WorldRedirection) Toolkit.Instance.rootScript;
-			Scene scene = rootScript.scene;
+			Scene scene = WRMainScript.scene;
 
-			switch (rootScript.strategy) {
+			switch (WRMainScript.strategy) {
 				case WRStrategy.None:
 					fixTargetCounts(1);
                     targets[0].position = scene.physicalHead.position + scene.physicalHead.forward;
@@ -101,7 +105,11 @@ namespace BG.Visualisation {
 			Quaternion stepRotation = Quaternion.Euler(0f, 360f/orbitResolution, 0f);
 			for (int angle = 0; angle < orbitResolution; angle++) {
 				currentRadius = stepRotation * previousRadius;
-				Debug.DrawLine(scene.selectedTarget.position + previousRadius, scene.selectedTarget.position + currentRadius);
+				Vector3 start = scene.selectedTarget.position + previousRadius;
+				start.y = scene.physicalHead.position.y;
+				Vector3 end = scene.selectedTarget.position + currentRadius;
+				end.y = scene.physicalHead.position.y;
+				Debug.DrawLine(start, end);
 				previousRadius = currentRadius;
 			}
 		}

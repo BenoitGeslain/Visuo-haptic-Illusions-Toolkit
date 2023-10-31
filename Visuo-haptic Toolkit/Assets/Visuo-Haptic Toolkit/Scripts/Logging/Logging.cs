@@ -22,6 +22,10 @@ namespace BG.Logging {
 				else return "";
 			}
 		}
+
+        public RedirectionData(Interaction script) {
+            this.script = script;
+        }
     }
 
 	public sealed class RedirectionDataMap : ClassMap<RedirectionData> {
@@ -66,7 +70,12 @@ namespace BG.Logging {
 		private List<RedirectionData> records = new();
         private readonly CsvConfiguration config = new(CultureInfo.InvariantCulture) { HasHeaderRecord = false, MemberTypes = MemberTypes.Fields };
 
-        private void Start() => createNewFile();
+		private Interaction script;
+
+        private void Start() {
+			createNewFile();
+			script = GetComponent<Interaction>();
+		}
 
         private void Update() {
             void writeRecords<Data, DataMap>(List<Data> records) where DataMap : ClassMap<Data> {
@@ -79,7 +88,7 @@ namespace BG.Logging {
 				}
             }
 
-			records.Add(new RedirectionData());
+			records.Add(new RedirectionData(script));
 			writeRecords<RedirectionData, RedirectionDataMap>(records);
 		}
 

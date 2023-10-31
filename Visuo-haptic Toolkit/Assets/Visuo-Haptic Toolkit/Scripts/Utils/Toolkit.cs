@@ -5,9 +5,9 @@ namespace BG.Redirection {
 	/// Available body redirection techniques.
 	/// </summary>
 	public enum BRTechnique {
-		None,
-		Han2018Instant,
-		Han2018Continous,
+		Reset,
+		Han2018TranslationalShift,
+		Han2018InterpolatedReach,
 		Azmandian2016Body,
 		Azmandian2016Hybrid,
 		Cheng2017Sparse,
@@ -18,13 +18,13 @@ namespace BG.Redirection {
     /// Available world redirection techniques.
     /// </summary>
     public enum WRTechnique {
-		None,
+		Reset,
 		Razzaque2001OverTimeRotation,
-		Steinicke2008Translational,
 		Razzaque2001Rotational,
 		Razzaque2001Curvature,
 		Razzaque2001Hybrid,
-		Azmandian2016World
+		Azmandian2016World,
+		Steinicke2008Translational
 	}
 
 	public enum WRStrategy {
@@ -39,8 +39,6 @@ namespace BG.Redirection {
 
 		public ParametersToolkit parameters;
 
-		[HideInInspector] public Interaction rootScript;
-
 		private void OnEnable() {
 			if (Instance != null && Instance != this) {
 				Destroy(this);
@@ -49,8 +47,6 @@ namespace BG.Redirection {
 				Instance = this;
 				DontDestroyOnLoad(this.gameObject);
 			}
-
-			rootScript = this.gameObject.GetComponent<Interaction>();
 		}
 
         public float CurvatureRadiusToRotationRate() => CurvatureRadiusToRotationRate(parameters.CurvatureRadius);

@@ -65,7 +65,7 @@ namespace BG.Redirection {
 
         public override void Redirect(Scene scene) {
 			// If the hand is inside the redirection boundary, instantly applies the redirection
-			scene.Redirection = scene.GetPhysicalHandOriginDistance() > Toolkit.Instance.parameters.NoRedirectionBuffer
+			scene.Redirection = scene.GetPhysicalHandOriginDistance() > Toolkit.Instance.parameters.RedirectionBuffer
                 ? scene.virtualTarget.position - scene.physicalTarget.position
                 : Vector3.zero;
         }
@@ -75,11 +75,11 @@ namespace BG.Redirection {
 	/// This class implements the Interpolated Reach technique from Han et al., 2018 renamed Continous in this toolkit as Instant. This technique progressively redirects the user
 	/// as they get closer to the physical target in a linear way.
     /// </summary>
-    public class Han2018Continous: BodyRedirectionTechnique {
+    public class Han2018Continuous: BodyRedirectionTechnique {
 
 		public override void Redirect(Scene scene) {
 			float D = scene.GetPhysicalHandTargetDistance();
-			float B = Vector3.Magnitude(scene.physicalTarget.position - scene.origin.position) + Toolkit.Instance.parameters.NoRedirectionBuffer;
+			float B = Vector3.Magnitude(scene.physicalTarget.position - scene.origin.position) + Toolkit.Instance.parameters.RedirectionBuffer;
 			scene.Redirection = Math.Max(1 - D / B, 0f) * (scene.virtualTarget.position- scene.physicalTarget.position);
 		}
 	}

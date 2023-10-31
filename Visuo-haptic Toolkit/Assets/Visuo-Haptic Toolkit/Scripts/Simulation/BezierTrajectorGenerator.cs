@@ -19,7 +19,7 @@ namespace BG.Trajectory {
 		private Vector3 finalPosition;
 
 		private void Start() {
-			scene = ((BodyRedirection)Toolkit.Instance.rootScript).scene;
+			scene = GetComponent<BodyRedirection>().scene;
 
 			initialPosition = scene.origin.position;
 			finalPosition = scene.physicalTarget.position;
