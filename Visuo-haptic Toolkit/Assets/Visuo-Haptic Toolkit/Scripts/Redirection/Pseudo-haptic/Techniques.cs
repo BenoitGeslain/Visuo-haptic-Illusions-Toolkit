@@ -15,8 +15,6 @@ namespace VHToolkit.Redirection {
 			// TODO use specific parameters, other gains
 			Vector3 distanceToOrigin = scene.virtualHand.position - scene.origin.position;
 			Vector3 instantTranslation = scene.GetHandInstantTranslation();
-			Debug.Log(MathF.Max(MathF.Abs(distanceToOrigin[0]), MathF.Abs(distanceToOrigin[2])));
-			Debug.Log(MathF.Max(MathF.Abs(distanceToOrigin[0]), MathF.Abs(distanceToOrigin[2])) < Toolkit.Instance.parameters.SwampSquareDistance/2);
 			if (MathF.Max(MathF.Abs(distanceToOrigin[0]), MathF.Abs(distanceToOrigin[2])) < Toolkit.Instance.parameters.SwampSquareDistance/2) {
 				scene.virtualHand.position += instantTranslation * Toolkit.Instance.parameters.SwampCDRatio;
 			} else {
