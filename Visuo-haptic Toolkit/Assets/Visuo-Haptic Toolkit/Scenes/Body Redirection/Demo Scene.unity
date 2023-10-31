@@ -1120,7 +1120,6 @@ GameObject:
   m_Component:
   - component: {fileID: 685073572}
   - component: {fileID: 685073571}
-  - component: {fileID: 685073570}
   m_Layer: 0
   m_Name: Camera Top-View
   m_TagString: Untagged
@@ -1128,14 +1127,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &685073570
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 685073569}
-  m_Enabled: 1
 --- !u!20 &685073571
 Camera:
   m_ObjectHideFlags: 0

@@ -56,7 +56,7 @@ namespace BG.Redirection {
 			// Scene
 			// EditorGUILayout.PropertyField(scene, new GUIContent("Scene"));
 			EditorGUILayout.PropertyField(physicalHand, new GUIContent("Physical Hand"));
-			EditorGUILayout.PropertyField(physicalHand, new GUIContent("Virtual Hand"));
+			EditorGUILayout.PropertyField(virtualHand, new GUIContent("Virtual Hand"));
 
 			serializedObject.ApplyModifiedProperties();
 		}
