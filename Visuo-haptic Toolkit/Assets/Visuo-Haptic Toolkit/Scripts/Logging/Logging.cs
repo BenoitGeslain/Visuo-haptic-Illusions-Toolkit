@@ -51,10 +51,10 @@ namespace BG.Logging {
 				References<SceneClassMap>(m => m.scene);
 			}
 		}
-		public RedirectionDataMap() {
-			References<InteractionClassMap>(m => m.script);
+		public RedirectionDataMap() {		
+			Map(m => m.timeStamp).TypeConverterOption.Format("yyyy/MM/dd-HH:mm:ss.fff").Index(0).Name("TimeStamp");	
 			Map(m => m.TechniqueName).Index(1);
-			Map(m => m.timeStamp).TypeConverterOption.Format("yyyy/MM/dd-HH:mm:ss.fff").Index(0).Name("TimeStamp");
+			References<InteractionClassMap>(m => m.script);
 		}
 	}
 
