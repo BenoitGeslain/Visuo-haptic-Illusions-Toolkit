@@ -71,7 +71,7 @@ namespace BG.Redirection {
 		/// initializes the previous head positions.
 		/// </summary>
 		private void Update() {
-			if (previousTechnique != technique) {
+			if (previousTechnique != technique || techniqueInstance == null) {
 				updateTechnique();
 				previousTechnique = technique;
 			}

@@ -2,15 +2,13 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace BG.Visualisation {
-	public class Controller : MonoBehaviour {
+	public class ControllerBR : MonoBehaviour {
 
-		public float speed = 0.5f;
+		[SerializeField] private float speed = 0.5f;
 
-		Camera cam;
+		[SerializeField] private Camera cam;
 		Vector3 previousMousePosition;
 		bool wasFocused;
-
-        void Awake() => cam = Camera.main;
 
         void Update() {
 			// KEYBOARD

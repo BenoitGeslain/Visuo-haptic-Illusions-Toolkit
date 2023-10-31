@@ -2368,6 +2368,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.5
+  cam: {fileID: 685073571}
 --- !u!1001 &1844764558790120163
 PrefabInstance:
   m_ObjectHideFlags: 0

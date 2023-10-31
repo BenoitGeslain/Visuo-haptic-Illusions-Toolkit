@@ -48,7 +48,7 @@ namespace BG.Redirection {
 		/// Start function called once when the game is starting. This fucntion calls updateTechnique() to instantiate the technique class and
 		/// initializes the previous head positions.
 		/// </summary>
-		private void Start() {
+		private void OnEnable() {
 			updateTechnique();
 			previousTechnique = technique;
 			// Store thhe previous hand and head position and rotation to compute instant linear or angular velocity
