@@ -55,8 +55,10 @@ The following tables list all the techniques implemented
 
 ## Reporting Issues
 
-## Authors
-Benoît Geslain (benoit.geslain@sii.fr, https://github.com/BenoitGeslain), Bruno Jartoux (bruno.jartoux@sii.fr, https://github.com/bjrtx)
+## Contributors
+Main Contributors:
+- Benoît Geslain (benoitgeslain@gmail.com, https://github.com/BenoitGeslain)
+- Bruno Jartoux (bruno.jartoux@sii.fr, https://github.com/bjrtx)
 
 ## Contributing
 
