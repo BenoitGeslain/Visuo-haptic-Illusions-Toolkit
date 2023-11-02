@@ -1,22 +1,19 @@
 # The Visuo-haptic Illusions Toolkit
 
-This toolkit for visuo-haptic illusions is a set of open-source tools developped for the Unity game engine under th MIT licence. It aims to promote the use of visuo-haptic illusions in the industry (e.g. video game) and in research by implementing popular visuo-haptic techniques, a simple architecture to create new ones. It also provides tools to help in debugging, logging and visualizing the effects of each technqiue requiring no or minimal additionnal programming.
-Unity plugin for using and developing visuo-haptic illusions in virtual reality.
+This toolkit is a set of open-source tools developped for the Unity game engine. It aims to promote the use of visuo-haptic illusions in the industry (e.g. video games) and in research by implementing popular visuo-haptic techniques and a simple architecture to create new ones. It also provides tools to help in debugging, logging, and visualizing the effects of each technique requiring no or minimal additionnal programming.
 
-## What is the Visuo-haptic Illusions Toolkit
+## What is the Visuo-haptic Illusions Toolkit?
 
 This video explains the basic concepts of visuo-haptic illusions and this toolkit.
 
 
-More details can be found inside the [paper published in XXX]() and in the [wiki]().
+More details can be found in the [paper published in XXX]() and in the [wiki]().
 
 ## Getting Started
 
-To get started, you can check the [wiki](), it contains tutorials,  details about the different modules in this toolkit as well as a [doxygen documentation]().
+To get started, you can check the [wiki](), which contains tutorials,  details about the different modules in this toolkit as well as a [doxygen documentation]().
 
-## List of Techniques Implemented
-
-The following tables list all the techniques implemented
+## List of Implemented Techniques 
 
 | Body Redirection  |    |
 |:-------------- | :--------------: |
@@ -40,7 +37,7 @@ The following tables list all the techniques implemented
 | [Langbehn and Steinicke, 2013](https://link.springer.com/referenceworkentry/10.1007/978-3-319-08234-9_253-1), Steer To Center    | [Langbehn and Steinicke, 2013](https://link.springer.com/referenceworkentry/10.1007/978-3-319-08234-9_253-1), Steer To Orbit    |   [Langbehn and Steinicke, 2013](https://link.springer.com/referenceworkentry/10.1007/978-3-319-08234-9_253-1), Steer To Targets    | &check; |
 | [Langbehn and Steinicke, 2013](https://link.springer.com/referenceworkentry/10.1007/978-3-319-08234-9_253-1), Steer To Targets + Center    |	|
 
-### Not Yet Implemented
+### Not Yet Implemented (Roadmap)
 
 | World Redirection   |     |
 |:-------------- | :--------------: |
@@ -56,7 +53,7 @@ The following tables list all the techniques implemented
 ## Reporting Issues
 
 ## Contributors
-Main Contributors:
+Main contributors:
 - Benoît Geslain (benoitgeslain@gmail.com, https://github.com/BenoitGeslain)
 - Bruno Jartoux (bruno.jartoux@sii.fr, https://github.com/bjrtx)
 
