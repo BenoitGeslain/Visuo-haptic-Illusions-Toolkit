@@ -32,9 +32,8 @@ namespace VHToolkit.Redirection {
             float normalizedMass = 1.5f; // high is heavy, low is light (though what this means is unclear)
             float verticalGain = 1 / normalizedMass;
             float horizontalGain = verticalGain * ratio;
-            var v = scene.GetHandInstantTranslation();
-            v[0] *= horizontalGain; v[1] *= verticalGain; v[2] *= horizontalGain;
-            scene.virtualHand.Translate(v);
+            Vector3 gainVector = new(horizontalGain, verticalGain, horizontalGain);
+            scene.virtualHand.Translate(Vector3.Scale(scene.GetHandInstantTranslation(), gainVector));
         }
     }
 }
