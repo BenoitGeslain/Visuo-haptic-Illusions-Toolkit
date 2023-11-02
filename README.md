@@ -62,7 +62,7 @@ Benoît Geslain (benoit.geslain@sii.fr, https://github.com/BenoitGeslain), Bruno
 
 All contributions are welcome. Please find more details on the [wiki](https://github.com/BenoitGeslain/Visuo-haptic-Illusions-Toolkit/wiki/Contributing).
 
-## Copyright and licensing
+## [Copyright and licensing](https://github.com/BenoitGeslain/Visuo-haptic-Illusions-Toolkit/blob/main/LICENSE)
 Copyright (c) 2023 SII Société pour l’Informatique Industrielle
 
 
