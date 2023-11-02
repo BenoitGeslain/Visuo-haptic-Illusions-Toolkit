@@ -71,23 +71,3 @@ Copyright (c) 2023 SII Société pour l’Informatique Industrielle
 This project is licensed under the open-source MIT X11 license, see the LICENSE file.
 In particular, you may not distribute any copy or substantial portion of this project
 without the contents of the LICENSE file.
-
-
-## TODO
-
-- Readme
-	- ajouter bandeau
-	- reduire la taille du tableau
-- Wiki + Doxygen doc
-- Logging
-	- jouer une scène à partir des logs
-- Simulation
-	- Générer trajectoire de main avec
-		- le Minimum Jerk Model
-		- une courbe de Bézier ?
-  		- Gonzalez, 2023 modele de contrôle mais pas tout à fait temps-réel, serait très cool de l'avoir
-	- Générer trajectoire de marche avec ???
-- Redirection
-	- Tester chaque fonction de redirection
-- Pseudo-haptique
-	- Ajouter les paramètres à ParametersToolkit
