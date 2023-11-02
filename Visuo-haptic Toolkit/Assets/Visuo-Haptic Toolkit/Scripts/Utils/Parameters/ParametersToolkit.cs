@@ -55,7 +55,7 @@ namespace VHToolkit.Redirection {
 
 		[Header("Pseudo-Haptic")]
 		[Tooltip("The size of the area around the origin where the Swamp illusion defined by [Lécuyer et al., 2000] is applied. Value is in m.")]
-		public float SwampSquareDistance = 0.25f;
+		public float SwampSquareLength = 0.25f;
 		[Tooltip("The C/D ratio inside the swamp area. Value is in m. [Lécuyer et al., 2000]")]
 		public float SwampCDRatio = 0.75f;
 	}
