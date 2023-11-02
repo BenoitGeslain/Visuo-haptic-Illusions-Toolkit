@@ -191,14 +191,6 @@ MARKDOWN_SUPPORT       = YES
 
 AUTOLINK_SUPPORT       = YES
 
-# Set the SIP_SUPPORT tag to YES if your project consists of sip (see:
-# http://www.riverbankcomputing.co.uk/software/sip/intro) sources only. Doxygen
-# will parse them like normal C++ but will assume all classes use public instead
-# of private inheritance when no explicit protection keyword is present.
-# The default value is: NO.
-
-SIP_SUPPORT            = NO
-
 # For Microsoft's IDL there are propget and propput attributes to indicate
 # getter and setter methods for a property. Setting this option to YES will make
 # doxygen to replace the get and set methods by a property in the documentation.
@@ -318,29 +310,6 @@ EXTRACT_LOCAL_CLASSES  = YES
 # The default value is: NO.
 
 EXTRACT_ANON_NSPACES   = NO
-
-# If the HIDE_UNDOC_MEMBERS tag is set to YES, doxygen will hide all
-# undocumented members inside documented classes or files. If set to NO these
-# members will be included in the various overviews, but no documentation
-# section is generated. This option has no effect if EXTRACT_ALL is enabled.
-# The default value is: NO.
-
-HIDE_UNDOC_MEMBERS     = NO
-
-# If the HIDE_UNDOC_CLASSES tag is set to YES, doxygen will hide all
-# undocumented classes that are normally visible in the class hierarchy. If set
-# to NO, these classes will be included in the various overviews. This option
-# has no effect if EXTRACT_ALL is enabled.
-# The default value is: NO.
-
-HIDE_UNDOC_CLASSES     = NO
-
-# If the HIDE_FRIEND_COMPOUNDS tag is set to YES, doxygen will hide all friend
-# (class|struct|union) declarations. If set to NO, these declarations will be
-# included in the documentation.
-# The default value is: NO.
-
-HIDE_FRIEND_COMPOUNDS  = NO
 
 # If the HIDE_IN_BODY_DOCS tag is set to YES, doxygen will hide any
 # documentation blocks found inside the body of a function. If set to NO, these
@@ -632,7 +601,7 @@ INPUT_ENCODING         = UTF-8
 # *.m, *.markdown, *.md, *.mm, *.dox, *.py, *.pyw, *.f90, *.f, *.for, *.tcl,
 # *.vhd, *.vhdl, *.ucf, *.qsf, *.as and *.js.
 
-FILE_PATTERNS          =
+FILE_PATTERNS          = *.cs
 
 # The RECURSIVE tag can be used to specify whether or not subdirectories should
 # be searched for input files as well.
