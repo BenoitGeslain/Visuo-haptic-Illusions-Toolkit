@@ -70,7 +70,7 @@ without the contents of the LICENSE file.
 - Readme
 	- ajouter bandeau
 	- reduire la taille du tableau
-- Wiki
+- Wiki + Doxygen doc
 - Logging
 	- jouer une scène à partir des logs
 - Simulation
