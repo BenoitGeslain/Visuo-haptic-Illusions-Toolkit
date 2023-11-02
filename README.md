@@ -77,6 +77,7 @@ without the contents of the LICENSE file.
 	- Générer trajectoire de main avec
 		- le Minimum Jerk Model
 		- une courbe de Bézier ?
+  		- Gonzalez, 2023 modele de contrôle mais pas tout à fait temps-réel, serait très cool de l'avoir
 	- Générer trajectoire de marche avec ???
 - Redirection
 	- Tester chaque fonction de redirection
