@@ -53,6 +53,8 @@ The following tables list all the techniques implemented
 | [Argelaguet et al., 2013](https://doi.org/10.1145/2501599), Deformable materials   | &cross;   |
 | [Kasahara et al., 2017](http://doi.acm.org/10.1145/3025453.3025962), Malleable Embodiement   | &cross;   |
 
+## Reporting Issues
+
 ## Authors
 Benoît Geslain (benoit.geslain@sii.fr, https://github.com/BenoitGeslain), Bruno Jartoux (bruno.jartoux@sii.fr, https://github.com/bjrtx)
 
@@ -74,7 +76,6 @@ without the contents of the LICENSE file.
 - Readme
 	- ajouter bandeau
 	- reduire la taille du tableau
- 	- Contributing?
 - Wiki + Doxygen doc
 - Logging
 	- jouer une scène à partir des logs
