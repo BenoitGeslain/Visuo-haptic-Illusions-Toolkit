@@ -56,6 +56,10 @@ The following tables list all the techniques implemented
 ## Authors
 Benoît Geslain (benoit.geslain@sii.fr, https://github.com/BenoitGeslain), Bruno Jartoux (bruno.jartoux@sii.fr, https://github.com/bjrtx)
 
+## Contributing
+
+All contributions are welcome. Please find more details on the [wiki](https://github.com/BenoitGeslain/Visuo-haptic-Illusions-Toolkit/wiki/Contributing).
+
 ## Copyright and licensing
 Copyright (c) 2023 SII Société pour l’Informatique Industrielle
 
