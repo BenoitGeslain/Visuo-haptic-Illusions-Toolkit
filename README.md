@@ -1,3 +1,6 @@
+[![GitHub Pages Deploy Action](https://github.com/bjrtx/Visuo-haptic-Illusions-Toolkit/actions/workflows/doxygen-gh-pages.yml/badge.svg)](https://github.com/bjrtx/Visuo-haptic-Illusions-Toolkit/actions/workflows/doxygen-gh-pages.yml)
+[![pages-build-deployment](https://github.com/bjrtx/Visuo-haptic-Illusions-Toolkit/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/bjrtx/Visuo-haptic-Illusions-Toolkit/actions/workflows/pages/pages-build-deployment)
+
 # The Visuo-haptic Illusions Toolkit
 
 This toolkit is a an open-source plugin for the Unity game engine. It aims to promote the use of visuo-haptic illusions in the industry (e.g. video games) and in academia by implementing popular visuo-haptic techniques and a simple architecture to create new ones. It also provides low-code tools to debug, log, and visualize the effects of each technique.
