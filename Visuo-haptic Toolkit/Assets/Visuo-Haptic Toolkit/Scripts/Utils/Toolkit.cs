@@ -5,7 +5,7 @@ namespace VHToolkit.Redirection {
 	/// Available body redirection techniques.
 	/// </summary>
 	public enum BRTechnique {
-		Reset,
+		Reset,	// Hand Redirection techniques
 		Han2018TranslationalShift,
 		Han2018InterpolatedReach,
 		Azmandian2016Body,
@@ -13,7 +13,7 @@ namespace VHToolkit.Redirection {
 		Cheng2017Sparse,
 		Geslain2022Polynom,
 		Poupyrev1996GoGo,
-		_,
+		_,	// Pseudo-haptic techiques
 		Lecuyer2000Swamp,
 		Samad2019Weight
 	}
