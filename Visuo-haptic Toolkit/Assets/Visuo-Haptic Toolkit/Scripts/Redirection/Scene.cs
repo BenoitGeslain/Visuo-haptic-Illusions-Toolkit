@@ -11,7 +11,7 @@ namespace VHToolkit.Redirection {
 	/// <param name="physicalHand">The Transform representing the user's physical hand, i.e. the transform that is receiving the tracked hand data.</param>
 	/// <param name="virtualHand">The Transform representing the user's virtual hand, i.e. the user's avatar.</param>
 	/// <param name="physicalHead">The Transform representing the user's physical head, i.e. the transform that is receiving the tracked head data..</param>
-	/// <param name="virtualHead">The Transform representing the user's virtual hand.</param>
+	/// <param name="virtualHead">The Transform representing the user's virtual head.</param>
 	///
 	/// <param name="physicalTarget">The physical target the hand should reach when the virtual hand reaches the virtual target.</param>
 	/// <param name="virtualTarget">The virtual target the user is reaching for.</param>
@@ -107,7 +107,7 @@ namespace VHToolkit.Redirection {
         /// <summary>
         ///
         /// </summary>
-        /// <returns>The instant angular velocity around the up axis (Y) of the physical head using the last frame's position</returns>
+        /// <returns>The instant angular velocity around the up axis (Y) of the physical head using the last frame's position.</returns>
         public float GetHeadInstantRotationY() {
 			float instantRotation = GetHeadInstantRotation().eulerAngles.y;
 			return (instantRotation > 180f)? 360 - instantRotation : instantRotation;

@@ -32,7 +32,7 @@ namespace VHToolkit.Visualisation {
 				// draws threshold lines for the hands
 				drawThresholdLines(BRMainScript.scene.physicalHand.position, BRMainScript.scene.virtualHand.position, BRMainScript);
 			}
-			if (BRMainScript.technique == BRTechnique.Lecuyer2000Swamp) {
+			if (BRMainScript.Technique == BRTechnique.Lecuyer2000Swamp) {
 				Debug.DrawRay(BRMainScript.scene.origin.position + new Vector3(Toolkit.Instance.parameters.SwampSquareDistance/2, 0f, Toolkit.Instance.parameters.SwampSquareDistance/2),
 							  Vector3.back * Toolkit.Instance.parameters.SwampSquareDistance, colors[1]);
 				Debug.DrawRay(BRMainScript.scene.origin.position + new Vector3(Toolkit.Instance.parameters.SwampSquareDistance/2, 0f, Toolkit.Instance.parameters.SwampSquareDistance/2),

@@ -12,15 +12,15 @@ namespace VHToolkit.Redirection {
 	/// </summary>
 	public class BodyRedirection: Interaction {
 
-		/// <summary>
-		/// Currently selected technique, if any.
-		/// </summary>
-		public BRTechnique technique;
+        /// <summary>
+        /// Currently selected technique, if any. When set, updateTechnique() gets called on the next Update().
+        /// </summary>
+        public BRTechnique Technique { set; get; }
 
-		/// <summary>
-		/// Previously selected technique, if any.
-		/// </summary>
-		private BRTechnique previousTechnique;
+        /// <summary>
+        /// Previously selected technique, if any.
+        /// </summary>
+        private BRTechnique previousTechnique;
 
 		[SerializeField] private BodyRedirectionTechnique techniqueInstance;
 
@@ -28,7 +28,7 @@ namespace VHToolkit.Redirection {
 		/// Updates the techniqueInstance according to the enumeration technique chosen.
 		/// </summary>
         private void updateTechnique() {
-			techniqueInstance = technique switch {
+			techniqueInstance = Technique switch {
 				BRTechnique.Reset => new ResetBodyRedirection(),
 				BRTechnique.Azmandian2016Body => new Azmandian2016Body(),
 				BRTechnique.Azmandian2016Hybrid => new Azmandian2016Hybrid(),
@@ -52,7 +52,7 @@ namespace VHToolkit.Redirection {
 		/// </summary>
 		private void OnEnable() {
 			updateTechnique();
-			previousTechnique = technique;
+			previousTechnique = Technique;
 			// Store thhe previous hand and head position and rotation to compute instant linear or angular velocity
 			scene.previousHandPosition = scene.physicalHand.position;
 			scene.previousHandRotation = scene.physicalHand.rotation;
@@ -68,9 +68,9 @@ namespace VHToolkit.Redirection {
 		/// initializes the previous head positions.
 		/// </summary>
         private void Update() {
-			if (previousTechnique != technique) {
+			if (previousTechnique != Technique) {
 				updateTechnique();
-				previousTechnique = technique;
+				previousTechnique = Technique;
 			}
 
 			techniqueInstance?.Redirect(scene);	// Computes and applies the redirection according to the selected redirection technique
@@ -86,23 +86,9 @@ namespace VHToolkit.Redirection {
 		}
 
 		/// <summary>
-		/// Setter for the enumeration BRTechnique. updateTechnique() gets called on the next Update().
-		/// </summary>
-		/// <param name="t">The enumeration defining which technique to call Redirect(...) from.</param>
-		public void SetTechnique(BRTechnique t) {
-			technique = t;
-		}
-
-		/// <summary>
 		/// A wrapper around SetTechnique(BRTechnique t) to use the ResetRedirection technique.
 		/// </summary>
-        public void ResetRedirection() => SetTechnique(BRTechnique.Reset);
-
-		/// <summary>
-		/// Getter for the enumeration technique.
-		/// </summary>
-		/// <returns>Returns the enumeration technique</returns>
-        public BRTechnique GetTechnique() => technique;
+        public void ResetRedirection() => Technique = BRTechnique.Reset;
 
 		/// <summary>
 		/// Returns whether a redirection is applied to the user's virtual and physical hand
