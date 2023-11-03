@@ -13,7 +13,7 @@ jobs:
       - run: | 
           echo "Current working dir" "$PWD"
           ls -lh
-          sudo apt install epstopdf
+          sudo apt install texlive-font-utils
       - uses: DenverCoder1/doxygen-github-pages-action@v1.3.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
