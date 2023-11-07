@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -33,14 +34,17 @@ namespace VHToolkit.Visualisation {
 				drawThresholdLines(BRMainScript.scene.physicalHand.position, BRMainScript.scene.virtualHand.position, BRMainScript);
 			}
 			if (BRMainScript.technique == BRTechnique.Lecuyer2000Swamp) {
-				Debug.DrawRay(BRMainScript.scene.origin.position + new Vector3(Toolkit.Instance.parameters.SwampSquareDistance/2, 0f, Toolkit.Instance.parameters.SwampSquareDistance/2),
-							  Vector3.back * Toolkit.Instance.parameters.SwampSquareDistance, colors[1]);
-				Debug.DrawRay(BRMainScript.scene.origin.position + new Vector3(Toolkit.Instance.parameters.SwampSquareDistance/2, 0f, Toolkit.Instance.parameters.SwampSquareDistance/2),
-							  Vector3.left * Toolkit.Instance.parameters.SwampSquareDistance, colors[1]);
-				Debug.DrawRay(BRMainScript.scene.origin.position - new Vector3(Toolkit.Instance.parameters.SwampSquareDistance/2, 0f, Toolkit.Instance.parameters.SwampSquareDistance/2),
-							  Vector3.forward * Toolkit.Instance.parameters.SwampSquareDistance, colors[1]);
-				Debug.DrawRay(BRMainScript.scene.origin.position - new Vector3(Toolkit.Instance.parameters.SwampSquareDistance/2, 0f, Toolkit.Instance.parameters.SwampSquareDistance/2),
-							  Vector3.right * Toolkit.Instance.parameters.SwampSquareDistance, colors[1]);
+				Vector3 distanceToOrigin = BRMainScript.scene.virtualHand.position - BRMainScript.scene.origin.position;
+				Color c = (MathF.Max(MathF.Abs(distanceToOrigin[0]), MathF.Abs(distanceToOrigin[2])) < Toolkit.Instance.parameters.SwampSquareLength/2) ?
+						  Color.green : Color.yellow;
+				Debug.DrawRay(BRMainScript.scene.origin.position + new Vector3(Toolkit.Instance.parameters.SwampSquareLength/2, 0f, Toolkit.Instance.parameters.SwampSquareLength/2),
+							  Vector3.back * Toolkit.Instance.parameters.SwampSquareLength, c);
+				Debug.DrawRay(BRMainScript.scene.origin.position + new Vector3(Toolkit.Instance.parameters.SwampSquareLength/2, 0f, Toolkit.Instance.parameters.SwampSquareLength/2),
+							  Vector3.left * Toolkit.Instance.parameters.SwampSquareLength, c);
+				Debug.DrawRay(BRMainScript.scene.origin.position - new Vector3(Toolkit.Instance.parameters.SwampSquareLength/2, 0f, Toolkit.Instance.parameters.SwampSquareLength/2),
+							  Vector3.forward * Toolkit.Instance.parameters.SwampSquareLength, c);
+				Debug.DrawRay(BRMainScript.scene.origin.position - new Vector3(Toolkit.Instance.parameters.SwampSquareLength/2, 0f, Toolkit.Instance.parameters.SwampSquareLength/2),
+							  Vector3.right * Toolkit.Instance.parameters.SwampSquareLength, c);
 			}
 		}
 
