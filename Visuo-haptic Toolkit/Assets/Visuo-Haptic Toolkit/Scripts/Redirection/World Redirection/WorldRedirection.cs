@@ -23,6 +23,7 @@ namespace VHToolkit.Redirection {
 		/// </summary>
 		private void updateTechnique() {
 			techniqueInstance = technique switch {
+				WRTechnique.None => new NoWorldRedirection(),
 				WRTechnique.Reset => new ResetWorldRedirection(),
 				WRTechnique.Razzaque2001OverTimeRotation => new Razzaque2001OverTimeRotation(),
 				WRTechnique.Steinicke2008Translational => new Steinicke2008Translational(),

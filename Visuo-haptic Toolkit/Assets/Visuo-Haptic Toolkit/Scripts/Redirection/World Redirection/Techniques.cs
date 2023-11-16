@@ -178,7 +178,8 @@ namespace VHToolkit.Redirection {
 			scene.virtualHead.Translate(
 				instantTranslation.x * Toolkit.Instance.parameters.GainsTranslational.x,
 				instantTranslation.y * Toolkit.Instance.parameters.GainsTranslational.y,
-				instantTranslation.z * Toolkit.Instance.parameters.GainsTranslational.z);
+				instantTranslation.z * Toolkit.Instance.parameters.GainsTranslational.z,
+				relativeTo: Space.World);
 		}
 	}
 
@@ -234,6 +235,13 @@ namespace VHToolkit.Redirection {
 			// 	scene.RotateVirtualHeadY(angles[0]);
 			// }
 
+			scene.CopyHeadRotations();
+			scene.CopyHeadTranslations();
+		}
+	}
+
+	public class NoWorldRedirection: WorldRedirectionTechnique {
+		public override void Redirect(Scene scene) {
 			scene.CopyHeadRotations();
 			scene.CopyHeadTranslations();
 		}

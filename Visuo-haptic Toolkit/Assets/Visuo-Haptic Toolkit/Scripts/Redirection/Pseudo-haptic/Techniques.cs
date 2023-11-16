@@ -32,7 +32,7 @@ namespace VHToolkit.Redirection {
             float verticalGain = 1 / normalizedMass;
             float horizontalGain = verticalGain * ratio;
             Vector3 gainVector = new(horizontalGain, verticalGain, horizontalGain);
-            scene.virtualHand.Translate(Vector3.Scale(scene.GetHandInstantTranslation(), gainVector));
+            scene.virtualHand.Translate(Vector3.Scale(scene.GetHandInstantTranslation(), gainVector), relativeTo: Space.World);
         }
     }
 }

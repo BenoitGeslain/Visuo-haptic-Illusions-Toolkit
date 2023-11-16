@@ -22,6 +22,7 @@ namespace VHToolkit.Redirection {
     /// Available world redirection techniques.
     /// </summary>
     public enum WRTechnique {
+		None,
 		Reset,
 		Razzaque2001OverTimeRotation,
 		Razzaque2001Rotational,
