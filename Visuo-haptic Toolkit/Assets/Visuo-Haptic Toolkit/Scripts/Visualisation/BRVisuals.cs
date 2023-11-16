@@ -33,7 +33,7 @@ namespace VHToolkit.Visualisation {
 				// draws threshold lines for the hands
 				drawThresholdLines(BRMainScript.scene.physicalHand.position, BRMainScript.scene.virtualHand.position, BRMainScript);
 			}
-			if (BRMainScript.technique == BRTechnique.Lecuyer2000Swamp) {
+			if (BRMainScript.Technique == BRTechnique.Lecuyer2000Swamp) {
 				Vector3 distanceToOrigin = BRMainScript.scene.virtualHand.position - BRMainScript.scene.origin.position;
 				Color c = (MathF.Max(MathF.Abs(distanceToOrigin[0]), MathF.Abs(distanceToOrigin[2])) < Toolkit.Instance.parameters.SwampSquareLength/2) ?
 						  Color.green : Color.yellow;
