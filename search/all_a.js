@@ -1,9 +1,9 @@
 var searchData=
 [
-  ['lecuyer2000swamp_65',['Lecuyer2000Swamp',['../namespaceVHToolkit_1_1Redirection.html#af8073b3c987118e1413b41c5be00892ba6e2670a2251c1e1e3dd5a77bfff178d4',1,'VHToolkit.Redirection.Lecuyer2000Swamp()'],['../classVHToolkit_1_1Redirection_1_1Lecuyer2000Swamp.html',1,'VHToolkit.Redirection.Lecuyer2000Swamp']]],
-  ['left_66',['left',['../classVHToolkit_1_1Redirection_1_1Vector2Horizontal.html#ad4340c9357bb1c63e704a7962d5a51e3',1,'VHToolkit::Redirection::Vector2Horizontal']]],
-  ['logging_67',['Logging',['../classVHToolkit_1_1Logging_1_1Logging.html',1,'VHToolkit::Logging']]],
-  ['logging_2ecs_68',['Logging.cs',['../Logging_8cs.html',1,'']]],
-  ['loggingeditor_69',['LoggingEditor',['../classVHToolkit_1_1Logging_1_1LoggingEditor.html',1,'VHToolkit::Logging']]],
-  ['loggingeditor_2ecs_70',['LoggingEditor.cs',['../LoggingEditor_8cs.html',1,'']]]
+  ['maxredirectionthreshold_72',['MaxRedirectionThreshold',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#af0ddc884454f477186f5963701f73973',1,'VHToolkit::Redirection::ParametersToolkit']]],
+  ['minjerktrajectory_73',['MinJerkTrajectory',['../classAssets_1_1Visuo__Haptic__Toolkit_1_1Scripts_1_1Logging_1_1UserTrajectorySimulation_1_1MinJerkTrajectory.html',1,'Assets::Visuo_Haptic_Toolkit::Scripts::Logging::UserTrajectorySimulation']]],
+  ['minjerktrajectory_2ecs_74',['MinJerkTrajectory.cs',['../MinJerkTrajectory_8cs.html',1,'']]],
+  ['mjttrajectorygenerator_75',['MJTTrajectoryGenerator',['../classVHToolkit_1_1Trajectory_1_1MJTTrajectoryGenerator.html',1,'VHToolkit::Trajectory']]],
+  ['mjttrajectorygenerator_2ecs_76',['MJTTrajectoryGenerator.cs',['../MJTTrajectoryGenerator_8cs.html',1,'']]],
+  ['movementinprogress_77',['movementInProgress',['../classVHToolkit_1_1Trajectory_1_1BezierTrajectorGenerator.html#a5321205e301deff5e60a046923bfac0f',1,'VHToolkit.Trajectory.BezierTrajectorGenerator.movementInProgress()'],['../classVHToolkit_1_1Trajectory_1_1MJTTrajectoryGenerator.html#ae75c8acee12d8b9c3394c80ebefa2bca',1,'VHToolkit.Trajectory.MJTTrajectoryGenerator.movementInProgress()']]]
 ];

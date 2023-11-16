@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['lecuyer2000swamp_183',['Lecuyer2000Swamp',['../classVHToolkit_1_1Redirection_1_1Lecuyer2000Swamp.html',1,'VHToolkit::Redirection']]],
-  ['logging_184',['Logging',['../classVHToolkit_1_1Logging_1_1Logging.html',1,'VHToolkit::Logging']]],
-  ['loggingeditor_185',['LoggingEditor',['../classVHToolkit_1_1Logging_1_1LoggingEditor.html',1,'VHToolkit::Logging']]]
+  ['minjerktrajectory_193',['MinJerkTrajectory',['../classAssets_1_1Visuo__Haptic__Toolkit_1_1Scripts_1_1Logging_1_1UserTrajectorySimulation_1_1MinJerkTrajectory.html',1,'Assets::Visuo_Haptic_Toolkit::Scripts::Logging::UserTrajectorySimulation']]],
+  ['mjttrajectorygenerator_194',['MJTTrajectoryGenerator',['../classVHToolkit_1_1Trajectory_1_1MJTTrajectoryGenerator.html',1,'VHToolkit::Trajectory']]]
 ];

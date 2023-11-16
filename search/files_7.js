@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['logging_2ecs_243',['Logging.cs',['../Logging_8cs.html',1,'']]],
-  ['loggingeditor_2ecs_244',['LoggingEditor.cs',['../LoggingEditor_8cs.html',1,'']]]
+  ['minjerktrajectory_2ecs_252',['MinJerkTrajectory.cs',['../MinJerkTrajectory_8cs.html',1,'']]],
+  ['mjttrajectorygenerator_2ecs_253',['MJTTrajectoryGenerator.cs',['../MJTTrajectoryGenerator_8cs.html',1,'']]]
 ];

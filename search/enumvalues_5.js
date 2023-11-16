@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['lecuyer2000swamp_331',['Lecuyer2000Swamp',['../namespaceVHToolkit_1_1Redirection.html#af8073b3c987118e1413b41c5be00892ba6e2670a2251c1e1e3dd5a77bfff178d4',1,'VHToolkit::Redirection']]]
+  ['han2018interpolatedreach_344',['Han2018InterpolatedReach',['../namespaceVHToolkit_1_1Redirection.html#af8073b3c987118e1413b41c5be00892baab278652904b8edb8be9a7bd262c71c9',1,'VHToolkit::Redirection']]],
+  ['han2018translationalshift_345',['Han2018TranslationalShift',['../namespaceVHToolkit_1_1Redirection.html#af8073b3c987118e1413b41c5be00892bab5b05ec6c6effa0128c0089e39c3c394',1,'VHToolkit::Redirection']]]
 ];
