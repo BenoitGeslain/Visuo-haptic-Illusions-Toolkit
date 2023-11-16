@@ -77,7 +77,7 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVHToolkit_1_1Redirection_1_1BodyRedirection.html">BodyRedirection</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This class allows users to select which body redirection technique to use as well as the relevant parameters. The enumeration BRTechnique allows for dynamic selection of the technique. The class reference <a class="el" href="classVHToolkit_1_1Redirection_1_1BodyRedirectionTechnique.html" title="This class is the most conceptual class of body interaction techniques defining the important functio...">BodyRedirectionTechnique</a> contains the redirect function that is used to apply redirection with the Redirect() function. The scene parameter contains all the information necessary for the redirection such as the GameObjects representing the hand (physical and virtual) or the targets.  <a href="classVHToolkit_1_1Redirection_1_1BodyRedirection.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This class allows users to select which body redirection technique to use as well as the relevant parameters. The enumeration BRtechnique allows for dynamic selection of the technique. The class reference <a class="el" href="classVHToolkit_1_1Redirection_1_1BodyRedirectionTechnique.html" title="This class is the most conceptual class of body interaction techniques defining the important functio...">BodyRedirectionTechnique</a> contains the redirect function that is used to apply redirection with the Redirect() function. The scene parameter contains all the information necessary for the redirection such as the GameObjects representing the hand (physical and virtual) or the targets.  <a href="classVHToolkit_1_1Redirection_1_1BodyRedirection.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVHToolkit_1_1Redirection_1_1BodyRedirectionTechnique.html">BodyRedirectionTechnique</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This class is the most conceptual class of body interaction techniques defining the important function to call: <a class="el" href="classVHToolkit_1_1Redirection_1_1RedirectionTechnique.html#a361e4f49fca87675d3ff8088167413b3" title="This virtual function redirects the Scene transforms according to the other parameters and the equati...">Redirect()</a>. Information about the user such as the user's position or the targets are encapsulated inside Scene.  <a href="classVHToolkit_1_1Redirection_1_1BodyRedirectionTechnique.html#details">More...</a><br /></td></tr>
@@ -150,6 +150,8 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVHToolkit_1_1Redirection_1_1ResetWorldRedirection.html">ResetWorldRedirection</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This class does not implement a redirection technique but reset the rotation between the user's physical and virtual head by using the over time rotation and rotationnal technique from Razzaque et al., 2001.  <a href="classVHToolkit_1_1Redirection_1_1ResetWorldRedirection.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVHToolkit_1_1Redirection_1_1NoWorldRedirection.html">NoWorldRedirection</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVHToolkit_1_1Redirection_1_1WorldRedirection.html">WorldRedirection</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This class allows users to select through the inspector or set through the API which body redirection technique to use as well as the relevant parameters. To reset redirection, set the technique enum to None.  <a href="classVHToolkit_1_1Redirection_1_1WorldRedirection.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -205,12 +207,13 @@ Enumerations</h2></td></tr>
 <tr class="memdesc:af8073b3c987118e1413b41c5be00892b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Available body redirection techniques.  <a href="namespaceVHToolkit_1_1Redirection.html#af8073b3c987118e1413b41c5be00892b">More...</a><br /></td></tr>
 <tr class="separator:af8073b3c987118e1413b41c5be00892b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0d56c189dc559dc0687f7c32fad22530"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceVHToolkit_1_1Redirection.html#a0d56c189dc559dc0687f7c32fad22530">WRTechnique</a> { <br />
-&#160;&#160;<a class="el" href="namespaceVHToolkit_1_1Redirection.html#a0d56c189dc559dc0687f7c32fad22530a526d688f37a86d3c3f27d0c5016eb71d">Reset</a>
+&#160;&#160;<a class="el" href="namespaceVHToolkit_1_1Redirection.html#a0d56c189dc559dc0687f7c32fad22530a6adf97f83acf6453d4a6a4b1070f3754">None</a>
+, <a class="el" href="namespaceVHToolkit_1_1Redirection.html#a0d56c189dc559dc0687f7c32fad22530a526d688f37a86d3c3f27d0c5016eb71d">Reset</a>
 , <a class="el" href="namespaceVHToolkit_1_1Redirection.html#a0d56c189dc559dc0687f7c32fad22530abd3aa6ba908318dcdf4e435d88559158">Razzaque2001OverTimeRotation</a>
 , <a class="el" href="namespaceVHToolkit_1_1Redirection.html#a0d56c189dc559dc0687f7c32fad22530a61c82f83d5602cb821cd0b9a0e211848">Razzaque2001Rotational</a>
-, <a class="el" href="namespaceVHToolkit_1_1Redirection.html#a0d56c189dc559dc0687f7c32fad22530a1456a5c6df7e2e9e905a81bf8b3c568a">Razzaque2001Curvature</a>
 , <br />
-&#160;&#160;<a class="el" href="namespaceVHToolkit_1_1Redirection.html#a0d56c189dc559dc0687f7c32fad22530af152530f6b3f52aee82c99f893774d1f">Razzaque2001Hybrid</a>
+&#160;&#160;<a class="el" href="namespaceVHToolkit_1_1Redirection.html#a0d56c189dc559dc0687f7c32fad22530a1456a5c6df7e2e9e905a81bf8b3c568a">Razzaque2001Curvature</a>
+, <a class="el" href="namespaceVHToolkit_1_1Redirection.html#a0d56c189dc559dc0687f7c32fad22530af152530f6b3f52aee82c99f893774d1f">Razzaque2001Hybrid</a>
 , <a class="el" href="namespaceVHToolkit_1_1Redirection.html#a0d56c189dc559dc0687f7c32fad22530a8173b692989818c5fc29b7b61b2ff9f4">Azmandian2016World</a>
 , <a class="el" href="namespaceVHToolkit_1_1Redirection.html#a0d56c189dc559dc0687f7c32fad22530aa5674bd07fc56d10fc5edf2d37ee66e4">Steinicke2008Translational</a>
 <br />
@@ -318,7 +321,8 @@ Functions</h2></td></tr>
 
 <p>Available world redirection techniques. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a0d56c189dc559dc0687f7c32fad22530a526d688f37a86d3c3f27d0c5016eb71d"></a>Reset&#160;</td><td class="fielddoc"></td></tr>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a0d56c189dc559dc0687f7c32fad22530a6adf97f83acf6453d4a6a4b1070f3754"></a>None&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a0d56c189dc559dc0687f7c32fad22530a526d688f37a86d3c3f27d0c5016eb71d"></a>Reset&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a0d56c189dc559dc0687f7c32fad22530abd3aa6ba908318dcdf4e435d88559158"></a>Razzaque2001OverTimeRotation&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a0d56c189dc559dc0687f7c32fad22530a61c82f83d5602cb821cd0b9a0e211848"></a>Razzaque2001Rotational&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a0d56c189dc559dc0687f7c32fad22530a1456a5c6df7e2e9e905a81bf8b3c568a"></a>Razzaque2001Curvature&#160;</td><td class="fielddoc"></td></tr>
