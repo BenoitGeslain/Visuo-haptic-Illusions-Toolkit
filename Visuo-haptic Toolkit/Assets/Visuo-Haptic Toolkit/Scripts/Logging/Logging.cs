@@ -59,6 +59,9 @@ namespace VHToolkit.Logging {
 		}
 	}
 
+	/// <summary>
+	/// This class handles the logging behavior at execution time.
+	/// </summary>
 	public class Logging : MonoBehaviour {
 
 		public string pathToFile = "LoggedData\\";
