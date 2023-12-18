@@ -3,7 +3,7 @@ using UnityEngine;
 namespace VHToolkit.Redirection {
 	/// <summary>
 	/// This class allows users to select which body redirection technique to use as well as the relevant parameters.
-	/// The enumeration BRTechnique allows for dynamic selection of the technique.
+	/// The enumeration BRtechnique allows for dynamic selection of the technique.
 	/// The class reference BodyRedirectionTechnique contains the redirect function that is used to apply redirection with the Redirect() function.
 	/// The scene parameter contains all the information necessary for the redirection such as the GameObjects representing the hand (physical and virtual) or the targets.
 	///
@@ -15,20 +15,20 @@ namespace VHToolkit.Redirection {
         /// <summary>
         /// Currently selected technique, if any. When set, updateTechnique() gets called on the next Update().
         /// </summary>
-        public BRTechnique Technique { set; get; }
+        [SerializeField] private BRTechnique technique;
 
         /// <summary>
         /// Previously selected technique, if any.
         /// </summary>
-        private BRTechnique previousTechnique;
+        private BRTechnique previoustechnique;
 
 		[SerializeField] private BodyRedirectionTechnique techniqueInstance;
 
 		/// <summary>
 		/// Updates the techniqueInstance according to the enumeration technique chosen.
 		/// </summary>
-        private void updateTechnique() {
-			techniqueInstance = Technique switch {
+        private void updatetechnique() {
+			techniqueInstance = technique switch {
 				BRTechnique.Reset => new ResetBodyRedirection(),
 				BRTechnique.Azmandian2016Body => new Azmandian2016Body(),
 				BRTechnique.Azmandian2016Hybrid => new Azmandian2016Hybrid(),
@@ -47,12 +47,12 @@ namespace VHToolkit.Redirection {
 		}
 
 		/// <summary>
-		/// Start function called once when the game is starting. This fucntion calls updateTechnique() to instantiate the technique class and
+		/// Start function called once when the game is starting. This fucntion calls updatetechnique() to instantiate the technique class and
 		/// initializes the previous head positions.
 		/// </summary>
 		private void OnEnable() {
-			updateTechnique();
-			previousTechnique = Technique;
+			updatetechnique();
+			previoustechnique = technique;
 			// Store thhe previous hand and head position and rotation to compute instant linear or angular velocity
 			scene.previousHandPosition = scene.physicalHand.position;
 			scene.previousHandRotation = scene.physicalHand.rotation;
@@ -62,15 +62,15 @@ namespace VHToolkit.Redirection {
 
 		/// <summary>
 		/// Update function called once per frame. This function
-		/// calls updateTechnique() to instantiate the technique class,
+		/// calls updatetechnique() to instantiate the technique class,
 		/// calls Redirect(...) from the BodyRedirection class to apply the redirection,
 		/// applies rotations to the physical hand and
 		/// initializes the previous head positions.
 		/// </summary>
         private void Update() {
-			if (previousTechnique != Technique) {
-				updateTechnique();
-				previousTechnique = Technique;
+			if (previoustechnique != technique) {
+				updatetechnique();
+				previoustechnique = technique;
 			}
 
 			techniqueInstance?.Redirect(scene);	// Computes and applies the redirection according to the selected redirection technique
@@ -88,7 +88,11 @@ namespace VHToolkit.Redirection {
 		/// <summary>
 		/// A wrapper around SetTechnique(BRTechnique t) to use the ResetRedirection technique.
 		/// </summary>
-        public void ResetRedirection() => Technique = BRTechnique.Reset;
+        public void ResetRedirection() => technique = BRTechnique.Reset;
+
+        public BRTechnique GetTechnique() => technique;
+
+        public void SetTechnique(BRTechnique t) => technique = t;
 
 		/// <summary>
 		/// Returns whether a redirection is applied to the user's virtual and physical hand

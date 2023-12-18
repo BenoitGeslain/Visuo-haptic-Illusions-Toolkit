@@ -139,7 +139,7 @@ namespace VHToolkit.Redirection {
         /// Applies unaltered physical head translations to the virtual head GameObject
         /// </summary>
         public void CopyHeadTranslations() {
-            virtualHead.Translate(GetHeadToHeadRotation() * (physicalHead.position - previousHeadPosition));
+            virtualHead.Translate(GetHeadToHeadRotation() * GetHeadInstantTranslation(), relativeTo: Space.World);
 		}
 
 		/// <summary>

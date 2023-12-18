@@ -16,7 +16,7 @@ namespace VHToolkit.Logging {
         public DateTime timeStamp = DateTime.Now;
         public string Technique => script switch {
             WorldRedirection => (script as WorldRedirection).technique.ToString(),
-            BodyRedirection => (script as BodyRedirection).technique.ToString(),
+            BodyRedirection => (script as BodyRedirection).GetTechnique().ToString(),
             _ => ""
         };
 
@@ -59,6 +59,9 @@ namespace VHToolkit.Logging {
 		}
 	}
 
+	/// <summary>
+	/// This class handles the logging behavior at execution time.
+	/// </summary>
 	public class Logging : MonoBehaviour {
 
 		public string pathToFile = "LoggedData\\";
