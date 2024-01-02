@@ -87,4 +87,10 @@ UnityCompileInBackground.meta
 __pycache__
 
 XR/
+StreamingAssets/
+StreamingAssets.meta
+SteamVR/
+SteamVR.meta
+SteamVR_Resources/
+SteamVR_Resources.meta
 LoggedData/
