@@ -87,6 +87,7 @@ UnityCompileInBackground.meta
 __pycache__
 
 XR/
+XR.meta
 StreamingAssets/
 StreamingAssets.meta
 SteamVR/
@@ -94,3 +95,6 @@ SteamVR.meta
 SteamVR_Resources/
 SteamVR_Resources.meta
 LoggedData/
+LoggedData.meta
+TextMesh Pro/
+TextMesh Pro.meta
