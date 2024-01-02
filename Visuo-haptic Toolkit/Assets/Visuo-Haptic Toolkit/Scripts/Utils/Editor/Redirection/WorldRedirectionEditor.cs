@@ -61,8 +61,9 @@ namespace VHToolkit.Redirection {
 			EditorGUILayout.PropertyField(virtualTarget, new GUIContent("Virtual Target"));
 			EditorGUILayout.PropertyField(origin, new GUIContent("Origin"));
 
-			// Hides redirectionLateness and controlpoint fields if the technique is not Geslain2022Polynom
-			if (technique.enumNames[technique.enumValueIndex] == "Razzaque2001Hybrid" && strategy.enumNames[strategy.enumValueIndex] != "NoSteering") {
+			// Hides targets, dampening and smoothing if
+			if (strategyTechniques.Contains(technique.enumNames[technique.enumValueIndex])) {
+				EditorGUILayout.Space(5);
 				if (targetsStrategies.Contains(strategy.enumNames[strategy.enumValueIndex])) {
 					EditorGUILayout.PropertyField(targetsScene, new GUIContent ("Targets"));
 				} else if (strategy.enumNames[strategy.enumValueIndex] == "SteerToOrbit") {
