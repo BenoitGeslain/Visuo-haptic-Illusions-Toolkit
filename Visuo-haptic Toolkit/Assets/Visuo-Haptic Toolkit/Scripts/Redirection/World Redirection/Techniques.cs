@@ -18,8 +18,8 @@ namespace VHToolkit.Redirection {
 	/// </summary>
 	public class Razzaque2001OverTimeRotation: WorldRedirectionTechnique {
 		public override void Redirect(Scene scene) {
-			scene.CopyHeadRotations();
-			scene.CopyHeadTranslations();
+			// scene.CopyHeadRotations();
+			// scene.CopyHeadTranslations();
 			scene.virtualHead.Rotate(0f, GetRedirection(scene), 0f, Space.World);
 		}
 
@@ -85,7 +85,6 @@ namespace VHToolkit.Redirection {
 	/// </summary>
 	public class Razzaque2001Curvature: WorldRedirectionTechnique {
 		public override void Redirect(Scene scene) {
-			scene.physicalHead.position += Vector3.forward/1000f;
 			scene.CopyHeadRotations();
 			scene.RotateVirtualHeadY(GetRedirection(scene));
 			scene.CopyHeadTranslations();
@@ -235,15 +234,15 @@ namespace VHToolkit.Redirection {
 			// 	scene.RotateVirtualHeadY(angles[0]);
 			// }
 
-			scene.CopyHeadRotations();
-			scene.CopyHeadTranslations();
+			// scene.CopyHeadRotations();
+			// scene.CopyHeadTranslations();
 		}
 	}
 
 	public class NoWorldRedirection: WorldRedirectionTechnique {
 		public override void Redirect(Scene scene) {
-			scene.CopyHeadRotations();
-			scene.CopyHeadTranslations();
+			// scene.CopyHeadRotations();
+			// scene.CopyHeadTranslations();
 		}
 	}
 }

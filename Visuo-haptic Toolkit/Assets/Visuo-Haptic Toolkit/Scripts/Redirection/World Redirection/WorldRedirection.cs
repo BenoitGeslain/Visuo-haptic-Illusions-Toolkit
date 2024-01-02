@@ -88,6 +88,12 @@ namespace VHToolkit.Redirection {
 			scene.previousHeadRotation = scene.physicalHead.rotation;
 		}
 
+		/// <summary>
+		/// Getter for the enumeration technique.
+		/// </summary>
+		/// <returns>Returns the enumeration technique</returns>
+		public WRTechnique GetTechnique() => technique;
+
         /// <summary>
         /// Setter for the enumeration BRTechnique. updateTechnique() gets called on the next Update().
         /// </summary>
@@ -98,12 +104,6 @@ namespace VHToolkit.Redirection {
         /// A wrapper around SetTechnique(BRTechnique t) to use the ResetRedirection technique.
         /// </summary>
         public void ResetRedirection() => SetTechnique(WRTechnique.Reset);
-
-		/// <summary>
-		/// Getter for the enumeration technique.
-		/// </summary>
-		/// <returns>Returns the enumeration technique</returns>
-		public WRTechnique GetTechnique() => technique;
 
 		/// <summary>
 		/// Determine whether a redirection is applied to the user's virtual and physical head
