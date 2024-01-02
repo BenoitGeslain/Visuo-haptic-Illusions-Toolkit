@@ -4,7 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Visuo-Haptic Toolkit/Scenes/SteamVR/Body Redirection/Demo Scene
+      Split Cameras.unity
+    guid: c28b84d687e4dfc47b3507934fe6bc7c
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 7871a6cd7edfb6e4e90388d9be0cd361, type: 2}
     Unity.XR.OpenVR.Settings: {fileID: 11400000, guid: b6bf661543b159f4f93e0c7221185c37, type: 2}

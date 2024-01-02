@@ -27,10 +27,7 @@ namespace VHToolkit.Redirection {
 
         public static Vector3 GetRedirection(Scene scene) {
 			var d = scene.physicalTarget.position - scene.origin.position;
-			var warpingRatio = Mathf.Clamp(
-				Vector3.Dot(d, scene.physicalHand.position - scene.origin.position) / d.sqrMagnitude,
-				0f,
-				1f);
+			var warpingRatio = Mathf.Clamp01(Vector3.Dot(d, scene.physicalHand.position - scene.origin.position) / d.sqrMagnitude);
 			return warpingRatio * (scene.virtualTarget.position - scene.physicalTarget.position);
 		}
 	}

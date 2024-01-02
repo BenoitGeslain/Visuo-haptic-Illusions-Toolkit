@@ -56,8 +56,11 @@ namespace VHToolkit.Redirection {
 			// Store thhe previous hand and head position and rotation to compute instant linear or angular velocity
 			scene.previousHandPosition = scene.physicalHand.position;
 			scene.previousHandRotation = scene.physicalHand.rotation;
-			scene.previousHeadPosition = scene.physicalHead.position;
-			scene.previousHeadRotation = scene.physicalHead.rotation;
+			if (scene.physicalHead) {
+				scene.previousHeadPosition = scene.physicalHead.position;
+				scene.previousHeadRotation = scene.physicalHead.rotation;
+			}
+
 		}
 
 		/// <summary>
@@ -81,8 +84,10 @@ namespace VHToolkit.Redirection {
 			// the previous position and rotation are stored to compute instant linear or angular velocity
 			scene.previousHandPosition = scene.physicalHand.position;
 			scene.previousHandRotation = scene.physicalHand.rotation;
-			scene.previousHeadPosition = scene.physicalHead.position;
-			scene.previousHeadRotation = scene.physicalHead.rotation;
+			if (scene.physicalHead) {
+				scene.previousHeadPosition = scene.physicalHead.position;
+				scene.previousHeadRotation = scene.physicalHead.rotation;
+			}
 		}
 
 		/// <summary>
