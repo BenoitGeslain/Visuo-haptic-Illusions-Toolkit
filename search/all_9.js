@@ -1,10 +1,9 @@
 var searchData=
 [
-  ['lecuyer2000swamp_67',['Lecuyer2000Swamp',['../namespaceVHToolkit_1_1Redirection.html#af8073b3c987118e1413b41c5be00892ba6e2670a2251c1e1e3dd5a77bfff178d4',1,'VHToolkit.Redirection.Lecuyer2000Swamp()'],['../classVHToolkit_1_1Redirection_1_1Lecuyer2000Swamp.html',1,'VHToolkit.Redirection.Lecuyer2000Swamp']]],
-  ['left_68',['left',['../classVHToolkit_1_1Redirection_1_1Vector2Horizontal.html#ad4340c9357bb1c63e704a7962d5a51e3',1,'VHToolkit::Redirection::Vector2Horizontal']]],
-  ['loadcalibration_69',['LoadCalibration',['../classSceneCalibration.html#a7e16eb4070d85969d35af622907958c2',1,'SceneCalibration']]],
-  ['logging_70',['Logging',['../classVHToolkit_1_1Logging_1_1Logging.html',1,'VHToolkit::Logging']]],
-  ['logging_2ecs_71',['Logging.cs',['../Logging_8cs.html',1,'']]],
-  ['loggingeditor_72',['LoggingEditor',['../classVHToolkit_1_1Logging_1_1LoggingEditor.html',1,'VHToolkit::Logging']]],
-  ['loggingeditor_2ecs_73',['LoggingEditor.cs',['../LoggingEditor_8cs.html',1,'']]]
+  ['instance_83',['Instance',['../classVHToolkit_1_1Redirection_1_1Toolkit.html#aec90ce25eb00a4758cb76e0bae952f39',1,'VHToolkit::Redirection::Toolkit']]],
+  ['interaction_84',['Interaction',['../classVHToolkit_1_1Redirection_1_1Interaction.html',1,'VHToolkit::Redirection']]],
+  ['interaction_2ecs_85',['Interaction.cs',['../Interaction_8cs.html',1,'']]],
+  ['interactionclassmap_86',['InteractionClassMap',['../classVHToolkit_1_1Logging_1_1RedirectionDataMap_1_1InteractionClassMap.html#a7d8b6c0ce46c2b9ae8847f210e9cc247',1,'VHToolkit.Logging.RedirectionDataMap.InteractionClassMap.InteractionClassMap()'],['../classVHToolkit_1_1Logging_1_1RedirectionDataMap_1_1InteractionClassMap.html',1,'VHToolkit.Logging.RedirectionDataMap.InteractionClassMap']]],
+  ['interactui_87',['InteractUI',['../classValve_1_1VR_1_1SteamVR__Input__ActionSet__default.html#a396cdd1ed0dae0a3cd65f820a343432d',1,'Valve::VR::SteamVR_Input_ActionSet_default']]],
+  ['isredirecting_88',['IsRedirecting',['../classVHToolkit_1_1Redirection_1_1BodyRedirection.html#a5b604f6c948e5b9ed902163d54497ee3',1,'VHToolkit.Redirection.BodyRedirection.IsRedirecting()'],['../classVHToolkit_1_1Redirection_1_1WorldRedirection.html#a8a62c729c569fc2eb6540e4a9735114a',1,'VHToolkit.Redirection.WorldRedirection.IsRedirecting()']]]
 ];
