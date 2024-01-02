@@ -1,5 +1,5 @@
-[![GitHub Pages Deploy Action](https://github.com/bjrtx/Visuo-haptic-Illusions-Toolkit/actions/workflows/doxygen-gh-pages.yml/badge.svg)](https://github.com/bjrtx/Visuo-haptic-Illusions-Toolkit/actions/workflows/doxygen-gh-pages.yml)
-[![pages-build-deployment](https://github.com/bjrtx/Visuo-haptic-Illusions-Toolkit/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/bjrtx/Visuo-haptic-Illusions-Toolkit/actions/workflows/pages/pages-build-deployment)
+[![GitHub Pages Deploy Action](https://github.com/benoitgeslain/Visuo-haptic-Illusions-Toolkit/actions/workflows/doxygen-gh-pages.yml/badge.svg)](https://github.com/benoitgeslain/Visuo-haptic-Illusions-Toolkit/actions/workflows/doxygen-gh-pages.yml)
+[![pages-build-deployment](https://github.com/benoitgeslain/Visuo-haptic-Illusions-Toolkit/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/benoitgeslain/Visuo-haptic-Illusions-Toolkit/actions/workflows/pages/pages-build-deployment)
 
 # The Visuo-haptic Illusions Toolkit
 
