@@ -1,8 +1,8 @@
 using System;
-
 using CsvHelper.Configuration.Attributes;
 
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace VHToolkit.Redirection {
 	/// <summary>
@@ -80,17 +80,17 @@ namespace VHToolkit.Redirection {
 		/// <returns>The distance between the user's physical and virtual head.</returns>
 		public float GetHeadToHeadDistance() => Vector3.Distance(physicalHead.position, virtualHead.position);
 
-		/// <summary>
-		///
-		/// </summary>
-		/// <returns>The quaternion rotation between the user's physical and virtual head.</returns>
-		public Quaternion GetHeadToHeadRotation() => Quaternion.FromToRotation(physicalHead.forward, virtualHead.forward);
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns>The quaternion rotation between the user's physical and virtual head.</returns>
+        public Quaternion GetHeadToHeadRotation() => virtualHead.rotation * Quaternion.Inverse(physicalHead.rotation);
 
-		/// <summary>
-		///
-		/// </summary>
-		/// <returns>The distance between the user's physical head and the target.</returns>
-		public float GetHeadToTargetDistance() => Vector3.Distance(physicalHead.position, selectedTarget.position);
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns>The distance between the user's physical head and the target.</returns>
+        public float GetHeadToTargetDistance() => Vector3.Distance(physicalHead.position, selectedTarget.position);
 
 		/// <summary>
 		///
@@ -109,7 +109,8 @@ namespace VHToolkit.Redirection {
         /// </summary>
         /// <returns>The instant angular velocity around the up axis (Y) of the physical head using the last frame's position.</returns>
         public float GetHeadInstantRotationY() {
-			float instantRotation = GetHeadInstantRotation().eulerAngles.y;
+			var Q = GetHeadToHeadRotation();
+			float instantRotation = (Quaternion.Inverse(physicalHead.rotation)* GetHeadInstantRotation() *  physicalHead.rotation ).eulerAngles.y;
 			return (instantRotation > 180f)? 360 - instantRotation : instantRotation;
 		}
 
@@ -128,18 +129,21 @@ namespace VHToolkit.Redirection {
 		/// <returns>The instant linear velocity of the physical hand using the last frame's position</returns>
 		public Vector3 GetHandInstantTranslation() => physicalHand.position - previousHandPosition;
 
+
         /// <summary>
         /// Applies unaltered physical head rotations to the virtual head GameObject
         /// </summary>
         public void CopyHeadRotations() {
-            virtualHead.rotation = (physicalHead.rotation * Quaternion.Inverse(previousHeadRotation)) * virtualHead.rotation;
+			var Q = GetHeadToHeadRotation();
+            virtualHead.rotation = Q  * physicalHead.rotation * Quaternion.Inverse(previousHeadRotation) * Quaternion.Inverse(Q) * virtualHead.rotation;
 		}
 
         /// <summary>
         /// Applies unaltered physical head translations to the virtual head GameObject
         /// </summary>
         public void CopyHeadTranslations() {
-            virtualHead.Translate(GetHeadToHeadRotation() * GetHeadInstantTranslation(), relativeTo: Space.World);
+            virtualHead.position += GetHeadToHeadRotation() * GetHeadInstantTranslation();
+            // virtualHead.Translate(GetHeadToHeadRotation() * GetHeadInstantTranslation(), relativeTo: Space.World);
 		}
 
 		/// <summary>

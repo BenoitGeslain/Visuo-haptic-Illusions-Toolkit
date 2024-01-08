@@ -59,4 +59,15 @@ namespace VHToolkit.Redirection {
 			return target.position - scene.physicalHead.position;
 		}
 	}
+
+	class SteerInDirection: WorldRedirectionStrategy {
+		/// <summary>
+		///
+		/// </summary>
+		/// <param name="scene"></param>
+		/// <returns></returns>
+		public override Vector3 SteerTo(Scene scene) {
+			return Vector3.Reflect(scene.physicalTarget.position, scene.physicalHead.right);
+		}
+	}
 }

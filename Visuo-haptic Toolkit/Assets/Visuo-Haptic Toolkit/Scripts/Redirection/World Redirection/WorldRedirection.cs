@@ -1,3 +1,5 @@
+using System.Collections.ObjectModel;
+using System.Linq;
 using UnityEngine;
 
 namespace VHToolkit.Redirection {
@@ -42,6 +44,7 @@ namespace VHToolkit.Redirection {
 				WRStrategy.SteerToCenter => new SteerToCenter(),
 				WRStrategy.SteerToOrbit => new SteerToOrbit(),
 				WRStrategy.SteerToMultipleTargets => new SteerToMultipleTargets(),
+				WRStrategy.SteerInDirection => new SteerInDirection(),
 				_ => null
 			};
 
@@ -57,9 +60,9 @@ namespace VHToolkit.Redirection {
 			updateTechnique();
 			previousTechnique = technique;
 
-			scene.selectedTarget = scene.targets[0];
-			scene.previousHandPosition = scene.physicalHand.position;
-			scene.previousHandRotation = scene.physicalHand.rotation;
+			if (scene.targets != null) {
+				scene.selectedTarget = scene.targets.FirstOrDefault();
+			}
 			scene.previousHeadPosition = scene.physicalHead.position;
 			scene.previousHeadRotation = scene.physicalHead.rotation;
 		}
@@ -81,9 +84,6 @@ namespace VHToolkit.Redirection {
 				scene.forwardTarget = strategyInstance.SteerTo(scene);
 
 			techniqueInstance?.Redirect(scene);
-
-			scene.previousHandPosition = scene.physicalHand.position;
-			scene.previousHandRotation = scene.physicalHand.rotation;
 			scene.previousHeadPosition = scene.physicalHead.position;
 			scene.previousHeadRotation = scene.physicalHead.rotation;
 		}

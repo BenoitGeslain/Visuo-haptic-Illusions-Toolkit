@@ -49,21 +49,21 @@ public class SceneCalibration : MonoBehaviour {
 				case CalibrationState.FirstPoint:
 					if (hand.TryGetFeatureValue(UnityEngine.XR.CommonUsages.triggerButton, out buttonPress) && !buttonPress && buttonWasPressed) {
 						points[0] = physicalTracker.position + forwardOffset.z * physicalTracker.forward;
-						Debug.Log("First clibration point saved. Ready for the second point");
+						Debug.Log("First calibration point saved. Ready for the second point");
 						state++;
 					}
 					break;
 				case CalibrationState.SecondPoint:
 					if (hand.TryGetFeatureValue(UnityEngine.XR.CommonUsages.triggerButton, out buttonPress) && !buttonPress && buttonWasPressed) {
 						points[1] = physicalTracker.position + forwardOffset.z * physicalTracker.forward;
-						Debug.Log("Second clibration point saved. Ready for the third point");
+						Debug.Log("Second calibration point saved. Ready for the third point");
 						state++;
 					}
 					break;
 				case CalibrationState.ThirdPoint:
 					if (hand.TryGetFeatureValue(UnityEngine.XR.CommonUsages.triggerButton, out buttonPress) && !buttonPress && buttonWasPressed) {
 						points[2] = physicalTracker.position + forwardOffset.z * physicalTracker.forward;
-						Debug.Log("Third clibration point saved.");
+						Debug.Log("Third calibration point saved.");
 						state++;
 					}
 					break;
@@ -87,9 +87,8 @@ public class SceneCalibration : MonoBehaviour {
 			}
 		} else if (virtualTrackers.Length == 1) {
 			if ((hand.TryGetFeatureValue(UnityEngine.XR.CommonUsages.triggerButton, out buttonPress) && buttonPress) || Input.GetKeyUp(KeyCode.Space)) {
-				virtualTrackers[0].position = physicalTracker.position;
-				virtualTrackers[0].rotation = physicalTracker.rotation;
-			}
+				virtualTrackers[0].SetPositionAndRotation(physicalTracker.position, physicalTracker.rotation);
+            }
 		} else {
 			Debug.LogWarning($"Incorrect number of virtualTrackers. There should be 1 or 3, there are {virtualTrackers.Length}.");
 		}
@@ -97,17 +96,15 @@ public class SceneCalibration : MonoBehaviour {
 		buttonWasPressed = hand.TryGetFeatureValue(UnityEngine.XR.CommonUsages.triggerButton, out buttonPress) && buttonPress;
 	}
 
-	/// <summary>
-	/// This function sets the state of the cvalibration so that the user can start calibration on the next frame
-	/// </summary>
-	public void Calibrate() {
-		state = CalibrationState.FirstPoint;
-	}
+    /// <summary>
+    /// This function sets the state of the cvalibration so that the user can start calibration on the next frame
+    /// </summary>
+    public void Calibrate() => state = CalibrationState.FirstPoint;
 
-	/// <summary>
-	/// Logs the transform of the root world to save calibration. The previous calibration can fail if the headset is self tracking and went in sleep mode as this usually resets the tracking origin.
-	/// </summary>
-	public void SaveCalibration() {
+    /// <summary>
+    /// Logs the transform of the root world to save calibration. The previous calibration can fail if the headset is self tracking and went in sleep mode as this usually resets the tracking origin.
+    /// </summary>
+    public void SaveCalibration() {
 		using (var writer = new StreamWriter($"{path}LastCalibration.txt")) {
 			writer.WriteLine(virtualTrackers[0].position);
 			writer.WriteLine(virtualTrackers[0].rotation);
@@ -126,9 +123,7 @@ public class SceneCalibration : MonoBehaviour {
 		string[] lines = File.ReadAllLines($"{path}LastCalibration.txt");
 
 		float[] tmpPosition = lines[0][1..^1].Split(", ", 3).Select(x => float.Parse(x)).ToArray();
-		virtualTrackers[0].position = new(tmpPosition[0], tmpPosition[1], tmpPosition[2]);
-
 		float[] tmpRotation = lines[1][1..^1].Split(", ", 4).Select(x => float.Parse(x)).ToArray();
-		virtualTrackers[0].rotation = new(tmpRotation[0], tmpRotation[1], tmpRotation[2], tmpRotation[3]);
-	}
+		virtualTrackers[0].SetPositionAndRotation(position: new(tmpPosition[0], tmpPosition[1], tmpPosition[2]), rotation: new(tmpRotation[0], tmpRotation[1], tmpRotation[2], tmpRotation[3]));
+    }
 }

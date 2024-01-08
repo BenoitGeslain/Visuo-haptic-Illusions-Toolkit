@@ -36,7 +36,8 @@ namespace VHToolkit.Redirection {
 		NoSteering,
 		SteerToCenter,
 		SteerToOrbit,
-		SteerToMultipleTargets
+		SteerToMultipleTargets,
+		SteerInDirection
 	}
 
 	public class Toolkit : MonoBehaviour {

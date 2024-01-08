@@ -18,9 +18,9 @@ namespace VHToolkit.Redirection {
 	/// </summary>
 	public class Razzaque2001OverTimeRotation: WorldRedirectionTechnique {
 		public override void Redirect(Scene scene) {
-			// scene.CopyHeadRotations();
-			// scene.CopyHeadTranslations();
-			scene.virtualHead.Rotate(0f, GetRedirection(scene), 0f, Space.World);
+			scene.CopyHeadRotations();
+			scene.CopyHeadTranslations();
+			scene.RotateVirtualHeadY(GetRedirection(scene));
 		}
 
 		public static float GetRedirection(Scene scene) {
@@ -50,8 +50,8 @@ namespace VHToolkit.Redirection {
 	public class Razzaque2001Rotational: WorldRedirectionTechnique {
 		public override void Redirect(Scene scene) {
 			scene.CopyHeadRotations();
-			scene.RotateVirtualHeadY(GetRedirection(scene));
 			scene.CopyHeadTranslations();
+			scene.RotateVirtualHeadY(GetRedirection(scene));
 		}
 
 		public static float GetRedirection(Scene scene) {
@@ -86,8 +86,8 @@ namespace VHToolkit.Redirection {
 	public class Razzaque2001Curvature: WorldRedirectionTechnique {
 		public override void Redirect(Scene scene) {
 			scene.CopyHeadRotations();
-			scene.RotateVirtualHeadY(GetRedirection(scene));
 			scene.CopyHeadTranslations();
+			scene.RotateVirtualHeadY(GetRedirection(scene));
 		}
 
 		public static float GetRedirection(Scene scene) {
@@ -152,8 +152,8 @@ namespace VHToolkit.Redirection {
 			scene.previousRedirection = angle;
 
 			scene.CopyHeadRotations();
-			scene.RotateVirtualHeadY(angle);
 			scene.CopyHeadTranslations();
+			scene.RotateVirtualHeadY(angle);
 		}
 
 		private float ApplyDampening(Scene scene, float angle) {
@@ -241,8 +241,8 @@ namespace VHToolkit.Redirection {
 
 	public class NoWorldRedirection: WorldRedirectionTechnique {
 		public override void Redirect(Scene scene) {
-			// scene.CopyHeadRotations();
-			// scene.CopyHeadTranslations();
+			scene.CopyHeadRotations();
+			scene.CopyHeadTranslations();
 		}
 	}
 }
