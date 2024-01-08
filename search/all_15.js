@@ -1,14 +1,15 @@
 var searchData=
 [
-  ['walkingthreshold_212',['WalkingThreshold',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#ae608015c6a072356b7f7f758f1cc2a8e',1,'VHToolkit::Redirection::ParametersToolkit']]],
-  ['worldredirection_213',['WorldRedirection',['../classVHToolkit_1_1Redirection_1_1WorldRedirection.html',1,'VHToolkit::Redirection']]],
-  ['worldredirection_2ecs_214',['WorldRedirection.cs',['../WorldRedirection_8cs.html',1,'']]],
-  ['worldredirectioneditor_215',['WorldRedirectionEditor',['../classVHToolkit_1_1Redirection_1_1WorldRedirectionEditor.html',1,'VHToolkit::Redirection']]],
-  ['worldredirectioneditor_2ecs_216',['WorldRedirectionEditor.cs',['../WorldRedirectionEditor_8cs.html',1,'']]],
-  ['worldredirectionstrategy_217',['WorldRedirectionStrategy',['../classVHToolkit_1_1Redirection_1_1WorldRedirectionStrategy.html',1,'VHToolkit::Redirection']]],
-  ['worldredirectiontechnique_218',['WorldRedirectionTechnique',['../classVHToolkit_1_1Redirection_1_1WorldRedirectionTechnique.html',1,'VHToolkit::Redirection']]],
-  ['wrstrategy_219',['WRStrategy',['../namespaceVHToolkit_1_1Redirection.html#aeebb6431e6f113539dc912ca85e23402',1,'VHToolkit::Redirection']]],
-  ['wrtechnique_220',['WRTechnique',['../namespaceVHToolkit_1_1Redirection.html#a0d56c189dc559dc0687f7c32fad22530',1,'VHToolkit::Redirection']]],
-  ['wrvisuals_221',['WRVisuals',['../classVHToolkit_1_1Visualisation_1_1WRVisuals.html',1,'VHToolkit::Visualisation']]],
-  ['wrvisuals_2ecs_222',['WRVisuals.cs',['../WRVisuals_8cs.html',1,'']]]
+  ['logging_203',['Logging',['../namespaceVHToolkit_1_1Logging.html',1,'VHToolkit']]],
+  ['redirection_204',['Redirection',['../namespaceVHToolkit_1_1Redirection.html',1,'VHToolkit']]],
+  ['trajectory_205',['Trajectory',['../namespaceVHToolkit_1_1Trajectory.html',1,'VHToolkit']]],
+  ['valve_206',['Valve',['../namespaceValve.html',1,'']]],
+  ['vector2gain_207',['Vector2Gain',['../classVHToolkit_1_1Redirection_1_1Vector2Gain.html',1,'VHToolkit::Redirection']]],
+  ['vector2horizontal_208',['Vector2Horizontal',['../classVHToolkit_1_1Redirection_1_1Vector2Horizontal.html',1,'VHToolkit::Redirection']]],
+  ['vector2rotation_209',['Vector2Rotation',['../classVHToolkit_1_1Redirection_1_1Vector2Rotation.html',1,'VHToolkit::Redirection']]],
+  ['vector2vertical_210',['Vector2Vertical',['../classVHToolkit_1_1Redirection_1_1Vector2Vertical.html',1,'VHToolkit::Redirection']]],
+  ['verticalangles_211',['VerticalAngles',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a4d05324688c4c5065efd325f5d54e955',1,'VHToolkit::Redirection::ParametersToolkit']]],
+  ['vhtoolkit_212',['VHToolkit',['../namespaceVHToolkit.html',1,'']]],
+  ['visualisation_213',['Visualisation',['../namespaceVHToolkit_1_1Visualisation.html',1,'VHToolkit']]],
+  ['vr_214',['VR',['../namespaceValve_1_1VR.html',1,'Valve']]]
 ];

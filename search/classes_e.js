@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['vector2gain_273',['Vector2Gain',['../classVHToolkit_1_1Redirection_1_1Vector2Gain.html',1,'VHToolkit::Redirection']]],
-  ['vector2horizontal_274',['Vector2Horizontal',['../classVHToolkit_1_1Redirection_1_1Vector2Horizontal.html',1,'VHToolkit::Redirection']]],
-  ['vector2rotation_275',['Vector2Rotation',['../classVHToolkit_1_1Redirection_1_1Vector2Rotation.html',1,'VHToolkit::Redirection']]],
-  ['vector2vertical_276',['Vector2Vertical',['../classVHToolkit_1_1Redirection_1_1Vector2Vertical.html',1,'VHToolkit::Redirection']]]
+  ['techniques_276',['Techniques',['../classTechniques.html',1,'']]],
+  ['toolkit_277',['Toolkit',['../classVHToolkit_1_1Redirection_1_1Toolkit.html',1,'VHToolkit::Redirection']]]
 ];
