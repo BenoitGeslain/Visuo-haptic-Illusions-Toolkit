@@ -20,8 +20,6 @@ namespace VHToolkit.Redirection {
 		public WRStrategy strategy;
 		public WorldRedirectionStrategy strategyInstance;
 
-		[SerializeField] private bool redirect = false;
-
 		/// <summary>
 		/// Updates the techniqueInstance according to the enumeration technique chosen.
 		/// </summary>
@@ -91,10 +89,6 @@ namespace VHToolkit.Redirection {
 				techniqueInstance.Redirect(scene);
 			scene.previousHeadPosition = scene.physicalHead.position;
 			scene.previousHeadRotation = scene.physicalHead.rotation;
-		}
-
-		public void StartRedirection() {
-			redirect = true;
 		}
 
 		/// <summary>

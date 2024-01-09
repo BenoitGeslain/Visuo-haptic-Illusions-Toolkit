@@ -11,10 +11,10 @@ public class QuickCalibration : MonoBehaviour {
 
 	private bool wasPressingButton = false;
 	private List<InputDevice> inputDevices;
-	private WorldRedirection script;
+	private Interaction script;
 
 	private void Start() {
-		script = Toolkit.Instance.transform.GetComponent<WorldRedirection>();
+		script = Toolkit.Instance.transform.GetComponent<Interaction>();
 	}
 
 	private void Update() {
@@ -33,6 +33,7 @@ public class QuickCalibration : MonoBehaviour {
 
             device.TryGetFeatureValue(CommonUsages.primaryButton, out bool buttonStatus);
             if (buttonStatus && !wasPressingButton) {
+				Debug.LogError(script);
 				script.StartRedirection();
 				world.SetPositionAndRotation(new(physicalHead.position.x, world.position.y, physicalHead.position.z) , Quaternion.Euler(0f, physicalHead.rotation.eulerAngles.y, 0f));
 			}
