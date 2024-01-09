@@ -1,10 +1,20 @@
 using System;
+using System.Collections.Generic;
+using System.IO.Compression;
+using System.Linq;
+using static System.Linq.Enumerable;
 using CsvHelper.Configuration.Attributes;
 
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace VHToolkit.Redirection {
+
+	public struct Limb {
+        public Transform PhysicalLimb;
+		public List<Transform> VirtualLimb;
+	}
+
 	/// <summary>
 	/// This class records the position of various objects of interest.
 	/// </summary>
@@ -23,8 +33,10 @@ namespace VHToolkit.Redirection {
 	[Serializable]
 	public record Scene() {
         [Header("User Parameters")]
-        [Ignore] public Transform physicalHand;
-        [Ignore] public Transform virtualHand;
+        // [Ignore] public Transform physicalHand;
+        // [Ignore] public Transform virtualHand;
+        [Ignore] public List<Limb> limbs;
+
         [Ignore] public Transform physicalHead;
 		[Ignore] public Transform virtualHead;
 
@@ -39,8 +51,8 @@ namespace VHToolkit.Redirection {
 
 		[Ignore] [HideInInspector] public Transform selectedTarget;
 		[Ignore] [HideInInspector] public Vector3 forwardTarget;
-		[Ignore] [HideInInspector] public Vector3 previousHandPosition;
-		[Ignore] [HideInInspector] public Quaternion previousHandRotation;
+		[Ignore] [HideInInspector] public List<Vector3> previousHandPosition;
+		[Ignore] [HideInInspector] public List<Quaternion> previousHandRotation;
 		[Ignore] [HideInInspector] public Vector3 previousHeadPosition;
 		[Ignore] [HideInInspector] public Quaternion previousHeadRotation;
 		[Ignore] [HideInInspector] public float previousRedirection;
@@ -48,25 +60,25 @@ namespace VHToolkit.Redirection {
         /// <summary>
         /// The position of the virtual hand is given by <c>physicalHand.position + Redirection</c>.
         /// </summary>
-        [Ignore] public Vector3 Redirection {
-			get => virtualHand.position - physicalHand.position;
-			set => virtualHand.position = physicalHand.position + value;
-		}
+        [Ignore] public List<Vector3> Redirection {
+            get => limbs.Select(limb => limb.VirtualLimb[0].position - limb.PhysicalLimb.position).ToList();
+            set => Enumerable.Zip(limbs, value, (limb, v) => limb.VirtualLimb.Select(vLimb => vLimb.position += v).ToList());
+        }
 
         /// <returns>The distance between the user's real and virtual hands.</returns>
-        public float GetHandRedirectionDistance() => Vector3.Distance(physicalHand.position, virtualHand.position);
+        public List<List<float>> GetHandRedirectionDistance() => limbs.Select(limb => limb.VirtualLimb.Select(vlimb => Vector3.Distance(limb.PhysicalLimb.position, vlimb.position)).ToList()).ToList();
 
 		/// <summary>
 		///
 		/// </summary>
 		/// <returns>The distance between the user's real hand and the physical target.</returns>
-		public float GetPhysicalHandTargetDistance() => Vector3.Distance(physicalHand.position, physicalTarget.position);
+		public List<float> GetPhysicalHandTargetDistance() => limbs.Select(limb => Vector3.Distance(limb.PhysicalLimb.position, physicalTarget.position)).ToList();
 
 		/// <summary>
 		///
 		/// </summary>
 		/// <returns>The distance between the user's physical hand and the origin.</returns>
-		public float GetPhysicalHandOriginDistance() => Vector3.Distance(physicalHand.position, origin.position);
+		public List<float> GetPhysicalHandOriginDistance() => limbs.Select(limb => Vector3.Distance(limb.PhysicalLimb.position, origin.position)).ToList();
 
 		/// <summary>
 		///
@@ -126,8 +138,7 @@ namespace VHToolkit.Redirection {
 		///
 		/// </summary>
 		/// <returns>The instant linear velocity of the physical hand using the last frame's position</returns>
-		public Vector3 GetHandInstantTranslation() => physicalHand.position - previousHandPosition;
-
+		public List<Vector3> GetHandInstantTranslation() => Enumerable.Zip(limbs, previousHandPosition, (a, b) => a.PhysicalLimb.position - b).ToList();
 
         /// <summary>
         /// Applies unaltered physical head rotations to the virtual head GameObject

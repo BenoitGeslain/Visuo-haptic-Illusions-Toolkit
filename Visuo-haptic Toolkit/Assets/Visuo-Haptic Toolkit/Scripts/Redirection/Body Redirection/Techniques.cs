@@ -1,7 +1,10 @@
 using System;
+using System.Collections.Generic;
+using System.IO.Compression;
 using System.Linq;
 
 using UnityEngine;
+using Valve.VR.InteractionSystem;
 
 namespace VHToolkit.Redirection {
     /// <summary>
@@ -25,12 +28,14 @@ namespace VHToolkit.Redirection {
 
         public override void Redirect(Scene scene) => scene.Redirection = GetRedirection(scene);
 
-        public static Vector3 GetRedirection(Scene scene) {
-			var d = scene.physicalTarget.position - scene.origin.position;
-			var warpingRatio = Mathf.Clamp01(Vector3.Dot(d, scene.physicalHand.position - scene.origin.position) / d.sqrMagnitude);
-			return warpingRatio * (scene.virtualTarget.position - scene.physicalTarget.position);
-		}
-	}
+        public static List<Vector3> GetRedirection(Scene scene) => scene.limbs.Select(
+			limb => {
+	            var d = scene.physicalTarget.position - scene.origin.position;
+    	        var warpingRatio = Mathf.Clamp01(Vector3.Dot(d, limb.PhysicalLimb.position - scene.origin.position) / d.sqrMagnitude);
+        	    return warpingRatio * (scene.virtualTarget.position - scene.physicalTarget.position);
+        	}
+		).ToList();
+    }
 
     /// <summary>
     /// This class implements the Hybrid Warping technique from Azmandian et al., 2016. This technique combines Body Warping and World Warping from the same author.
@@ -43,11 +48,13 @@ namespace VHToolkit.Redirection {
 			scene.CopyHeadRotations();
 			scene.CopyHeadTranslations();
 
-			float handTargetDistance = Vector3.Dot(scene.origin.position - scene.physicalTarget.position, scene.physicalHand.position - scene.physicalTarget.position);
-			handTargetDistance = Mathf.Clamp(handTargetDistance, 0f, 1f);
+			List<float> handTargetDistance = scene.limbs.Select(limb =>
+				Vector3.Dot(scene.origin.position - scene.physicalTarget.position, limb.PhysicalLimb.position - scene.physicalTarget.position)).Select(
+					x => Mathf.Clamp01(x)
+				).ToList();
 
-			Vector3 BRRedirection = (1 - handTargetDistance) * Azmandian2016Body.GetRedirection(scene);
-			float WRRedirection = handTargetDistance * Azmandian2016World.GetRedirection(scene);
+			List<Vector3> BRRedirection = Enumerable.Zip(handTargetDistance, Azmandian2016Body.GetRedirection(scene), (v, d) => (1 - v) * d).ToList();
+			float WRRedirection = Enumerable.Zip(handTargetDistance, Azmandian2016World.GetRedirection(scene), (a, b) => a * b).ToList();
 
 			scene.Redirection = BRRedirection;
 			scene.virtualHead.RotateAround(scene.origin.position, Vector3.up, WRRedirection);
@@ -166,7 +173,8 @@ namespace VHToolkit.Redirection {
     public class NoBodyRedirection : BodyRedirectionTechnique {
 
         public override void Redirect(Scene scene) {
-            scene.virtualHand.position += scene.GetHandInstantTranslation();
+			Enumerable.Zip(scene.limbs, scene.GetHandInstantTranslation(), (limb, t) => (limb, t))
+				.ForEach(p => p.limb.VirtualLimb.ForEach(vlimb => vlimb.position += p.t));
         }
     }
 }

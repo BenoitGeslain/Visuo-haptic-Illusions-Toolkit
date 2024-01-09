@@ -88,8 +88,9 @@ public class SceneCalibration : MonoBehaviour {
 					break;
 			}
 		} else if (virtualTrackers.Length == 1) {
-			if ((hand.TryGetFeatureValue(UnityEngine.XR.CommonUsages.triggerButton, out buttonPress) && buttonPress) || Input.GetKeyUp(KeyCode.Space)) {
+			if (state == CalibrationState.FirstPoint && ((hand.TryGetFeatureValue(CommonUsages.triggerButton, out buttonPress) && buttonPress) || Input.GetKeyUp(KeyCode.Space))) {
 				virtualTrackers[0].SetPositionAndRotation(physicalTracker.position, physicalTracker.rotation);
+				state++;
             }
 		} else {
 			Debug.LogWarning($"Incorrect number of virtualTrackers. There should be 1 or 3, there are {virtualTrackers.Length}.");

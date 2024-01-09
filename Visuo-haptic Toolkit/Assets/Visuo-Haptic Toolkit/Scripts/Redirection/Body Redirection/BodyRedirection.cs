@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 namespace VHToolkit.Redirection {
@@ -55,8 +56,8 @@ namespace VHToolkit.Redirection {
 			updatetechnique();
 			previoustechnique = technique;
 			// Store thhe previous hand and head position and rotation to compute instant linear or angular velocity
-			scene.previousHandPosition = scene.physicalHand.position;
-			scene.previousHandRotation = scene.physicalHand.rotation;
+			scene.previousHandPosition = scene.limbs.Select(limb => limb.PhysicalLimb.position).ToList();
+			scene.previousHandRotation = scene.limbs.Select(limb => limb.PhysicalLimb.rotation).ToList();
 			if (scene.physicalHead) {
 				scene.previousHeadPosition = scene.physicalHead.position;
 				scene.previousHeadRotation = scene.physicalHead.rotation;
@@ -80,11 +81,11 @@ namespace VHToolkit.Redirection {
 			techniqueInstance?.Redirect(scene);	// Computes and applies the redirection according to the selected redirection technique
 
 			// Copy the real hand rotation to the virtual hand to conserve tracking.
-			scene.virtualHand.rotation = scene.physicalHand.rotation;	// TODO check Azmandian Body for rotation
+			scene.limbs.ForEach(limb => limb.VirtualLimb.ForEach(vlimb => vlimb.rotation = limb.PhysicalLimb.rotation)); // TODO check Azmandian Body for rotation
 			// In case the body redirection technique uses the head of the user (e.g. ),
 			// the previous position and rotation are stored to compute instant linear or angular velocity
-			scene.previousHandPosition = scene.physicalHand.position;
-			scene.previousHandRotation = scene.physicalHand.rotation;
+			scene.previousHandPosition = scene.limbs.Select(limb => limb.PhysicalLimb.position).ToList();
+			scene.previousHandRotation = scene.limbs.Select(limb => limb.PhysicalLimb.rotation).ToList();
 			if (scene.physicalHead) {
 				scene.previousHeadPosition = scene.physicalHead.position;
 				scene.previousHeadRotation = scene.physicalHead.rotation;
@@ -106,6 +107,6 @@ namespace VHToolkit.Redirection {
 		/// <returns>Returns a bool:
 		/// true if the virtual hand of the user is not co-localised to the physical hand.
 		/// false otherwise.</returns>
-        public bool IsRedirecting() => scene.GetHandRedirectionDistance() > Vector3.kEpsilon;
+        public bool IsRedirecting() => scene.GetHandRedirectionDistance().SelectMany(x => x).Any(x => x > Vector3.kEpsilon);
     }
 }
