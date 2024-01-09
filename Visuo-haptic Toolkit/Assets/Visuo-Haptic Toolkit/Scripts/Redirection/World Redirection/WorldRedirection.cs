@@ -20,6 +20,8 @@ namespace VHToolkit.Redirection {
 		public WRStrategy strategy;
 		public WorldRedirectionStrategy strategyInstance;
 
+		[SerializeField] private bool redirect = false;
+
 		/// <summary>
 		/// Updates the techniqueInstance according to the enumeration technique chosen.
 		/// </summary>
@@ -74,7 +76,7 @@ namespace VHToolkit.Redirection {
 		/// applies rotations to the physical hand and
 		/// initializes the previous head positions.
 		/// </summary>
-		private void Update() {
+		private void LateUpdate() {
 			if (previousTechnique != technique || techniqueInstance == null) {
 				updateTechnique();
 				previousTechnique = technique;
@@ -83,9 +85,16 @@ namespace VHToolkit.Redirection {
 			if (strategyInstance is not null)
 				scene.forwardTarget = strategyInstance.SteerTo(scene);
 
-			techniqueInstance?.Redirect(scene);
+			if (!redirect)
+				new NoWorldRedirection().Redirect(scene);
+			else if (techniqueInstance is not null)
+				techniqueInstance.Redirect(scene);
 			scene.previousHeadPosition = scene.physicalHead.position;
 			scene.previousHeadRotation = scene.physicalHead.rotation;
+		}
+
+		public void StartRedirection() {
+			redirect = true;
 		}
 
 		/// <summary>

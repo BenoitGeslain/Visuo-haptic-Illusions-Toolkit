@@ -29,6 +29,7 @@ namespace VHToolkit.Redirection {
 		/// </summary>
         private void updatetechnique() {
 			techniqueInstance = technique switch {
+				BRTechnique.None => new NoBodyRedirection(),
 				BRTechnique.Reset => new ResetBodyRedirection(),
 				BRTechnique.Azmandian2016Body => new Azmandian2016Body(),
 				BRTechnique.Azmandian2016Hybrid => new Azmandian2016Hybrid(),

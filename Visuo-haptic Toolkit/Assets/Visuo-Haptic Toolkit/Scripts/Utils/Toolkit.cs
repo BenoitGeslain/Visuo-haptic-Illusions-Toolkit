@@ -5,6 +5,7 @@ namespace VHToolkit.Redirection {
 	/// Available body redirection techniques.
 	/// </summary>
 	public enum BRTechnique {
+		None,	// Hand Redirection techniques
 		Reset,	// Hand Redirection techniques
 		Han2018TranslationalShift,
 		Han2018InterpolatedReach,

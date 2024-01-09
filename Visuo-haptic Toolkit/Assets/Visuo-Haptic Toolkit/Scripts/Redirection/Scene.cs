@@ -109,8 +109,7 @@ namespace VHToolkit.Redirection {
         /// </summary>
         /// <returns>The instant angular velocity around the up axis (Y) of the physical head using the last frame's position.</returns>
         public float GetHeadInstantRotationY() {
-			var Q = GetHeadToHeadRotation();
-			float instantRotation = (Quaternion.Inverse(physicalHead.rotation)* GetHeadInstantRotation() *  physicalHead.rotation ).eulerAngles.y;
+			float instantRotation = (Quaternion.Inverse(physicalHead.rotation) * GetHeadInstantRotation() * physicalHead.rotation ).eulerAngles.y;
 			return (instantRotation > 180f)? 360 - instantRotation : instantRotation;
 		}
 
@@ -135,15 +134,14 @@ namespace VHToolkit.Redirection {
         /// </summary>
         public void CopyHeadRotations() {
 			var Q = GetHeadToHeadRotation();
-            virtualHead.rotation = Q  * physicalHead.rotation * Quaternion.Inverse(previousHeadRotation) * Quaternion.Inverse(Q) * virtualHead.rotation;
+            virtualHead.rotation = Q * physicalHead.rotation * Quaternion.Inverse(previousHeadRotation) * Quaternion.Inverse(Q) * virtualHead.rotation;
 		}
 
         /// <summary>
         /// Applies unaltered physical head translations to the virtual head GameObject
         /// </summary>
         public void CopyHeadTranslations() {
-            virtualHead.position += GetHeadToHeadRotation() * GetHeadInstantTranslation();
-            // virtualHead.Translate(GetHeadToHeadRotation() * GetHeadInstantTranslation(), relativeTo: Space.World);
+            virtualHead.Translate(GetHeadToHeadRotation() * GetHeadInstantTranslation(), relativeTo: Space.World);
 		}
 
 		/// <summary>

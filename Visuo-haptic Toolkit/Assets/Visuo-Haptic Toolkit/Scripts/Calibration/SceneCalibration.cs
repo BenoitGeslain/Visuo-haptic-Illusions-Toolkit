@@ -39,29 +39,31 @@ public class SceneCalibration : MonoBehaviour {
 
 	private void Update() {
 		// Get the controller used to set the 3 calibration points
-		List<InputDevice> foundControllers = new List<InputDevice>();
-  	    UnityEngine.XR.InputDevices.GetDevicesWithCharacteristics(characteristics, foundControllers);
+		List<InputDevice> foundControllers = new();
+  	    InputDevices.GetDevicesWithCharacteristics(characteristics, foundControllers);
 		hand = foundControllers.FirstOrDefault();
+		Debug.Log(hand.characteristics);
 
 		bool buttonPress;
 		if (virtualTrackers.Length == 3) {
 			switch (state) {
 				case CalibrationState.FirstPoint:
-					if (hand.TryGetFeatureValue(UnityEngine.XR.CommonUsages.triggerButton, out buttonPress) && !buttonPress && buttonWasPressed) {
+					Debug.Log(hand.TryGetFeatureValue(CommonUsages.triggerButton, out buttonPress));
+					if (hand.TryGetFeatureValue(CommonUsages.triggerButton, out buttonPress) && !buttonPress && buttonWasPressed) {
 						points[0] = physicalTracker.position + forwardOffset.z * physicalTracker.forward;
 						Debug.Log("First calibration point saved. Ready for the second point");
 						state++;
 					}
 					break;
 				case CalibrationState.SecondPoint:
-					if (hand.TryGetFeatureValue(UnityEngine.XR.CommonUsages.triggerButton, out buttonPress) && !buttonPress && buttonWasPressed) {
+					if (hand.TryGetFeatureValue(CommonUsages.triggerButton, out buttonPress) && !buttonPress && buttonWasPressed) {
 						points[1] = physicalTracker.position + forwardOffset.z * physicalTracker.forward;
 						Debug.Log("Second calibration point saved. Ready for the third point");
 						state++;
 					}
 					break;
 				case CalibrationState.ThirdPoint:
-					if (hand.TryGetFeatureValue(UnityEngine.XR.CommonUsages.triggerButton, out buttonPress) && !buttonPress && buttonWasPressed) {
+					if (hand.TryGetFeatureValue(CommonUsages.triggerButton, out buttonPress) && !buttonPress && buttonWasPressed) {
 						points[2] = physicalTracker.position + forwardOffset.z * physicalTracker.forward;
 						Debug.Log("Third calibration point saved.");
 						state++;

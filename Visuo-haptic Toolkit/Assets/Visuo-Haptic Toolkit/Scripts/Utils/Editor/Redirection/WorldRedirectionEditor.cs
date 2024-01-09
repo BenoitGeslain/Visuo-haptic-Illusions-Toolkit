@@ -22,6 +22,7 @@ namespace VHToolkit.Redirection {
 		SerializedProperty radius;
 		SerializedProperty applyDampening;
 		SerializedProperty applySmoothing;
+		SerializedProperty redirect;
 
         readonly string[] strategyTechniques = { "Razzaque2001OverTimeRotation", "Razzaque2001Rotational", "Razzaque2001Curvature", "Razzaque2001Hybrid" };
         readonly string[] targetsStrategies = { "SteerToCenter", "SteerToMultipleTargets" };
@@ -39,6 +40,7 @@ namespace VHToolkit.Redirection {
 			radius = serializedObject.FindProperty("scene.radius");
 			applyDampening = serializedObject.FindProperty("scene.applyDampening");
 			applySmoothing = serializedObject.FindProperty("scene.applySmoothing");
+			redirect = serializedObject.FindProperty("redirect");
 		}
 
 		public override void OnInspectorGUI() {
@@ -56,6 +58,8 @@ namespace VHToolkit.Redirection {
 			// Scene
 			EditorGUILayout.PropertyField(physicalHead, new GUIContent("Physical Head"));
 			EditorGUILayout.PropertyField(virtualHead, new GUIContent("Virtual Head"));
+
+			EditorGUILayout.PropertyField(redirect, new GUIContent("redirect"));
 
 			EditorGUILayout.PropertyField(physicalTarget, new GUIContent("Physical Target"));
 			EditorGUILayout.PropertyField(virtualTarget, new GUIContent("Virtual Target"));
