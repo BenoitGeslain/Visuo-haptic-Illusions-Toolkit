@@ -194,7 +194,7 @@ namespace VHToolkit.Redirection {
 			scene.virtualHead.RotateAround(scene.origin.position, Vector3.up, GetRedirection(scene));
 		}
 
-		public static List<float> GetRedirection(Scene scene) {
+		public static float GetRedirection(Scene scene) {
 			float angleBetweenTargets = Vector3.SignedAngle(Vector3.ProjectOnPlane(scene.physicalTarget.position - scene.origin.position, Vector3.up), scene.virtualTarget.position - scene.origin.position, Vector3.up);
 			float angleBetweenHeads = Vector3.SignedAngle(Vector3.ProjectOnPlane(scene.physicalHead.forward, Vector3.up), scene.virtualHead.forward, Vector3.up);
 

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Globalization;
+using System.Linq;
 
 using CsvHelper;
 using CsvHelper.Configuration;
@@ -32,12 +33,12 @@ namespace VHToolkit.Logging {
 			public SceneClassMap() {
 				// Warning! Non-logged attributes in Scene MUST be ignored ([Ignore])
 				AutoMap(new CsvConfiguration(CultureInfo.InvariantCulture) {MemberTypes = MemberTypes.Fields});
-				Map(m => m.physicalHand.position).Name("PhysicalHandPosition");
-				Map(m => m.physicalHand.rotation).Name("PhysicalHandOrientation");
-				Map(m => m.physicalHand.rotation.eulerAngles).Name("PhysicalHandOrientationEuler");
-				Map(m => m.virtualHand.position).Name("VirtualHandPosition");
-				Map(m => m.virtualHand.rotation).Name("VirtualHandOrientation");
-				Map(m => m.virtualHand.rotation.eulerAngles).Name("VirtualHandOrientationEuler");
+				Map(m => m.limbs.Select(limb => limb.PhysicalLimb.position).ToList()).Name("PhysicalHandPosition");
+				Map(m => m.limbs.Select(limb => limb.PhysicalLimb.rotation).ToList()).Name("PhysicalHandOrientation");
+				Map(m => m.limbs.Select(limb => limb.PhysicalLimb.rotation.eulerAngles).ToList()).Name("PhysicalHandOrientationEuler");
+				Map(m => m.limbs.SelectMany(limb => limb.VirtualLimb.Select(vlimb => vlimb.position)).ToList()).Name("VirtualHandPosition");
+				Map(m => m.limbs.SelectMany(limb => limb.VirtualLimb.Select(vlimb => vlimb.rotation)).ToList()).Name("VirtualHandOrientation");
+				Map(m => m.limbs.SelectMany(limb => limb.VirtualLimb.Select(vlimb => vlimb.rotation.eulerAngles)).ToList()).Name("VirtualHandOrientationEuler");
 				Map(m => m.physicalTarget.position).Name("PhysicalTargetPosition");
 				Map(m => m.physicalTarget.rotation).Name("PhysicalTargetOrientation");
 				Map(m => m.physicalTarget.rotation.eulerAngles).Name("PhysicalTargetOrientationEuler");
