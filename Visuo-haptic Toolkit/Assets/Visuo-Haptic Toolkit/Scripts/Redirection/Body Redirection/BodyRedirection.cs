@@ -28,7 +28,7 @@ namespace VHToolkit.Redirection {
 		/// <summary>
 		/// Updates the techniqueInstance according to the enumeration technique chosen.
 		/// </summary>
-        private void updatetechnique() {
+        private void updateTechnique() {
 			techniqueInstance = technique switch {
 				BRTechnique.None => new NoBodyRedirection(),
 				BRTechnique.Reset => new ResetBodyRedirection(),
@@ -53,11 +53,11 @@ namespace VHToolkit.Redirection {
 		/// initializes the previous head positions.
 		/// </summary>
 		private void OnEnable() {
-			updatetechnique();
+			updateTechnique();
 			previoustechnique = technique;
 			// Store thhe previous hand and head position and rotation to compute instant linear or angular velocity
-			scene.previousHandPosition = scene.limbs.Select(limb => limb.PhysicalLimb.position).ToList();
-			scene.previousHandRotation = scene.limbs.Select(limb => limb.PhysicalLimb.rotation).ToList();
+			scene.previousLimbPositions = scene.limbs.ConvertAll(limb => limb.PhysicalLimb.position);
+			scene.previousLimbRotations = scene.limbs.ConvertAll(limb => limb.PhysicalLimb.rotation);
 			if (scene.physicalHead) {
 				scene.previousHeadPosition = scene.physicalHead.position;
 				scene.previousHeadRotation = scene.physicalHead.rotation;
@@ -74,7 +74,7 @@ namespace VHToolkit.Redirection {
 		/// </summary>
         private void LateUpdate() {
 			if (previoustechnique != technique) {
-				updatetechnique();
+				updateTechnique();
 				previoustechnique = technique;
 			}
 
@@ -84,8 +84,8 @@ namespace VHToolkit.Redirection {
 			scene.limbs.ForEach(limb => limb.VirtualLimb.ForEach(vlimb => vlimb.rotation = limb.PhysicalLimb.rotation)); // TODO check Azmandian Body for rotation
 			// In case the body redirection technique uses the head of the user (e.g. ),
 			// the previous position and rotation are stored to compute instant linear or angular velocity
-			scene.previousHandPosition = scene.limbs.Select(limb => limb.PhysicalLimb.position).ToList();
-			scene.previousHandRotation = scene.limbs.Select(limb => limb.PhysicalLimb.rotation).ToList();
+			scene.previousLimbPositions = scene.limbs.ConvertAll(limb => limb.PhysicalLimb.position);
+			scene.previousLimbRotations = scene.limbs.ConvertAll(limb => limb.PhysicalLimb.rotation);
 			if (scene.physicalHead) {
 				scene.previousHeadPosition = scene.physicalHead.position;
 				scene.previousHeadRotation = scene.physicalHead.rotation;

@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 namespace VHToolkit.Redirection {
@@ -61,13 +62,11 @@ namespace VHToolkit.Redirection {
 	}
 
 	class SteerInDirection: WorldRedirectionStrategy {
-		/// <summary>
-		///
-		/// </summary>
-		/// <param name="scene"></param>
-		/// <returns></returns>
-		public override Vector3 SteerTo(Scene scene) {
-			return Vector3.Reflect(scene.physicalTarget.position, scene.physicalHead.right);
-		}
-	}
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="scene"></param>
+        /// <returns></returns>
+        public override Vector3 SteerTo(Scene scene) => Vector3.Reflect(scene.physicalTarget.position, scene.physicalHead.right);
+    }
 }

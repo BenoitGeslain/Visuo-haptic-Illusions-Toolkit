@@ -7,8 +7,6 @@ namespace VHToolkit.Redirection {
 		[SerializeField] protected bool redirect = false;
 
 
-		public void StartRedirection() {
-			redirect = true;
-		}
-	}
+        public void StartRedirection() => redirect = true;
+    }
 }
