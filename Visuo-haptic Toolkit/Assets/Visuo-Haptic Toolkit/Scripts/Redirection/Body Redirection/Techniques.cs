@@ -63,7 +63,7 @@ namespace VHToolkit.Redirection {
 	/// This class implements the Translation Shift technique from Han et al., 2018 renamed Instant in this toolkit as Instant. This technique instantly redirects the user's hand
 	/// to remap the the virtual target to the physical one.
     /// </summary>
-    public class Han2018Instant: BodyRedirectionTechnique {
+    public class Han2018TranslationalShift: BodyRedirectionTechnique {
 
         public override void Redirect(Scene scene) {
 			// If the hand is inside the redirection boundary, instantly applies the redirection

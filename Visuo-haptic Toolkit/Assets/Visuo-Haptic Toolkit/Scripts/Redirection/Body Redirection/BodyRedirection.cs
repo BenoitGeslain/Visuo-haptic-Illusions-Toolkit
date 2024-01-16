@@ -34,7 +34,7 @@ namespace VHToolkit.Redirection {
 				BRTechnique.Reset => new ResetBodyRedirection(),
 				BRTechnique.Azmandian2016Body => new Azmandian2016Body(),
 				BRTechnique.Azmandian2016Hybrid => new Azmandian2016Hybrid(),
-				BRTechnique.Han2018TranslationalShift => new Han2018Instant(),
+				BRTechnique.Han2018TranslationalShift => new Han2018TranslationalShift(),
 				BRTechnique.Han2018InterpolatedReach => new Han2018Continuous(),
 				BRTechnique.Cheng2017Sparse => new Cheng2017Sparse(),
 				BRTechnique.Geslain2022Polynom => new Geslain2022Polynom(techniqueInstance.redirectionLateness, techniqueInstance.controlPoint),
