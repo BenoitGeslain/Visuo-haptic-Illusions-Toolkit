@@ -32,13 +32,13 @@ namespace VHToolkit.Logging {
 		public sealed class SceneClassMap : ClassMap<Scene> {
 			public SceneClassMap() {
 				// Warning! Non-logged attributes in Scene MUST be ignored ([Ignore])
-				AutoMap(new CsvConfiguration(CultureInfo.InvariantCulture) {MemberTypes = MemberTypes.Fields});
-				Map(m => m.limbs.Select(limb => limb.PhysicalLimb.position).ToList()).Name("PhysicalHandPosition");
-				Map(m => m.limbs.Select(limb => limb.PhysicalLimb.rotation).ToList()).Name("PhysicalHandOrientation");
-				Map(m => m.limbs.Select(limb => limb.PhysicalLimb.rotation.eulerAngles).ToList()).Name("PhysicalHandOrientationEuler");
-				Map(m => m.limbs.SelectMany(limb => limb.VirtualLimb.Select(vlimb => vlimb.position)).ToList()).Name("VirtualHandPosition");
-				Map(m => m.limbs.SelectMany(limb => limb.VirtualLimb.Select(vlimb => vlimb.rotation)).ToList()).Name("VirtualHandOrientation");
-				Map(m => m.limbs.SelectMany(limb => limb.VirtualLimb.Select(vlimb => vlimb.rotation.eulerAngles)).ToList()).Name("VirtualHandOrientationEuler");
+				AutoMap(new CsvConfiguration(CultureInfo.InvariantCulture) {MemberTypes = MemberTypes.Fields | MemberTypes.Properties | MemberTypes.None});
+				// Map(m => m.limbs.Select(limb => limb.PhysicalLimb.position).ToList()).Name("PhysicalLimbPosition");
+				// Map(m => m.limbs.Select(limb => limb.PhysicalLimb.rotation).ToList()).Name("PhysicalLimbOrientation");
+				// Map(m => m.limbs.Select(limb => limb.PhysicalLimb.rotation.eulerAngles).ToList()).Name("PhysicalLimbOrientationEuler");
+				// Map(m => m.limbs.SelectMany(limb => limb.VirtualLimb.Select(vlimb => vlimb.position)).ToList()).Name("VirtualLimbPosition");
+				// Map(m => m.limbs.SelectMany(limb => limb.VirtualLimb.Select(vlimb => vlimb.rotation)).ToList()).Name("VirtualLimbOrientation");
+				// Map(m => m.limbs.SelectMany(limb => limb.VirtualLimb.Select(vlimb => vlimb.rotation.eulerAngles)).ToList()).Name("VirtualLimbOrientationEuler");
 				Map(m => m.physicalTarget.position).Name("PhysicalTargetPosition");
 				Map(m => m.physicalTarget.rotation).Name("PhysicalTargetOrientation");
 				Map(m => m.physicalTarget.rotation.eulerAngles).Name("PhysicalTargetOrientationEuler");
