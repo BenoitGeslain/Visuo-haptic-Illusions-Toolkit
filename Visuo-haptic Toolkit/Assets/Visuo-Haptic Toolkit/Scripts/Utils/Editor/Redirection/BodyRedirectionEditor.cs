@@ -12,8 +12,8 @@ namespace VHToolkit.Redirection {
 		SerializedProperty technique;
 		SerializedProperty techniqueInstance;
 
-		SerializedProperty physicalHand;
-		SerializedProperty virtualHand;
+		SerializedProperty physicalLimbs;
+		// SerializedProperty virtualLimbs;
 		SerializedProperty physicalHead;
 		SerializedProperty virtualHead;
 		SerializedProperty physicalTarget;
@@ -25,8 +25,8 @@ namespace VHToolkit.Redirection {
 			technique = serializedObject.FindProperty("technique");
             techniqueInstance = serializedObject.FindProperty("techniqueInstance");
 
-			physicalHand = serializedObject.FindProperty("scene.physicalHand");
-			virtualHand = serializedObject.FindProperty("scene.virtualHand");
+			physicalLimbs = serializedObject.FindProperty("scene.limbs");
+			// virtualLimbs = serializedObject.FindProperty("scene.virtualLimbs");
 			physicalHead = serializedObject.FindProperty("scene.physicalHead");
 			virtualHead = serializedObject.FindProperty("scene.virtualHead");
 			physicalTarget = serializedObject.FindProperty("scene.physicalTarget");
@@ -44,8 +44,8 @@ namespace VHToolkit.Redirection {
 			EditorGUILayout.PropertyField(technique, new GUIContent ("Technique"));
 
 			// Scene
-			EditorGUILayout.PropertyField(physicalHand, new GUIContent("Physical Hand"));
-			EditorGUILayout.PropertyField(virtualHand, new GUIContent("Virtual Hand"));
+			EditorGUILayout.PropertyField(physicalLimbs, new GUIContent("Physical Limbs"));
+			// EditorGUILayout.PropertyField(virtualLimbs, new GUIContent("Virtual Limbs"));
 			if (technique.enumNames[technique.enumValueIndex] == "Azmandian2016Hybrid") {
 				EditorGUILayout.PropertyField(physicalHead, new GUIContent("Physical Head"));
 				EditorGUILayout.PropertyField(virtualHead, new GUIContent("Virtual Head"));
