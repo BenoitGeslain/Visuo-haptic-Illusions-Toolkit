@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['targetprefab_401',['targetPrefab',['../classVHToolkit_1_1Visualisation_1_1WRVisuals.html#a82da08e8de038cdd04d2d829fc835ee1',1,'VHToolkit::Visualisation::WRVisuals']]],
-  ['technique_402',['technique',['../classVHToolkit_1_1Redirection_1_1WorldRedirection.html#aae354ed9399dba158d33f3016f1e6f11',1,'VHToolkit::Redirection::WorldRedirection']]],
-  ['techniqueinstance_403',['techniqueInstance',['../classVHToolkit_1_1Redirection_1_1WorldRedirection.html#a1e953a101881f5ecf68713fd71947c14',1,'VHToolkit::Redirection::WorldRedirection']]]
+  ['up_395',['up',['../classVHToolkit_1_1Redirection_1_1Vector2Vertical.html#afca0bc219058d79de35ae7f42e670777',1,'VHToolkit::Redirection::Vector2Vertical']]]
 ];

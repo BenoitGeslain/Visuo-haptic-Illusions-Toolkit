@@ -1,10 +1,11 @@
 var searchData=
 [
-  ['redirect_386',['redirect',['../classVHToolkit_1_1Redirection_1_1Interaction.html#ac2e21c5b6037bfb7231e232cb3dc80a0',1,'VHToolkit::Redirection::Interaction']]],
-  ['redirectionbuffer_387',['RedirectionBuffer',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a74cfe8ad097461a4712ead219bc7e53d',1,'VHToolkit::Redirection::ParametersToolkit']]],
-  ['redirectionlateness_388',['redirectionLateness',['../classVHToolkit_1_1Redirection_1_1BodyRedirectionTechnique.html#affc35fe4f4875764b11e71cbc19473eb',1,'VHToolkit::Redirection::BodyRedirectionTechnique']]],
-  ['resetredirectioncoeff_389',['ResetRedirectionCoeff',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a560f097571f1c80286a9038ccda2014f',1,'VHToolkit::Redirection::ParametersToolkit']]],
-  ['right_390',['right',['../classVHToolkit_1_1Redirection_1_1Vector2Horizontal.html#a97d18f0a38a10765a760a8e95871280f',1,'VHToolkit::Redirection::Vector2Horizontal']]],
-  ['rotationalerror_391',['RotationalError',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a7dad5be9259e7c1b014af0adf62be72e',1,'VHToolkit::Redirection::ParametersToolkit']]],
-  ['rotationthreshold_392',['RotationThreshold',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#ab2d38a498e13a6c48d9a51022c699a45',1,'VHToolkit::Redirection::ParametersToolkit']]]
+  ['same_384',['same',['../classVHToolkit_1_1Redirection_1_1Vector2Rotation.html#a219295f09fa2a75aef6a0556bad98fa6',1,'VHToolkit::Redirection::Vector2Rotation']]],
+  ['scene_385',['scene',['../classVHToolkit_1_1Redirection_1_1Interaction.html#ae9730e506d4c34d29fef4b2b3378d28c',1,'VHToolkit::Redirection::Interaction']]],
+  ['slower_386',['slower',['../classVHToolkit_1_1Redirection_1_1Vector2Gain.html#a94c96a6825858d33a9232b4abcfca7a5',1,'VHToolkit::Redirection::Vector2Gain']]],
+  ['smoothingfactor_387',['SmoothingFactor',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a85b4519688808b925e4056b32827df9a',1,'VHToolkit::Redirection::ParametersToolkit']]],
+  ['strategy_388',['strategy',['../classVHToolkit_1_1Redirection_1_1WorldRedirection.html#ad4bbaebc4ed9eabee4fa651106ee53da',1,'VHToolkit::Redirection::WorldRedirection']]],
+  ['strategyinstance_389',['strategyInstance',['../classVHToolkit_1_1Redirection_1_1WorldRedirection.html#a06593e0b14cc03086a1e4668813f50b6',1,'VHToolkit::Redirection::WorldRedirection']]],
+  ['swampcdratio_390',['SwampCDRatio',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#ab6679d0014155872a61b32b9e5f1d8e1',1,'VHToolkit::Redirection::ParametersToolkit']]],
+  ['swampsquarelength_391',['SwampSquareLength',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a55a790a1897533bddb816c2eb52211cd',1,'VHToolkit::Redirection::ParametersToolkit']]]
 ];
