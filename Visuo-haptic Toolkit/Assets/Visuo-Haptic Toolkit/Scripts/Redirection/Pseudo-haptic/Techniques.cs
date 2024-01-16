@@ -1,6 +1,8 @@
 ﻿using System;
-
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+
 
 // TODO once implemented move these techniques into the right namespace
 // TODO handle collision detection
@@ -12,13 +14,16 @@ namespace VHToolkit.Redirection {
     /// </summary>
     public class Lecuyer2000Swamp : BodyRedirectionTechnique {
         public override void Redirect(Scene scene) {
-			Vector3 distanceToOrigin = scene.virtualHand.position - scene.origin.position;
-			Vector3 instantTranslation = scene.GetHandInstantTranslation();
-			if (MathF.Max(MathF.Abs(distanceToOrigin[0]), MathF.Abs(distanceToOrigin[2])) < Toolkit.Instance.parameters.SwampSquareLength/2) {
-				scene.virtualHand.position += instantTranslation * Toolkit.Instance.parameters.SwampCDRatio;
-			} else {
-				scene.virtualHand.position += instantTranslation;
-			}
+            Enumerable.Zip(scene.limbs, scene.GetHandInstantTranslation(), (limb, t) => (limb, t)).ToList().ForEach(p => {
+                foreach(Transform vlimb in p.limb.VirtualLimb) {
+                    var distanceToOrigin = vlimb.position - scene.origin.position;
+                    if (MathF.Max(MathF.Abs(distanceToOrigin[0]), MathF.Abs(distanceToOrigin[2])) * 2 < Toolkit.Instance.parameters.SwampSquareLength) {
+                        vlimb.Translate(p.t * Toolkit.Instance.parameters.SwampCDRatio);
+                    } else {
+                        vlimb.Translate(p.t);
+                    }
+			    }
+            });
         }
     }
 
@@ -32,7 +37,9 @@ namespace VHToolkit.Redirection {
             float verticalGain = 1 / normalizedMass;
             float horizontalGain = verticalGain * ratio;
             Vector3 gainVector = new(horizontalGain, verticalGain, horizontalGain);
-            scene.virtualHand.Translate(Vector3.Scale(scene.GetHandInstantTranslation(), gainVector), relativeTo: Space.World);
+            foreach(var p in Enumerable.Zip(scene.limbs, scene.GetHandInstantTranslation(), (limb, t) => (limb, t))) {
+                p.limb.VirtualLimb.ForEach(vLimb => vLimb.Translate(Vector3.Scale(p.t, gainVector)));
+            }
         }
     }
 }
