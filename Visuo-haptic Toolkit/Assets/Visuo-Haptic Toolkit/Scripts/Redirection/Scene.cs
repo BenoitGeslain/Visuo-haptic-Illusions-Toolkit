@@ -34,7 +34,7 @@ namespace VHToolkit.Redirection {
         [Header("User Parameters")]
         // [Ignore] public Transform physicalHand;
         // [Ignore] public Transform virtualHand;
-        [Ignore] public List<Limb> limbs;
+        [SerializeField] public List<Limb> limbs;
 
         [Ignore] public Transform physicalHead;
 		[Ignore] public Transform virtualHead;
