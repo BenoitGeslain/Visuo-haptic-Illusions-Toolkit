@@ -88,8 +88,9 @@ public class SceneCalibration : MonoBehaviour {
 					break;
 			}
 		} else if (virtualTrackers.Length == 1) {
-			if ((hand.TryGetFeatureValue(UnityEngine.XR.CommonUsages.triggerButton, out buttonPress) && buttonPress) || Input.GetKeyUp(KeyCode.Space)) {
+			if (state == CalibrationState.FirstPoint && ((hand.TryGetFeatureValue(CommonUsages.triggerButton, out buttonPress) && buttonPress) || Input.GetKeyUp(KeyCode.Space))) {
 				virtualTrackers[0].SetPositionAndRotation(physicalTracker.position, physicalTracker.rotation);
+				state++;
             }
 		} else {
 			Debug.LogWarning($"Incorrect number of virtualTrackers. There should be 1 or 3, there are {virtualTrackers.Length}.");
@@ -124,8 +125,8 @@ public class SceneCalibration : MonoBehaviour {
 	public void LoadCalibration() {
 		string[] lines = File.ReadAllLines($"{path}LastCalibration.txt");
 
-		float[] tmpPosition = lines[0][1..^1].Split(", ", 3).Select(x => float.Parse(x)).ToArray();
-		float[] tmpRotation = lines[1][1..^1].Split(", ", 4).Select(x => float.Parse(x)).ToArray();
+		float[] tmpPosition = Array.ConvertAll(lines[0][1..^1].Split(", ", 3), float.Parse);
+		float[] tmpRotation = Array.ConvertAll(lines[1][1..^1].Split(", ", 4), float.Parse);
 		virtualTrackers[0].SetPositionAndRotation(position: new(tmpPosition[0], tmpPosition[1], tmpPosition[2]), rotation: new(tmpRotation[0], tmpRotation[1], tmpRotation[2], tmpRotation[3]));
     }
 }

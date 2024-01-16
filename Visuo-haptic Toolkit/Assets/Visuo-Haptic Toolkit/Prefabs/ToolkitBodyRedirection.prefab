@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3169019813816358605}
   - component: {fileID: 2891068713693094246}
-  - component: {fileID: 4389313314016028775}
   - component: {fileID: 2713608614238546106}
   - component: {fileID: 551704495323053107}
   m_Layer: 0
@@ -47,13 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c6eac9d82e7fde4d816294ebdd46b8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  technique: 1
-  techniqueInstance:
-    redirectionLateness: 0
-    controlPoint: {x: 0, y: 0}
   scene:
-    physicalHand: {fileID: 0}
-    virtualHand: {fileID: 0}
+    limbs: []
     physicalHead: {fileID: 0}
     virtualHead: {fileID: 0}
     physicalTarget: {fileID: 0}
@@ -65,24 +59,23 @@ MonoBehaviour:
     applySmoothing: 0
     selectedTarget: {fileID: 0}
     forwardTarget: {x: 0, y: 0, z: 0}
-    previousHandPosition: {x: 0, y: 0, z: 0}
-    previousHandRotation: {x: 0, y: 0, z: 0, w: 0}
+    previousHandPosition:
+    - {x: -5.7646997e-27, y: 8.52e-43, z: 1e-45}
+    - {x: 0, y: 3.1576344e-29, z: 8.53e-43}
+    - {x: 4.6e-44, y: 0, z: -5.7646997e-27}
+    previousHandRotation:
+    - {x: -1.9550452e-29, y: 8.52e-43, z: 1e-45, w: 0}
+    - {x: 3.1576344e-29, y: 8.53e-43, z: 4.6e-44, w: 0}
+    - {x: -1.9550452e-29, y: 8.52e-43, z: -1.9547563e-29, w: 8.52e-43}
+    - {x: 3.157644e-29, y: 8.53e-43, z: 6.9e-44, w: 0}
     previousHeadPosition: {x: 0, y: 0, z: 0}
     previousHeadRotation: {x: 0, y: 0, z: 0, w: 0}
     previousRedirection: 0
---- !u!114 &4389313314016028775
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1607897844603459841}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a83050ac92ff0f4ba973c4bbc1fcdfd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  showThersholdLines: 0
+  redirect: 0
+  technique: 1
+  techniqueInstance:
+    redirectionLateness: 0
+    controlPoint: {x: 0, y: 0}
 --- !u!114 &2713608614238546106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,4 +103,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parameters: {fileID: 11400000, guid: c39097e50bc3898498d2edf378be3a21, type: 2}
-  rootScript: {fileID: 0}

@@ -1,6 +1,6 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -172,13 +172,7 @@ namespace VHToolkit.Redirection {
 	public class Steinicke2008Translational: WorldRedirectionTechnique {
 		public override void Redirect(Scene scene) {
 			scene.CopyHeadRotations();
-
-			Vector3 instantTranslation = scene.GetHeadInstantTranslation();
-			scene.virtualHead.Translate(
-				instantTranslation.x * Toolkit.Instance.parameters.GainsTranslational.x,
-				instantTranslation.y * Toolkit.Instance.parameters.GainsTranslational.y,
-				instantTranslation.z * Toolkit.Instance.parameters.GainsTranslational.z,
-				relativeTo: Space.World);
+            scene.virtualHead.Translate(Vector3.Scale(scene.GetHeadInstantTranslation(), Toolkit.Instance.parameters.GainsTranslational), relativeTo: Space.World);
 		}
 	}
 
