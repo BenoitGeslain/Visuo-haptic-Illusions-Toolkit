@@ -49,6 +49,8 @@ namespace VHToolkit.Redirection {
 			if (technique.enumNames[technique.enumValueIndex] == "Azmandian2016Hybrid") {
 				EditorGUILayout.PropertyField(physicalHead, new GUIContent("Physical Head"));
 				EditorGUILayout.PropertyField(virtualHead, new GUIContent("Virtual Head"));
+			} else if (technique.enumNames[technique.enumValueIndex] == "Poupyrev1996GoGo") {
+				EditorGUILayout.PropertyField(physicalHead, new GUIContent("Physical Head"));
 			}
 
 			EditorGUILayout.PropertyField(physicalTarget, new GUIContent("Physical Target"));

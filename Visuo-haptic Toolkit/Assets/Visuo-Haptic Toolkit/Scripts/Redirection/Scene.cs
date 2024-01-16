@@ -1,15 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.IO.Compression;
 using System.Linq;
 using static System.Linq.Enumerable;
 using CsvHelper.Configuration.Attributes;
 
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace VHToolkit.Redirection {
-	[Serializable]
 
 	[Serializable]
 	public struct Limb {
@@ -37,8 +34,7 @@ namespace VHToolkit.Redirection {
         [Header("User Parameters")]
         // [Ignore] public Transform physicalHand;
         // [Ignore] public Transform virtualHand;
-        [SerializeField] public List<Limb> limbs;
-        [SerializeField] public List<Limb> limbs;
+        [Ignore] public List<Limb> limbs;
 
         [Ignore] public Transform physicalHead;
 		[Ignore] public Transform virtualHead;
@@ -63,10 +59,16 @@ namespace VHToolkit.Redirection {
         /// <summary>
         /// The position of the virtual hand is given by <c>physicalHand.position + Redirection</c>.
         /// </summary>
-        [Ignore] public List<Vector3> Redirection {
+        [Ignore] public List<Vector3> Redirection
+        {
             get => limbs.ConvertAll(limb => limb.VirtualLimb[0].position - limb.PhysicalLimb.position);
-            set => Enumerable.Zip(limbs, value, (limb, v) => limb.VirtualLimb.ConvertAll(vLimb => vLimb.position += v));
-        }
+            set
+            {
+				foreach (var p in Enumerable.Zip(limbs, value, (limb, v) => (limb, v))) {
+					p.limb.VirtualLimb.ForEach(vLimb => vLimb.position = p.limb.PhysicalLimb.position + p.v);
+				}
+        	}
+		}
 
         /// <returns>The distance between the user's real and virtual hands.</returns>
         public List<List<float>> GetHandRedirectionDistance() => limbs.ConvertAll(limb => limb.VirtualLimb.ConvertAll(vlimb => Vector3.Distance(limb.PhysicalLimb.position, vlimb.position)));

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.IO.Compression;
 using System.Linq;
 
 using UnityEngine;
@@ -30,10 +29,10 @@ namespace VHToolkit.Redirection {
 
         public static List<Vector3> GetRedirection(Scene scene) => scene.limbs.ConvertAll(
 			limb => {
-	            var d = scene.physicalTarget.position - scene.origin.position;
-    	        var warpingRatio = Mathf.Clamp01(Vector3.Dot(d, limb.PhysicalLimb.position - scene.origin.position) / d.sqrMagnitude);
-        	    return warpingRatio * (scene.virtualTarget.position - scene.physicalTarget.position);
-        	}
+				var d = scene.physicalTarget.position - scene.origin.position;
+				var warpingRatio = Mathf.Clamp01(Vector3.Dot(d, limb.PhysicalLimb.position - scene.origin.position) / d.sqrMagnitude);
+				return warpingRatio * (scene.virtualTarget.position - scene.physicalTarget.position);
+			}
 		);
     }
 
@@ -145,7 +144,7 @@ namespace VHToolkit.Redirection {
 
 		public override void Redirect(Scene scene) {
 			// Offset the head position by 0.2m to approximate the chest position then compute the chest to hand vector
-			List<Vector3> chestToHand = scene.limbs.ConvertAll(limb => limb.PhysicalLimb.position + new Vector3(0f, 0.2f, 0f) - scene.physicalHead.position);
+			List<Vector3> chestToHand = scene.limbs.ConvertAll(limb => limb.PhysicalLimb.position + 0.2f * Vector3.up - scene.physicalHead.position);
 			scene.Redirection = chestToHand.ConvertAll(d => d.magnitude > Toolkit.Instance.parameters.GoGoActivationDistance
                 ? Toolkit.Instance.parameters.GoGoCoefficient * Mathf.Pow(d.magnitude - Toolkit.Instance.parameters.GoGoActivationDistance, 2) * d.normalized
                 : Vector3.zero);
