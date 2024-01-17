@@ -65,6 +65,8 @@ namespace VHToolkit.Redirection {
 			}
 			scene.previousHeadPosition = scene.physicalHead.position;
 			scene.previousHeadRotation = scene.physicalHead.rotation;
+
+			scene.previousLimbPositions = scene.limbs.Select(limb => limb.PhysicalLimb.position).ToList();
 		}
 
 		/// <summary>
