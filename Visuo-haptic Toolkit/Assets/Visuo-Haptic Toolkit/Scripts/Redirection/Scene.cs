@@ -48,22 +48,20 @@ namespace VHToolkit.Redirection {
 		[Ignore] public bool applyDampening = false;
 		[Ignore] public bool applySmoothing = false;
 
-		[Ignore] [HideInInspector] public Transform selectedTarget;
-		[Ignore] [HideInInspector] public Vector3 forwardTarget;
-		[Ignore] [HideInInspector] public List<Vector3> previousLimbPositions;
-		[Ignore] [HideInInspector] public List<Quaternion> previousLimbRotations;
-		[Ignore] [HideInInspector] public Vector3 previousHeadPosition;
-		[Ignore] [HideInInspector] public Quaternion previousHeadRotation;
-		[Ignore] [HideInInspector] public float previousRedirection;
+		[Ignore] public Transform selectedTarget;
+		[Ignore] public Vector3 forwardTarget;
+		[Ignore] public List<Vector3> previousLimbPositions;
+		[Ignore] public List<Quaternion> previousLimbRotations;
+		[Ignore] public Vector3 previousHeadPosition;
+		[Ignore] public Quaternion previousHeadRotation;
+		[Ignore] public float previousRedirection;
 
         /// <summary>
         /// The position of the virtual hand is given by <c>physicalHand.position + Redirection</c>.
         /// </summary>
-        [Ignore] public List<Vector3> Redirection
-        {
+        [Ignore] public List<Vector3> Redirection {
             get => limbs.ConvertAll(limb => limb.VirtualLimb[0].position - limb.PhysicalLimb.position);
-            set
-            {
+            set {
 				foreach (var p in Enumerable.Zip(limbs, value, (limb, v) => (limb, v))) {
 					p.limb.VirtualLimb.ForEach(vLimb => vLimb.position = p.limb.PhysicalLimb.position + p.v);
 				}
@@ -143,8 +141,7 @@ namespace VHToolkit.Redirection {
         ///
         /// </summary>
         /// <returns>The instant linear velocity of the physical hand using the last frame's position</returns>
-        public List<Vector3> GetHandInstantTranslation()
-        {
+        public List<Vector3> GetHandInstantTranslation() {
             return Enumerable.Zip(limbs, previousLimbPositions, (limb, pLimb) => limb.PhysicalLimb.position - pLimb).ToList();
         }
 
@@ -176,9 +173,11 @@ namespace VHToolkit.Redirection {
         /// Applies unaltered physical hand translations to the virtual hand GameObjects
         /// </summary>
         public void CopyHandTranslations() {
+			var t = GetHandInstantTranslation();
+			var Q = GetHeadToHeadRotation();
             limbs.ForEach(limb => {
-				foreach (var p in Enumerable.Zip(limb.VirtualLimb, GetHandInstantTranslation(), (vLimb, t) => (vLimb, t)))
-					p.vLimb.position += GetHeadToHeadRotation() * p.t;
+				foreach (var p in Enumerable.Zip(limb.VirtualLimb, t, (vLimb, t) => (vLimb, t)))
+					p.vLimb.position += Q * p.t;
 			});
 		}
 
