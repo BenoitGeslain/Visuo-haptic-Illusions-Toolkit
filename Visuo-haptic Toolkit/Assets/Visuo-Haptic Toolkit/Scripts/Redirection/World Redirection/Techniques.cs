@@ -10,7 +10,14 @@ namespace VHToolkit.Redirection {
 	///  This class is the most conceptual class of  world redirection defining the important function to call: Redirect().
 	///  Information about the user such as the user's position or the targets are encapsulated inside Scene.
 	/// </summary>
-	public class WorldRedirectionTechnique : RedirectionTechnique { }
+	public class WorldRedirectionTechnique : RedirectionTechnique {
+		public void copyHeadAndHandTransform(Scene scene) {
+			scene.CopyHeadRotations();
+			scene.CopyHeadTranslations();
+
+			scene.CopyHandTranslations();
+		}
+	}
 
 	/// <summary>
 	/// This class implements the rotation over time technique from Razzaque et al., 2001. This technique rotates the user's virtual head around the vertical axis by a fixed amount
@@ -18,8 +25,8 @@ namespace VHToolkit.Redirection {
 	/// </summary>
 	public class Razzaque2001OverTimeRotation: WorldRedirectionTechnique {
 		public override void Redirect(Scene scene) {
-			scene.CopyHeadRotations();
-			scene.CopyHeadTranslations();
+			copyHeadAndHandTransform(scene);
+
 			scene.RotateVirtualHeadY(GetRedirection(scene));
 		}
 
@@ -49,8 +56,8 @@ namespace VHToolkit.Redirection {
 	/// </summary>
 	public class Razzaque2001Rotational: WorldRedirectionTechnique {
 		public override void Redirect(Scene scene) {
-			scene.CopyHeadRotations();
-			scene.CopyHeadTranslations();
+			copyHeadAndHandTransform(scene);
+
 			scene.RotateVirtualHeadY(GetRedirection(scene));
 		}
 
@@ -85,8 +92,8 @@ namespace VHToolkit.Redirection {
 	/// </summary>
 	public class Razzaque2001Curvature: WorldRedirectionTechnique {
 		public override void Redirect(Scene scene) {
-			scene.CopyHeadRotations();
-			scene.CopyHeadTranslations();
+			copyHeadAndHandTransform(scene);
+
 			scene.RotateVirtualHeadY(GetRedirection(scene));
 		}
 
@@ -235,8 +242,9 @@ namespace VHToolkit.Redirection {
 
 	public class NoWorldRedirection: WorldRedirectionTechnique {
 		public override void Redirect(Scene scene) {
-			scene.CopyHeadRotations();
-			scene.CopyHeadTranslations();
+			copyHeadAndHandTransform(scene);
+
+			scene.CopyHandTranslations();
 		}
 	}
 }

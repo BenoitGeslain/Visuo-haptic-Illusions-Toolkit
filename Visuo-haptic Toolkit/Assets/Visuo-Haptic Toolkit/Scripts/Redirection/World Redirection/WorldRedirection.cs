@@ -74,7 +74,7 @@ namespace VHToolkit.Redirection {
 		/// applies rotations to the physical hand and
 		/// initializes the previous head positions.
 		/// </summary>
-		private void LateUpdate() {
+		private void Update() {
 			if (previousTechnique != technique || techniqueInstance == null) {
 				updateTechnique();
 				previousTechnique = technique;
@@ -89,6 +89,8 @@ namespace VHToolkit.Redirection {
 				techniqueInstance.Redirect(scene);
 			scene.previousHeadPosition = scene.physicalHead.position;
 			scene.previousHeadRotation = scene.physicalHead.rotation;
+
+			scene.previousLimbPositions = scene.limbs.Select(limb => limb.PhysicalLimb.position).ToList();
 		}
 
 		/// <summary>

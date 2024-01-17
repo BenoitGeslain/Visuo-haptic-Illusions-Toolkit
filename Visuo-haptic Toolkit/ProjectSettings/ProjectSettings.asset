@@ -136,8 +136,6 @@ PlayerSettings:
   bundleVersion: 0.1
   preloadedAssets:
   - {fileID: 11400000, guid: aa2addff608b7004cba93201fbe95c26, type: 2}
-  - {fileID: 11400000, guid: 7871a6cd7edfb6e4e90388d9be0cd361, type: 2}
-  - {fileID: 8468517288158940043, guid: e6e69351f8204d94d8a6a059a9450b67, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -157,6 +155,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
+    Android: com.DefaultCompany.VisuohapticToolkit
     Standalone: com.DefaultCompany.Visuo-haptic-Toolkit
   buildNumber:
     Standalone: 0

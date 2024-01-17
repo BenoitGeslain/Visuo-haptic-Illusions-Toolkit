@@ -13,6 +13,7 @@ namespace VHToolkit.Redirection {
 		SerializedProperty technique;
 		SerializedProperty strategy;
 
+		SerializedProperty physicalHand;
 		SerializedProperty physicalHead;
 		SerializedProperty virtualHead;
 		SerializedProperty physicalTarget;
@@ -30,6 +31,8 @@ namespace VHToolkit.Redirection {
 		private void OnEnable() {
 			technique = serializedObject.FindProperty("technique");
 			strategy = serializedObject.FindProperty("strategy");
+
+			physicalHand = serializedObject.FindProperty("scene.limbs");
 
 			physicalHead = serializedObject.FindProperty("scene.physicalHead");
 			virtualHead = serializedObject.FindProperty("scene.virtualHead");
@@ -56,6 +59,7 @@ namespace VHToolkit.Redirection {
 			}
 
 			// Scene
+			EditorGUILayout.PropertyField(physicalHand, new GUIContent("Physical Hand"));
 			EditorGUILayout.PropertyField(physicalHead, new GUIContent("Physical Head"));
 			EditorGUILayout.PropertyField(virtualHead, new GUIContent("Virtual Head"));
 

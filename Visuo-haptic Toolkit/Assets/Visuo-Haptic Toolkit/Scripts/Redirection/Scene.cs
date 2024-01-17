@@ -143,7 +143,7 @@ namespace VHToolkit.Redirection {
 		///
 		/// </summary>
 		/// <returns>The instant linear velocity of the physical hand using the last frame's position</returns>
-		public List<Vector3> GetHandInstantTranslation() => Enumerable.Zip(limbs, previousLimbPositions, (a, b) => a.PhysicalLimb.position - b).ToList();
+		public List<Vector3> GetHandInstantTranslation() => Enumerable.Zip(limbs, previousLimbPositions, (limb, pLimb) => limb.PhysicalLimb.position - pLimb).ToList();
 
         /// <summary>
         /// Applies unaltered physical head rotations to the virtual head GameObject
@@ -158,6 +158,33 @@ namespace VHToolkit.Redirection {
         /// </summary>
         public void CopyHeadTranslations() {
             virtualHead.Translate(GetHeadToHeadRotation() * GetHeadInstantTranslation(), relativeTo: Space.World);
+		}
+
+        /// <summary>
+        /// Applies unaltered physical hand rotations to the virtual hand GameObjects
+        /// </summary>
+        public void CopyHandRotations() {
+
+
+		}
+
+        /// <summary>
+        /// Applies unaltered physical hand translations to the virtual hand GameObjects
+        /// </summary>
+        public void CopyHandTranslations() {
+			Debug.Log("!" + GetHandInstantTranslation().Count);
+
+            limbs.ForEach(limb => {
+				foreach (var p in Enumerable.Zip(limb.VirtualLimb, GetHandInstantTranslation(), (vLimb, t) => (vLimb, t))) {
+					p.vLimb.position += p.t;
+				}
+			});
+            // limbs.ForEach(limb => limb.VirtualLimb.ForEach(vLimb => {
+			// 	var Q = GetHeadToHeadRotation();
+			// 	vLimb.position = limb.PhysicalLimb.position + virtualHead.position - physicalHead.position;
+			// 	// vLimb.position = limb.PhysicalLimb.position + Q * (virtualHead.position - physicalHead.position);
+			// 	Debug.Log(physicalHead.position + virtualHead.position);
+			// }));
 		}
 
         /// <summary>

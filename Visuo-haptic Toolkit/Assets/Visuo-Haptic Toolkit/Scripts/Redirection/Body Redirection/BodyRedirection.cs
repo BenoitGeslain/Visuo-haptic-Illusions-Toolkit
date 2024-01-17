@@ -55,7 +55,7 @@ namespace VHToolkit.Redirection {
 		private void OnEnable() {
 			updateTechnique();
 			previoustechnique = technique;
-			// Store thhe previous hand and head position and rotation to compute instant linear or angular velocity
+			// Store the previous hand and head position and rotation to compute instant linear or angular velocity
 			scene.previousLimbPositions = scene.limbs.ConvertAll(limb => limb.PhysicalLimb.position);
 			scene.previousLimbRotations = scene.limbs.ConvertAll(limb => limb.PhysicalLimb.rotation);
 			if (scene.physicalHead) {
@@ -72,7 +72,7 @@ namespace VHToolkit.Redirection {
 		/// applies rotations to the physical hand and
 		/// initializes the previous head positions.
 		/// </summary>
-        private void LateUpdate() {
+        private void Update() {
 			if (previoustechnique != technique) {
 				updateTechnique();
 				previoustechnique = technique;
@@ -97,8 +97,16 @@ namespace VHToolkit.Redirection {
 		/// </summary>
         public void ResetRedirection() => technique = BRTechnique.Reset;
 
+		/// <summary>
+		/// Getter for the redirection technique currently used.
+		/// </summary>
+		/// <returns>BRTechnique</returns>
         public BRTechnique GetTechnique() => technique;
 
+		/// <summary>
+		/// Setter for the redirection technique to use.
+		/// </summary>
+		/// <param name="t">BRTechnique</param>
         public void SetTechnique(BRTechnique t) => technique = t;
 
 		/// <summary>
