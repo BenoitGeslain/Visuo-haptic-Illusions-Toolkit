@@ -22,7 +22,7 @@ You will find
 | [Azmandian et al., 2016](https://doi.org/10.1145/2858036.2858226), Body Warping    |[Azmandian et al., 2016](https://doi.org/10.1145/2858036.2858226), Hybrid Warping    |
 | [Han et al., 2019](http://ieeexplore.ieee.org/document/8260974/), Translational Shift    | [Han et al., 2019](http://ieeexplore.ieee.org/document/8260974/), Interpolated Reach *    |
 | [Cheng et al., 2017](http://doi.acm.org/10.1145/3025453.3025753), Sparse Haptics   | [Geslain et al., 2022](https://doi.org/10.1145/3531073.3531100), 2<sup>nd</sup> order polynomials   |
-| [Poupyrev et al., 1996](https://dl.acm.org/doi/10.1145/237091.237102), The Go-Go   |
+| [Poupyrev et al., 1996](https://dl.acm.org/doi/10.1145/237091.237102), The Go-Go   | |
 
 | World Redirection   |     |
 |:-------------- | :--------------: |
@@ -40,10 +40,12 @@ You will find
 
 \* Erreur de signe dans l'équation à 3.3, la technique redirige dans la direction opposée. + B est faux
 
-| Steering Strategies  | Status   |
-|:-------------- | :--------------: |
-| [Langbehn and Steinicke, 2013](https://link.springer.com/referenceworkentry/10.1007/978-3-319-08234-9_253-1), Steer To Center    | [Langbehn and Steinicke, 2013](https://link.springer.com/referenceworkentry/10.1007/978-3-319-08234-9_253-1), Steer To Orbit    |   [Langbehn and Steinicke, 2013](https://link.springer.com/referenceworkentry/10.1007/978-3-319-08234-9_253-1), Steer To Targets    | &check; |
-| [Langbehn and Steinicke, 2013](https://link.springer.com/referenceworkentry/10.1007/978-3-319-08234-9_253-1), Steer To Targets + Center    |	|
+| Steering Strategies  |
+|:-------------- |
+| [Langbehn and Steinicke, 2013](https://link.springer.com/referenceworkentry/10.1007/978-3-319-08234-9_253-1), Steer To Center |
+| [Langbehn and Steinicke, 2013](https://link.springer.com/referenceworkentry/10.1007/978-3-319-08234-9_253-1), Steer To Orbit  |
+| [Langbehn and Steinicke, 2013](https://link.springer.com/referenceworkentry/10.1007/978-3-319-08234-9_253-1), Steer To Targets |
+| [Langbehn and Steinicke, 2013](https://link.springer.com/referenceworkentry/10.1007/978-3-319-08234-9_253-1), Steer To Targets + Center |
 
 ### Not Yet Implemented (Roadmap)
 
