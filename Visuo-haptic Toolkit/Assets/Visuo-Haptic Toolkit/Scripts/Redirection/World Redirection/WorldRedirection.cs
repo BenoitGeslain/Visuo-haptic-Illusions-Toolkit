@@ -1,5 +1,6 @@
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using System.Linq;
+
 using UnityEngine;
 
 namespace VHToolkit.Redirection {
@@ -66,7 +67,7 @@ namespace VHToolkit.Redirection {
 			scene.previousHeadPosition = scene.physicalHead.position;
 			scene.previousHeadRotation = scene.physicalHead.rotation;
 
-			scene.previousLimbPositions = scene.limbs.Select(limb => limb.PhysicalLimb.position).ToList();
+			scene.previousLimbPositions = scene.limbs.Select(limb => limb.physicalLimb.position).ToList();
 		}
 
 		/// <summary>
@@ -92,7 +93,7 @@ namespace VHToolkit.Redirection {
 			scene.previousHeadPosition = scene.physicalHead.position;
 			scene.previousHeadRotation = scene.physicalHead.rotation;
 
-			scene.previousLimbPositions = scene.limbs.Select(limb => limb.PhysicalLimb.position).ToList();
+			scene.previousLimbPositions = scene.limbs.Select(limb => limb.physicalLimb.position).ToList();
 		}
 
 		/// <summary>
@@ -111,6 +112,18 @@ namespace VHToolkit.Redirection {
         /// A wrapper around SetTechnique(BRTechnique t) to use the ResetRedirection technique.
         /// </summary>
         public void ResetRedirection() => SetTechnique(WRTechnique.Reset);
+
+		public void SetTargets(List<Transform> targets) => scene.targets = targets;
+
+		public List<Transform> GetTargets() => scene.targets;
+
+		public void SetApplyDampening(bool dampening) => scene.applyDampening = dampening;
+
+		public bool GetApplyDampening() => scene.applyDampening;
+
+		public void SetApplySmoothing(bool smoothing) => scene.applySmoothing = smoothing;
+
+		public bool GetApplySmoothing() => scene.applySmoothing;
 
 		/// <summary>
 		/// Determine whether a redirection is applied to the user's virtual and physical head

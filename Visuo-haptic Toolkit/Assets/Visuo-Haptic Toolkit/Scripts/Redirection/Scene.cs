@@ -10,8 +10,13 @@ namespace VHToolkit.Redirection {
 
 	[Serializable]
 	public struct Limb {
-        public Transform PhysicalLimb;
-		public List<Transform> VirtualLimb;
+        public Transform physicalLimb;
+		public List<Transform> virtualLimb;
+
+		public Limb(Transform physicalLimb, List<Transform> virtualLimb) {
+			this.physicalLimb = physicalLimb;
+			this.virtualLimb = virtualLimb;
+		}
 	}
 
 	/// <summary>
@@ -31,7 +36,6 @@ namespace VHToolkit.Redirection {
 	/// <param name="applySmoothing">Whether to apply smoothing in the Razzaque et al.'s Redirected walking hybrid technique.</param>
 	[Serializable]
 	public record Scene() {
-        [Header("User Parameters")]
         // [Ignore] public Transform physicalHand;
         // [Ignore] public Transform virtualHand;
         [SerializeField] public List<Limb> limbs;
@@ -39,11 +43,12 @@ namespace VHToolkit.Redirection {
         [Ignore] public Transform physicalHead;
 		[Ignore] public Transform virtualHead;
 
-		[Header("Technique Parameters")]
         [Ignore] public Transform physicalTarget;
+        [Ignore] public Vector3 physicalTargetPosition;
         [Ignore] public Transform virtualTarget;
+        [Ignore] public Vector3 virtualTargetPosition;
         [Ignore] public Transform origin;
-		[Ignore] public Transform[] targets;
+		[Ignore] public List<Transform> targets;
 		[Ignore] public float radius = 5f;
 		[Ignore] public bool applyDampening = false;
 		[Ignore] public bool applySmoothing = false;
@@ -60,28 +65,28 @@ namespace VHToolkit.Redirection {
         /// The position of the virtual hand is given by <c>physicalHand.position + Redirection</c>.
         /// </summary>
         [Ignore] public List<Vector3> Redirection {
-            get => limbs.ConvertAll(limb => limb.VirtualLimb[0].position - limb.PhysicalLimb.position);
+            get => limbs.ConvertAll(limb => limb.virtualLimb[0].position - limb.physicalLimb.position);
             set {
 				foreach (var p in Enumerable.Zip(limbs, value, (limb, v) => (limb, v))) {
-					p.limb.VirtualLimb.ForEach(vLimb => vLimb.position = p.limb.PhysicalLimb.position + p.v);
+					p.limb.virtualLimb.ForEach(vLimb => vLimb.position = p.limb.physicalLimb.position + p.v);
 				}
         	}
 		}
 
         /// <returns>The distance between the user's real and virtual hands.</returns>
-        public List<List<float>> GetHandRedirectionDistance() => limbs.ConvertAll(limb => limb.VirtualLimb.ConvertAll(vlimb => Vector3.Distance(limb.PhysicalLimb.position, vlimb.position)));
+        public List<List<float>> GetHandRedirectionDistance() => limbs.ConvertAll(limb => limb.virtualLimb.ConvertAll(vlimb => Vector3.Distance(limb.physicalLimb.position, vlimb.position)));
 
 		/// <summary>
 		///
 		/// </summary>
 		/// <returns>The distance between the user's real hand and the physical target.</returns>
-		public List<float> GetPhysicalHandTargetDistance() => limbs.ConvertAll(limb => Vector3.Distance(limb.PhysicalLimb.position, physicalTarget.position));
+		public List<float> GetPhysicalHandTargetDistance() => limbs.ConvertAll(limb => Vector3.Distance(limb.physicalLimb.position, physicalTarget.position));
 
 		/// <summary>
 		///
 		/// </summary>
 		/// <returns>The distance between the user's physical hand and the origin.</returns>
-		public List<float> GetPhysicalHandOriginDistance() => limbs.ConvertAll(limb => Vector3.Distance(limb.PhysicalLimb.position, origin.position));
+		public List<float> GetPhysicalHandOriginDistance() => limbs.ConvertAll(limb => Vector3.Distance(limb.physicalLimb.position, origin.position));
 
 		/// <summary>
 		///
@@ -142,7 +147,7 @@ namespace VHToolkit.Redirection {
         /// </summary>
         /// <returns>The instant linear velocity of the physical hand using the last frame's position</returns>
         public List<Vector3> GetHandInstantTranslation() {
-            return Enumerable.Zip(limbs, previousLimbPositions, (limb, pLimb) => limb.PhysicalLimb.position - pLimb).ToList();
+            return Enumerable.Zip(limbs, previousLimbPositions, (limb, pLimb) => limb.physicalLimb.position - pLimb).ToList();
         }
 
 
@@ -176,7 +181,7 @@ namespace VHToolkit.Redirection {
 			var t = GetHandInstantTranslation();
 			var Q = GetHeadToHeadRotation();
             limbs.ForEach(limb => {
-				foreach (var p in Enumerable.Zip(limb.VirtualLimb, t, (vLimb, t) => (vLimb, t)))
+				foreach (var p in Enumerable.Zip(limb.virtualLimb, t, (vLimb, t) => (vLimb, t)))
 					p.vLimb.position += Q * p.t;
 			});
 		}

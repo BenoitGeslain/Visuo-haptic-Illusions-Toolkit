@@ -15,7 +15,7 @@ namespace VHToolkit.Redirection {
     public class Lecuyer2000Swamp : BodyRedirectionTechnique {
         public override void Redirect(Scene scene) {
             Enumerable.Zip(scene.limbs, scene.GetHandInstantTranslation(), (limb, t) => (limb, t)).ToList().ForEach(p => {
-                foreach(Transform vlimb in p.limb.VirtualLimb) {
+                foreach(Transform vlimb in p.limb.virtualLimb) {
                     var distanceToOrigin = vlimb.position - scene.origin.position;
                     if (MathF.Max(MathF.Abs(distanceToOrigin[0]), MathF.Abs(distanceToOrigin[2])) * 2 < Toolkit.Instance.parameters.SwampSquareLength) {
                         vlimb.Translate(p.t * Toolkit.Instance.parameters.SwampCDRatio);
@@ -38,7 +38,7 @@ namespace VHToolkit.Redirection {
             float horizontalGain = verticalGain * ratio;
             Vector3 gainVector = new(horizontalGain, verticalGain, horizontalGain);
             foreach(var p in Enumerable.Zip(scene.limbs, scene.GetHandInstantTranslation(), (limb, t) => (limb, t))) {
-                p.limb.VirtualLimb.ForEach(vLimb => vLimb.Translate(Vector3.Scale(p.t, gainVector)));
+                p.limb.virtualLimb.ForEach(vLimb => vLimb.Translate(Vector3.Scale(p.t, gainVector)));
             }
         }
     }
