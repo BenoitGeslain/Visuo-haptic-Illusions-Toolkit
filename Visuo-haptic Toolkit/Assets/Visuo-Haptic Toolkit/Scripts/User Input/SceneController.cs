@@ -20,7 +20,7 @@ public class SceneController : MonoBehaviour {
 	private void Start() {
 		mesh = GetComponent<MeshRenderer>();
 		unpressedMaterial = mesh.material;
-		cubesInitialPosition = cubes.Select(cube => cube.position).ToList();
+		cubesInitialPosition = cubes.ConvertAll(cube => cube.position);
 	}
 
 	private void OnTriggerEnter(Collider other) {
