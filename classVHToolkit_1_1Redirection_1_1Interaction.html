@@ -74,6 +74,9 @@ $(function() {
 <div class="title">VHToolkit.Redirection.Interaction Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>This is the base class for the visuo-haptic techniques managers such as <a class="el" href="classVHToolkit_1_1Redirection_1_1BodyRedirection.html" title="This class allows users to select which body redirection technique to use as well as the relevant par...">BodyRedirection</a>.  
+ <a href="classVHToolkit_1_1Redirection_1_1Interaction.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for VHToolkit.Redirection.Interaction:</div>
 <div class="dyncontent">
@@ -89,6 +92,16 @@ Inheritance diagram for VHToolkit.Redirection.Interaction:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a38c80fb5bbefeb7fe96b4ef524e800ba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVHToolkit_1_1Redirection_1_1Interaction.html#a38c80fb5bbefeb7fe96b4ef524e800ba">StartRedirection</a> ()</td></tr>
 <tr class="separator:a38c80fb5bbefeb7fe96b4ef524e800ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17438ad9098274d22e3d1fb3aa9f2165"><td class="memItemLeft" align="right" valign="top">List&lt; Transform &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVHToolkit_1_1Redirection_1_1Interaction.html#a17438ad9098274d22e3d1fb3aa9f2165">GetPhysicalLimbs</a> ()</td></tr>
+<tr class="separator:a17438ad9098274d22e3d1fb3aa9f2165"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22db65c9274aec872653a1355cc6565c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVHToolkit_1_1Redirection_1_1Interaction.html#a22db65c9274aec872653a1355cc6565c">AddPhysicalLimb</a> (Transform physicalLimb, List&lt; Transform &gt; virtualLimbs)</td></tr>
+<tr class="separator:a22db65c9274aec872653a1355cc6565c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74588fea10ef444f522072f1c52cf3a8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVHToolkit_1_1Redirection_1_1Interaction.html#a74588fea10ef444f522072f1c52cf3a8">RemovePhysicalLimb</a> (Transform physicalLimb)</td></tr>
+<tr class="separator:a74588fea10ef444f522072f1c52cf3a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf31178ceb16624f7a19312c8fee945b"><td class="memItemLeft" align="right" valign="top">List&lt; <a class="el" href="structVHToolkit_1_1Redirection_1_1Limb.html">Limb</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVHToolkit_1_1Redirection_1_1Interaction.html#acf31178ceb16624f7a19312c8fee945b">GetLimbs</a> ()</td></tr>
+<tr class="separator:acf31178ceb16624f7a19312c8fee945b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a647d73384598c5a782e01b3d923807f0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVHToolkit_1_1Redirection_1_1Interaction.html#a647d73384598c5a782e01b3d923807f0">SetLimbs</a> (List&lt; <a class="el" href="structVHToolkit_1_1Redirection_1_1Limb.html">Limb</a> &gt; limbs)</td></tr>
+<tr class="separator:a647d73384598c5a782e01b3d923807f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -100,7 +113,107 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:ac2e21c5b6037bfb7231e232cb3dc80a0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVHToolkit_1_1Redirection_1_1Interaction.html#ac2e21c5b6037bfb7231e232cb3dc80a0">redirect</a> = false</td></tr>
 <tr class="separator:ac2e21c5b6037bfb7231e232cb3dc80a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>This is the base class for the visuo-haptic techniques managers such as <a class="el" href="classVHToolkit_1_1Redirection_1_1BodyRedirection.html" title="This class allows users to select which body redirection technique to use as well as the relevant par...">BodyRedirection</a>. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a22db65c9274aec872653a1355cc6565c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a22db65c9274aec872653a1355cc6565c">&#9670;&nbsp;</a></span>AddPhysicalLimb()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void VHToolkit.Redirection.Interaction.AddPhysicalLimb </td>
+          <td>(</td>
+          <td class="paramtype">Transform&#160;</td>
+          <td class="paramname"><em>physicalLimb</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">List&lt; Transform &gt;&#160;</td>
+          <td class="paramname"><em>virtualLimbs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="acf31178ceb16624f7a19312c8fee945b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acf31178ceb16624f7a19312c8fee945b">&#9670;&nbsp;</a></span>GetLimbs()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">List&lt;<a class="el" href="structVHToolkit_1_1Redirection_1_1Limb.html">Limb</a>&gt; VHToolkit.Redirection.Interaction.GetLimbs </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a17438ad9098274d22e3d1fb3aa9f2165"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a17438ad9098274d22e3d1fb3aa9f2165">&#9670;&nbsp;</a></span>GetPhysicalLimbs()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">List&lt;Transform&gt; VHToolkit.Redirection.Interaction.GetPhysicalLimbs </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a74588fea10ef444f522072f1c52cf3a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a74588fea10ef444f522072f1c52cf3a8">&#9670;&nbsp;</a></span>RemovePhysicalLimb()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void VHToolkit.Redirection.Interaction.RemovePhysicalLimb </td>
+          <td>(</td>
+          <td class="paramtype">Transform&#160;</td>
+          <td class="paramname"><em>physicalLimb</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a647d73384598c5a782e01b3d923807f0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a647d73384598c5a782e01b3d923807f0">&#9670;&nbsp;</a></span>SetLimbs()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void VHToolkit.Redirection.Interaction.SetLimbs </td>
+          <td>(</td>
+          <td class="paramtype">List&lt; <a class="el" href="structVHToolkit_1_1Redirection_1_1Limb.html">Limb</a> &gt;&#160;</td>
+          <td class="paramname"><em>limbs</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a38c80fb5bbefeb7fe96b4ef524e800ba"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a38c80fb5bbefeb7fe96b4ef524e800ba">&#9670;&nbsp;</a></span>StartRedirection()</h2>
 

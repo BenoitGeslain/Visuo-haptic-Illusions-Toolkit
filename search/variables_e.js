@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['verticalangles_403',['VerticalAngles',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a4d05324688c4c5065efd325f5d54e955',1,'VHToolkit::Redirection::ParametersToolkit']]],
-  ['virtuallimb_404',['VirtualLimb',['../structVHToolkit_1_1Redirection_1_1Limb.html#a427164cf4a3fac6a31f342cb2a0eee71',1,'VHToolkit::Redirection::Limb']]]
+  ['verticalangles_434',['VerticalAngles',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a4d05324688c4c5065efd325f5d54e955',1,'VHToolkit::Redirection::ParametersToolkit']]],
+  ['virtuallimb_435',['virtualLimb',['../structVHToolkit_1_1Redirection_1_1Limb.html#a37293638746da06d912876cb55ef4159',1,'VHToolkit::Redirection::Limb']]]
 ];
