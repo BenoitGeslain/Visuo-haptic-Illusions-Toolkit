@@ -58,20 +58,27 @@ namespace VHToolkit.Redirection {
 				EditorGUILayout.PropertyField(strategy, new GUIContent ("Strategy"));
 			}
 
-			// Scene
+			EditorGUILayout.Space(5);
+			EditorGUILayout.LabelField("User Parameters", EditorStyles.boldLabel);
+
 			EditorGUILayout.PropertyField(physicalHand, new GUIContent("Physical Hand"));
 			EditorGUILayout.PropertyField(physicalHead, new GUIContent("Physical Head"));
 			EditorGUILayout.PropertyField(virtualHead, new GUIContent("Virtual Head"));
 
-			EditorGUILayout.PropertyField(redirect, new GUIContent("redirect"));
+			if (technique.enumNames[technique.enumValueIndex] == "Azmandian2016World") {
+				EditorGUILayout.PropertyField(physicalTarget, new GUIContent("Physical Target"));
+				EditorGUILayout.PropertyField(virtualTarget, new GUIContent("Virtual Target"));
+				EditorGUILayout.PropertyField(origin, new GUIContent("Origin"));
+			}
 
-			EditorGUILayout.PropertyField(physicalTarget, new GUIContent("Physical Target"));
-			EditorGUILayout.PropertyField(virtualTarget, new GUIContent("Virtual Target"));
-			EditorGUILayout.PropertyField(origin, new GUIContent("Origin"));
+
+			EditorGUILayout.Space(5);
+			EditorGUILayout.LabelField("Technique Parameters", EditorStyles.boldLabel);
+
+			EditorGUILayout.PropertyField(redirect, new GUIContent("Redirect"));
 
 			// Hides targets, dampening and smoothing if
 			if (strategyTechniques.Contains(technique.enumNames[technique.enumValueIndex])) {
-				EditorGUILayout.Space(5);
 				if (targetsStrategies.Contains(strategy.enumNames[strategy.enumValueIndex])) {
 					EditorGUILayout.PropertyField(targetsScene, new GUIContent ("Targets"));
 				} else if (strategy.enumNames[strategy.enumValueIndex] == "SteerToOrbit") {

@@ -45,6 +45,9 @@ namespace VHToolkit.Redirection {
 
 			EditorGUILayout.PropertyField(technique, new GUIContent ("Technique"));
 
+			EditorGUILayout.Space(5);
+			EditorGUILayout.LabelField("User Parameters", EditorStyles.boldLabel);
+
 			// Scene
 			EditorGUILayout.PropertyField(physicalLimbs, new GUIContent("Physical Limbs"));
 			// EditorGUILayout.PropertyField(virtualLimbs, new GUIContent("Virtual Limbs"));
@@ -54,7 +57,12 @@ namespace VHToolkit.Redirection {
 			} else if (technique.enumNames[technique.enumValueIndex] == "Poupyrev1996GoGo") {
 				EditorGUILayout.PropertyField(physicalHead, new GUIContent("Physical Head"));
 			}
-			EditorGUILayout.PropertyField(redirect, new GUIContent("redirect"));
+
+
+			EditorGUILayout.Space(5);
+			EditorGUILayout.LabelField("Technique Parameters", EditorStyles.boldLabel);
+
+			EditorGUILayout.PropertyField(redirect, new GUIContent("Redirect"));
 
 			EditorGUILayout.PropertyField(physicalTarget, new GUIContent("Physical Target"));
 			EditorGUILayout.PropertyField(virtualTarget, new GUIContent("Virtual Target"));
