@@ -76,7 +76,7 @@ namespace VHToolkit.Redirection {
 		/// applies rotations to the physical hand and
 		/// initializes the previous head positions.
 		/// </summary>
-		private void Update() {
+		private void LateUpdate() {
 			if (previousTechnique != technique || techniqueInstance == null) {
 				updateTechnique();
 				previousTechnique = technique;
