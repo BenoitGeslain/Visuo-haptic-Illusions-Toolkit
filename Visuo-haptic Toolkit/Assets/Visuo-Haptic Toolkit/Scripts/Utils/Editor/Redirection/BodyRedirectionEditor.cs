@@ -19,6 +19,7 @@ namespace VHToolkit.Redirection {
 		SerializedProperty physicalTarget;
 		SerializedProperty virtualTarget;
 		SerializedProperty origin;
+		SerializedProperty redirect;
 
 		private void OnEnable() {
 
@@ -32,6 +33,7 @@ namespace VHToolkit.Redirection {
 			physicalTarget = serializedObject.FindProperty("scene.physicalTarget");
 			virtualTarget = serializedObject.FindProperty("scene.virtualTarget");
 			origin = serializedObject.FindProperty("scene.origin");
+			redirect = serializedObject.FindProperty("redirect");
 		}
 
 		public override void OnInspectorGUI() {
@@ -52,6 +54,7 @@ namespace VHToolkit.Redirection {
 			} else if (technique.enumNames[technique.enumValueIndex] == "Poupyrev1996GoGo") {
 				EditorGUILayout.PropertyField(physicalHead, new GUIContent("Physical Head"));
 			}
+			EditorGUILayout.PropertyField(redirect, new GUIContent("redirect"));
 
 			EditorGUILayout.PropertyField(physicalTarget, new GUIContent("Physical Target"));
 			EditorGUILayout.PropertyField(virtualTarget, new GUIContent("Virtual Target"));
