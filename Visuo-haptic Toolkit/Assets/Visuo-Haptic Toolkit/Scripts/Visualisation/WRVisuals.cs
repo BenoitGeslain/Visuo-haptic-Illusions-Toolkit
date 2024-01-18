@@ -100,7 +100,7 @@ namespace VHToolkit.Visualisation {
 		}
 
 		private void showOrbit(Scene scene) {
-			Vector3 previousRadius = new Vector3(0f, 0f, scene.radius);
+			Vector3 previousRadius = new (0f, 0f, scene.radius);
 			Vector3 currentRadius;
 			Quaternion stepRotation = Quaternion.Euler(0f, 360f/orbitResolution, 0f);
 			for (int angle = 0; angle < orbitResolution; angle++) {

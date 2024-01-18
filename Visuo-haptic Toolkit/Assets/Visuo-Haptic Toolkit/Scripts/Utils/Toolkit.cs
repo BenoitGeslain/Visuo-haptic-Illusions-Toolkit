@@ -5,6 +5,7 @@ namespace VHToolkit.Redirection {
 	/// Available body redirection techniques.
 	/// </summary>
 	public enum BRTechnique {
+		None,	// Hand Redirection techniques
 		Reset,	// Hand Redirection techniques
 		Han2018TranslationalShift,
 		Han2018InterpolatedReach,
@@ -36,7 +37,8 @@ namespace VHToolkit.Redirection {
 		NoSteering,
 		SteerToCenter,
 		SteerToOrbit,
-		SteerToMultipleTargets
+		SteerToMultipleTargets,
+		SteerInDirection
 	}
 
 	public class Toolkit : MonoBehaviour {

@@ -1,3 +1,5 @@
+using System.Collections.ObjectModel;
+using System.Linq;
 using UnityEngine;
 
 namespace VHToolkit.Redirection {
@@ -42,6 +44,7 @@ namespace VHToolkit.Redirection {
 				WRStrategy.SteerToCenter => new SteerToCenter(),
 				WRStrategy.SteerToOrbit => new SteerToOrbit(),
 				WRStrategy.SteerToMultipleTargets => new SteerToMultipleTargets(),
+				WRStrategy.SteerInDirection => new SteerInDirection(),
 				_ => null
 			};
 
@@ -57,11 +60,13 @@ namespace VHToolkit.Redirection {
 			updateTechnique();
 			previousTechnique = technique;
 
-			scene.selectedTarget = scene.targets[0];
-			scene.previousHandPosition = scene.physicalHand.position;
-			scene.previousHandRotation = scene.physicalHand.rotation;
+			if (scene.targets != null) {
+				scene.selectedTarget = scene.targets.FirstOrDefault();
+			}
 			scene.previousHeadPosition = scene.physicalHead.position;
 			scene.previousHeadRotation = scene.physicalHead.rotation;
+
+			scene.previousLimbPositions = scene.limbs.Select(limb => limb.PhysicalLimb.position).ToList();
 		}
 
 		/// <summary>
@@ -80,13 +85,21 @@ namespace VHToolkit.Redirection {
 			if (strategyInstance is not null)
 				scene.forwardTarget = strategyInstance.SteerTo(scene);
 
-			techniqueInstance?.Redirect(scene);
-
-			scene.previousHandPosition = scene.physicalHand.position;
-			scene.previousHandRotation = scene.physicalHand.rotation;
+			if (!redirect)
+				new NoWorldRedirection().Redirect(scene);
+			else if (techniqueInstance is not null)
+				techniqueInstance.Redirect(scene);
 			scene.previousHeadPosition = scene.physicalHead.position;
 			scene.previousHeadRotation = scene.physicalHead.rotation;
+
+			scene.previousLimbPositions = scene.limbs.Select(limb => limb.PhysicalLimb.position).ToList();
 		}
+
+		/// <summary>
+		/// Getter for the enumeration technique.
+		/// </summary>
+		/// <returns>Returns the enumeration technique</returns>
+		public WRTechnique GetTechnique() => technique;
 
         /// <summary>
         /// Setter for the enumeration BRTechnique. updateTechnique() gets called on the next Update().
@@ -98,12 +111,6 @@ namespace VHToolkit.Redirection {
         /// A wrapper around SetTechnique(BRTechnique t) to use the ResetRedirection technique.
         /// </summary>
         public void ResetRedirection() => SetTechnique(WRTechnique.Reset);
-
-		/// <summary>
-		/// Getter for the enumeration technique.
-		/// </summary>
-		/// <returns>Returns the enumeration technique</returns>
-		public WRTechnique GetTechnique() => technique;
 
 		/// <summary>
 		/// Determine whether a redirection is applied to the user's virtual and physical head

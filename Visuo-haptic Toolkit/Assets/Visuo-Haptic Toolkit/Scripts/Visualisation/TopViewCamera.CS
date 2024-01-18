@@ -8,6 +8,6 @@ public class TopViewCamera : MonoBehaviour {
 
 	private void Update() {
 		this.transform.position = new Vector3(trackedObject.position.x, this.transform.position.y, trackedObject.position.z);
-		this.transform.rotation = Quaternion.Euler(this.transform.rotation.eulerAngles.x, trackedObject.rotation.eulerAngles.y, this.transform.rotation.eulerAngles.z);
+		this.transform.rotation = Quaternion.Euler(90f, trackedObject.rotation.eulerAngles.y, 0f);
 	}
 }

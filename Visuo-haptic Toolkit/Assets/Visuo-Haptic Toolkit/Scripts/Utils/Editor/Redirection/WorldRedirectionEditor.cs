@@ -13,6 +13,7 @@ namespace VHToolkit.Redirection {
 		SerializedProperty technique;
 		SerializedProperty strategy;
 
+		SerializedProperty physicalHand;
 		SerializedProperty physicalHead;
 		SerializedProperty virtualHead;
 		SerializedProperty physicalTarget;
@@ -22,6 +23,7 @@ namespace VHToolkit.Redirection {
 		SerializedProperty radius;
 		SerializedProperty applyDampening;
 		SerializedProperty applySmoothing;
+		SerializedProperty redirect;
 
         readonly string[] strategyTechniques = { "Razzaque2001OverTimeRotation", "Razzaque2001Rotational", "Razzaque2001Curvature", "Razzaque2001Hybrid" };
         readonly string[] targetsStrategies = { "SteerToCenter", "SteerToMultipleTargets" };
@@ -29,6 +31,8 @@ namespace VHToolkit.Redirection {
 		private void OnEnable() {
 			technique = serializedObject.FindProperty("technique");
 			strategy = serializedObject.FindProperty("strategy");
+
+			physicalHand = serializedObject.FindProperty("scene.limbs");
 
 			physicalHead = serializedObject.FindProperty("scene.physicalHead");
 			virtualHead = serializedObject.FindProperty("scene.virtualHead");
@@ -39,6 +43,7 @@ namespace VHToolkit.Redirection {
 			radius = serializedObject.FindProperty("scene.radius");
 			applyDampening = serializedObject.FindProperty("scene.applyDampening");
 			applySmoothing = serializedObject.FindProperty("scene.applySmoothing");
+			redirect = serializedObject.FindProperty("redirect");
 		}
 
 		public override void OnInspectorGUI() {
@@ -54,15 +59,19 @@ namespace VHToolkit.Redirection {
 			}
 
 			// Scene
+			EditorGUILayout.PropertyField(physicalHand, new GUIContent("Physical Hand"));
 			EditorGUILayout.PropertyField(physicalHead, new GUIContent("Physical Head"));
 			EditorGUILayout.PropertyField(virtualHead, new GUIContent("Virtual Head"));
+
+			EditorGUILayout.PropertyField(redirect, new GUIContent("redirect"));
 
 			EditorGUILayout.PropertyField(physicalTarget, new GUIContent("Physical Target"));
 			EditorGUILayout.PropertyField(virtualTarget, new GUIContent("Virtual Target"));
 			EditorGUILayout.PropertyField(origin, new GUIContent("Origin"));
 
-			// Hides redirectionLateness and controlpoint fields if the technique is not Geslain2022Polynom
-			if (technique.enumNames[technique.enumValueIndex] == "Razzaque2001Hybrid" && strategy.enumNames[strategy.enumValueIndex] != "NoSteering") {
+			// Hides targets, dampening and smoothing if
+			if (strategyTechniques.Contains(technique.enumNames[technique.enumValueIndex])) {
+				EditorGUILayout.Space(5);
 				if (targetsStrategies.Contains(strategy.enumNames[strategy.enumValueIndex])) {
 					EditorGUILayout.PropertyField(targetsScene, new GUIContent ("Targets"));
 				} else if (strategy.enumNames[strategy.enumValueIndex] == "SteerToOrbit") {

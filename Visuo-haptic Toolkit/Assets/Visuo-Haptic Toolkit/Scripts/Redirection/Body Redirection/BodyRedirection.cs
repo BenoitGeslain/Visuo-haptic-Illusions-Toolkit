@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 namespace VHToolkit.Redirection {
@@ -27,12 +28,13 @@ namespace VHToolkit.Redirection {
 		/// <summary>
 		/// Updates the techniqueInstance according to the enumeration technique chosen.
 		/// </summary>
-        private void updatetechnique() {
+        private void updateTechnique() {
 			techniqueInstance = technique switch {
+				BRTechnique.None => new NoBodyRedirection(),
 				BRTechnique.Reset => new ResetBodyRedirection(),
 				BRTechnique.Azmandian2016Body => new Azmandian2016Body(),
 				BRTechnique.Azmandian2016Hybrid => new Azmandian2016Hybrid(),
-				BRTechnique.Han2018TranslationalShift => new Han2018Instant(),
+				BRTechnique.Han2018TranslationalShift => new Han2018TranslationalShift(),
 				BRTechnique.Han2018InterpolatedReach => new Han2018Continuous(),
 				BRTechnique.Cheng2017Sparse => new Cheng2017Sparse(),
 				BRTechnique.Geslain2022Polynom => new Geslain2022Polynom(techniqueInstance.redirectionLateness, techniqueInstance.controlPoint),
@@ -51,13 +53,16 @@ namespace VHToolkit.Redirection {
 		/// initializes the previous head positions.
 		/// </summary>
 		private void OnEnable() {
-			updatetechnique();
+			updateTechnique();
 			previoustechnique = technique;
-			// Store thhe previous hand and head position and rotation to compute instant linear or angular velocity
-			scene.previousHandPosition = scene.physicalHand.position;
-			scene.previousHandRotation = scene.physicalHand.rotation;
-			scene.previousHeadPosition = scene.physicalHead.position;
-			scene.previousHeadRotation = scene.physicalHead.rotation;
+			// Store the previous hand and head position and rotation to compute instant linear or angular velocity
+			scene.previousLimbPositions = scene.limbs.ConvertAll(limb => limb.PhysicalLimb.position);
+			scene.previousLimbRotations = scene.limbs.ConvertAll(limb => limb.PhysicalLimb.rotation);
+			if (scene.physicalHead) {
+				scene.previousHeadPosition = scene.physicalHead.position;
+				scene.previousHeadRotation = scene.physicalHead.rotation;
+			}
+
 		}
 
 		/// <summary>
@@ -69,20 +74,22 @@ namespace VHToolkit.Redirection {
 		/// </summary>
         private void Update() {
 			if (previoustechnique != technique) {
-				updatetechnique();
+				updateTechnique();
 				previoustechnique = technique;
 			}
 
 			techniqueInstance?.Redirect(scene);	// Computes and applies the redirection according to the selected redirection technique
 
 			// Copy the real hand rotation to the virtual hand to conserve tracking.
-			scene.virtualHand.rotation = scene.physicalHand.rotation;	// TODO check Azmandian Body for rotation
+			scene.limbs.ForEach(limb => limb.VirtualLimb.ForEach(vlimb => vlimb.rotation = limb.PhysicalLimb.rotation)); // TODO check Azmandian Body for rotation
 			// In case the body redirection technique uses the head of the user (e.g. ),
 			// the previous position and rotation are stored to compute instant linear or angular velocity
-			scene.previousHandPosition = scene.physicalHand.position;
-			scene.previousHandRotation = scene.physicalHand.rotation;
-			scene.previousHeadPosition = scene.physicalHead.position;
-			scene.previousHeadRotation = scene.physicalHead.rotation;
+			scene.previousLimbPositions = scene.limbs.ConvertAll(limb => limb.PhysicalLimb.position);
+			scene.previousLimbRotations = scene.limbs.ConvertAll(limb => limb.PhysicalLimb.rotation);
+			if (scene.physicalHead) {
+				scene.previousHeadPosition = scene.physicalHead.position;
+				scene.previousHeadRotation = scene.physicalHead.rotation;
+			}
 		}
 
 		/// <summary>
@@ -90,8 +97,16 @@ namespace VHToolkit.Redirection {
 		/// </summary>
         public void ResetRedirection() => technique = BRTechnique.Reset;
 
+		/// <summary>
+		/// Getter for the redirection technique currently used.
+		/// </summary>
+		/// <returns>BRTechnique</returns>
         public BRTechnique GetTechnique() => technique;
 
+		/// <summary>
+		/// Setter for the redirection technique to use.
+		/// </summary>
+		/// <param name="t">BRTechnique</param>
         public void SetTechnique(BRTechnique t) => technique = t;
 
 		/// <summary>
@@ -100,6 +115,6 @@ namespace VHToolkit.Redirection {
 		/// <returns>Returns a bool:
 		/// true if the virtual hand of the user is not co-localised to the physical hand.
 		/// false otherwise.</returns>
-        public bool IsRedirecting() => scene.GetHandRedirectionDistance() > Vector3.kEpsilon;
+        public bool IsRedirecting() => scene.GetHandRedirectionDistance().SelectMany(x => x).Any(x => x > Vector3.kEpsilon);
     }
 }

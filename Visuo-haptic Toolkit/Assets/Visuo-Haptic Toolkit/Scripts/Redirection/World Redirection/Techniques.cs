@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -10,7 +9,14 @@ namespace VHToolkit.Redirection {
 	///  This class is the most conceptual class of  world redirection defining the important function to call: Redirect().
 	///  Information about the user such as the user's position or the targets are encapsulated inside Scene.
 	/// </summary>
-	public class WorldRedirectionTechnique : RedirectionTechnique { }
+	public class WorldRedirectionTechnique : RedirectionTechnique {
+		public void CopyHeadAndHandTransform(Scene scene) {
+			scene.CopyHeadRotations();
+			scene.CopyHeadTranslations();
+
+			scene.CopyHandTranslations();
+		}
+	}
 
 	/// <summary>
 	/// This class implements the rotation over time technique from Razzaque et al., 2001. This technique rotates the user's virtual head around the vertical axis by a fixed amount
@@ -18,9 +24,9 @@ namespace VHToolkit.Redirection {
 	/// </summary>
 	public class Razzaque2001OverTimeRotation: WorldRedirectionTechnique {
 		public override void Redirect(Scene scene) {
-			scene.CopyHeadRotations();
-			scene.CopyHeadTranslations();
-			scene.virtualHead.Rotate(0f, GetRedirection(scene), 0f, Space.World);
+			CopyHeadAndHandTransform(scene);
+
+			scene.RotateVirtualHeadY(GetRedirection(scene));
 		}
 
 		public static float GetRedirection(Scene scene) {
@@ -49,9 +55,9 @@ namespace VHToolkit.Redirection {
 	/// </summary>
 	public class Razzaque2001Rotational: WorldRedirectionTechnique {
 		public override void Redirect(Scene scene) {
-			scene.CopyHeadRotations();
+			CopyHeadAndHandTransform(scene);
+
 			scene.RotateVirtualHeadY(GetRedirection(scene));
-			scene.CopyHeadTranslations();
 		}
 
 		public static float GetRedirection(Scene scene) {
@@ -85,10 +91,9 @@ namespace VHToolkit.Redirection {
 	/// </summary>
 	public class Razzaque2001Curvature: WorldRedirectionTechnique {
 		public override void Redirect(Scene scene) {
-			scene.physicalHead.position += Vector3.forward/1000f;
-			scene.CopyHeadRotations();
+			CopyHeadAndHandTransform(scene);
+
 			scene.RotateVirtualHeadY(GetRedirection(scene));
-			scene.CopyHeadTranslations();
 		}
 
 		public static float GetRedirection(Scene scene) {
@@ -138,11 +143,14 @@ namespace VHToolkit.Redirection {
 		/// </summary>
 		static Razzaque2001Hybrid Weighted(float x, float y, float z) => new((a, b, c) => a * x + b * y + c * z);
 		public override void Redirect(Scene scene) {
+			CopyHeadAndHandTransform(scene);
+
 			float angle = aggregate(
 				Razzaque2001OverTimeRotation.GetRedirection(scene),
 				Razzaque2001Rotational.GetRedirection(scene),
 				Razzaque2001Curvature.GetRedirection(scene)
 			);
+
 			if (scene.applyDampening) {
 				angle = ApplyDampening(scene, angle);
 			}
@@ -151,10 +159,7 @@ namespace VHToolkit.Redirection {
 			}
 
 			scene.previousRedirection = angle;
-
-			scene.CopyHeadRotations();
 			scene.RotateVirtualHeadY(angle);
-			scene.CopyHeadTranslations();
 		}
 
 		private float ApplyDampening(Scene scene, float angle) {
@@ -172,14 +177,9 @@ namespace VHToolkit.Redirection {
 	/// </summary>
 	public class Steinicke2008Translational: WorldRedirectionTechnique {
 		public override void Redirect(Scene scene) {
-			scene.CopyHeadRotations();
+			CopyHeadAndHandTransform(scene);
 
-			Vector3 instantTranslation = scene.GetHeadInstantTranslation();
-			scene.virtualHead.Translate(
-				instantTranslation.x * Toolkit.Instance.parameters.GainsTranslational.x,
-				instantTranslation.y * Toolkit.Instance.parameters.GainsTranslational.y,
-				instantTranslation.z * Toolkit.Instance.parameters.GainsTranslational.z,
-				relativeTo: Space.World);
+            scene.virtualHead.Translate(Vector3.Scale(scene.GetHeadInstantTranslation(), Toolkit.Instance.parameters.GainsTranslational - Vector3.one), relativeTo: Space.World);
 		}
 	}
 
@@ -189,8 +189,7 @@ namespace VHToolkit.Redirection {
 	/// </summary>
 	public class Azmandian2016World: WorldRedirectionTechnique {
 		public override void Redirect(Scene scene) {
-			scene.CopyHeadRotations();
-			scene.CopyHeadTranslations();
+			CopyHeadAndHandTransform(scene);
 
 			scene.virtualHead.RotateAround(scene.origin.position, Vector3.up, GetRedirection(scene));
 		}
@@ -219,31 +218,15 @@ namespace VHToolkit.Redirection {
 	/// </summary>
 	public class ResetWorldRedirection: WorldRedirectionTechnique {
 		public override void Redirect(Scene scene) {
-			// if (Mathf.Abs(scene.GetHeadToHeadRotation().eulerAngles.y) > Toolkit.Instance.parameters.RotationalEpsilon) {
-			// 		float[] angles = new float[] {
-			// 		Razzaque2001OverTimeRotation.GetRedirectionReset(scene),
-			// 		Razzaque2001Rotational.GetRedirectionReset(scene)
-			// 	};
 
-			// 	for (int i = 1; i < angles.Length; i++) {
-			// 		if (Mathf.Abs(angles[i]) > Mathf.Abs(angles[0])) {
-			// 			angles[0] = angles[i];
-			// 		}
-			// 	}
-
-			// 	scene.previousRedirection = angles[0];
-			// 	scene.RotateVirtualHeadY(angles[0]);
-			// }
-
-			scene.CopyHeadRotations();
-			scene.CopyHeadTranslations();
 		}
 	}
 
 	public class NoWorldRedirection: WorldRedirectionTechnique {
 		public override void Redirect(Scene scene) {
-			scene.CopyHeadRotations();
-			scene.CopyHeadTranslations();
+			CopyHeadAndHandTransform(scene);
+
+			scene.CopyHandTranslations();
 		}
 	}
 }
