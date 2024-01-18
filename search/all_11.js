@@ -15,10 +15,11 @@ var searchData=
   ['redirectiontechnique_2ecs_137',['RedirectionTechnique.cs',['../RedirectionTechnique_8cs.html',1,'']]],
   ['reset_138',['Reset',['../namespaceVHToolkit_1_1Redirection.html#a0d56c189dc559dc0687f7c32fad22530a526d688f37a86d3c3f27d0c5016eb71d',1,'VHToolkit.Redirection.Reset()'],['../namespaceVHToolkit_1_1Redirection.html#af8073b3c987118e1413b41c5be00892ba526d688f37a86d3c3f27d0c5016eb71d',1,'VHToolkit.Redirection.Reset()'],['../classValve_1_1VR_1_1SteamVR__Input__ActionSet__buggy.html#a1b1442d70fb8e37e12fdd3870c43bcb3',1,'Valve.VR.SteamVR_Input_ActionSet_buggy.Reset()']]],
   ['resetbodyredirection_139',['ResetBodyRedirection',['../classVHToolkit_1_1Redirection_1_1ResetBodyRedirection.html',1,'VHToolkit::Redirection']]],
-  ['resetredirection_140',['ResetRedirection',['../classVHToolkit_1_1Redirection_1_1WorldRedirection.html#a1bfe877cd739eb827d8e0c22ca9993ed',1,'VHToolkit.Redirection.WorldRedirection.ResetRedirection()'],['../classVHToolkit_1_1Redirection_1_1BodyRedirection.html#aa951539f8a1a279c72c1dba293cdfb70',1,'VHToolkit.Redirection.BodyRedirection.ResetRedirection()']]],
-  ['resetredirectioncoeff_141',['ResetRedirectionCoeff',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a560f097571f1c80286a9038ccda2014f',1,'VHToolkit::Redirection::ParametersToolkit']]],
-  ['resetworldredirection_142',['ResetWorldRedirection',['../classVHToolkit_1_1Redirection_1_1ResetWorldRedirection.html',1,'VHToolkit::Redirection']]],
-  ['right_143',['right',['../classVHToolkit_1_1Redirection_1_1Vector2Horizontal.html#a97d18f0a38a10765a760a8e95871280f',1,'VHToolkit::Redirection::Vector2Horizontal']]],
-  ['rotationalerror_144',['RotationalError',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a7dad5be9259e7c1b014af0adf62be72e',1,'VHToolkit::Redirection::ParametersToolkit']]],
-  ['rotationthreshold_145',['RotationThreshold',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#ab2d38a498e13a6c48d9a51022c699a45',1,'VHToolkit::Redirection::ParametersToolkit']]]
+  ['resetcubes_140',['ResetCubes',['../classSceneController.html#aeabacdb6107f93b9449fe77d43244ebc',1,'SceneController']]],
+  ['resetredirection_141',['ResetRedirection',['../classVHToolkit_1_1Redirection_1_1WorldRedirection.html#a1bfe877cd739eb827d8e0c22ca9993ed',1,'VHToolkit.Redirection.WorldRedirection.ResetRedirection()'],['../classVHToolkit_1_1Redirection_1_1BodyRedirection.html#aa951539f8a1a279c72c1dba293cdfb70',1,'VHToolkit.Redirection.BodyRedirection.ResetRedirection()']]],
+  ['resetredirectioncoeff_142',['ResetRedirectionCoeff',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a560f097571f1c80286a9038ccda2014f',1,'VHToolkit::Redirection::ParametersToolkit']]],
+  ['resetworldredirection_143',['ResetWorldRedirection',['../classVHToolkit_1_1Redirection_1_1ResetWorldRedirection.html',1,'VHToolkit::Redirection']]],
+  ['right_144',['right',['../classVHToolkit_1_1Redirection_1_1Vector2Horizontal.html#a97d18f0a38a10765a760a8e95871280f',1,'VHToolkit::Redirection::Vector2Horizontal']]],
+  ['rotationalerror_145',['RotationalError',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a7dad5be9259e7c1b014af0adf62be72e',1,'VHToolkit::Redirection::ParametersToolkit']]],
+  ['rotationthreshold_146',['RotationThreshold',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#ab2d38a498e13a6c48d9a51022c699a45',1,'VHToolkit::Redirection::ParametersToolkit']]]
 ];
