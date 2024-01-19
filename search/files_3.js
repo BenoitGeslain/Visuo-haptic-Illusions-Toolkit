@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['geslain2022polynomeditor_2ecs_323',['Geslain2022PolynomEditor.cs',['../Geslain2022PolynomEditor_8cs.html',1,'']]]
+  ['geslain2022polynomeditor_2ecs_260',['Geslain2022PolynomEditor.cs',['../Geslain2022PolynomEditor_8cs.html',1,'']]]
 ];

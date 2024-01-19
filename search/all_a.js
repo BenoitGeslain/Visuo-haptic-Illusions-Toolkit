@@ -1,4 +1,7 @@
 var searchData=
 [
-  ['jump_94',['Jump',['../classValve_1_1VR_1_1SteamVR__Input__ActionSet__platformer.html#a2abd6fbf45f724e0c2cdf0851ac43702',1,'Valve::VR::SteamVR_Input_ActionSet_platformer']]]
+  ['maxredirectionthreshold_77',['MaxRedirectionThreshold',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#af0ddc884454f477186f5963701f73973',1,'VHToolkit::Redirection::ParametersToolkit']]],
+  ['minjerktrajectory_78',['MinJerkTrajectory',['../classAssets_1_1Visuo__Haptic__Toolkit_1_1Scripts_1_1Logging_1_1UserTrajectorySimulation_1_1MinJerkTrajectory.html',1,'Assets::Visuo_Haptic_Toolkit::Scripts::Logging::UserTrajectorySimulation']]],
+  ['minjerktrajectory_2ecs_79',['MinJerkTrajectory.cs',['../MinJerkTrajectory_8cs.html',1,'']]],
+  ['mjttrajectorygenerator_2ecs_80',['MJTTrajectoryGenerator.cs',['../MJTTrajectoryGenerator_8cs.html',1,'']]]
 ];
