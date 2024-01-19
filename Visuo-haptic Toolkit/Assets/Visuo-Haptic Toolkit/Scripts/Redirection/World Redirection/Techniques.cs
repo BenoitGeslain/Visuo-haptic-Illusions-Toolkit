@@ -121,7 +121,7 @@ namespace VHToolkit.Redirection {
 		/// By default, the aggregation function is the maximum by absolute value.
 		/// </summary>
 		public Razzaque2001Hybrid() : base() {
-			this.aggregate = (a, b, c) => (new float[] { a, b, c }).AsReadOnlyList().OrderByDescending(Mathf.Abs).First();
+			this.aggregate = (a, b, c) => (new float[] { a, b, c }).OrderByDescending(Mathf.Abs).First();
 		}
 
 		/// <summary>

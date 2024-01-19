@@ -50,7 +50,7 @@ namespace VHToolkit.Redirection {
 			List<float> handTargetDistance = scene.limbs.ConvertAll(limb =>
 				Mathf.Clamp01(Vector3.Dot(scene.origin.position - scene.physicalTarget.position, limb.physicalLimb.position - scene.physicalTarget.position)));
 
-			List<Vector3> BRRedirection = Enumerable.Zip(handTargetDistance, Azmandian2016Body.GetRedirection(scene), (v, d) => (1 - v) * d).ToList();
+			List<Vector3> BRRedirection = handTargetDistance.Zip(Azmandian2016Body.GetRedirection(scene), (v, d) => (1 - v) * d).ToList();
             float WRRedirection = handTargetDistance.FirstOrDefault() * Azmandian2016World.GetRedirection(scene);
 			// todo follow multiple limbs and not just first limb
 
@@ -94,7 +94,7 @@ namespace VHToolkit.Redirection {
 	public class Cheng2017Sparse: BodyRedirectionTechnique {
 
 		public override void Redirect(Scene scene) {
-            List<float> alpha = Enumerable.Zip(scene.GetPhysicalHandOriginDistance(), scene.GetPhysicalHandTargetDistance(), (s, p) => s / (s + p)).ToList();
+            List<float> alpha = scene.GetPhysicalHandOriginDistance().Zip(scene.GetPhysicalHandTargetDistance(), (s, p) => s / (s + p)).ToList();
 			scene.Redirection = alpha.ConvertAll(a => a * (scene.virtualTarget.position - scene.physicalTarget.position));
 		}
 	}
@@ -158,7 +158,7 @@ namespace VHToolkit.Redirection {
     public class ResetBodyRedirection : BodyRedirectionTechnique {
 
         public override void Redirect(Scene scene) {
-            foreach (var p in Enumerable.Zip(scene.limbs, scene.GetHandInstantTranslation(), (limb, t) => (limb, t))) {
+            foreach (var p in scene.limbs.Zip(scene.GetHandInstantTranslation(), (limb, t) => (limb, t))) {
 				p.limb.virtualLimb.ForEach(vlimb => vlimb.Translate(p.t + p.t.magnitude * Toolkit.Instance.parameters.ResetRedirectionCoeff * (p.limb.physicalLimb.position - vlimb.position).normalized));
         	};
     	}
