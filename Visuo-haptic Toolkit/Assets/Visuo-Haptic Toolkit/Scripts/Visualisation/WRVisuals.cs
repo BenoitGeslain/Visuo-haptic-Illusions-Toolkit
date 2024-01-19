@@ -115,7 +115,7 @@ namespace VHToolkit.Visualisation {
 		}
 
 		private void multipleTargets(Scene scene) {
-			fixTargetCounts(scene.targets.Length);
+			fixTargetCounts(scene.targets.Count);
             var targetsAndSceneTargets = targets.Zip(scene.targets, (a, b) => (a, b));
             foreach ((var first, var second) in targetsAndSceneTargets) {
                 first.transform.position = second.position;
