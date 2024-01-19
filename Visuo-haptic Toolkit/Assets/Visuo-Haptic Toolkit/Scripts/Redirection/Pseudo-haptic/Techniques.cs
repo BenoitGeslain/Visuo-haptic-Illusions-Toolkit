@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
+
 using UnityEngine;
 
 
-// TODO once implemented move these techniques into the right namespace
 // TODO handle collision detection
 // TODO handle offset reduction
 namespace VHToolkit.Redirection {
