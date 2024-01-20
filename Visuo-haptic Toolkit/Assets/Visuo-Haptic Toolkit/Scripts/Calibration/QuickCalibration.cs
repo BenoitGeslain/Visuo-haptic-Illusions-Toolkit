@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.XR;
 using VHToolkit.Redirection;
@@ -28,10 +29,8 @@ public class QuickCalibration : MonoBehaviour {
 		inputDevices = new List<InputDevice>();
 		InputDevices.GetDevicesWithCharacteristics(characteristics, inputDevices);
 
-		if (inputDevices.Count > 0) {
-			var device = inputDevices[0];
-
-            device.TryGetFeatureValue(CommonUsages.primaryButton, out bool buttonStatus);
+		if (inputDevices.Any()) {
+            inputDevices.First().TryGetFeatureValue(CommonUsages.primaryButton, out bool buttonStatus);
             if (buttonStatus && !wasPressingButton) {
 				Debug.LogError(script);
 				script.StartRedirection();
