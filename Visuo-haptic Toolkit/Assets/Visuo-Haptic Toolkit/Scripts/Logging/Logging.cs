@@ -12,7 +12,9 @@ using VHToolkit.Redirection;
 
 namespace VHToolkit.Logging
 {
-
+	/// <summary>
+	/// Class specifying loggable data for a redirection scene.
+	/// </summary>
     public record RedirectionData {
         public DateTime timeStamp = DateTime.Now;
         public string Technique => script switch {
@@ -28,6 +30,9 @@ namespace VHToolkit.Logging
         }
     }
 
+	/// <summary>
+	/// Helper class for redirection logging.
+	/// </summary>
 	public sealed class RedirectionDataMap : ClassMap<RedirectionData> {
 		public sealed class SceneClassMap : ClassMap<Scene> {
 			public SceneClassMap() {

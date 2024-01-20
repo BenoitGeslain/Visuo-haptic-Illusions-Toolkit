@@ -24,7 +24,7 @@ namespace VHToolkit.Redirection {
     }
 
     /// <summary>
-    /// TODO
+    /// This class implements the pseudo-haptic weight effect by Samad et al., 2019. CD ratio manipulation simulates the effects of weight.
     /// </summary>
     public class Samad2019Weight : BodyRedirectionTechnique {
         public override void Redirect(Scene scene) {
