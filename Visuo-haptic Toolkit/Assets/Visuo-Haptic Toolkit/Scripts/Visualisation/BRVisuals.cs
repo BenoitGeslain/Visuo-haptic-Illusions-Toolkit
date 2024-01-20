@@ -7,7 +7,7 @@ using VHToolkit.Redirection;
 namespace VHToolkit.Visualisation {
 	public class BRVisuals : MonoBehaviour {
 
-		[SerializeField] private bool showThersholdLines;
+		[SerializeField] private bool showThresholdLines;
 
 		private BodyRedirection BRMainScript;
 		private Scene scene;
@@ -23,16 +23,16 @@ namespace VHToolkit.Visualisation {
 
 		private void Update() {
 			// draws threshold lines for the targets
-			drawThresholdLines(BRMainScript.scene.physicalTarget.position, BRMainScript.scene.virtualTarget.position, BRMainScript);
+			DrawThresholdLines(BRMainScript.scene.physicalTarget.position, BRMainScript.scene.virtualTarget.position, BRMainScript);
 			if (BRMainScript.IsRedirecting()) {
 				// draws threshold lines for the hands
 				foreach(Limb limb in BRMainScript.scene.limbs) {
 					foreach(var vlimb in limb.virtualLimb)
-						drawThresholdLines(limb.physicalLimb.position, vlimb.position, BRMainScript);
+						DrawThresholdLines(limb.physicalLimb.position, vlimb.position, BRMainScript);
 				}
 			}
 			if (BRMainScript.GetTechnique() == BRTechnique.Lecuyer2000Swamp) {
-				foreach(var vlimb in BRMainScript.scene.limbs.SelectMany(limb => limb.virtualLimb)) {
+				foreach(var vlimb in BRMainScript.scene.virtualLimbs) {
 					Vector3 distanceToOrigin = vlimb.position - BRMainScript.scene.origin.position;
 					Color c = (MathF.Max(MathF.Abs(distanceToOrigin[0]), MathF.Abs(distanceToOrigin[2])) < Toolkit.Instance.parameters.SwampSquareLength/2) ?
 							Color.green : Color.yellow;
@@ -59,7 +59,7 @@ namespace VHToolkit.Visualisation {
 		/// <param name="obj1">Vector3: A physical GameObject's position</param>
 		/// <param name="obj2">Vector3: The virtual corresponding GameObject's position</param>
 		/// <param name="BRMainScript"></param>
-		private void drawThresholdLines(Vector3 obj1, Vector3 obj2, BodyRedirection BRMainScript) {
+		private void DrawThresholdLines(Vector3 obj1, Vector3 obj2, BodyRedirection BRMainScript) {
 
             if (Debug.isDebugBuild) {
 				// Computes the euler angles from the rotation matrix from obj1 to obj2 around the origin

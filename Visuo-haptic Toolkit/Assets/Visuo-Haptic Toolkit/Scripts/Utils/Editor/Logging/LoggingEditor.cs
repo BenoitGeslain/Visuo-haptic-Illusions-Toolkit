@@ -9,7 +9,7 @@ namespace VHToolkit.Logging {
 
 			if (GUILayout.Button("Create new logging file")) {
 				Logging script = (Logging)target;
-				script.createNewFile();
+				script.CreateNewFile();
 			}
 		}
 	}

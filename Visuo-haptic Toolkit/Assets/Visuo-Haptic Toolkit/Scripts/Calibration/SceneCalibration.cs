@@ -71,16 +71,13 @@ public class SceneCalibration : MonoBehaviour {
 					break;
 				case CalibrationState.Computation:
 					virtualTrackers[0].position = points[0];	// Align the first point with the tracker
-
-					// Align the second point by rotating the world
-					float angle = Vector3.Angle(virtualTrackers[1].position - virtualTrackers[0].position, points[1] - points[0]);
-					Vector3 axis = Vector3.Cross(virtualTrackers[1].position - virtualTrackers[0].position, points[1] - points[0]);
-					virtualTrackers[0].Rotate(axis, angle);
-
-					// Align the third point by rotating the world
-					angle = Vector3.Angle(virtualTrackers[2].position - virtualTrackers[0].position, points[2] - points[0]);
-					axis = Vector3.Cross(virtualTrackers[2].position - virtualTrackers[0].position, points[2] - points[0]);
-					virtualTrackers[0].Rotate(axis, angle);
+					// Align the second and third points by rotating the world
+					for (int i=1; i <= 2; i++) 
+					{
+						var v = virtualTrackers[i].position - virtualTrackers[0].position;
+						var p = points[i] - points[0];
+						virtualTrackers[0].Rotate(axis: Vector3.Cross(v, p), angle: Vector3.Angle(v, p));
+					}
 
 					state = CalibrationState.None;
 					SaveCalibration();

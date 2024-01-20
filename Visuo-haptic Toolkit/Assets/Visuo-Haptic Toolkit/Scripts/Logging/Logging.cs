@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Globalization;
-using System.Linq;
 
 using CsvHelper;
 using CsvHelper.Configuration;
@@ -11,7 +10,8 @@ using UnityEngine;
 
 using VHToolkit.Redirection;
 
-namespace VHToolkit.Logging {
+namespace VHToolkit.Logging
+{
 
     public record RedirectionData {
         public DateTime timeStamp = DateTime.Now;
@@ -76,7 +76,7 @@ namespace VHToolkit.Logging {
 		private Interaction script;
 
         private void Start() {
-			createNewFile();
+			CreateNewFile();
 			script = GetComponent<Interaction>();
 		}
 
@@ -95,7 +95,7 @@ namespace VHToolkit.Logging {
 			writeRecords<RedirectionData, RedirectionDataMap>(records);
 		}
 
-		public void createNewFile() {
+		public void CreateNewFile() {
 			fileName = $"{pathToFile}{fileNamePrefix}{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.csv";
 
 			void writeHeaders<Data, DataMap>(out List<Data> records) where DataMap : ClassMap<Data> {
