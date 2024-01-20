@@ -69,7 +69,7 @@ namespace VHToolkit.Redirection {
         [Ignore] public List<Vector3> Redirection {
             get => limbs.ConvertAll(limb => limb.virtualLimb[0].position - limb.physicalLimb.position);
             set {
-				foreach (var p in Enumerable.Zip(limbs, value, (limb, v) => (limb, v))) {
+				foreach (var p in limbs.Zip(value, (limb, v) => (limb, v))) {
 					p.limb.virtualLimb.ForEach(vLimb => vLimb.position = p.limb.physicalLimb.position + p.v);
 				}
         	}
@@ -149,7 +149,7 @@ namespace VHToolkit.Redirection {
         /// </summary>
         /// <returns>The instant linear velocity of the physical hand using the last frame's position</returns>
         public List<Vector3> GetHandInstantTranslation() {
-            return Enumerable.Zip(limbs, previousLimbPositions, (limb, pLimb) => limb.physicalLimb.position - pLimb).ToList();
+            return limbs.Zip(previousLimbPositions, (limb, pLimb) => limb.physicalLimb.position - pLimb).ToList();
         }
 
 
@@ -183,8 +183,8 @@ namespace VHToolkit.Redirection {
 			var t = GetHandInstantTranslation();
 			var Q = GetHeadToHeadRotation();
             limbs.ForEach(limb => {
-				foreach (var p in Enumerable.Zip(limb.virtualLimb, t, (vLimb, t) => (vLimb, t)))
-					p.vLimb.position += Q * p.t;
+				foreach (var p in limb.virtualLimb.Zip(t, (vLimb, t) => (vLimb, t)))
+					p.vLimb.Translate(Q * p.t);
 			});
 		}
 

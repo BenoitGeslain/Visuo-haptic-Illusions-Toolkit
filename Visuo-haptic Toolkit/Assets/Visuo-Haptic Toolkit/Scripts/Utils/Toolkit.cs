@@ -47,14 +47,16 @@ namespace VHToolkit.Redirection {
 		public ParametersToolkit parameters;
 
 		private void OnEnable() {
-			if (Instance != null && Instance != this) {
-				Destroy(this);
-			}
-			else {
-				Instance = this;
-				DontDestroyOnLoad(gameObject);
-			}
-		}
+            if (Instance == null || Instance == this)
+            {
+                Instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else
+            {
+                Destroy(this);
+            }
+        }
 
         public float CurvatureRadiusToRotationRate() => CurvatureRadiusToRotationRate(parameters.CurvatureRadius);
 

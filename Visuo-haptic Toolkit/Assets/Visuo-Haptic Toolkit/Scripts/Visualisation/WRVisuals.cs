@@ -36,19 +36,19 @@ namespace VHToolkit.Visualisation {
 
 			switch (WRMainScript.strategy) {
 				case WRStrategy.NoSteering:
-					fixTargetCounts(1);
+					FixTargetCounts(1);
                     targets[0].position = scene.physicalHead.position + scene.physicalHead.forward;
                     targets[0].gameObject.SetActive(true);
                     break;
 				case WRStrategy.SteerToCenter:
-					centerTarget(scene);
+					CenterTarget(scene);
 					break;
 				case WRStrategy.SteerToOrbit:
-					showOrbit(scene);
-					orbitTargets(scene);
+					ShowOrbit(scene);
+					OrbitTargets(scene);
 					break;
 				case WRStrategy.SteerToMultipleTargets:
-                    multipleTargets(scene);
+                    MultipleTargets(scene);
 					break;
 				default:
 					targets.Clear();
@@ -57,14 +57,14 @@ namespace VHToolkit.Visualisation {
             targets.ForEach(t => t.gameObject.SetActive(true));
 		}
 
-		private void centerTarget(Scene scene) {
-			fixTargetCounts(1);
+		private void CenterTarget(Scene scene) {
+			FixTargetCounts(1);
             targets[0].position = scene.selectedTarget.position;
             targets[0].GetComponent<Renderer>().material = active;
 			Debug.DrawLine(scene.physicalHead.position, scene.selectedTarget.position, colors[2]);
 		}
 
-		private void orbitTargets(Scene scene) {
+		private void OrbitTargets(Scene scene) {
 			float distanceToTarget = scene.GetHeadToTargetDistance();
 			Vector3 vectorToTarget = Vector3.ProjectOnPlane(scene.selectedTarget.position - scene.physicalHead.position, Vector3.up);
 			Vector3 leftTarget, rightTarget;
@@ -81,11 +81,11 @@ namespace VHToolkit.Visualisation {
             var targetColors = (Vector3.Angle(leftTarget, scene.physicalHead.forward) < Vector3.Angle(scene.physicalHead.forward, rightTarget)) ?
 				(colors[0], colors[1]) : (colors[1], colors[0]);
 
-            updateTargetsOrbit(scene, leftTarget, rightTarget);
+            UpdateTargetsOrbit(scene, leftTarget, rightTarget);
         }
 
-		private void updateTargetsOrbit(Scene scene, Vector3 leftTarget, Vector3 rightTarget) {
-			fixTargetCounts(2);
+		private void UpdateTargetsOrbit(Scene scene, Vector3 leftTarget, Vector3 rightTarget) {
+			FixTargetCounts(2);
 			if (Vector3.Angle(leftTarget, scene.physicalHead.forward) < Vector3.Angle(scene.physicalHead.forward, rightTarget)) {
             	targets[0].GetComponent<Renderer>().material = active;
             	targets[1].GetComponent<Renderer>().material = inactive;
@@ -99,7 +99,7 @@ namespace VHToolkit.Visualisation {
 			targets[1].position = scene.physicalHead.position + rightTarget;
 		}
 
-		private void showOrbit(Scene scene) {
+		private void ShowOrbit(Scene scene) {
 			Vector3 previousRadius = new (0f, 0f, scene.radius);
 			Vector3 currentRadius;
 			Quaternion stepRotation = Quaternion.Euler(0f, 360f/orbitResolution, 0f);
@@ -114,8 +114,8 @@ namespace VHToolkit.Visualisation {
 			}
 		}
 
-		private void multipleTargets(Scene scene) {
-			fixTargetCounts(scene.targets.Count);
+		private void MultipleTargets(Scene scene) {
+			FixTargetCounts(scene.targets.Count);
             var targetsAndSceneTargets = targets.Zip(scene.targets, (a, b) => (a, b));
             foreach ((var first, var second) in targetsAndSceneTargets) {
                 first.transform.position = second.position;
@@ -128,12 +128,12 @@ namespace VHToolkit.Visualisation {
             }
         }
 
-		private void fixTargetCounts(int count) {
+		private void FixTargetCounts(int count) {
 			if (targets.Count != count) {
                 targets.ForEach(t => Destroy(t.gameObject));
                 targets.Clear();
                 targets.AddRange(
-                    Enumerable.Range(0, count).Select(_ => Instantiate(targetPrefab, this.transform).transform)
+                    Enumerable.Range(0, count).Select(_ => Instantiate(targetPrefab, transform).transform)
                 );
             }
 			Debug.Assert(targets.Count == count);

@@ -35,7 +35,7 @@ public class SceneController : MonoBehaviour {
 
 	public void ResetCubes() {
 		Debug.Log("reset");
-		foreach(var z in Enumerable.Zip(cubes, cubesInitialPosition, (c, cP) => (c, cP)))
+		foreach(var z in cubes.Zip(cubesInitialPosition, (c, cP) => (c, cP)))
 			z.c.position = z.cP;
 	}
 }
