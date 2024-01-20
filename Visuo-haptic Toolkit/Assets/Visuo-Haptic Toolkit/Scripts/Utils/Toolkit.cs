@@ -52,12 +52,12 @@ namespace VHToolkit.Redirection {
 			}
 			else {
 				Instance = this;
-				DontDestroyOnLoad(this.gameObject);
+				DontDestroyOnLoad(gameObject);
 			}
 		}
 
         public float CurvatureRadiusToRotationRate() => CurvatureRadiusToRotationRate(parameters.CurvatureRadius);
 
-        public static float CurvatureRadiusToRotationRate(float radius) => 360f / (2 * Mathf.PI * radius);
+        public static float CurvatureRadiusToRotationRate(float radius) => 180f / (Mathf.PI * radius);
     }
 }

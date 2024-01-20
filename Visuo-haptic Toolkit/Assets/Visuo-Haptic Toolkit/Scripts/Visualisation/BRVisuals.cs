@@ -7,7 +7,7 @@ using VHToolkit.Redirection;
 namespace VHToolkit.Visualisation {
 	public class BRVisuals : MonoBehaviour {
 
-		[SerializeField] private bool showThersholdLines;
+		[SerializeField] private bool showThresholdLines;
 
 		private BodyRedirection BRMainScript;
 		private Scene scene;
@@ -32,7 +32,7 @@ namespace VHToolkit.Visualisation {
 				}
 			}
 			if (BRMainScript.GetTechnique() == BRTechnique.Lecuyer2000Swamp) {
-				foreach(var vlimb in BRMainScript.scene.limbs.SelectMany(limb => limb.virtualLimb)) {
+				foreach(var vlimb in BRMainScript.scene.virtualLimbs) {
 					Vector3 distanceToOrigin = vlimb.position - BRMainScript.scene.origin.position;
 					Color c = (MathF.Max(MathF.Abs(distanceToOrigin[0]), MathF.Abs(distanceToOrigin[2])) < Toolkit.Instance.parameters.SwampSquareLength/2) ?
 							Color.green : Color.yellow;

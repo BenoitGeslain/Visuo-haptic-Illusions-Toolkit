@@ -40,7 +40,7 @@ namespace VHToolkit.Redirection {
         // [Ignore] public Transform virtualHand;
         [SerializeField] public List<Limb> limbs;
 
-        private List<Limb> virtualLimbs => limbs.SelectMany(limb => limb.virtualLimb).ToList();
+        [Ignore] public List<Transform> virtualLimbs => limbs.SelectMany(limb => limb.virtualLimb).ToList();
 
         [Ignore] public Transform physicalHead;
 		[Ignore] public Transform virtualHead;
