@@ -1,10 +1,9 @@
-using UnityEngine;
-
-namespace VHToolkit.Redirection {
-	/// <summary>
-	/// Wrapper for a pair of <c>float</c> associated with left and right.
-	/// </summary>
-	[System.Serializable]
+namespace VHToolkit.Redirection
+{
+    /// <summary>
+    /// Wrapper for a pair of <c>float</c> associated with left and right.
+    /// </summary>
+    [System.Serializable]
 	public class Vector2Horizontal {
 		public float left;
 		public float right;
