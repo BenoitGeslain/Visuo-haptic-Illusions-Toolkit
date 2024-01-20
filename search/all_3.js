@@ -8,7 +8,7 @@ var searchData=
   ['controllerwr_2ecs_28',['ControllerWR.cs',['../ControllerWR_8cs.html',1,'']]],
   ['controlpoint_29',['controlPoint',['../classVHToolkit_1_1Redirection_1_1BodyRedirectionTechnique.html#a44f6907bb17ec8dcd7332f72222d382a',1,'VHToolkit::Redirection::BodyRedirectionTechnique']]],
   ['copyheadandhandtransform_30',['CopyHeadAndHandTransform',['../classVHToolkit_1_1Redirection_1_1WorldRedirectionTechnique.html#a5773d256bdbd3ca962ae1b207033dd02',1,'VHToolkit::Redirection::WorldRedirectionTechnique']]],
-  ['createnewfile_31',['createNewFile',['../classVHToolkit_1_1Logging_1_1Logging.html#a03eb1d51c841950ae9e3c9af2d18dd83',1,'VHToolkit::Logging::Logging']]],
+  ['createnewfile_31',['CreateNewFile',['../classVHToolkit_1_1Logging_1_1Logging.html#a1f3aaeabf70901177f1e871be4a3a395',1,'VHToolkit::Logging::Logging']]],
   ['curvatureradius_32',['CurvatureRadius',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a094b9a6beb61e1b1ae42f33a87db3091',1,'VHToolkit::Redirection::ParametersToolkit']]],
   ['curvatureradiustorotationrate_33',['CurvatureRadiusToRotationRate',['../classVHToolkit_1_1Redirection_1_1Toolkit.html#a50a9ffa9ce5e74ecba6bb009db7e8cad',1,'VHToolkit.Redirection.Toolkit.CurvatureRadiusToRotationRate()'],['../classVHToolkit_1_1Redirection_1_1Toolkit.html#ad43190700bbeb326a95bb5d5951a7469',1,'VHToolkit.Redirection.Toolkit.CurvatureRadiusToRotationRate(float radius)']]]
 ];
