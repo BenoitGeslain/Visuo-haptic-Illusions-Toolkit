@@ -10,10 +10,12 @@ EditorBuildSettings:
       Split Cameras.unity
     guid: c28b84d687e4dfc47b3507934fe6bc7c
   - enabled: 0
-    path: Assets/Visuo-Haptic Toolkit/Scenes/World Redirection/Sample Scene WR OVR.unity
+    path: Assets/Visuo-Haptic Toolkit/Sample Scenes/World Redirection/Sample Scene
+      WR OVR.unity
     guid: a884e4826583d2c459ffd8611d1ceb8e
   - enabled: 1
-    path: Assets/Visuo-Haptic Toolkit/Scenes/Body Redirection/Sample Scene BR OVR.unity
+    path: Assets/Visuo-Haptic Toolkit/Sample Scenes/Body Redirection/Sample Scene
+      BR OVR.unity
     guid: 81a027c82dd10a34a818bb544929334e
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 4de0d0428f1d20040b6e4b62938cb31b, type: 2}

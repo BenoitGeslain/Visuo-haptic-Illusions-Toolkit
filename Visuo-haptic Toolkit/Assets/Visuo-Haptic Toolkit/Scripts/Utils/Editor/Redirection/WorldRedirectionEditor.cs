@@ -32,6 +32,7 @@ namespace VHToolkit.Redirection {
 			technique = serializedObject.FindProperty("technique");
 			strategy = serializedObject.FindProperty("strategy");
 
+			// Scene
 			physicalHand = serializedObject.FindProperty("scene.limbs");
 
 			physicalHead = serializedObject.FindProperty("scene.physicalHead");

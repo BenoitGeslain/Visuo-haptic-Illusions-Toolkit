@@ -1,5 +1,3 @@
-using System;
-
 using UnityEngine;
 using UnityEditor;
 
@@ -27,7 +25,6 @@ namespace VHToolkit.Redirection {
             techniqueInstance = serializedObject.FindProperty("techniqueInstance");
 
 			physicalLimbs = serializedObject.FindProperty("scene.limbs");
-			// virtualLimbs = serializedObject.FindProperty("scene.virtualLimbs");
 			physicalHead = serializedObject.FindProperty("scene.physicalHead");
 			virtualHead = serializedObject.FindProperty("scene.virtualHead");
 			physicalTarget = serializedObject.FindProperty("scene.physicalTarget");
@@ -50,6 +47,7 @@ namespace VHToolkit.Redirection {
 
 			// Scene
 			EditorGUILayout.PropertyField(physicalLimbs, new GUIContent("Physical Limbs"));
+
 			// EditorGUILayout.PropertyField(virtualLimbs, new GUIContent("Virtual Limbs"));
 			if (technique.enumNames[technique.enumValueIndex] == "Azmandian2016Hybrid") {
 				EditorGUILayout.PropertyField(physicalHead, new GUIContent("Physical Head"));
