@@ -757,7 +757,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &508544629
 Transform:
   m_ObjectHideFlags: 0
@@ -1488,12 +1488,16 @@ PrefabInstance:
       objectReference: {fileID: 797326631}
     - target: {fileID: 2891068713693094246, guid: 04e531f9da6b5c640b2de2a8fa88a2fa, type: 3}
       propertyPath: scene.limbs.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2891068713693094246, guid: 04e531f9da6b5c640b2de2a8fa88a2fa, type: 3}
       propertyPath: scene.limbs.Array.data[0].PhysicalLimb
       value: 
       objectReference: {fileID: 1512585425}
+    - target: {fileID: 2891068713693094246, guid: 04e531f9da6b5c640b2de2a8fa88a2fa, type: 3}
+      propertyPath: scene.limbs.Array.data[0].physicalLimb
+      value: 
+      objectReference: {fileID: 508544629}
     - target: {fileID: 2891068713693094246, guid: 04e531f9da6b5c640b2de2a8fa88a2fa, type: 3}
       propertyPath: scene.limbs.Array.data[1].PhysicalLimb
       value: 
@@ -1501,6 +1505,10 @@ PrefabInstance:
     - target: {fileID: 2891068713693094246, guid: 04e531f9da6b5c640b2de2a8fa88a2fa, type: 3}
       propertyPath: scene.limbs.Array.data[0].VirtualLimb.Array.size
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2891068713693094246, guid: 04e531f9da6b5c640b2de2a8fa88a2fa, type: 3}
+      propertyPath: scene.limbs.Array.data[0].virtualLimb.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2891068713693094246, guid: 04e531f9da6b5c640b2de2a8fa88a2fa, type: 3}
       propertyPath: scene.limbs.Array.data[1].VirtualLimb.Array.size
@@ -1534,6 +1542,10 @@ PrefabInstance:
       propertyPath: scene.limbs.Array.data[0].VirtualLimb.Array.data[6]
       value: 
       objectReference: {fileID: 1636917597}
+    - target: {fileID: 2891068713693094246, guid: 04e531f9da6b5c640b2de2a8fa88a2fa, type: 3}
+      propertyPath: scene.limbs.Array.data[0].virtualLimb.Array.data[0]
+      value: 
+      objectReference: {fileID: 1223366259}
     - target: {fileID: 2891068713693094246, guid: 04e531f9da6b5c640b2de2a8fa88a2fa, type: 3}
       propertyPath: scene.limbs.Array.data[1].VirtualLimb.Array.data[0]
       value: 
@@ -2011,7 +2023,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1000204909 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5679112963574900117, guid: 4c0ee7a14e52ba544b89c2f777670cca, type: 3}
@@ -2835,7 +2847,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100004, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
       propertyPath: m_LocalPosition.x
