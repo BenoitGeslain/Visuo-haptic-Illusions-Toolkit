@@ -1743,7 +1743,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2542120560557277227, guid: 5fb8647dcfba39f43976bd2e07bcddf6, type: 3}
       propertyPath: technique
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2542120560557277227, guid: 5fb8647dcfba39f43976bd2e07bcddf6, type: 3}
       propertyPath: scene.origin
@@ -1865,6 +1865,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4269787013998645211, guid: 5fb8647dcfba39f43976bd2e07bcddf6, type: 3}
+      propertyPath: inactive
+      value: 
+      objectReference: {fileID: 2100000, guid: fdc7faebe87ef18468772439a4b880b2, type: 2}
     - target: {fileID: 4269787013998645211, guid: 5fb8647dcfba39f43976bd2e07bcddf6, type: 3}
       propertyPath: orbitResolution
       value: 3
