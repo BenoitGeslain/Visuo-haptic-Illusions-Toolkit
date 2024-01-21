@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 
 using UnityEngine;
 
@@ -13,9 +12,6 @@ namespace VHToolkit.Redirection {
 	public class WorldRedirection : Interaction {
 
 		public WRTechnique technique;
-        /// <summary>
-        /// Previously selected technique, if any.
-        /// </summary>
         private WRTechnique previousTechnique;
 		public WorldRedirectionTechnique techniqueInstance;
 		public WRStrategy strategy;
@@ -57,17 +53,15 @@ namespace VHToolkit.Redirection {
 		/// Start function called once when the game is starting. This function calls updateTechnique() to instantiate the technique class and
 		/// initializes the previous head positions.
 		/// </summary>
-		private void Start() {
+		private void OnEnable() {
 			updateTechnique();
 			previousTechnique = technique;
 
-			if (scene.targets != null) {
-				scene.selectedTarget = scene.targets.FirstOrDefault();
-			}
 			scene.previousHeadPosition = scene.physicalHead.position;
 			scene.previousHeadRotation = scene.physicalHead.rotation;
 
-			scene.previousLimbPositions = scene.limbs.Select(limb => limb.physicalLimb.position).ToList();
+			if (technique == WRTechnique.Azmandian2016World)
+				scene.previousLimbPositions = scene.limbs.ConvertAll(limb => limb.physicalLimb.position);
 		}
 
 		/// <summary>
@@ -93,7 +87,8 @@ namespace VHToolkit.Redirection {
 			scene.previousHeadPosition = scene.physicalHead.position;
 			scene.previousHeadRotation = scene.physicalHead.rotation;
 
-			scene.previousLimbPositions = scene.limbs.ConvertAll(limb => limb.physicalLimb.position);
+			if (technique == WRTechnique.Azmandian2016World)
+				scene.previousLimbPositions = scene.limbs.ConvertAll(limb => limb.physicalLimb.position);
 		}
 
 		/// <summary>

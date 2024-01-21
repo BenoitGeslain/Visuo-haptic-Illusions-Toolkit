@@ -1,4 +1,3 @@
-using System.Linq;
 using UnityEngine;
 
 namespace VHToolkit.Redirection {
@@ -17,7 +16,7 @@ namespace VHToolkit.Redirection {
 
 	public class SteerToCenter: WorldRedirectionStrategy {
 
-        public override Vector3 SteerTo(Scene scene) => scene.selectedTarget.position - scene.physicalHead.position;
+        public override Vector3 SteerTo(Scene scene) => scene.targets[0].position - scene.physicalHead.position;
     }
 
 	public class SteerToOrbit: WorldRedirectionStrategy {
@@ -25,7 +24,7 @@ namespace VHToolkit.Redirection {
 		public override Vector3 SteerTo(Scene scene) {
 			float distanceToTarget = scene.GetHeadToTargetDistance();
 			float angleToTargets = (distanceToTarget < scene.radius ? Mathf.PI / 3 : Mathf.Asin(scene.radius / distanceToTarget)) * Mathf.Rad2Deg;
-			var v = Vector3.ProjectOnPlane(scene.selectedTarget.position - scene.physicalHead.position, Vector3.up);
+			var v = Vector3.ProjectOnPlane(scene.targets[0].position - scene.physicalHead.position, Vector3.up);
             Vector3 leftTarget = Quaternion.Euler(0f, angleToTargets, 0f) * v;
 			Vector3 rightTarget = Quaternion.Euler(0f, -angleToTargets, 0f) * v;
             return Vector3.Angle(leftTarget, scene.physicalHead.forward) < Vector3.Angle(scene.physicalHead.forward, rightTarget)
@@ -67,6 +66,6 @@ namespace VHToolkit.Redirection {
         /// </summary>
         /// <param name="scene"></param>
         /// <returns></returns>
-        public override Vector3 SteerTo(Scene scene) => Vector3.Reflect(scene.physicalTarget.position, scene.physicalHead.right);
+        public override Vector3 SteerTo(Scene scene) => Vector3.Reflect(scene.targets[0].position, scene.physicalHead.right);
     }
 }

@@ -5,8 +5,9 @@ namespace VHToolkit.Redirection {
 	/// Available body redirection techniques.
 	/// </summary>
 	public enum BRTechnique {
-		None,	// Hand Redirection techniques
-		Reset,	// Hand Redirection techniques
+		None,
+		Reset,
+		// Hand Redirection techniques
 		Han2018TranslationalShift,
 		Han2018InterpolatedReach,
 		Azmandian2016Body,
@@ -14,7 +15,7 @@ namespace VHToolkit.Redirection {
 		Cheng2017Sparse,
 		Geslain2022Polynom,
 		Poupyrev1996GoGo,
-		_,	// Pseudo-haptic techiques
+		// Pseudo-haptic techiques
 		Lecuyer2000Swamp,
 		Samad2019Weight
 	}
@@ -47,13 +48,11 @@ namespace VHToolkit.Redirection {
 		public ParametersToolkit parameters;
 
 		private void OnEnable() {
-            if (Instance == null || Instance == this)
-            {
+            if (Instance == null || Instance == this) {
                 Instance = this;
-                DontDestroyOnLoad(gameObject);
+                // DontDestroyOnLoad(gameObject);
             }
-            else
-            {
+            else {
                 Destroy(this);
             }
         }
