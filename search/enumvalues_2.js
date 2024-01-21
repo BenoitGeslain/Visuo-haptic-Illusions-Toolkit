@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['firstpoint_378',['FirstPoint',['../classSceneCalibration.html#a4d41711592c04a2928a4606191583793a7f96422659759463a6faa5a17b7a5554',1,'SceneCalibration']]]
+  ['firstpoint_381',['FirstPoint',['../classVHToolkit_1_1Calibration_1_1SceneCalibration.html#a3039d7e5866ee2150776519bc606e88ea7f96422659759463a6faa5a17b7a5554',1,'VHToolkit::Calibration::SceneCalibration']]]
 ];

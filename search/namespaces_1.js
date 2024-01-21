@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['logging_250',['Logging',['../namespaceVHToolkit_1_1Logging.html',1,'VHToolkit']]],
-  ['redirection_251',['Redirection',['../namespaceVHToolkit_1_1Redirection.html',1,'VHToolkit']]],
-  ['vhtoolkit_252',['VHToolkit',['../namespaceVHToolkit.html',1,'']]],
-  ['visualisation_253',['Visualisation',['../namespaceVHToolkit_1_1Visualisation.html',1,'VHToolkit']]]
+  ['calibration_252',['Calibration',['../namespaceVHToolkit_1_1Calibration.html',1,'VHToolkit']]],
+  ['logging_253',['Logging',['../namespaceVHToolkit_1_1Logging.html',1,'VHToolkit']]],
+  ['redirection_254',['Redirection',['../namespaceVHToolkit_1_1Redirection.html',1,'VHToolkit']]],
+  ['vhtoolkit_255',['VHToolkit',['../namespaceVHToolkit.html',1,'']]],
+  ['visualisation_256',['Visualisation',['../namespaceVHToolkit_1_1Visualisation.html',1,'VHToolkit']]]
 ];

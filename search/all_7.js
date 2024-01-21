@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['instance_65',['Instance',['../classVHToolkit_1_1Redirection_1_1Toolkit.html#aec90ce25eb00a4758cb76e0bae952f39',1,'VHToolkit::Redirection::Toolkit']]],
+  ['instance_65',['Instance',['../classVHToolkit_1_1Toolkit.html#afe1ae2083d26fb591401aa0f5fcb4962',1,'VHToolkit::Toolkit']]],
   ['interaction_66',['Interaction',['../classVHToolkit_1_1Redirection_1_1Interaction.html',1,'VHToolkit::Redirection']]],
   ['interaction_2ecs_67',['Interaction.cs',['../Interaction_8cs.html',1,'']]],
   ['interactionclassmap_68',['InteractionClassMap',['../classVHToolkit_1_1Logging_1_1RedirectionDataMap_1_1InteractionClassMap.html#a7d8b6c0ce46c2b9ae8847f210e9cc247',1,'VHToolkit.Logging.RedirectionDataMap.InteractionClassMap.InteractionClassMap()'],['../classVHToolkit_1_1Logging_1_1RedirectionDataMap_1_1InteractionClassMap.html',1,'VHToolkit.Logging.RedirectionDataMap.InteractionClassMap']]],

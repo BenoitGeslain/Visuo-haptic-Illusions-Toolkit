@@ -1,8 +1,8 @@
 var searchData=
 [
   ['han2018continuous_59',['Han2018Continuous',['../classVHToolkit_1_1Redirection_1_1Han2018Continuous.html',1,'VHToolkit::Redirection']]],
-  ['han2018interpolatedreach_60',['Han2018InterpolatedReach',['../namespaceVHToolkit_1_1Redirection.html#af8073b3c987118e1413b41c5be00892baab278652904b8edb8be9a7bd262c71c9',1,'VHToolkit::Redirection']]],
-  ['han2018translationalshift_61',['Han2018TranslationalShift',['../namespaceVHToolkit_1_1Redirection.html#af8073b3c987118e1413b41c5be00892bab5b05ec6c6effa0128c0089e39c3c394',1,'VHToolkit.Redirection.Han2018TranslationalShift()'],['../classVHToolkit_1_1Redirection_1_1Han2018TranslationalShift.html',1,'VHToolkit.Redirection.Han2018TranslationalShift']]],
+  ['han2018interpolatedreach_60',['Han2018InterpolatedReach',['../namespaceVHToolkit.html#ae85c0749a52f7728da28fbcc0274a1f4aab278652904b8edb8be9a7bd262c71c9',1,'VHToolkit']]],
+  ['han2018translationalshift_61',['Han2018TranslationalShift',['../namespaceVHToolkit.html#ae85c0749a52f7728da28fbcc0274a1f4ab5b05ec6c6effa0128c0089e39c3c394',1,'VHToolkit.Han2018TranslationalShift()'],['../classVHToolkit_1_1Redirection_1_1Han2018TranslationalShift.html',1,'VHToolkit.Redirection.Han2018TranslationalShift']]],
   ['handmodelsmanager_62',['HandModelsManager',['../classHandModelsManager.html',1,'']]],
   ['handpresence_2ecs_63',['HandPresence.cs',['../HandPresence_8cs.html',1,'']]],
   ['horizontalangles_64',['HorizontalAngles',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#aefce33e96a1666c786b42e28954238d3',1,'VHToolkit::Redirection::ParametersToolkit']]]
