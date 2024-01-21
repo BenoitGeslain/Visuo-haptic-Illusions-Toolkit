@@ -1,13 +1,14 @@
 var searchData=
 [
-  ['logging_169',['Logging',['../namespaceVHToolkit_1_1Logging.html',1,'VHToolkit']]],
-  ['redirection_170',['Redirection',['../namespaceVHToolkit_1_1Redirection.html',1,'VHToolkit']]],
-  ['vector2gain_171',['Vector2Gain',['../classVHToolkit_1_1Redirection_1_1Vector2Gain.html',1,'VHToolkit::Redirection']]],
-  ['vector2horizontal_172',['Vector2Horizontal',['../classVHToolkit_1_1Redirection_1_1Vector2Horizontal.html',1,'VHToolkit::Redirection']]],
-  ['vector2rotation_173',['Vector2Rotation',['../classVHToolkit_1_1Redirection_1_1Vector2Rotation.html',1,'VHToolkit::Redirection']]],
-  ['vector2vertical_174',['Vector2Vertical',['../classVHToolkit_1_1Redirection_1_1Vector2Vertical.html',1,'VHToolkit::Redirection']]],
-  ['verticalangles_175',['VerticalAngles',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a4d05324688c4c5065efd325f5d54e955',1,'VHToolkit::Redirection::ParametersToolkit']]],
-  ['vhtoolkit_176',['VHToolkit',['../namespaceVHToolkit.html',1,'']]],
-  ['virtuallimb_177',['virtualLimb',['../structVHToolkit_1_1Redirection_1_1Limb.html#a37293638746da06d912876cb55ef4159',1,'VHToolkit::Redirection::Limb']]],
-  ['visualisation_178',['Visualisation',['../namespaceVHToolkit_1_1Visualisation.html',1,'VHToolkit']]]
+  ['walkingthreshold_177',['WalkingThreshold',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#ae608015c6a072356b7f7f758f1cc2a8e',1,'VHToolkit::Redirection::ParametersToolkit']]],
+  ['worldredirection_178',['WorldRedirection',['../classVHToolkit_1_1Redirection_1_1WorldRedirection.html',1,'VHToolkit::Redirection']]],
+  ['worldredirection_2ecs_179',['WorldRedirection.cs',['../WorldRedirection_8cs.html',1,'']]],
+  ['worldredirectioneditor_180',['WorldRedirectionEditor',['../classVHToolkit_1_1Redirection_1_1WorldRedirectionEditor.html',1,'VHToolkit::Redirection']]],
+  ['worldredirectioneditor_2ecs_181',['WorldRedirectionEditor.cs',['../WorldRedirectionEditor_8cs.html',1,'']]],
+  ['worldredirectionstrategy_182',['WorldRedirectionStrategy',['../classVHToolkit_1_1Redirection_1_1WorldRedirectionStrategy.html',1,'VHToolkit::Redirection']]],
+  ['worldredirectiontechnique_183',['WorldRedirectionTechnique',['../classVHToolkit_1_1Redirection_1_1WorldRedirectionTechnique.html',1,'VHToolkit::Redirection']]],
+  ['wrstrategy_184',['WRStrategy',['../namespaceVHToolkit_1_1Redirection.html#aeebb6431e6f113539dc912ca85e23402',1,'VHToolkit::Redirection']]],
+  ['wrtechnique_185',['WRTechnique',['../namespaceVHToolkit_1_1Redirection.html#a0d56c189dc559dc0687f7c32fad22530',1,'VHToolkit::Redirection']]],
+  ['wrvisuals_186',['WRVisuals',['../classVHToolkit_1_1Visualisation_1_1WRVisuals.html',1,'VHToolkit::Visualisation']]],
+  ['wrvisuals_2ecs_187',['WRVisuals.cs',['../WRVisuals_8cs.html',1,'']]]
 ];

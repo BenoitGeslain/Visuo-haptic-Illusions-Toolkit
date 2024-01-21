@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['azmandian2016body_376',['Azmandian2016Body',['../namespaceVHToolkit_1_1Redirection.html#af8073b3c987118e1413b41c5be00892ba2f6bb9ffb458f5bd918f0d1e085d3916',1,'VHToolkit::Redirection']]],
-  ['azmandian2016hybrid_377',['Azmandian2016Hybrid',['../namespaceVHToolkit_1_1Redirection.html#af8073b3c987118e1413b41c5be00892ba46e75f84154770065df6ba12802ca95a',1,'VHToolkit::Redirection']]],
-  ['azmandian2016world_378',['Azmandian2016World',['../namespaceVHToolkit_1_1Redirection.html#a0d56c189dc559dc0687f7c32fad22530a8173b692989818c5fc29b7b61b2ff9f4',1,'VHToolkit::Redirection']]]
+  ['cheng2017sparse_376',['Cheng2017Sparse',['../namespaceVHToolkit_1_1Redirection.html#af8073b3c987118e1413b41c5be00892ba282645738cc7192cb3233f871d2e8eb6',1,'VHToolkit::Redirection']]],
+  ['computation_377',['Computation',['../classSceneCalibration.html#a4d41711592c04a2928a4606191583793a42186b9568e986064665689944c4a1e3',1,'SceneCalibration']]]
 ];

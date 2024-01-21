@@ -1,8 +1,10 @@
 var searchData=
 [
-  ['razzaque2001curvature_389',['Razzaque2001Curvature',['../namespaceVHToolkit_1_1Redirection.html#a0d56c189dc559dc0687f7c32fad22530a1456a5c6df7e2e9e905a81bf8b3c568a',1,'VHToolkit::Redirection']]],
-  ['razzaque2001hybrid_390',['Razzaque2001Hybrid',['../namespaceVHToolkit_1_1Redirection.html#a0d56c189dc559dc0687f7c32fad22530af152530f6b3f52aee82c99f893774d1f',1,'VHToolkit::Redirection']]],
-  ['razzaque2001overtimerotation_391',['Razzaque2001OverTimeRotation',['../namespaceVHToolkit_1_1Redirection.html#a0d56c189dc559dc0687f7c32fad22530abd3aa6ba908318dcdf4e435d88559158',1,'VHToolkit::Redirection']]],
-  ['razzaque2001rotational_392',['Razzaque2001Rotational',['../namespaceVHToolkit_1_1Redirection.html#a0d56c189dc559dc0687f7c32fad22530a61c82f83d5602cb821cd0b9a0e211848',1,'VHToolkit::Redirection']]],
-  ['reset_393',['Reset',['../namespaceVHToolkit_1_1Redirection.html#af8073b3c987118e1413b41c5be00892ba526d688f37a86d3c3f27d0c5016eb71d',1,'VHToolkit.Redirection.Reset()'],['../namespaceVHToolkit_1_1Redirection.html#a0d56c189dc559dc0687f7c32fad22530a526d688f37a86d3c3f27d0c5016eb71d',1,'VHToolkit.Redirection.Reset()']]]
+  ['samad2019weight_391',['Samad2019Weight',['../namespaceVHToolkit_1_1Redirection.html#af8073b3c987118e1413b41c5be00892ba65c847d95f0af4c066a6beb3ae0273f9',1,'VHToolkit::Redirection']]],
+  ['secondpoint_392',['SecondPoint',['../classSceneCalibration.html#a4d41711592c04a2928a4606191583793ac8dcbd757e675381f3f7b5d2c75de2e8',1,'SceneCalibration']]],
+  ['steerindirection_393',['SteerInDirection',['../namespaceVHToolkit_1_1Redirection.html#aeebb6431e6f113539dc912ca85e23402aaf2cfc4fea8a83f7acd6baf273be4077',1,'VHToolkit::Redirection']]],
+  ['steertocenter_394',['SteerToCenter',['../namespaceVHToolkit_1_1Redirection.html#aeebb6431e6f113539dc912ca85e23402ab706cd246aecabca3b65fc4c0dcc1253',1,'VHToolkit::Redirection']]],
+  ['steertomultipletargets_395',['SteerToMultipleTargets',['../namespaceVHToolkit_1_1Redirection.html#aeebb6431e6f113539dc912ca85e23402a147f5c94742e7efb26fd3acac4e2aec3',1,'VHToolkit::Redirection']]],
+  ['steertoorbit_396',['SteerToOrbit',['../namespaceVHToolkit_1_1Redirection.html#aeebb6431e6f113539dc912ca85e23402ab57b5cd0b80752b5d67f3af904f4f58e',1,'VHToolkit::Redirection']]],
+  ['steinicke2008translational_397',['Steinicke2008Translational',['../namespaceVHToolkit_1_1Redirection.html#a0d56c189dc559dc0687f7c32fad22530aa5674bd07fc56d10fc5edf2d37ee66e4',1,'VHToolkit::Redirection']]]
 ];

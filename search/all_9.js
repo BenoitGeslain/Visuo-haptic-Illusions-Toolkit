@@ -1,11 +1,7 @@
 var searchData=
 [
-  ['lecuyer2000swamp_71',['Lecuyer2000Swamp',['../namespaceVHToolkit_1_1Redirection.html#af8073b3c987118e1413b41c5be00892ba6e2670a2251c1e1e3dd5a77bfff178d4',1,'VHToolkit.Redirection.Lecuyer2000Swamp()'],['../classVHToolkit_1_1Redirection_1_1Lecuyer2000Swamp.html',1,'VHToolkit.Redirection.Lecuyer2000Swamp']]],
-  ['left_72',['left',['../classVHToolkit_1_1Redirection_1_1Vector2Horizontal.html#ad4340c9357bb1c63e704a7962d5a51e3',1,'VHToolkit::Redirection::Vector2Horizontal']]],
-  ['limb_73',['Limb',['../structVHToolkit_1_1Redirection_1_1Limb.html#af3b5edba645f4b4e5626ce7c55a152f4',1,'VHToolkit.Redirection.Limb.Limb()'],['../structVHToolkit_1_1Redirection_1_1Limb.html',1,'VHToolkit.Redirection.Limb']]],
-  ['loadcalibration_74',['LoadCalibration',['../classSceneCalibration.html#a7e16eb4070d85969d35af622907958c2',1,'SceneCalibration']]],
-  ['logging_75',['Logging',['../classVHToolkit_1_1Logging_1_1Logging.html',1,'VHToolkit::Logging']]],
-  ['logging_2ecs_76',['Logging.cs',['../Logging_8cs.html',1,'']]],
-  ['loggingeditor_77',['LoggingEditor',['../classVHToolkit_1_1Logging_1_1LoggingEditor.html',1,'VHToolkit::Logging']]],
-  ['loggingeditor_2ecs_78',['LoggingEditor.cs',['../LoggingEditor_8cs.html',1,'']]]
+  ['maxredirectionthreshold_78',['MaxRedirectionThreshold',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#af0ddc884454f477186f5963701f73973',1,'VHToolkit::Redirection::ParametersToolkit']]],
+  ['minjerktrajectory_79',['MinJerkTrajectory',['../classAssets_1_1Visuo__Haptic__Toolkit_1_1Scripts_1_1Logging_1_1UserTrajectorySimulation_1_1MinJerkTrajectory.html',1,'Assets::Visuo_Haptic_Toolkit::Scripts::Logging::UserTrajectorySimulation']]],
+  ['minjerktrajectory_2ecs_80',['MinJerkTrajectory.cs',['../MinJerkTrajectory_8cs.html',1,'']]],
+  ['mjttrajectorygenerator_2ecs_81',['MJTTrajectoryGenerator.cs',['../MJTTrajectoryGenerator_8cs.html',1,'']]]
 ];
