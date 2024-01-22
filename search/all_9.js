@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['maxredirectionthreshold_82',['MaxRedirectionThreshold',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#af0ddc884454f477186f5963701f73973',1,'VHToolkit::Redirection::ParametersToolkit']]],
-  ['minjerktrajectory_83',['MinJerkTrajectory',['../classAssets_1_1Visuo__Haptic__Toolkit_1_1Scripts_1_1Logging_1_1UserTrajectorySimulation_1_1MinJerkTrajectory.html',1,'Assets::Visuo_Haptic_Toolkit::Scripts::Logging::UserTrajectorySimulation']]],
-  ['minjerktrajectory_2ecs_84',['MinJerkTrajectory.cs',['../MinJerkTrajectory_8cs.html',1,'']]],
-  ['mjttrajectorygenerator_2ecs_85',['MJTTrajectoryGenerator.cs',['../MJTTrajectoryGenerator_8cs.html',1,'']]]
+  ['maxredirectionthreshold_67',['MaxRedirectionThreshold',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#af0ddc884454f477186f5963701f73973',1,'VHToolkit::Redirection::ParametersToolkit']]],
+  ['minjerktrajectory_68',['MinJerkTrajectory',['../classAssets_1_1Visuo__Haptic__Toolkit_1_1Scripts_1_1Logging_1_1UserTrajectorySimulation_1_1MinJerkTrajectory.html',1,'Assets::Visuo_Haptic_Toolkit::Scripts::Logging::UserTrajectorySimulation']]]
 ];

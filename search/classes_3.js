@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['devicetracking_206',['DeviceTracking',['../classDeviceTracking.html',1,'']]]
+  ['devicetracking_174',['DeviceTracking',['../classDeviceTracking.html',1,'']]]
 ];
