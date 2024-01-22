@@ -75,7 +75,7 @@ Main contributors:
 All contributions are welcome. Please find more details on the [wiki](https://github.com/BenoitGeslain/Visuo-haptic-Illusions-Toolkit/wiki/Contributing).
 
 ## Copyright and Licensing
-Copyright (c) 2023 SII Société pour l’Informatique Industrielle
+Copyright (c) 2023-2024 SII Société pour l’Informatique Industrielle
 
 
 This project is licensed under the open-source MIT X11 license, see the [LICENSE](https://github.com/BenoitGeslain/Visuo-haptic-Illusions-Toolkit/blob/main/LICENSE) file.
