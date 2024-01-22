@@ -32,9 +32,6 @@ You will find
 | [Razzaque et al., 2001](https://diglib.eg.org:443/xmlui/handle/10.2312/egs20011036), Curvature <br />[Steinicke et al., 2008](http://ieeexplore.ieee.org/document/4741303/)    | [Razzaque et al., 2001](https://diglib.eg.org:443/xmlui/handle/10.2312/egs20011036), Redirected Walking Hybrid    |
 | [Azmandian et al., 2016](https://doi.org/10.1145/2858036.2858226), World Warping    | [Williams et al., 2006](https://dl.acm.org/doi/10.1145/1140491.1140495), Translational <br />[Steinicke et al., 2008](http://ieeexplore.ieee.org/document/4741303/),    |
 
-| Interpolation   |     |
-|:-------------- | :--------------: |
-
 | Pseudo-Haptic   |     |
 |:-------------- | :--------------: |
 | [Lécuyer et al., 2000](https://doi.org/10.1109/VR.2000.840369), Swamp Illusion   | [Lécuyer et al., 2000](https://doi.org/10.1109/VR.2000.840369), Spring stiffness   |
