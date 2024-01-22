@@ -64,7 +64,7 @@ namespace VHToolkit.Redirection {
 			float angleToTarget = scene.GetHeadAngleToTarget();
 			float instantRotation = scene.GetHeadInstantRotationY();
 
-			if (Mathf.Abs(instantRotation) > Toolkit.Instance.parameters.RotationThreshold && Mathf.Abs(angleToTarget) > Toolkit.Instance.parameters.RotationalError) {
+			if (Mathf.Abs(angleToTarget) > Toolkit.Instance.parameters.RotationalError && Mathf.Abs(instantRotation) > Toolkit.Instance.parameters.RotationThreshold) {
 				return instantRotation * ((Mathf.Sign(scene.GetHeadAngleToTarget()) == Mathf.Sign(instantRotation))
 					? Toolkit.Instance.parameters.GainsRotational.opposite - 1
 					: Toolkit.Instance.parameters.GainsRotational.same - 1);
