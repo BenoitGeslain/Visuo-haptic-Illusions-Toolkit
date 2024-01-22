@@ -33,6 +33,7 @@ var searchData=
   ['strategies_2ecs_154',['Strategies.cs',['../Strategies_8cs.html',1,'']]],
   ['strategy_155',['strategy',['../classVHToolkit_1_1Redirection_1_1WorldRedirection.html#ad4bbaebc4ed9eabee4fa651106ee53da',1,'VHToolkit::Redirection::WorldRedirection']]],
   ['strategyinstance_156',['strategyInstance',['../classVHToolkit_1_1Redirection_1_1WorldRedirection.html#a06593e0b14cc03086a1e4668813f50b6',1,'VHToolkit::Redirection::WorldRedirection']]],
-  ['swampcdratio_157',['SwampCDRatio',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#ab6679d0014155872a61b32b9e5f1d8e1',1,'VHToolkit::Redirection::ParametersToolkit']]],
-  ['swampsquarelength_158',['SwampSquareLength',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a55a790a1897533bddb816c2eb52211cd',1,'VHToolkit::Redirection::ParametersToolkit']]]
+  ['sum_157',['Sum',['../classVHToolkit_1_1Redirection_1_1Razzaque2001Hybrid.html#af3a728e634ca463857b4922833780a85',1,'VHToolkit::Redirection::Razzaque2001Hybrid']]],
+  ['swampcdratio_158',['SwampCDRatio',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#ab6679d0014155872a61b32b9e5f1d8e1',1,'VHToolkit::Redirection::ParametersToolkit']]],
+  ['swampsquarelength_159',['SwampSquareLength',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a55a790a1897533bddb816c2eb52211cd',1,'VHToolkit::Redirection::ParametersToolkit']]]
 ];
