@@ -117,31 +117,28 @@ namespace VHToolkit.Redirection {
 
 		readonly Func<float, float, float, float> aggregate;
 
-		/// <summary>
-		/// By default, the aggregation function is the maximum by absolute value.
-		/// </summary>
-		public Razzaque2001Hybrid() : base() {
-			this.aggregate = (a, b, c) => (new float[] { a, b, c }).OrderByDescending(Mathf.Abs).First();
-		}
+        /// <summary>
+        /// By default, the aggregation function is the maximum by absolute value.
+        /// </summary>
+        public Razzaque2001Hybrid() : base() => this.aggregate = (a, b, c) => (new float[] { a, b, c }).OrderByDescending(Mathf.Abs).First();
 
-		/// <summary>
-		/// Constructor taking a parameter, an aggregation function (float, float, float) -> float.
-		/// </summary>
-		/// <param name="aggregate"></param>
-		public Razzaque2001Hybrid(Func<float, float, float, float> aggregate) : base() {
-			this.aggregate = aggregate;
-		}
+        /// <summary>
+        /// Constructor taking a parameter, an aggregation function (float, float, float) -> float.
+        /// </summary>
+        /// <param name="aggregate"></param>
+        public Razzaque2001Hybrid(Func<float, float, float, float> aggregate) : base() => this.aggregate = aggregate;
 
-		/// <summary>
-		/// Static factory method for using sum-aggregation.
-		/// </summary>
-		/// <param name="aggregate"></param>
-		static Razzaque2001Hybrid Sum() => new((a, b, c) => a + b + c);
+        /// <summary>
+        /// Static factory method for using sum-aggregation.
+        /// </summary>
+        /// <param name="aggregate"></param>
+        static Razzaque2001Hybrid Sum() => new((a, b, c) => a + b + c);
 
 		/// <summary>
 		/// Static factory method for using weighted-sum-aggregation.
 		/// </summary>
 		static Razzaque2001Hybrid Weighted(float x, float y, float z) => new((a, b, c) => a * x + b * y + c * z);
+
 		public override void Redirect(Scene scene) {
 			CopyHeadAndHandTransform(scene);
 
