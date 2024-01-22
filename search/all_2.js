@@ -8,7 +8,9 @@ var searchData=
   ['controllerwr_2ecs_27',['ControllerWR.cs',['../ControllerWR_8cs.html',1,'']]],
   ['controlpoint_28',['controlPoint',['../classVHToolkit_1_1Redirection_1_1BodyRedirectionTechnique.html#a44f6907bb17ec8dcd7332f72222d382a',1,'VHToolkit::Redirection::BodyRedirectionTechnique']]],
   ['copyheadandhandtransform_29',['CopyHeadAndHandTransform',['../classVHToolkit_1_1Redirection_1_1WorldRedirectionTechnique.html#a5773d256bdbd3ca962ae1b207033dd02',1,'VHToolkit::Redirection::WorldRedirectionTechnique']]],
-  ['createnewfile_30',['CreateNewFile',['../classVHToolkit_1_1Logging_1_1Logging.html#a1f3aaeabf70901177f1e871be4a3a395',1,'VHToolkit::Logging::Logging']]],
-  ['curvatureradius_31',['CurvatureRadius',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a094b9a6beb61e1b1ae42f33a87db3091',1,'VHToolkit::Redirection::ParametersToolkit']]],
-  ['curvatureradiustorotationrate_32',['CurvatureRadiusToRotationRate',['../classVHToolkit_1_1Toolkit.html#ac4e50fc0ac7cc5f20c520a60f1ebc4cc',1,'VHToolkit.Toolkit.CurvatureRadiusToRotationRate()'],['../classVHToolkit_1_1Toolkit.html#a815378c477baad9f5a9451503b063682',1,'VHToolkit.Toolkit.CurvatureRadiusToRotationRate(float radius)']]]
+  ['corridorredirection_30',['CorridorRedirection',['../classCorridorRedirection.html',1,'']]],
+  ['corridorredirection_2ecs_31',['CorridorRedirection.cs',['../CorridorRedirection_8cs.html',1,'']]],
+  ['createnewfile_32',['CreateNewFile',['../classVHToolkit_1_1Logging_1_1Logging.html#a1f3aaeabf70901177f1e871be4a3a395',1,'VHToolkit::Logging::Logging']]],
+  ['curvatureradius_33',['CurvatureRadius',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a094b9a6beb61e1b1ae42f33a87db3091',1,'VHToolkit::Redirection::ParametersToolkit']]],
+  ['curvatureradiustorotationrate_34',['CurvatureRadiusToRotationRate',['../classVHToolkit_1_1Toolkit.html#ac4e50fc0ac7cc5f20c520a60f1ebc4cc',1,'VHToolkit.Toolkit.CurvatureRadiusToRotationRate()'],['../classVHToolkit_1_1Toolkit.html#a815378c477baad9f5a9451503b063682',1,'VHToolkit.Toolkit.CurvatureRadiusToRotationRate(float radius)']]]
 ];
