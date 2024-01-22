@@ -24,6 +24,8 @@ You will find
 | [Cheng et al., 2017](http://doi.acm.org/10.1145/3025453.3025753), Sparse Haptics   | [Geslain et al., 2022](https://doi.org/10.1145/3531073.3531100), 2<sup>nd</sup> order polynomials   |
 | [Poupyrev et al., 1996](https://dl.acm.org/doi/10.1145/237091.237102), The Go-Go   | |
 
+\* Sign mistake in equation (3.3). Technique redirects in opposite direction. + B is incorrect.
+
 | World Redirection   |     |
 |:-------------- | :--------------: |
 | [Razzaque et al., 2001](http://dx.doi.org/10.2312/egs.20011036), Over Time Rotation    | [Razzaque et al., 2001](https://diglib.eg.org:443/xmlui/handle/10.2312/egs20011036), Rotational <br />[Steinicke et al., 2008](http://ieeexplore.ieee.org/document/4741303/)    |
@@ -37,8 +39,6 @@ You will find
 |:-------------- | :--------------: |
 | [Lécuyer et al., 2000](https://doi.org/10.1109/VR.2000.840369), Swamp Illusion   | [Lécuyer et al., 2000](https://doi.org/10.1109/VR.2000.840369), Spring stiffness   |
 | [Samad et al., 2019](https://dl.acm.org/doi/10.1145/3290605.3300550), Pseudo-haptic weight   | [Rietzler et al., 2018](https://dl.acm.org/doi/10.1145/3173574.3173702), Breaking the tracking, weight   |
-
-\* Erreur de signe dans l'équation à 3.3, la technique redirige dans la direction opposée. + B est faux
 
 | Steering Strategies  |
 |:-------------- |
