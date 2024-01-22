@@ -11,7 +11,9 @@ namespace VHToolkit.Redirection {
 		public Scene scene;
 		[SerializeField] protected bool redirect = false;
 
-        public void StartRedirection() => redirect = true;
+		public void StartRedirection() => redirect = true;
+
+		public void StopRedirection() => redirect = false;
 
 		public List<Transform> GetPhysicalLimbs() => scene.limbs.ConvertAll(limb => limb.physicalLimb);
 

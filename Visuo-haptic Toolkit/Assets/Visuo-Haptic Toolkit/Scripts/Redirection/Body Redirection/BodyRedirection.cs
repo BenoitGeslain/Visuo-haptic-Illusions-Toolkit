@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 
 using UnityEngine;
@@ -112,6 +113,8 @@ namespace VHToolkit.Redirection {
 		/// </summary>
 		/// <param name="t">BRTechnique</param>
         public void SetTechnique(BRTechnique t) => technique = t;
+
+		public List<Vector3> GetRedirection() => scene.Redirection;
 
 		public Transform GetPhysicalTarget() => scene.physicalTarget;
 

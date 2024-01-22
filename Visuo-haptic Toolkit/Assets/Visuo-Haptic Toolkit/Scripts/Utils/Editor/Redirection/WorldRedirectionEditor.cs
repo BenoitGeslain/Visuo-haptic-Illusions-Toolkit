@@ -26,7 +26,7 @@ namespace VHToolkit.Redirection {
 		SerializedProperty redirect;
 
         readonly string[] strategyTechniques = { "Razzaque2001OverTimeRotation", "Razzaque2001Rotational", "Razzaque2001Curvature", "Razzaque2001Hybrid" };
-        readonly string[] targetsStrategies = { "SteerToCenter", "SteerToMultipleTargets" };
+        readonly string[] targetsStrategies = { "SteerToCenter", "SteerToMultipleTargets", "SteerInDirection" };
 
 		private void OnEnable() {
 			technique = serializedObject.FindProperty("technique");

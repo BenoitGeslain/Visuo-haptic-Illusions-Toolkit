@@ -40,7 +40,10 @@ namespace VHToolkit.Visualisation {
 					ShowOrbitTargets(scene);
 					break;
 				case WRStrategy.SteerToMultipleTargets:
-                    MultipleTargets(scene);
+					MultipleTargets(scene);
+					break;
+				case WRStrategy.SteerInDirection:
+					CenterTarget(scene);
 					break;
 				default:
 					targets.Clear();

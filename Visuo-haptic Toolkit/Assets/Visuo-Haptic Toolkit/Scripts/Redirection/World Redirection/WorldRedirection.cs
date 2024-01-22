@@ -92,6 +92,11 @@ namespace VHToolkit.Redirection {
 		}
 
 		/// <summary>
+		/// A wrapper around SetTechnique(BRTechnique t) to use the ResetRedirection technique.
+		/// </summary>
+		public void ResetRedirection() => SetTechnique(WRTechnique.Reset);
+
+		/// <summary>
 		/// Getter for the enumeration technique.
 		/// </summary>
 		/// <returns>Returns the enumeration technique</returns>
@@ -103,10 +108,9 @@ namespace VHToolkit.Redirection {
         /// <param name="t">The enumeration defining which technique to call Redirect(...) from.</param>
         public void SetTechnique(WRTechnique t) => technique = t;
 
-        /// <summary>
-        /// A wrapper around SetTechnique(BRTechnique t) to use the ResetRedirection technique.
-        /// </summary>
-        public void ResetRedirection() => SetTechnique(WRTechnique.Reset);
+		public Quaternion GetAngularRedirection() => scene.GetHeadToHeadRotation();
+
+		public float GetTranslationalRedirection() => scene.GetHeadToHeadDistance();	// TODO : maybe should be a vector 3 between heads instead of magn
 
 		public void SetTargets(List<Transform> targets) => scene.targets = targets;
 
