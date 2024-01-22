@@ -151,9 +151,7 @@ namespace VHToolkit.Redirection {
         ///
         /// </summary>
         /// <returns>The instant linear velocity of the physical hand using the last frame's position</returns>
-        public List<Vector3> GetHandInstantTranslation() {
-            return limbs.Zip(previousLimbPositions, (limb, pLimb) => limb.physicalLimb.position - pLimb).ToList();
-        }
+        public List<Vector3> GetHandInstantTranslation() => limbs.Zip(previousLimbPositions, (limb, pLimb) => limb.physicalLimb.position - pLimb).ToList();
 
 
         /// <summary>
@@ -167,9 +165,7 @@ namespace VHToolkit.Redirection {
         /// <summary>
         /// Applies unaltered physical head translations to the virtual head GameObject
         /// </summary>
-        public void CopyHeadTranslations() {
-            virtualHead.Translate(GetHeadToHeadRotation() * GetHeadInstantTranslation(), relativeTo: Space.World);
-		}
+        public void CopyHeadTranslations() => virtualHead.Translate(GetHeadToHeadRotation() * GetHeadInstantTranslation());
 
         /// <summary>
         /// Applies unaltered physical hand rotations to the virtual hand GameObjects
