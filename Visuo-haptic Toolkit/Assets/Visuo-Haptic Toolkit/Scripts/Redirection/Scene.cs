@@ -171,23 +171,32 @@ namespace VHToolkit.Redirection {
         /// Applies unaltered physical hand rotations to the virtual hand GameObjects
         /// </summary>
         public void CopyHandRotations() {
-
-
+			limbs.ForEach(limb =>
+			{
+				// something along these lines
+				// TODO test against OVR
+				foreach (var vlimb in limb.virtualLimb) {
+					vlimb.SetLocalPositionAndRotation(limb.physicalLimb.localPosition, limb.physicalLimb.localRotation);
+				}
+			});
 		}
 
         /// <summary>
         /// Applies unaltered physical hand translations to the virtual hand GameObjects
         /// </summary>
         public void CopyHandTranslations() {
-			var t = GetHandInstantTranslation();
-			var Q = GetHeadToHeadRotation();
+			// var t = GetHandInstantTranslation();
+			// var Q = GetHeadToHeadRotation();
 
 			// Debug.Log(t[0]);
-            limbs.ForEach(limb => {
-				foreach (var p in limb.virtualLimb.Zip(t, (vLimb, t) => (vLimb, t)))
-					p.vLimb.Translate(Q * p.t, relativeTo: Space.World);
-			});
+			// Debug.Log(Q.eulerAngles);
+			// Debug.Log(Q == Q.normalized);
+			// limbs.ForEach(limb => {
+			// 	foreach (var p in limb.virtualLimb.Zip(t, (vLimb, t) => (vLimb, t)))
+			// 		p.vLimb.Translate(Q * p.t, relativeTo: Space.World);
+			// });
 		}
+
 
         /// <summary>
         /// Rotate the virtual head by the given angle (in degrees) around the world's y axis

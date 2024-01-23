@@ -51,7 +51,7 @@ public class CorridorRedirection : MonoBehaviour {
 		if (redirectionApplied > 180f)
 			redirectionApplied = 360f - redirectionApplied;
 
-		Debug.Log((Math.Abs(redirectionApplied) - redirectionAmount.Take(currentPainting).Sum()) + ", " + redirectionAmount[currentPainting]);
+		// Debug.Log((Math.Abs(redirectionApplied) - redirectionAmount.Take(currentPainting).Sum()) + ", " + redirectionAmount[currentPainting]);
 		// If the correct redirection has been applied, stop the redirection
 		if (currentPainting >= 0 && Math.Abs(redirectionApplied) - redirectionAmount.Take(currentPainting).Sum() > redirectionAmount[currentPainting]) {
 			Debug.Log("stop");

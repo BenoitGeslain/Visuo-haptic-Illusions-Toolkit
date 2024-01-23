@@ -60,8 +60,7 @@ namespace VHToolkit.Redirection {
 			scene.previousHeadPosition = scene.physicalHead.position;
 			scene.previousHeadRotation = scene.physicalHead.rotation;
 
-			if (technique == WRTechnique.Azmandian2016World)
-				scene.previousLimbPositions = scene.limbs.ConvertAll(limb => limb.physicalLimb.position);
+			scene.previousLimbPositions = scene.limbs.ConvertAll(limb => limb.physicalLimb.position);
 		}
 
 		/// <summary>
@@ -87,8 +86,7 @@ namespace VHToolkit.Redirection {
 			scene.previousHeadPosition = scene.physicalHead.position;
 			scene.previousHeadRotation = scene.physicalHead.rotation;
 
-			if (technique == WRTechnique.Azmandian2016World)
-				scene.previousLimbPositions = scene.limbs.ConvertAll(limb => limb.physicalLimb.position);
+			scene.previousLimbPositions = scene.limbs.ConvertAll(limb => limb.physicalLimb.position);
 		}
 
 		/// <summary>

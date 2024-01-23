@@ -14,7 +14,7 @@ namespace VHToolkit.Redirection {
 			scene.CopyHeadRotations();
 			scene.CopyHeadTranslations();
 
-			scene.CopyHandTranslations();
+			scene.CopyHandRotations();
 		}
 	}
 
