@@ -182,6 +182,7 @@ namespace VHToolkit.Redirection {
 			var t = GetHandInstantTranslation();
 			var Q = GetHeadToHeadRotation();
 
+			// Debug.Log(t[0]);
             limbs.ForEach(limb => {
 				foreach (var p in limb.virtualLimb.Zip(t, (vLimb, t) => (vLimb, t)))
 					p.vLimb.Translate(Q * p.t, relativeTo: Space.World);

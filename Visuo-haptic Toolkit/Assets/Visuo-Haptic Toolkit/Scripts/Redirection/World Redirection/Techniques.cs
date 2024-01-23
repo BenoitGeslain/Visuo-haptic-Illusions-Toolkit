@@ -222,8 +222,6 @@ namespace VHToolkit.Redirection {
 	public class NoWorldRedirection: WorldRedirectionTechnique {
 		public override void Redirect(Scene scene) {
 			CopyHeadAndHandTransform(scene);
-
-			scene.CopyHandTranslations();
 		}
 	}
 }

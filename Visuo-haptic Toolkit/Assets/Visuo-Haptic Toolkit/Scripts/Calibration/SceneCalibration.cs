@@ -12,7 +12,7 @@ namespace VHToolkit.Calibration {
 	/// </summary>
 	public class SceneCalibration : MonoBehaviour {
 
-		public enum CalibrationState {
+		enum CalibrationState {
 			None,
 			FirstPoint,
 			SecondPoint,

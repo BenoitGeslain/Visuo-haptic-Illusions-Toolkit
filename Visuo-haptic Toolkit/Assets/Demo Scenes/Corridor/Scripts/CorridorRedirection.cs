@@ -8,35 +8,53 @@ using VHToolkit;
 using VHToolkit.Redirection;
 
 public class CorridorRedirection : MonoBehaviour {
+
+	enum CorridorStates {
+		None,
+		FirstPainting,
+		SecondPainting,
+		ThirdPainting,
+		FourthPainting
+	}
+
 	private WorldRedirection redirectionScript;
 
 	[SerializeField] private Transform UserHead;
 
-	[SerializeField] private int paintingIndex = 0;
+	[SerializeField] private CorridorStates state = CorridorStates.None;
+	[ReadOnly][SerializeField] private float redirectionApplied;
 	[SerializeField] private List<Transform> paintingReferences;
-
 	[Range(0, 45)]
 	[SerializeField] private List<float> redirectionAmount;
+	private int nPaintings;
 
 	private void Start() {
 		redirectionScript = Toolkit.Instance.gameObject.GetComponent<WorldRedirection>();
+
+		nPaintings = paintingReferences.Count;
+		if (paintingReferences.Count != redirectionAmount.Count)
+			Debug.LogWarning("Different numbers of painting references and redirection amounts.");
 	}
 
 	private void Update() {
 
-		if (paintingIndex < 4 && UserHead.position.x > paintingReferences[paintingIndex].position.x) {
-			paintingIndex++;
+		int currentPainting = (int)state - 1;
+		int nextPainting = (int)state;
+
+		// If user reached next painting
+		if (nextPainting < nPaintings && UserHead.position.x > paintingReferences[nextPainting].position.x) {
+			state++;
 			redirectionScript.StartRedirection();
 		}
 
-		float redirectionApplied = redirectionScript.GetAngularRedirection().eulerAngles.y;
+		redirectionApplied = redirectionScript.GetAngularRedirection().eulerAngles.y;
 		if (redirectionApplied > 180f)
 			redirectionApplied = 360f - redirectionApplied;
 
-		Debug.Log(redirectionApplied);
-		Debug.Log(redirectionApplied - redirectionAmount.Take(paintingIndex - 1).Sum());
-		Debug.Log(redirectionAmount[paintingIndex - 1]);
-		if (paintingIndex > 0 && Math.Abs(redirectionApplied) - redirectionAmount.Take(paintingIndex - 1).Sum() > redirectionAmount[paintingIndex - 1]) {
+		Debug.Log((Math.Abs(redirectionApplied) - redirectionAmount.Take(currentPainting).Sum()) + ", " + redirectionAmount[currentPainting]);
+		// If the correct redirection has been applied, stop the redirection
+		if (currentPainting >= 0 && Math.Abs(redirectionApplied) - redirectionAmount.Take(currentPainting).Sum() > redirectionAmount[currentPainting]) {
+			Debug.Log("stop");
 			redirectionScript.StopRedirection();
 		}
 	}
