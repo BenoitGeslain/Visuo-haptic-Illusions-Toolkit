@@ -165,7 +165,7 @@ namespace VHToolkit.Redirection {
         /// <summary>
         /// Applies unaltered physical head translations to the virtual head GameObject
         /// </summary>
-        public void CopyHeadTranslations() => virtualHead.Translate(GetHeadToHeadRotation() * GetHeadInstantTranslation());
+        public void CopyHeadTranslations() => virtualHead.Translate(GetHeadToHeadRotation() * GetHeadInstantTranslation(), relativeTo: Space.World);
 
         /// <summary>
         /// Applies unaltered physical hand rotations to the virtual hand GameObjects
@@ -181,9 +181,10 @@ namespace VHToolkit.Redirection {
         public void CopyHandTranslations() {
 			var t = GetHandInstantTranslation();
 			var Q = GetHeadToHeadRotation();
+
             limbs.ForEach(limb => {
 				foreach (var p in limb.virtualLimb.Zip(t, (vLimb, t) => (vLimb, t)))
-					p.vLimb.Translate(Q * p.t);
+					p.vLimb.Translate(Q * p.t, relativeTo: Space.World);
 			});
 		}
 

@@ -159,7 +159,7 @@ namespace VHToolkit.Redirection {
 
         public override void Redirect(Scene scene) {
             foreach (var p in scene.limbs.Zip(scene.GetHandInstantTranslation(), (limb, t) => (limb, t))) {
-				p.limb.virtualLimb.ForEach(vlimb => vlimb.Translate(p.t + p.t.magnitude * Toolkit.Instance.parameters.ResetRedirectionCoeff * (p.limb.physicalLimb.position - vlimb.position).normalized));
+				p.limb.virtualLimb.ForEach(vlimb => vlimb.Translate(p.t + p.t.magnitude * Toolkit.Instance.parameters.ResetRedirectionCoeff * (p.limb.physicalLimb.position - vlimb.position).normalized, relativeTo: Space.World));
         	};
     	}
 	}
@@ -172,7 +172,7 @@ namespace VHToolkit.Redirection {
 
         public override void Redirect(Scene scene) {
 			foreach(var p in scene.limbs.Zip(scene.GetHandInstantTranslation(), (limb, t) => (limb, t)))
-				p.limb.virtualLimb.ForEach(vlimb => vlimb.Translate(p.t));
+				p.limb.virtualLimb.ForEach(vlimb => vlimb.Translate(p.t, relativeTo: Space.World));
         }
     }
 }

@@ -17,7 +17,7 @@ namespace VHToolkit.Redirection {
                 foreach(Transform vlimb in p.limb.virtualLimb) {
                     var distanceToOrigin = vlimb.position - scene.origin.position;
                     bool insideSwamp = MathF.Max(MathF.Abs(distanceToOrigin[0]), MathF.Abs(distanceToOrigin[2])) * 2 < Toolkit.Instance.parameters.SwampSquareLength;
-                    vlimb.Translate(insideSwamp ? p.t * Toolkit.Instance.parameters.SwampCDRatio : p.t);
+                    vlimb.Translate(insideSwamp ? p.t * Toolkit.Instance.parameters.SwampCDRatio : p.t, relativeTo: Space.World);
 			    }
             });
         }
@@ -34,7 +34,7 @@ namespace VHToolkit.Redirection {
             float horizontalGain = verticalGain * ratio;
             Vector3 gainVector = new(horizontalGain, verticalGain, horizontalGain);
             foreach(var p in scene.limbs.Zip(scene.GetHandInstantTranslation(), (limb, t) => (limb, t))) {
-                p.limb.virtualLimb.ForEach(vLimb => vLimb.Translate(Vector3.Scale(p.t, gainVector)));
+                p.limb.virtualLimb.ForEach(vLimb => vLimb.Translate(Vector3.Scale(p.t, gainVector), relativeTo: Space.World));
             }
         }
     }
