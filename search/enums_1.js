@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['calibrationstate_320',['CalibrationState',['../classVHToolkit_1_1Calibration_1_1SceneCalibration.html#a3039d7e5866ee2150776519bc606e88e',1,'VHToolkit::Calibration::SceneCalibration']]]
+  ['wrstrategy_319',['WRStrategy',['../namespaceVHToolkit.html#a4083c14ccb3ba6e050f3b562e93d096a',1,'VHToolkit']]],
+  ['wrtechnique_320',['WRTechnique',['../namespaceVHToolkit.html#a875a5018b7a275ae89347294e657e8d4',1,'VHToolkit']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['firstpoint_328',['FirstPoint',['../classVHToolkit_1_1Calibration_1_1SceneCalibration.html#a3039d7e5866ee2150776519bc606e88ea7f96422659759463a6faa5a17b7a5554',1,'VHToolkit::Calibration::SceneCalibration']]]
+  ['geslain2022polynom_325',['Geslain2022Polynom',['../namespaceVHToolkit.html#ae85c0749a52f7728da28fbcc0274a1f4a881fb348ecec51db4fb0da7eb50da0bc',1,'VHToolkit']]]
 ];
