@@ -20,7 +20,7 @@ namespace VHToolkit.Redirection {
 		/// <summary>
 		/// Updates the techniqueInstance according to the enumeration technique chosen.
 		/// </summary>
-		private void updateTechnique() {
+		private void UpdateTechnique() {
 			techniqueInstance = technique switch {
 				WRTechnique.None => new NoWorldRedirection(),
 				WRTechnique.Reset => new ResetWorldRedirection(),
@@ -54,7 +54,7 @@ namespace VHToolkit.Redirection {
 		/// initializes the previous head positions.
 		/// </summary>
 		private void OnEnable() {
-			updateTechnique();
+			UpdateTechnique();
 			previousTechnique = technique;
 
 			scene.previousHeadPosition = scene.physicalHead.position;
@@ -73,7 +73,7 @@ namespace VHToolkit.Redirection {
 		/// </summary>
 		private void LateUpdate() {
 			if (previousTechnique != technique || techniqueInstance == null) {
-				updateTechnique();
+				UpdateTechnique();
 				previousTechnique = technique;
 			}
 

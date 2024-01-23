@@ -43,6 +43,9 @@ namespace VHToolkit
 
         static Func<Vector2, float> RepulsivePotential(List<Collider2D> obstacles) =>
             (x) => obstacles.Sum(o => 1 / Vector2.Distance(x, o.ClosestPoint(x)));
+
+        // The potential is given as || x - goal || / 2.
+        static Vector2 GradientOfAttractivePotential(Vector2 goal, Vector2 x) => (x - goal).normalized / 2;
     }
 }
 

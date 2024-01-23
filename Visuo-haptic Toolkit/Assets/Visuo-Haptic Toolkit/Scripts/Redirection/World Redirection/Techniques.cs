@@ -120,7 +120,7 @@ namespace VHToolkit.Redirection {
         /// <summary>
         /// By default, the aggregation function is the maximum by absolute value.
         /// </summary>
-        public Razzaque2001Hybrid() : base() => this.aggregate = (a, b, c) => (new float[] { a, b, c }).OrderByDescending(Mathf.Abs).First();
+        public Razzaque2001Hybrid() : base() => aggregate = (a, b, c) => (new float[] { a, b, c }).OrderByDescending(Mathf.Abs).First();
 
         /// <summary>
         /// Constructor taking a parameter, an aggregation function (float, float, float) -> float.
