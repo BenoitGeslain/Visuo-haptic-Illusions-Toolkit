@@ -85,9 +85,8 @@ namespace VHToolkit.Visualisation {
 
 			if (distanceToTarget < scene.radius) {
 				var length = 0.5f * (distanceToTarget + Mathf.Sqrt(4 * Mathf.Pow(scene.radius, 2f) - 3 * Mathf.Pow(distanceToTarget, 2f)));
-
-				leftTarget =  Quaternion.Euler(0f, 60, 0f) * (length * vectorToTarget.normalized);
-                rightTarget = Quaternion.Euler(0f, -60, 0f) * (length * vectorToTarget.normalized);
+				leftTarget =  Quaternion.Euler(0f, 60f, 0f) * (length * vectorToTarget.normalized);
+                rightTarget = Quaternion.Euler(0f, -60f, 0f) * (length * vectorToTarget.normalized);
 			} else {
 				float angleToTargetsInRadians = Mathf.Asin(scene.radius / distanceToTarget);
 				float angleToTargetsInDegrees = angleToTargetsInRadians * Mathf.Rad2Deg;
@@ -101,16 +100,11 @@ namespace VHToolkit.Visualisation {
 
 		private void UpdateTargetsOrbit(Scene scene, Vector3 leftTarget, Vector3 rightTarget) {
 			FixTargetCounts(2);
-
-			if (Vector3.Angle(leftTarget, scene.physicalHead.forward) < Vector3.Angle(scene.physicalHead.forward, rightTarget)) {
-            	targets[0].GetComponent<Renderer>().material = active;
-            	targets[1].GetComponent<Renderer>().material = inactive;
-				Debug.DrawRay(scene.physicalHead.position, leftTarget, Color.blue);
-			} else {
-            	targets[0].GetComponent<Renderer>().material = inactive;
-            	targets[1].GetComponent<Renderer>().material = active;
-				Debug.DrawRay(scene.physicalHead.position, rightTarget, Color.blue);
-			}
+			bool leftTargetIsActive = Vector3.Angle(leftTarget, scene.physicalHead.forward) < Vector3.Angle(scene.physicalHead.forward, rightTarget);
+			int activeTargetIndex = leftTargetIsActive ? 0 : 1;
+			targets[activeTargetIndex].GetComponent<Renderer>().material = active;
+			targets[1 - activeTargetIndex].GetComponent<Renderer>().material = inactive;
+			Debug.DrawRay(scene.physicalHead.position, leftTargetIsActive ? leftTarget : rightTarget, Color.blue);
 
             targets[0].position = scene.physicalHead.position + leftTarget;
 			targets[1].position = scene.physicalHead.position + rightTarget;
@@ -118,9 +112,8 @@ namespace VHToolkit.Visualisation {
 
 		private void MultipleTargets(Scene scene) {
 			FixTargetCounts(scene.targets.Count);
-            var targetsAndSceneTargets = targets.Zip(scene.targets, (a, b) => (a, b));
 
-            foreach ((var first, var second) in targetsAndSceneTargets) {
+            foreach ((var first, var second) in targets.Zip(scene.targets, (a, b) => (a, b))) {
                 first.transform.position = second.position;
 
 				if (second == scene.selectedTarget) {

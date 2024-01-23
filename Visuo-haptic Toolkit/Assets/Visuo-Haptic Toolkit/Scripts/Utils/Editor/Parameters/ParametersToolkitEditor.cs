@@ -2,6 +2,9 @@ using UnityEditor;
 
 namespace VHToolkit.Redirection {
 	// [CanEditMultipleObjects]
+	/// <summary>
+	/// Custom <c>Editor</c> for toolkit parameters.
+	/// </summary>
 	[CustomEditor(typeof(ParametersToolkit))]
 	public class ParametersToolkitEditor: Editor {
 

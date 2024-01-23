@@ -15,8 +15,7 @@ namespace VHToolkit.Visualisation {
 		/// Calling OnEnable instead of Start to support recompilation during play (Hot reload)
 		/// </summary>
 		private void OnEnable() {
-			if (!Debug.isDebugBuild)
-				this.enabled = false;
+			this.enabled &= Debug.isDebugBuild;
 			BRMainScript = GetComponent<BodyRedirection>();
 			scene = BRMainScript.scene;
 		}
@@ -29,12 +28,11 @@ namespace VHToolkit.Visualisation {
 			if (BRMainScript.IsRedirecting()) {
 				// draws threshold lines for the hands
 				foreach(Limb limb in scene.limbs) {
-					// foreach (var vlimb in limb.virtualLimb)
-					// 	DrawThresholdLines(limb.physicalLimb.position, vlimb.position);
 					DrawThresholdLines(limb.physicalLimb.position, limb.virtualLimb[0].position);
 				}
 			}
 
+			// draw Lécuyer's swamp if applicable
 			if (BRMainScript.GetTechnique() == BRTechnique.Lecuyer2000Swamp) {
 				foreach(var vlimb in scene.virtualLimbs) {
 					Vector3 distanceToOrigin = vlimb.position - scene.origin.position;

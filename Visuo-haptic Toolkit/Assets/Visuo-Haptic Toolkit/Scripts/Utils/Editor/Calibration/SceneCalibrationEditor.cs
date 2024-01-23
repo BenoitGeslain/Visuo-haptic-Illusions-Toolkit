@@ -2,24 +2,24 @@ using UnityEngine;
 using UnityEditor;
 
 namespace VHToolkit.Calibration {
+	/// <summary>
+	/// Custom <c>Editor</c> for <c>Scene</c> calibration.
+	/// </summary>
 	[CustomEditor(typeof(SceneCalibration))]
 	public class SceneCalibrationEditor : Editor {
 		public override void OnInspectorGUI() {
 			base.OnInspectorGUI();
 
 			if (GUILayout.Button("Calibrate")) {
-				SceneCalibration script = (SceneCalibration)target;
-				script.Calibrate();
+                ((SceneCalibration)target).Calibrate();
 			}
 
 			EditorGUILayout.BeginHorizontal();
 			if (GUILayout.Button("Save Calibration")) {
-				SceneCalibration script = (SceneCalibration)target;
-				script.SaveCalibration();
+                ((SceneCalibration)target).SaveCalibration();
 			}
 			if (GUILayout.Button("Load Last Calibration")) {
-				SceneCalibration script = (SceneCalibration)target;
-				script.LoadCalibration();
+                ((SceneCalibration)target).LoadCalibration();
 			}
 			EditorGUILayout.EndHorizontal();
 		}
