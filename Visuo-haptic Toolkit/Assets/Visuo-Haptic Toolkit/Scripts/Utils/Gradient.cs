@@ -3,18 +3,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace VHToolkit
-{
-    static class MathTools
-    {
+namespace VHToolkit {
+    static class MathTools {
         /// <summary>
         /// Compute the gradient of its input <c>function</c> at position <c>x</c> by the central differences method.
         /// </summary>
         /// <param name="function"></param>
         /// <param name="x"></param>
         /// <returns></returns>
-        static Vector3 Gradient3(Func<Vector3, float> function, Vector3 x)
-        {
+        static Vector3 Gradient3(Func<Vector3, float> function, Vector3 x) {
             var eps = Vector3.kEpsilon;
             return new Vector3(
                 function(x + eps * Vector3.right) - function(x + eps * Vector3.left),
@@ -30,8 +27,7 @@ namespace VHToolkit
         /// <param name="function"></param>
         /// <param name="x"></param>
         /// <returns></returns>
-        static Vector2 Gradient2(Func<Vector2, float> function, Vector2 x)
-        {
+        static Vector2 Gradient2(Func<Vector2, float> function, Vector2 x) {
             var eps = Vector2.kEpsilon;
             return new Vector2(
                 function(x + eps * Vector2.right) - function(x + eps * Vector2.left),
@@ -48,4 +44,3 @@ namespace VHToolkit
         static Vector2 GradientOfAttractivePotential(Vector2 goal, Vector2 x) => (x - goal).normalized / 2;
     }
 }
-

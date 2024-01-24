@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.XR;
 
 using VHToolkit.Redirection;
@@ -16,10 +17,10 @@ namespace VHToolkit.Calibration {
 
 		private bool wasPressingButton = false;
 		private List<InputDevice> inputDevices;
-		private Interaction script;
+		private WorldRedirection script;
 
-		private void OnEnable() {
-			script = Toolkit.Instance.transform.GetComponent<Interaction>();
+		private void Start() {
+			script = Toolkit.Instance.gameObject.GetComponent<WorldRedirection>();
 		}
 
 		private void Update() {
@@ -36,9 +37,10 @@ namespace VHToolkit.Calibration {
 			if (inputDevices.Any()) {
 				inputDevices.First().TryGetFeatureValue(CommonUsages.primaryButton, out bool buttonStatus);
 				if (buttonStatus && !wasPressingButton) {
-					Debug.LogError(script);
-					script.StartRedirection();
+					Debug.Log("Button Pressed");
+					// script.StartRedirection();
 					world.SetPositionAndRotation(new(physicalHead.position.x, world.position.y, physicalHead.position.z) , Quaternion.Euler(0f, physicalHead.rotation.eulerAngles.y, 0f));
+					GetComponent<CorridorRedirection>().state++;
 				}
 				wasPressingButton = buttonStatus;
 			}

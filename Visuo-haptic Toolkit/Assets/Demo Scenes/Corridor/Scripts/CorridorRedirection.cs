@@ -9,7 +9,8 @@ using VHToolkit.Redirection;
 
 public class CorridorRedirection : MonoBehaviour {
 
-	enum CorridorStates {
+	public enum CorridorStates {
+		Calibration = -1,
 		None,
 		FirstPainting,
 		SecondPainting,
@@ -21,7 +22,7 @@ public class CorridorRedirection : MonoBehaviour {
 
 	[SerializeField] private Transform UserHead;
 
-	[SerializeField] private CorridorStates state = CorridorStates.None;
+	public CorridorStates state = CorridorStates.None;
 	[ReadOnly][SerializeField] private float redirectionApplied;
 	[SerializeField] private List<Transform> paintingReferences;
 	[Range(0, 45)]
@@ -38,24 +39,25 @@ public class CorridorRedirection : MonoBehaviour {
 
 	private void Update() {
 
-		int currentPainting = (int)state - 1;
-		int nextPainting = (int)state;
+		if (state != CorridorStates.Calibration) {
+			int currentPainting = (int)state - 1;
+			int nextPainting = (int)state;
 
-		// If user reached next painting
-		if (nextPainting < nPaintings && UserHead.position.x > paintingReferences[nextPainting].position.x) {
-			state++;
-			redirectionScript.StartRedirection();
+			redirectionApplied = redirectionScript.GetAngularRedirection().eulerAngles.y;
+			if (redirectionApplied > 180f)
+				redirectionApplied = 360f - redirectionApplied;
+
+			// Debug.Log((Math.Abs(redirectionApplied) - redirectionAmount.Take(currentPainting).Sum()) + ", " + redirectionAmount[currentPainting]);
+			// If the correct redirection has been applied, stop the redirection
+			if (currentPainting >= 0 && Math.Abs(redirectionApplied) - redirectionAmount.Take(currentPainting).Sum() > redirectionAmount[currentPainting]) {
+				Debug.Log($"stop {currentPainting}");
+				redirectionScript.StopRedirection();
+			}
 		}
+	}
 
-		redirectionApplied = redirectionScript.GetAngularRedirection().eulerAngles.y;
-		if (redirectionApplied > 180f)
-			redirectionApplied = 360f - redirectionApplied;
-
-		// Debug.Log((Math.Abs(redirectionApplied) - redirectionAmount.Take(currentPainting).Sum()) + ", " + redirectionAmount[currentPainting]);
-		// If the correct redirection has been applied, stop the redirection
-		if (currentPainting >= 0 && Math.Abs(redirectionApplied) - redirectionAmount.Take(currentPainting).Sum() > redirectionAmount[currentPainting]) {
-			Debug.Log("stop");
-			redirectionScript.StopRedirection();
-		}
+	public void SetState(CorridorStates s) {
+		state = (CorridorStates)Math.Max((int)state, (int)s);
+		redirectionScript.StartRedirection();
 	}
 }
