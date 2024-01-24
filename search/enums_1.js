@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['wrstrategy_319',['WRStrategy',['../namespaceVHToolkit.html#a4083c14ccb3ba6e050f3b562e93d096a',1,'VHToolkit']]],
-  ['wrtechnique_320',['WRTechnique',['../namespaceVHToolkit.html#a875a5018b7a275ae89347294e657e8d4',1,'VHToolkit']]]
+  ['corridorstates_331',['CorridorStates',['../classCorridorRedirection.html#a9adca29350f5e874d844bf450adda49e',1,'CorridorRedirection']]]
 ];
