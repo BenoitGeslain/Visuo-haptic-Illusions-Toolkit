@@ -7,15 +7,15 @@ using System.Linq;
 using UnityEngine.AI;
 
 
-public class NewBehaviourScript : MonoBehaviour
+public class Utilisateur_AFP_Projet_Test : MonoBehaviour
 {
     [Header ("Debug tools")]
 
     [SerializeField]
-    [Tooltip("à cocher avant le lancement, affiche tous les objets taggés obstacles")]
+    [Tooltip("ï¿½ cocher avant le lancement, affiche tous les objets taggï¿½s obstacles")]
     bool afficher_nom_et_position = false;
     [SerializeField]
-    [Tooltip("Affiche la distance entre l'utilisateur et chaque obstacle en temps réel")]
+    [Tooltip("Affiche la distance entre l'utilisateur et chaque obstacle en temps rï¿½el")]
     bool afficher_distance_objets = false;
     [SerializeField]
     bool position_utilisateur = false;
@@ -31,7 +31,7 @@ public class NewBehaviourScript : MonoBehaviour
     GameObject[] Obstacles_gameObject;
 
 
-    // récupération de la position des objets uniquement au start 
+    // rï¿½cupï¿½ration de la position des objets uniquement au start 
     // + tard : trouver le point le plus proche de chaque objet-user / optimisation du code pour le mettre dans le update
     void Start()
     {
@@ -41,7 +41,7 @@ public class NewBehaviourScript : MonoBehaviour
         {
             for (int i = 0; i < Position_Obstacles.Count; i++)
             {
-                Debug.Log($"obstacle {i} : {Obstacles_gameObject[i].name} à la position : {Position_Obstacles[i]} ");
+                Debug.Log($"obstacle {i} : {Obstacles_gameObject[i].name} ï¿½ la position : {Position_Obstacles[i]} ");
 
             }
         }
@@ -58,7 +58,7 @@ public class NewBehaviourScript : MonoBehaviour
         if (Position_utilisateur != LastPosition_utilisateur)
         {
 
-            if (position_utilisateur) Debug.Log($"L'utilisateur est à la position {Position_utilisateur}");
+            if (position_utilisateur) Debug.Log($"L'utilisateur est ï¿½ la position {Position_utilisateur}");
 
             CalculDistanceObstacles();
 
@@ -81,13 +81,11 @@ public class NewBehaviourScript : MonoBehaviour
 
             }
 
-            
-
             if (afficher_distance_objets)
             {
                 for (int i = 0; i < Distance_Obstacles.Length; i++)
                 {
-                    Debug.Log($"Distance de l'objet {Obstacles_gameObject[i].name} à {Distance_Obstacles[i]} pixels");
+                    Debug.Log($"Distance de l'objet {Obstacles_gameObject[i].name} ï¿½ {Distance_Obstacles[i]} pixels");
                 }
             }
         
