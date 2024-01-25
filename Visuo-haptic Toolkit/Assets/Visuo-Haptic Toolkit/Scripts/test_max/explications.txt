@@ -1,0 +1,6 @@
+utilisateur se place sur la caméra/ casque vr qui indique la position réelle de l'utilisateur
+les fonctions de calculs sont les méthodes statiques que j'utilise pour 
+- calcul distance
+- retourner la position des obstacles
+- modifier les coordonnées Vector2 qui sont par defaut x,y en x,z car y correspond à la hauteur et z la profondeur
+- renvoit du calcul de la fonction p2r (je ne sais pas si elle est correct)
