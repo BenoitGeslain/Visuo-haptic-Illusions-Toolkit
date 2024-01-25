@@ -35,12 +35,41 @@ namespace VHToolkit {
             ) / (2 * eps);
         }
 
-        static Vector2 ProjectToHorizontalPlane(this Vector3 v) => new(v.x, v.z);
-
         static Func<Vector2, float> RepulsivePotential(List<Collider2D> obstacles) =>
             (x) => obstacles.Sum(o => 1 / Vector2.Distance(x, o.ClosestPoint(x)));
 
-        // The potential is given as || x - goal || / 2.
+        // The potential is given as || x - goal || / 2. Will become unstable near goal.
         static Vector2 GradientOfAttractivePotential(Vector2 goal, Vector2 x) => (x - goal).normalized / 2;
+
+
+        public readonly struct PositionAndRotation2D {
+            public readonly Vector2 position;
+            public readonly Vector2 forward;
+
+            public PositionAndRotation2D(Vector2 position = new(), Vector2 forward = new()) {
+                this.position = position;
+                this.forward = forward;
+            }
+        }
+
+        // TODO careful, this isn't the same choice as Vector2.Vector2 / Vector2.Vector3. (Those project to a vertical plane.)
+        static public Vector2 ProjectToHorizontalPlane(this Vector3 v) => new(v.x, v.z);
+        static public Vector3 LiftFromHorizontalPlane(this Vector2 v) => new(v.x, 0, v.y);
+
+        // Compute the forward kinematics chain from link-to-link length and angle information.
+        static public List<PositionAndRotation2D> ForwardKinematics(PositionAndRotation2D origin, List<float> lengths, List<float> angles) {
+            List<PositionAndRotation2D> result = new() { origin };
+            var position = origin.position;
+            var direction = origin.forward.LiftFromHorizontalPlane();
+            foreach (var (length, angle) in lengths.Zip(angles, (l, a) => (l, a))) {
+                Debug.Assert(length > 0);
+                Debug.Assert(Mathf.Abs(angle) <= 180f);
+                var last = result.Last();
+                position += length * last.forward;
+                direction = Quaternion.AngleAxis(angle, Vector3.up) * direction;
+                result.Add(new(position, direction.ProjectToHorizontalPlane()));
+            }
+            return result;
+        }
     }
 }
