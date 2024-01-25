@@ -1,5 +1,3 @@
-using System;
-
 using UnityEngine;
 using UnityEditor;
 
@@ -19,6 +17,7 @@ namespace VHToolkit.Redirection {
 		SerializedProperty physicalTarget;
 		SerializedProperty virtualTarget;
 		SerializedProperty origin;
+		SerializedProperty redirect;
 
 		private void OnEnable() {
 
@@ -26,12 +25,12 @@ namespace VHToolkit.Redirection {
             techniqueInstance = serializedObject.FindProperty("techniqueInstance");
 
 			physicalLimbs = serializedObject.FindProperty("scene.limbs");
-			// virtualLimbs = serializedObject.FindProperty("scene.virtualLimbs");
 			physicalHead = serializedObject.FindProperty("scene.physicalHead");
 			virtualHead = serializedObject.FindProperty("scene.virtualHead");
 			physicalTarget = serializedObject.FindProperty("scene.physicalTarget");
 			virtualTarget = serializedObject.FindProperty("scene.virtualTarget");
 			origin = serializedObject.FindProperty("scene.origin");
+			redirect = serializedObject.FindProperty("redirect");
 		}
 
 		public override void OnInspectorGUI() {
@@ -43,8 +42,12 @@ namespace VHToolkit.Redirection {
 
 			EditorGUILayout.PropertyField(technique, new GUIContent ("Technique"));
 
+			EditorGUILayout.Space(5);
+			EditorGUILayout.LabelField("User Parameters", EditorStyles.boldLabel);
+
 			// Scene
 			EditorGUILayout.PropertyField(physicalLimbs, new GUIContent("Physical Limbs"));
+
 			// EditorGUILayout.PropertyField(virtualLimbs, new GUIContent("Virtual Limbs"));
 			if (technique.enumNames[technique.enumValueIndex] == "Azmandian2016Hybrid") {
 				EditorGUILayout.PropertyField(physicalHead, new GUIContent("Physical Head"));
@@ -52,6 +55,12 @@ namespace VHToolkit.Redirection {
 			} else if (technique.enumNames[technique.enumValueIndex] == "Poupyrev1996GoGo") {
 				EditorGUILayout.PropertyField(physicalHead, new GUIContent("Physical Head"));
 			}
+
+
+			EditorGUILayout.Space(5);
+			EditorGUILayout.LabelField("Technique Parameters", EditorStyles.boldLabel);
+
+			EditorGUILayout.PropertyField(redirect, new GUIContent("Redirect"));
 
 			EditorGUILayout.PropertyField(physicalTarget, new GUIContent("Physical Target"));
 			EditorGUILayout.PropertyField(virtualTarget, new GUIContent("Virtual Target"));

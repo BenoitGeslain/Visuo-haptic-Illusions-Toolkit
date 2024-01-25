@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.Linq;
+
 using UnityEngine;
 
 namespace VHToolkit.Redirection {
@@ -55,14 +57,16 @@ namespace VHToolkit.Redirection {
 		private void OnEnable() {
 			updateTechnique();
 			previoustechnique = technique;
-			// Store thhe previous hand and head position and rotation to compute instant linear or angular velocity
-			scene.previousLimbPositions = scene.limbs.ConvertAll(limb => limb.PhysicalLimb.position);
-			scene.previousLimbRotations = scene.limbs.ConvertAll(limb => limb.PhysicalLimb.rotation);
+			// Store the previous hand and head position and rotation to compute instant linear or angular velocity
+			scene.previousLimbPositions = scene.limbs.ConvertAll(limb => limb.physicalLimb.position);
+			scene.previousLimbRotations = scene.limbs.ConvertAll(limb => limb.physicalLimb.rotation);
 			if (scene.physicalHead) {
 				scene.previousHeadPosition = scene.physicalHead.position;
 				scene.previousHeadRotation = scene.physicalHead.rotation;
 			}
 
+			scene.physicalTargetPosition = scene.physicalTarget.position;
+			scene.virtualTargetPosition = scene.virtualTarget.position;
 		}
 
 		/// <summary>
@@ -81,11 +85,12 @@ namespace VHToolkit.Redirection {
 			techniqueInstance?.Redirect(scene);	// Computes and applies the redirection according to the selected redirection technique
 
 			// Copy the real hand rotation to the virtual hand to conserve tracking.
-			scene.limbs.ForEach(limb => limb.VirtualLimb.ForEach(vlimb => vlimb.rotation = limb.PhysicalLimb.rotation)); // TODO check Azmandian Body for rotation
+			scene.limbs.ForEach(limb => limb.virtualLimb.ForEach(vlimb => vlimb.rotation = limb.physicalLimb.rotation)); // TODO check Azmandian Body for rotation
+
 			// In case the body redirection technique uses the head of the user (e.g. ),
 			// the previous position and rotation are stored to compute instant linear or angular velocity
-			scene.previousLimbPositions = scene.limbs.ConvertAll(limb => limb.PhysicalLimb.position);
-			scene.previousLimbRotations = scene.limbs.ConvertAll(limb => limb.PhysicalLimb.rotation);
+			scene.previousLimbPositions = scene.limbs.ConvertAll(limb => limb.physicalLimb.position);
+			scene.previousLimbRotations = scene.limbs.ConvertAll(limb => limb.physicalLimb.rotation);
 			if (scene.physicalHead) {
 				scene.previousHeadPosition = scene.physicalHead.position;
 				scene.previousHeadRotation = scene.physicalHead.rotation;
@@ -97,9 +102,33 @@ namespace VHToolkit.Redirection {
 		/// </summary>
         public void ResetRedirection() => technique = BRTechnique.Reset;
 
+		/// <summary>
+		/// Getter for the redirection technique currently used.
+		/// </summary>
+		/// <returns>BRTechnique</returns>
         public BRTechnique GetTechnique() => technique;
 
+		/// <summary>
+		/// Setter for the redirection technique to use.
+		/// </summary>
+		/// <param name="t">BRTechnique</param>
         public void SetTechnique(BRTechnique t) => technique = t;
+
+		public List<Vector3> GetRedirection() => scene.Redirection;
+
+		public Transform GetPhysicalTarget() => scene.physicalTarget;
+
+		public void SetPhysicalTarget(Transform physicalTarget) {
+			scene.physicalTarget = physicalTarget;
+			scene.physicalTargetPosition = scene.physicalTarget.position;
+		}
+
+		public Transform GetVirtualarget() => scene.virtualTarget;
+
+		public void SetVirtualTarget(Transform virtualTarget) {
+			scene.virtualTarget = virtualTarget;
+			scene.virtualTargetPosition = scene.virtualTarget.position;
+		}
 
 		/// <summary>
 		/// Returns whether a redirection is applied to the user's virtual and physical hand

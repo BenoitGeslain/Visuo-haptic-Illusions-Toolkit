@@ -1,12 +1,15 @@
 using UnityEngine;
 
-namespace VHToolkit.Redirection {
+using VHToolkit.Redirection;
+
+namespace VHToolkit {
 	/// <summary>
 	/// Available body redirection techniques.
 	/// </summary>
 	public enum BRTechnique {
-		None,	// Hand Redirection techniques
-		Reset,	// Hand Redirection techniques
+		None,
+		Reset,
+		// Hand Redirection techniques
 		Han2018TranslationalShift,
 		Han2018InterpolatedReach,
 		Azmandian2016Body,
@@ -14,7 +17,7 @@ namespace VHToolkit.Redirection {
 		Cheng2017Sparse,
 		Geslain2022Polynom,
 		Poupyrev1996GoGo,
-		_,	// Pseudo-haptic techiques
+		// Pseudo-haptic techiques
 		Lecuyer2000Swamp,
 		Samad2019Weight
 	}
@@ -47,17 +50,17 @@ namespace VHToolkit.Redirection {
 		public ParametersToolkit parameters;
 
 		private void OnEnable() {
-			if (Instance != null && Instance != this) {
-				Destroy(this);
-			}
-			else {
-				Instance = this;
-				DontDestroyOnLoad(this.gameObject);
-			}
-		}
+            if (Instance == null || Instance == this) {
+                Instance = this;
+                // DontDestroyOnLoad(gameObject);
+            }
+            else {
+                Destroy(this);
+            }
+        }
 
         public float CurvatureRadiusToRotationRate() => CurvatureRadiusToRotationRate(parameters.CurvatureRadius);
 
-        public static float CurvatureRadiusToRotationRate(float radius) => 360f / (2 * Mathf.PI * radius);
+        public static float CurvatureRadiusToRotationRate(float radius) => 180f / (Mathf.PI * radius);
     }
 }

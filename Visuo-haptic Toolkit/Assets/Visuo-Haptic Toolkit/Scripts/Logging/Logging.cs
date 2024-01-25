@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Globalization;
-using System.Linq;
 
 using CsvHelper;
 using CsvHelper.Configuration;
@@ -11,8 +10,11 @@ using UnityEngine;
 
 using VHToolkit.Redirection;
 
-namespace VHToolkit.Logging {
-
+namespace VHToolkit.Logging
+{
+	/// <summary>
+	/// Class specifying loggable data for a redirection scene.
+	/// </summary>
     public record RedirectionData {
         public DateTime timeStamp = DateTime.Now;
         public string Technique => script switch {
@@ -28,7 +30,13 @@ namespace VHToolkit.Logging {
         }
     }
 
+	/// <summary>
+	/// Helper class for redirection logging.
+	/// </summary>
 	public sealed class RedirectionDataMap : ClassMap<RedirectionData> {
+		/// <summary>
+		/// Helper class for logging <c>Scene</c> objects.
+		/// </summary>
 		public sealed class SceneClassMap : ClassMap<Scene> {
 			public SceneClassMap() {
 				// Warning! Non-logged attributes in Scene MUST be ignored ([Ignore])
@@ -48,11 +56,12 @@ namespace VHToolkit.Logging {
 				Map(m => m.origin.position).Name("OriginPosition");
 			}
 		}
+		/// <summary>
+		/// Helper class for logging <c>Interaction</c> objects.
+		/// </summary>
 		public sealed class InteractionClassMap : ClassMap<Interaction> {
-			public InteractionClassMap() {
-				References<SceneClassMap>(m => m.scene);
-			}
-		}
+            public InteractionClassMap() => References<SceneClassMap>(m => m.scene);
+        }
 		public RedirectionDataMap() {
 			Map(m => m.timeStamp).TypeConverterOption.Format("yyyy/MM/dd-HH:mm:ss.fff").Index(0).Name("TimeStamp");
 			Map(m => m.Technique).Index(1);
@@ -76,7 +85,7 @@ namespace VHToolkit.Logging {
 		private Interaction script;
 
         private void Start() {
-			createNewFile();
+			CreateNewFile();
 			script = GetComponent<Interaction>();
 		}
 
@@ -95,7 +104,7 @@ namespace VHToolkit.Logging {
 			writeRecords<RedirectionData, RedirectionDataMap>(records);
 		}
 
-		public void createNewFile() {
+		public void CreateNewFile() {
 			fileName = $"{pathToFile}{fileNamePrefix}{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.csv";
 
 			void writeHeaders<Data, DataMap>(out List<Data> records) where DataMap : ClassMap<Data> {

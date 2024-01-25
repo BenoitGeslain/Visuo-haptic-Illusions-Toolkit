@@ -22,7 +22,9 @@ You will find
 | [Azmandian et al., 2016](https://doi.org/10.1145/2858036.2858226), Body Warping    |[Azmandian et al., 2016](https://doi.org/10.1145/2858036.2858226), Hybrid Warping    |
 | [Han et al., 2019](http://ieeexplore.ieee.org/document/8260974/), Translational Shift    | [Han et al., 2019](http://ieeexplore.ieee.org/document/8260974/), Interpolated Reach *    |
 | [Cheng et al., 2017](http://doi.acm.org/10.1145/3025453.3025753), Sparse Haptics   | [Geslain et al., 2022](https://doi.org/10.1145/3531073.3531100), 2<sup>nd</sup> order polynomials   |
-| [Poupyrev et al., 1996](https://dl.acm.org/doi/10.1145/237091.237102), The Go-Go   |
+| [Poupyrev et al., 1996](https://dl.acm.org/doi/10.1145/237091.237102), The Go-Go   | |
+
+\* Sign mistake in equation (3.3). Technique redirects in opposite direction. + B is incorrect.
 
 | World Redirection   |     |
 |:-------------- | :--------------: |
@@ -30,20 +32,17 @@ You will find
 | [Razzaque et al., 2001](https://diglib.eg.org:443/xmlui/handle/10.2312/egs20011036), Curvature <br />[Steinicke et al., 2008](http://ieeexplore.ieee.org/document/4741303/)    | [Razzaque et al., 2001](https://diglib.eg.org:443/xmlui/handle/10.2312/egs20011036), Redirected Walking Hybrid    |
 | [Azmandian et al., 2016](https://doi.org/10.1145/2858036.2858226), World Warping    | [Williams et al., 2006](https://dl.acm.org/doi/10.1145/1140491.1140495), Translational <br />[Steinicke et al., 2008](http://ieeexplore.ieee.org/document/4741303/),    |
 
-| Interpolation   |     |
-|:-------------- | :--------------: |
-
 | Pseudo-Haptic   |     |
 |:-------------- | :--------------: |
 | [Lécuyer et al., 2000](https://doi.org/10.1109/VR.2000.840369), Swamp Illusion   | [Lécuyer et al., 2000](https://doi.org/10.1109/VR.2000.840369), Spring stiffness   |
 | [Samad et al., 2019](https://dl.acm.org/doi/10.1145/3290605.3300550), Pseudo-haptic weight   | [Rietzler et al., 2018](https://dl.acm.org/doi/10.1145/3173574.3173702), Breaking the tracking, weight   |
 
-\* Erreur de signe dans l'équation à 3.3, la technique redirige dans la direction opposée. + B est faux
-
-| Steering Strategies  | Status   |
-|:-------------- | :--------------: |
-| [Langbehn and Steinicke, 2013](https://link.springer.com/referenceworkentry/10.1007/978-3-319-08234-9_253-1), Steer To Center    | [Langbehn and Steinicke, 2013](https://link.springer.com/referenceworkentry/10.1007/978-3-319-08234-9_253-1), Steer To Orbit    |   [Langbehn and Steinicke, 2013](https://link.springer.com/referenceworkentry/10.1007/978-3-319-08234-9_253-1), Steer To Targets    | &check; |
-| [Langbehn and Steinicke, 2013](https://link.springer.com/referenceworkentry/10.1007/978-3-319-08234-9_253-1), Steer To Targets + Center    |	|
+| Steering Strategies  |
+|:-------------- |
+| [Langbehn and Steinicke, 2013](https://link.springer.com/referenceworkentry/10.1007/978-3-319-08234-9_253-1), Steer To Center |
+| [Langbehn and Steinicke, 2013](https://link.springer.com/referenceworkentry/10.1007/978-3-319-08234-9_253-1), Steer To Orbit  |
+| [Langbehn and Steinicke, 2013](https://link.springer.com/referenceworkentry/10.1007/978-3-319-08234-9_253-1), Steer To Targets |
+| [Langbehn and Steinicke, 2013](https://link.springer.com/referenceworkentry/10.1007/978-3-319-08234-9_253-1), Steer To Targets + Center |
 
 ### Not Yet Implemented (Roadmap)
 
@@ -76,7 +75,7 @@ Main contributors:
 All contributions are welcome. Please find more details on the [wiki](https://github.com/BenoitGeslain/Visuo-haptic-Illusions-Toolkit/wiki/Contributing).
 
 ## Copyright and Licensing
-Copyright (c) 2023 SII Société pour l’Informatique Industrielle
+Copyright (c) 2023-2024 SII Société pour l’Informatique Industrielle
 
 
 This project is licensed under the open-source MIT X11 license, see the [LICENSE](https://github.com/BenoitGeslain/Visuo-haptic-Illusions-Toolkit/blob/main/LICENSE) file.

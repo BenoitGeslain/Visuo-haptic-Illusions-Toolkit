@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
+
 using UnityEngine;
 
 
-// TODO once implemented move these techniques into the right namespace
 // TODO handle collision detection
 // TODO handle offset reduction
 namespace VHToolkit.Redirection {
@@ -14,21 +13,18 @@ namespace VHToolkit.Redirection {
     /// </summary>
     public class Lecuyer2000Swamp : BodyRedirectionTechnique {
         public override void Redirect(Scene scene) {
-            Enumerable.Zip(scene.limbs, scene.GetHandInstantTranslation(), (limb, t) => (limb, t)).ToList().ForEach(p => {
-                foreach(Transform vlimb in p.limb.VirtualLimb) {
+            scene.limbs.Zip(scene.GetHandInstantTranslation(), (limb, t) => (limb, t)).ToList().ForEach(p => {
+                foreach(Transform vlimb in p.limb.virtualLimb) {
                     var distanceToOrigin = vlimb.position - scene.origin.position;
-                    if (MathF.Max(MathF.Abs(distanceToOrigin[0]), MathF.Abs(distanceToOrigin[2])) * 2 < Toolkit.Instance.parameters.SwampSquareLength) {
-                        vlimb.Translate(p.t * Toolkit.Instance.parameters.SwampCDRatio);
-                    } else {
-                        vlimb.Translate(p.t);
-                    }
+                    bool insideSwamp = MathF.Max(MathF.Abs(distanceToOrigin[0]), MathF.Abs(distanceToOrigin[2])) * 2 < Toolkit.Instance.parameters.SwampSquareLength;
+                    vlimb.Translate(insideSwamp ? p.t * Toolkit.Instance.parameters.SwampCDRatio : p.t, relativeTo: Space.World);
 			    }
             });
         }
     }
 
     /// <summary>
-    /// TODO
+    /// This class implements the pseudo-haptic weight effect by Samad et al., 2019. CD ratio manipulation simulates the effects of weight.
     /// </summary>
     public class Samad2019Weight : BodyRedirectionTechnique {
         public override void Redirect(Scene scene) {
@@ -37,8 +33,8 @@ namespace VHToolkit.Redirection {
             float verticalGain = 1 / normalizedMass;
             float horizontalGain = verticalGain * ratio;
             Vector3 gainVector = new(horizontalGain, verticalGain, horizontalGain);
-            foreach(var p in Enumerable.Zip(scene.limbs, scene.GetHandInstantTranslation(), (limb, t) => (limb, t))) {
-                p.limb.VirtualLimb.ForEach(vLimb => vLimb.Translate(Vector3.Scale(p.t, gainVector)));
+            foreach(var p in scene.limbs.Zip(scene.GetHandInstantTranslation(), (limb, t) => (limb, t))) {
+                p.limb.virtualLimb.ForEach(vLimb => vLimb.Translate(Vector3.Scale(p.t, gainVector), relativeTo: Space.World));
             }
         }
     }

@@ -30,7 +30,7 @@ namespace VHToolkit.Redirection {
         public static List<Vector3> GetRedirection(Scene scene) => scene.limbs.ConvertAll(
 			limb => {
 				var d = scene.physicalTarget.position - scene.origin.position;
-				var warpingRatio = Mathf.Clamp01(Vector3.Dot(d, limb.PhysicalLimb.position - scene.origin.position) / d.sqrMagnitude);
+				var warpingRatio = Mathf.Clamp01(Vector3.Dot(d, limb.physicalLimb.position - scene.origin.position) / d.sqrMagnitude);
 				return warpingRatio * (scene.virtualTarget.position - scene.physicalTarget.position);
 			}
 		);
@@ -48,9 +48,9 @@ namespace VHToolkit.Redirection {
 			scene.CopyHeadTranslations();
 
 			List<float> handTargetDistance = scene.limbs.ConvertAll(limb =>
-				Mathf.Clamp01(Vector3.Dot(scene.origin.position - scene.physicalTarget.position, limb.PhysicalLimb.position - scene.physicalTarget.position)));
+				Mathf.Clamp01(Vector3.Dot(scene.origin.position - scene.physicalTarget.position, limb.physicalLimb.position - scene.physicalTarget.position)));
 
-			List<Vector3> BRRedirection = Enumerable.Zip(handTargetDistance, Azmandian2016Body.GetRedirection(scene), (v, d) => (1 - v) * d).ToList();
+			List<Vector3> BRRedirection = handTargetDistance.Zip(Azmandian2016Body.GetRedirection(scene), (v, d) => (1 - v) * d).ToList();
             float WRRedirection = handTargetDistance.FirstOrDefault() * Azmandian2016World.GetRedirection(scene);
 			// todo follow multiple limbs and not just first limb
 
@@ -94,7 +94,7 @@ namespace VHToolkit.Redirection {
 	public class Cheng2017Sparse: BodyRedirectionTechnique {
 
 		public override void Redirect(Scene scene) {
-            List<float> alpha = Enumerable.Zip(scene.GetPhysicalHandOriginDistance(), scene.GetPhysicalHandTargetDistance(), (s, p) => s / (s + p)).ToList();
+            List<float> alpha = scene.GetPhysicalHandOriginDistance().Zip(scene.GetPhysicalHandTargetDistance(), (s, p) => s / (s + p)).ToList();
 			scene.Redirection = alpha.ConvertAll(a => a * (scene.virtualTarget.position - scene.physicalTarget.position));
 		}
 	}
@@ -144,7 +144,7 @@ namespace VHToolkit.Redirection {
 
 		public override void Redirect(Scene scene) {
 			// Offset the head position by 0.2m to approximate the chest position then compute the chest to hand vector
-			List<Vector3> chestToHand = scene.limbs.ConvertAll(limb => limb.PhysicalLimb.position + 0.2f * Vector3.up - scene.physicalHead.position);
+			List<Vector3> chestToHand = scene.limbs.ConvertAll(limb => limb.physicalLimb.position + 0.2f * Vector3.up - scene.physicalHead.position);
 			scene.Redirection = chestToHand.ConvertAll(d => d.magnitude > Toolkit.Instance.parameters.GoGoActivationDistance
                 ? Toolkit.Instance.parameters.GoGoCoefficient * Mathf.Pow(d.magnitude - Toolkit.Instance.parameters.GoGoActivationDistance, 2) * d.normalized
                 : Vector3.zero);
@@ -158,8 +158,8 @@ namespace VHToolkit.Redirection {
     public class ResetBodyRedirection : BodyRedirectionTechnique {
 
         public override void Redirect(Scene scene) {
-            foreach (var p in Enumerable.Zip(scene.limbs, scene.GetHandInstantTranslation(), (limb, t) => (limb, t))) {
-				p.limb.VirtualLimb.ForEach(vlimb => vlimb.Translate(p.t + p.t.magnitude * Toolkit.Instance.parameters.ResetRedirectionCoeff * (p.limb.PhysicalLimb.position - vlimb.position).normalized));
+            foreach (var p in scene.limbs.Zip(scene.GetHandInstantTranslation(), (limb, t) => (limb, t))) {
+				p.limb.virtualLimb.ForEach(vlimb => vlimb.Translate(p.t + p.t.magnitude * Toolkit.Instance.parameters.ResetRedirectionCoeff * (p.limb.physicalLimb.position - vlimb.position).normalized, relativeTo: Space.World));
         	};
     	}
 	}
@@ -171,8 +171,8 @@ namespace VHToolkit.Redirection {
     public class NoBodyRedirection : BodyRedirectionTechnique {
 
         public override void Redirect(Scene scene) {
-			foreach(var p in Enumerable.Zip(scene.limbs, scene.GetHandInstantTranslation(), (limb, t) => (limb, t)))
-				p.limb.VirtualLimb.ForEach(vlimb => vlimb.Translate(p.t));
+			foreach(var p in scene.limbs.Zip(scene.GetHandInstantTranslation(), (limb, t) => (limb, t)))
+				p.limb.virtualLimb.ForEach(vlimb => vlimb.Translate(p.t, relativeTo: Space.World));
         }
     }
 }

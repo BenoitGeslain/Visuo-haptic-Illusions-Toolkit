@@ -1,5 +1,5 @@
-using System.Collections.ObjectModel;
-using System.Linq;
+using System.Collections.Generic;
+
 using UnityEngine;
 
 namespace VHToolkit.Redirection {
@@ -12,9 +12,6 @@ namespace VHToolkit.Redirection {
 	public class WorldRedirection : Interaction {
 
 		public WRTechnique technique;
-        /// <summary>
-        /// Previously selected technique, if any.
-        /// </summary>
         private WRTechnique previousTechnique;
 		public WorldRedirectionTechnique techniqueInstance;
 		public WRStrategy strategy;
@@ -23,7 +20,7 @@ namespace VHToolkit.Redirection {
 		/// <summary>
 		/// Updates the techniqueInstance according to the enumeration technique chosen.
 		/// </summary>
-		private void updateTechnique() {
+		private void UpdateTechnique() {
 			techniqueInstance = technique switch {
 				WRTechnique.None => new NoWorldRedirection(),
 				WRTechnique.Reset => new ResetWorldRedirection(),
@@ -56,15 +53,14 @@ namespace VHToolkit.Redirection {
 		/// Start function called once when the game is starting. This function calls updateTechnique() to instantiate the technique class and
 		/// initializes the previous head positions.
 		/// </summary>
-		private void Start() {
-			updateTechnique();
+		private void OnEnable() {
+			UpdateTechnique();
 			previousTechnique = technique;
 
-			if (scene.targets != null) {
-				scene.selectedTarget = scene.targets.FirstOrDefault();
-			}
 			scene.previousHeadPosition = scene.physicalHead.position;
 			scene.previousHeadRotation = scene.physicalHead.rotation;
+
+			scene.previousLimbPositions = scene.limbs.ConvertAll(limb => limb.physicalLimb.position);
 		}
 
 		/// <summary>
@@ -76,7 +72,7 @@ namespace VHToolkit.Redirection {
 		/// </summary>
 		private void LateUpdate() {
 			if (previousTechnique != technique || techniqueInstance == null) {
-				updateTechnique();
+				UpdateTechnique();
 				previousTechnique = technique;
 			}
 
@@ -89,7 +85,14 @@ namespace VHToolkit.Redirection {
 				techniqueInstance.Redirect(scene);
 			scene.previousHeadPosition = scene.physicalHead.position;
 			scene.previousHeadRotation = scene.physicalHead.rotation;
+
+			scene.previousLimbPositions = scene.limbs.ConvertAll(limb => limb.physicalLimb.position);
 		}
+
+		/// <summary>
+		/// A wrapper around SetTechnique(BRTechnique t) to use the ResetRedirection technique.
+		/// </summary>
+		public void ResetRedirection() => SetTechnique(WRTechnique.Reset);
 
 		/// <summary>
 		/// Getter for the enumeration technique.
@@ -103,10 +106,21 @@ namespace VHToolkit.Redirection {
         /// <param name="t">The enumeration defining which technique to call Redirect(...) from.</param>
         public void SetTechnique(WRTechnique t) => technique = t;
 
-        /// <summary>
-        /// A wrapper around SetTechnique(BRTechnique t) to use the ResetRedirection technique.
-        /// </summary>
-        public void ResetRedirection() => SetTechnique(WRTechnique.Reset);
+		public Quaternion GetAngularRedirection() => scene.GetHeadToHeadRotation();
+
+		public float GetTranslationalRedirection() => scene.GetHeadToHeadDistance();	// TODO : maybe should be a vector 3 between heads instead of magn
+
+		public void SetTargets(List<Transform> targets) => scene.targets = targets;
+
+		public List<Transform> GetTargets() => scene.targets;
+
+		public void SetApplyDampening(bool dampening) => scene.applyDampening = dampening;
+
+		public bool GetApplyDampening() => scene.applyDampening;
+
+		public void SetApplySmoothing(bool smoothing) => scene.applySmoothing = smoothing;
+
+		public bool GetApplySmoothing() => scene.applySmoothing;
 
 		/// <summary>
 		/// Determine whether a redirection is applied to the user's virtual and physical head

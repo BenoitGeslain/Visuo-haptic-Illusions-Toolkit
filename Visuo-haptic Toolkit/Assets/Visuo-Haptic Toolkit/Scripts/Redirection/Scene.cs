@@ -8,10 +8,18 @@ using UnityEngine;
 
 namespace VHToolkit.Redirection {
 
+	/// <summary>
+	/// A Limb pairs one <c>physicalLimb</c> Transform with a list of virtual limb Transforms.
+	/// </summary>
 	[Serializable]
 	public struct Limb {
-        public Transform PhysicalLimb;
-		public List<Transform> VirtualLimb;
+        public Transform physicalLimb;
+		public List<Transform> virtualLimb;
+
+		public Limb(Transform physicalLimb, List<Transform> virtualLimb) {
+			this.physicalLimb = physicalLimb;
+			this.virtualLimb = virtualLimb;
+		}
 	}
 
 	/// <summary>
@@ -31,59 +39,59 @@ namespace VHToolkit.Redirection {
 	/// <param name="applySmoothing">Whether to apply smoothing in the Razzaque et al.'s Redirected walking hybrid technique.</param>
 	[Serializable]
 	public record Scene() {
-        [Header("User Parameters")]
         // [Ignore] public Transform physicalHand;
         // [Ignore] public Transform virtualHand;
         [SerializeField] public List<Limb> limbs;
 
+        [Ignore] public List<Transform> virtualLimbs => limbs.SelectMany(limb => limb.virtualLimb).ToList();
+
         [Ignore] public Transform physicalHead;
 		[Ignore] public Transform virtualHead;
 
-		[Header("Technique Parameters")]
         [Ignore] public Transform physicalTarget;
+        [Ignore] public Vector3 physicalTargetPosition;
         [Ignore] public Transform virtualTarget;
+        [Ignore] public Vector3 virtualTargetPosition;
         [Ignore] public Transform origin;
-		[Ignore] public Transform[] targets;
+		[Ignore] public List<Transform> targets;
 		[Ignore] public float radius = 5f;
 		[Ignore] public bool applyDampening = false;
 		[Ignore] public bool applySmoothing = false;
 
-		[Ignore] [HideInInspector] public Transform selectedTarget;
-		[Ignore] [HideInInspector] public Vector3 forwardTarget;
-		[Ignore] [HideInInspector] public List<Vector3> previousLimbPositions;
-		[Ignore] [HideInInspector] public List<Quaternion> previousLimbRotations;
-		[Ignore] [HideInInspector] public Vector3 previousHeadPosition;
-		[Ignore] [HideInInspector] public Quaternion previousHeadRotation;
-		[Ignore] [HideInInspector] public float previousRedirection;
+		[Ignore] public Transform selectedTarget;
+		[Ignore] public Vector3 forwardTarget;
+		[Ignore] public List<Vector3> previousLimbPositions;
+		[Ignore] public List<Quaternion> previousLimbRotations;
+		[Ignore] public Vector3 previousHeadPosition;
+		[Ignore] public Quaternion previousHeadRotation;
+		[Ignore] public float previousRedirection;
 
         /// <summary>
         /// The position of the virtual hand is given by <c>physicalHand.position + Redirection</c>.
         /// </summary>
-        [Ignore] public List<Vector3> Redirection
-        {
-            get => limbs.ConvertAll(limb => limb.VirtualLimb[0].position - limb.PhysicalLimb.position);
-            set
-            {
-				foreach (var p in Enumerable.Zip(limbs, value, (limb, v) => (limb, v))) {
-					p.limb.VirtualLimb.ForEach(vLimb => vLimb.position = p.limb.PhysicalLimb.position + p.v);
+        [Ignore] public List<Vector3> Redirection {
+            get => limbs.ConvertAll(limb => limb.virtualLimb[0].position - limb.physicalLimb.position);
+            set {
+				foreach (var p in limbs.Zip(value, (limb, v) => (limb, v))) {
+					p.limb.virtualLimb.ForEach(vLimb => vLimb.position = p.limb.physicalLimb.position + p.v);
 				}
         	}
 		}
 
         /// <returns>The distance between the user's real and virtual hands.</returns>
-        public List<List<float>> GetHandRedirectionDistance() => limbs.ConvertAll(limb => limb.VirtualLimb.ConvertAll(vlimb => Vector3.Distance(limb.PhysicalLimb.position, vlimb.position)));
+        public List<List<float>> GetHandRedirectionDistance() => limbs.ConvertAll(limb => limb.virtualLimb.ConvertAll(vlimb => Vector3.Distance(limb.physicalLimb.position, vlimb.position)));
 
 		/// <summary>
 		///
 		/// </summary>
 		/// <returns>The distance between the user's real hand and the physical target.</returns>
-		public List<float> GetPhysicalHandTargetDistance() => limbs.ConvertAll(limb => Vector3.Distance(limb.PhysicalLimb.position, physicalTarget.position));
+		public List<float> GetPhysicalHandTargetDistance() => limbs.ConvertAll(limb => Vector3.Distance(limb.physicalLimb.position, physicalTarget.position));
 
 		/// <summary>
 		///
 		/// </summary>
 		/// <returns>The distance between the user's physical hand and the origin.</returns>
-		public List<float> GetPhysicalHandOriginDistance() => limbs.ConvertAll(limb => Vector3.Distance(limb.PhysicalLimb.position, origin.position));
+		public List<float> GetPhysicalHandOriginDistance() => limbs.ConvertAll(limb => Vector3.Distance(limb.physicalLimb.position, origin.position));
 
 		/// <summary>
 		///
@@ -139,11 +147,12 @@ namespace VHToolkit.Redirection {
 		/// <returns>The instant linear velocity of the physical head using the last frame's position projected on the physical head forward vector.</returns>
 		public Vector3 GetHeadInstantTranslationForward() => Vector3.Project(GetHeadInstantTranslation(), physicalHead.forward);
 
-		/// <summary>
-		///
-		/// </summary>
-		/// <returns>The instant linear velocity of the physical hand using the last frame's position</returns>
-		public List<Vector3> GetHandInstantTranslation() => Enumerable.Zip(limbs, previousLimbPositions, (a, b) => a.PhysicalLimb.position - b).ToList();
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns>The instant linear velocity of the physical hand using the last frame's position</returns>
+        public List<Vector3> GetHandInstantTranslation() => limbs.Zip(previousLimbPositions, (limb, pLimb) => limb.physicalLimb.position - pLimb).ToList();
+
 
         /// <summary>
         /// Applies unaltered physical head rotations to the virtual head GameObject
@@ -156,9 +165,38 @@ namespace VHToolkit.Redirection {
         /// <summary>
         /// Applies unaltered physical head translations to the virtual head GameObject
         /// </summary>
-        public void CopyHeadTranslations() {
-            virtualHead.Translate(GetHeadToHeadRotation() * GetHeadInstantTranslation(), relativeTo: Space.World);
+        public void CopyHeadTranslations() => virtualHead.Translate(GetHeadToHeadRotation() * GetHeadInstantTranslation(), relativeTo: Space.World);
+
+        /// <summary>
+        /// Applies unaltered physical hand rotations to the virtual hand GameObjects
+        /// </summary>
+        public void CopyHandRotations() {
+			limbs.ForEach(limb =>
+			{
+				// something along these lines
+				// TODO test against OVR
+				foreach (var vlimb in limb.virtualLimb) {
+					vlimb.SetLocalPositionAndRotation(limb.physicalLimb.localPosition, limb.physicalLimb.localRotation);
+				}
+			});
 		}
+
+        /// <summary>
+        /// Applies unaltered physical hand translations to the virtual hand GameObjects
+        /// </summary>
+        public void CopyHandTranslations() {
+			// var t = GetHandInstantTranslation();
+			// var Q = GetHeadToHeadRotation();
+
+			// Debug.Log(t[0]);
+			// Debug.Log(Q.eulerAngles);
+			// Debug.Log(Q == Q.normalized);
+			// limbs.ForEach(limb => {
+			// 	foreach (var p in limb.virtualLimb.Zip(t, (vLimb, t) => (vLimb, t)))
+			// 		p.vLimb.Translate(Q * p.t, relativeTo: Space.World);
+			// });
+		}
+
 
         /// <summary>
         /// Rotate the virtual head by the given angle (in degrees) around the world's y axis
