@@ -9,7 +9,7 @@ namespace VHToolkit.Redirection {
 	/// </summary>
     public class Interaction : MonoBehaviour {
 		public Scene scene;
-		[SerializeField] protected bool redirect = false;
+		public bool redirect = false;
 
 		public void StartRedirection() => redirect = true;
 

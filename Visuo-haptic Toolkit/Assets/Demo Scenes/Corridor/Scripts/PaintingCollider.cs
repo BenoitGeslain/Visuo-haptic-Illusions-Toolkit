@@ -6,5 +6,6 @@ public class PaintingCollider : MonoBehaviour {
 
 	private void OnTriggerEnter(Collider other) {
 		manager.SetState(state);
+		this.GetComponent<Collider>().enabled = false;
 	}
 }

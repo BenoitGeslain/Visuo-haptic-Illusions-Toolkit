@@ -76,13 +76,13 @@ namespace VHToolkit.Redirection {
 				previousTechnique = technique;
 			}
 
-			if (strategyInstance is not null)
-				scene.forwardTarget = strategyInstance.SteerTo(scene);
-
 			if (!redirect)
 				new NoWorldRedirection().Redirect(scene);
-			else if (techniqueInstance is not null)
+			else if (techniqueInstance is not null) {
+				if (strategyInstance is not null)
+					scene.forwardTarget = strategyInstance.SteerTo(scene);
 				techniqueInstance.Redirect(scene);
+			}
 			scene.previousHeadPosition = scene.physicalHead.position;
 			scene.previousHeadRotation = scene.physicalHead.rotation;
 

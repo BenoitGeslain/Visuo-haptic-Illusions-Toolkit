@@ -171,13 +171,11 @@ namespace VHToolkit.Redirection {
         /// Applies unaltered physical hand rotations to the virtual hand GameObjects
         /// </summary>
         public void CopyHandRotations() {
-			limbs.ForEach(limb =>
-			{
-				// something along these lines
-				// TODO test against OVR
+			limbs.ForEach(limb => {
+				Vector3 offset = physicalHead.InverseTransformPoint(limb.physicalLimb.position);
 				foreach (var vlimb in limb.virtualLimb) {
-					vlimb.SetLocalPositionAndRotation(limb.physicalLimb.localPosition, limb.physicalLimb.localRotation);
-				}
+					vlimb.SetPositionAndRotation(virtualHead.TransformPoint(offset), GetHeadToHeadRotation() * limb.physicalLimb.rotation);
+                }
 			});
 		}
 
