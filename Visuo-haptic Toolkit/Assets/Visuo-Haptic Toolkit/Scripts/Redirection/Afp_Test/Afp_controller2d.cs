@@ -69,7 +69,6 @@ namespace VHToolkit.Redirection
             
             if (UserPosition!=LastUserPosition)
             {
-                Debug.Log("Position utilisateur "+UserPosition);
                 GradientCompute();
                 LastUserPosition = UserPosition;
             }
@@ -92,16 +91,26 @@ namespace VHToolkit.Redirection
         // tentative de représenter l'orientation du gradient (pour Théo!)
         void GradientRepresentation (Vector2 Gradient)
         {
-            gradientobject.transform.position = Physical_headset.transform.position;
+            gradientobject.transform.position = Physical_headset.transform.position + gradientobject.transform.right * 1.3f;
 
             Gradient.Normalize();
 
+            Debug.Log(Gradient);
+
+            // représenter l'orientation
             float angleRadian = Mathf.Atan2(Gradient.y, Gradient.x);
             float angleEnDegres = angleRadian * Mathf.Rad2Deg;
 
             Quaternion nouvelleRotation = Quaternion.Euler(0, 0, angleEnDegres);
 
             gradientobject.transform.rotation = nouvelleRotation;
+
+            //représenter la taille
+
+            Vector3 nouvelleTaille = new Vector3(Gradient.magnitude, gradientobject.transform.localScale.y, gradientobject.transform.localScale.z);
+
+            // Appliquer la nouvelle taille au GameObject
+            gradientobject.transform.localScale = nouvelleTaille;
         }
 
         void MoveUserKeyboard()
