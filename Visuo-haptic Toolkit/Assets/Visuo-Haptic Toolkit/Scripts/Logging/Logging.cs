@@ -25,9 +25,7 @@ namespace VHToolkit.Logging
 
         public Interaction script;
 
-        public RedirectionData(Interaction script) {
-            this.script = script;
-        }
+        public RedirectionData(Interaction script) => this.script = script;
     }
 
 	/// <summary>
@@ -77,7 +75,7 @@ namespace VHToolkit.Logging
 		public string pathToFile = "LoggedData\\";
 		[SerializeField] private string fileNamePrefix;
 		private string fileName;
-		private int bufferSize = 10; // number of records kept before writing to disk
+		private readonly int bufferSize = 10; // number of records kept before writing to disk
 
 		private List<RedirectionData> records = new();
         private readonly CsvConfiguration config = new(CultureInfo.InvariantCulture) { HasHeaderRecord = false, MemberTypes = MemberTypes.Fields };

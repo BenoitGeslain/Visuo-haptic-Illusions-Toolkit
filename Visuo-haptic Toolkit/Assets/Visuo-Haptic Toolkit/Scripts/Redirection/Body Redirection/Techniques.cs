@@ -171,8 +171,8 @@ namespace VHToolkit.Redirection {
     public class NoBodyRedirection : BodyRedirectionTechnique {
 
         public override void Redirect(Scene scene) {
-			foreach(var p in scene.limbs.Zip(scene.GetHandInstantTranslation(), (limb, t) => (limb, t)))
-				p.limb.virtualLimb.ForEach(vlimb => vlimb.Translate(p.t, relativeTo: Space.World));
+			foreach((var limb, var t) in scene.limbs.Zip(scene.GetHandInstantTranslation(), (limb, t) => (limb, t)))
+				limb.virtualLimb.ForEach(vlimb => vlimb.Translate(t, relativeTo: Space.World));
         }
     }
 }

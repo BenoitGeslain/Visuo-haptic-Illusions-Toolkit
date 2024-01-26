@@ -13,13 +13,13 @@ namespace VHToolkit.Redirection {
     /// </summary>
     public class Lecuyer2000Swamp : BodyRedirectionTechnique {
         public override void Redirect(Scene scene) {
-            scene.limbs.Zip(scene.GetHandInstantTranslation(), (limb, t) => (limb, t)).ToList().ForEach(p => {
-                foreach(Transform vlimb in p.limb.virtualLimb) {
+            foreach ((var limb, var t) in scene.limbs.Zip(scene.GetHandInstantTranslation(), (limb, t) => (limb, t))) {
+                foreach(Transform vlimb in limb.virtualLimb) {
                     var distanceToOrigin = vlimb.position - scene.origin.position;
                     bool insideSwamp = MathF.Max(MathF.Abs(distanceToOrigin[0]), MathF.Abs(distanceToOrigin[2])) * 2 < Toolkit.Instance.parameters.SwampSquareLength;
-                    vlimb.Translate(insideSwamp ? p.t * Toolkit.Instance.parameters.SwampCDRatio : p.t, relativeTo: Space.World);
+                    vlimb.Translate(insideSwamp ? t * Toolkit.Instance.parameters.SwampCDRatio : t, relativeTo: Space.World);
 			    }
-            });
+            }
         }
     }
 
@@ -33,8 +33,8 @@ namespace VHToolkit.Redirection {
             float verticalGain = 1 / normalizedMass;
             float horizontalGain = verticalGain * ratio;
             Vector3 gainVector = new(horizontalGain, verticalGain, horizontalGain);
-            foreach(var p in scene.limbs.Zip(scene.GetHandInstantTranslation(), (limb, t) => (limb, t))) {
-                p.limb.virtualLimb.ForEach(vLimb => vLimb.Translate(Vector3.Scale(p.t, gainVector), relativeTo: Space.World));
+            foreach((var limb, var t) in scene.limbs.Zip(scene.GetHandInstantTranslation(), (limb, t) => (limb, t))) {
+                limb.virtualLimb.ForEach(vLimb => vLimb.Translate(Vector3.Scale(t, gainVector), relativeTo: Space.World));
             }
         }
     }

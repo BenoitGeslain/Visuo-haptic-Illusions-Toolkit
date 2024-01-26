@@ -61,8 +61,7 @@ namespace VHToolkit.Redirection {
 			scene.previousLimbPositions = scene.limbs.ConvertAll(limb => limb.physicalLimb.position);
 			scene.previousLimbRotations = scene.limbs.ConvertAll(limb => limb.physicalLimb.rotation);
 			if (scene.physicalHead) {
-				scene.previousHeadPosition = scene.physicalHead.position;
-				scene.previousHeadRotation = scene.physicalHead.rotation;
+				scene.physicalHead.GetPositionAndRotation(out scene.previousHeadPosition, out scene.previousHeadRotation);
 			}
 
 			scene.physicalTargetPosition = scene.physicalTarget.position;
@@ -92,8 +91,7 @@ namespace VHToolkit.Redirection {
 			scene.previousLimbPositions = scene.limbs.ConvertAll(limb => limb.physicalLimb.position);
 			scene.previousLimbRotations = scene.limbs.ConvertAll(limb => limb.physicalLimb.rotation);
 			if (scene.physicalHead) {
-				scene.previousHeadPosition = scene.physicalHead.position;
-				scene.previousHeadRotation = scene.physicalHead.rotation;
+				scene.physicalHead.GetPositionAndRotation(out scene.previousHeadPosition, out scene.previousHeadRotation);
 			}
 		}
 

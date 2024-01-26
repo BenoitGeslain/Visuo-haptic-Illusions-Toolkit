@@ -72,8 +72,8 @@ namespace VHToolkit.Redirection {
         [Ignore] public List<Vector3> Redirection {
             get => limbs.ConvertAll(limb => limb.virtualLimb[0].position - limb.physicalLimb.position);
             set {
-				foreach (var p in limbs.Zip(value, (limb, v) => (limb, v))) {
-					p.limb.virtualLimb.ForEach(vLimb => vLimb.position = p.limb.physicalLimb.position + p.v);
+				foreach ((var limb, var v) in limbs.Zip(value, (limb, v) => (limb, v))) {
+					limb.virtualLimb.ForEach(vLimb => vLimb.position = limb.physicalLimb.position + v);
 				}
         	}
 		}
@@ -171,14 +171,13 @@ namespace VHToolkit.Redirection {
         /// Applies unaltered physical hand rotations to the virtual hand GameObjects
         /// </summary>
         public void CopyHandRotations() {
-			limbs.ForEach(limb =>
-			{
+			foreach (var limb in limbs) {
 				// something along these lines
 				// TODO test against OVR
 				foreach (var vlimb in limb.virtualLimb) {
 					vlimb.SetLocalPositionAndRotation(limb.physicalLimb.localPosition, limb.physicalLimb.localRotation);
 				}
-			});
+			}
 		}
 
         /// <summary>

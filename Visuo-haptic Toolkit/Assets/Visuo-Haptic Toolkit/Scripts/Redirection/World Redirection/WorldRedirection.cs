@@ -83,9 +83,7 @@ namespace VHToolkit.Redirection {
 				new NoWorldRedirection().Redirect(scene);
 			else if (techniqueInstance is not null)
 				techniqueInstance.Redirect(scene);
-			scene.previousHeadPosition = scene.physicalHead.position;
-			scene.previousHeadRotation = scene.physicalHead.rotation;
-
+			scene.physicalHead.GetPositionAndRotation(out scene.previousHeadPosition, out scene.previousHeadRotation);
 			scene.previousLimbPositions = scene.limbs.ConvertAll(limb => limb.physicalLimb.position);
 		}
 
