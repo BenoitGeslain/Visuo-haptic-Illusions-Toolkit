@@ -27,12 +27,9 @@ public class CorridorRedirection : MonoBehaviour {
 	[SerializeField] private List<Transform> paintingReferences;
 	[Range(0, 45)]
 	[SerializeField] private List<float> redirectionAmount;
-	private int nPaintings;
 
 	private void Start() {
 		redirectionScript = Toolkit.Instance.gameObject.GetComponent<WorldRedirection>();
-
-		nPaintings = paintingReferences.Count;
 		if (paintingReferences.Count != redirectionAmount.Count)
 			Debug.LogWarning("Different numbers of painting references and redirection amounts.");
 	}

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Events;
+using static VHToolkit.Future;
 
 [System.Serializable]
 
@@ -35,7 +35,7 @@ public class SceneController : MonoBehaviour {
 
 	public void ResetCubes() {
 		Debug.Log("reset");
-		foreach(var z in cubes.Zip(cubesInitialPosition, (c, cP) => (c, cP)))
-			z.c.position = z.cP;
+		foreach(var (cube, pos) in cubes.Zip(cubesInitialPosition))
+			cube.position = pos;
 	}
 }

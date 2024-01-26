@@ -22,7 +22,9 @@ namespace VHToolkit.Calibration {
 
 		[SerializeField] private Transform physicalTracker;
 		[SerializeField] private Transform[] virtualTrackers;
-		[SerializeField] private Vector3 forwardOffset;	// Offset in the (left/right, up/down, forward/backward direction)
+
+		/// Offset in the (left/right, up/down, forward/backward direction)
+		[SerializeField] private Vector3 forwardOffset;	
 
 		private InputDevice hand;
 		[SerializeField] private InputDeviceCharacteristics characteristics = InputDeviceCharacteristics.Right;
@@ -31,7 +33,7 @@ namespace VHToolkit.Calibration {
 		private Vector3[] points;
 		private bool buttonWasPressed;
 
-		private string path = "LoggedData\\";
+		private readonly string loggingPath = "LoggedData\\";
 
 		private void OnEnable() {
 			state = CalibrationState.None;
@@ -43,7 +45,7 @@ namespace VHToolkit.Calibration {
 			List<InputDevice> foundControllers = new();
 			InputDevices.GetDevicesWithCharacteristics(characteristics, foundControllers);
 			hand = foundControllers.FirstOrDefault();
-			Debug.Log(hand.characteristics);
+			Debug.Log($"found hand: {hand.characteristics}");
 
 			bool buttonPress;
 			if (virtualTrackers.Length == 3) {
@@ -94,11 +96,11 @@ namespace VHToolkit.Calibration {
 				Debug.LogWarning($"Incorrect number of virtualTrackers. There should be 1 or 3, there are {virtualTrackers.Length}.");
 			}
 
-			buttonWasPressed = hand.TryGetFeatureValue(UnityEngine.XR.CommonUsages.triggerButton, out buttonPress) && buttonPress;
+			buttonWasPressed = hand.TryGetFeatureValue(CommonUsages.triggerButton, out buttonPress) && buttonPress;
 		}
 
 		/// <summary>
-		/// This function sets the state of the cvalibration so that the user can start calibration on the next frame
+		/// This function sets the state of the calibration so that the user can start calibration on the next frame
 		/// </summary>
 		public void Calibrate() => state = CalibrationState.FirstPoint;
 
@@ -106,11 +108,11 @@ namespace VHToolkit.Calibration {
 		/// Logs the transform of the root world to save calibration. The previous calibration can fail if the headset is self tracking and went in sleep mode as this usually resets the tracking origin.
 		/// </summary>
 		public void SaveCalibration() {
-			using (var writer = new StreamWriter($"{path}LastCalibration.txt")) {
+			using (var writer = new StreamWriter($"{loggingPath}LastCalibration.txt")) {
 				writer.WriteLine(virtualTrackers[0].position);
 				writer.WriteLine(virtualTrackers[0].rotation);
 			}
-			using (var writer = new StreamWriter($"{path}calibration_{DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss")}.txt")) {
+			using (var writer = new StreamWriter($"{loggingPath}calibration_{DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss")}.txt")) {
 				writer.WriteLine(virtualTrackers[0].position);
 				writer.WriteLine(virtualTrackers[0].rotation);
 			}
@@ -121,7 +123,7 @@ namespace VHToolkit.Calibration {
 		/// To load another calibration file, rename it to "LastCalibration.txt".
 		/// </summary>
 		public void LoadCalibration() {
-			string[] lines = File.ReadAllLines($"{path}LastCalibration.txt");
+			string[] lines = File.ReadAllLines($"{loggingPath}LastCalibration.txt");
 
 			float[] tmpPosition = Array.ConvertAll(lines[0][1..^1].Split(", ", 3), float.Parse);
 			float[] tmpRotation = Array.ConvertAll(lines[1][1..^1].Split(", ", 4), float.Parse);

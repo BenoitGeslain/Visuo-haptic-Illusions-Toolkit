@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using static System.Linq.Enumerable;
 using CsvHelper.Configuration.Attributes;
+using static VHToolkit.Future;
 
 using UnityEngine;
 
@@ -72,8 +73,8 @@ namespace VHToolkit.Redirection {
         [Ignore] public List<Vector3> Redirection {
             get => limbs.ConvertAll(limb => limb.virtualLimb[0].position - limb.physicalLimb.position);
             set {
-				foreach (var p in limbs.Zip(value, (limb, v) => (limb, v))) {
-					p.limb.virtualLimb.ForEach(vLimb => vLimb.position = p.limb.physicalLimb.position + p.v);
+				foreach ((var limb, var v) in limbs.Zip(value)) {
+					limb.virtualLimb.ForEach(vLimb => vLimb.position = limb.physicalLimb.position + v);
 				}
         	}
 		}
