@@ -58,14 +58,14 @@ namespace VHToolkit {
 
         // Compute the forward kinematics chain from link-to-link length and angle information.
         static public List<PositionAndRotation2D> ForwardKinematics(PositionAndRotation2D origin, List<float> lengths, List<float> angles) {
+            Debug.Assert(lengths.Count == angles.Count);
             List<PositionAndRotation2D> result = new() { origin };
             var position = origin.position;
             var direction = origin.forward.LiftFromHorizontalPlane();
-            foreach (var (length, angle) in lengths.Zip(angles, (l, a) => (l, a))) {
+            foreach (var (length, angle) in lengths.Zip(angles)) {
                 Debug.Assert(length > 0);
                 Debug.Assert(Mathf.Abs(angle) <= 180f);
-                var last = result.Last();
-                position += length * last.forward;
+                position += length * result.Last().forward;
                 direction = Quaternion.AngleAxis(angle, Vector3.up) * direction;
                 result.Add(new(position, direction.ProjectToHorizontalPlane()));
             }

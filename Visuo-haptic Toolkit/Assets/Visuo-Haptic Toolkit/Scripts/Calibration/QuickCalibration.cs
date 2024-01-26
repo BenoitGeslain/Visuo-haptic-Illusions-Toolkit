@@ -24,13 +24,6 @@ namespace VHToolkit.Calibration {
 		}
 
 		private void Update() {
-			List<InputDevice> i = new();
-			InputDevices.GetDevicesWithCharacteristics(InputDeviceCharacteristics.TrackedDevice, i);
-			foreach (var item in i) {
-				Debug.Log(item.characteristics);
-			}
-
-
 			inputDevices = new List<InputDevice>();
 			InputDevices.GetDevicesWithCharacteristics(characteristics, inputDevices);
 
