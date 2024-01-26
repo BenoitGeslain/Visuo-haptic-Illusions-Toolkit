@@ -30,9 +30,7 @@ namespace VHToolkit.Redirection {
         public override void Redirect(Scene scene) {
             float ratio = 0.65f;
             float normalizedMass = 1.5f; // high is heavy, low is light (though what this means is unclear)
-            float verticalGain = 1 / normalizedMass;
-            float horizontalGain = verticalGain * ratio;
-            Vector3 gainVector = new(horizontalGain, verticalGain, horizontalGain);
+            var gainVector = new Vector3(ratio, 1f, ratio) / normalizedMass;
             foreach((var limb, var t) in scene.limbs.Zip(scene.GetHandInstantTranslation(), (limb, t) => (limb, t))) {
                 limb.virtualLimb.ForEach(vLimb => vLimb.Translate(Vector3.Scale(t, gainVector), relativeTo: Space.World));
             }
