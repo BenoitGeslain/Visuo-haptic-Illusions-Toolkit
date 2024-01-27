@@ -2,6 +2,8 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.U2D.IK;
+using UnityEngine.UIElements;
 
 namespace VHToolkit {
     static class MathTools {
@@ -70,6 +72,20 @@ namespace VHToolkit {
                 result.Add(new(position, direction.ProjectToHorizontalPlane()));
             }
             return result;
+        }
+
+        static public List<Vector2> InverseKinematics(Vector2 origin, Vector2 end, List<float> lengths) {
+            // TODO figure out sensible solver limit and tolerance
+            bool wasSolved = false;
+            int solverLimit = 1;
+            float tolerance = Vector2.kEpsilon;
+            Vector2[] positions = new Vector2[lengths.Count - 1];
+            while (!wasSolved) {
+                wasSolved = FABRIK2D.Solve(end, solverLimit, tolerance, lengths.ToArray(), ref positions);
+                solverLimit *= 2;
+                tolerance *= 2;
+            }
+            return positions.Select(v => origin + v).ToList();
         }
     }
 }
