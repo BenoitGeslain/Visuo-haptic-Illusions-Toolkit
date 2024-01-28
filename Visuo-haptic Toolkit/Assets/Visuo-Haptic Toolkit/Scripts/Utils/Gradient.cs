@@ -37,7 +37,7 @@ namespace VHToolkit {
             ) / (2 * eps);
         }
 
-        static Func<Vector2, float> RepulsivePotential(List<Collider2D> obstacles) =>
+        static Func<Vector2, float> RepulsivePotential(IList<Collider2D> obstacles) =>
             (x) => obstacles.Sum(o => 1 / Vector2.Distance(x, o.ClosestPoint(x)));
 
         // The potential is given as || x - goal || / 2. Will become unstable near goal.
@@ -57,7 +57,5 @@ namespace VHToolkit {
         // TODO careful, this isn't the same choice as Vector2.Vector2 / Vector2.Vector3. (Those project to a vertical plane.)
         static public Vector2 ProjectToHorizontalPlane(this Vector3 v) => new(v.x, v.z);
         static public Vector3 LiftFromHorizontalPlane(this Vector2 v) => new(v.x, 0, v.y);
-
-
     }
 }
