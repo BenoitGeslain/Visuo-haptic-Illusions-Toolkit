@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['han2018continuous_185',['Han2018Continuous',['../classVHToolkit_1_1Redirection_1_1Han2018Continuous.html',1,'VHToolkit::Redirection']]],
-  ['han2018translationalshift_186',['Han2018TranslationalShift',['../classVHToolkit_1_1Redirection_1_1Han2018TranslationalShift.html',1,'VHToolkit::Redirection']]],
-  ['handmodelsmanager_187',['HandModelsManager',['../classHandModelsManager.html',1,'']]]
+  ['interaction_182',['Interaction',['../classVHToolkit_1_1Redirection_1_1Interaction.html',1,'VHToolkit::Redirection']]],
+  ['interactionclassmap_183',['InteractionClassMap',['../classVHToolkit_1_1Logging_1_1RedirectionDataMap_1_1InteractionClassMap.html',1,'VHToolkit::Logging::RedirectionDataMap']]]
 ];

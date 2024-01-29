@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['maxredirectionthreshold_69',['MaxRedirectionThreshold',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#af0ddc884454f477186f5963701f73973',1,'VHToolkit::Redirection::ParametersToolkit']]],
-  ['minjerktrajectory_70',['MinJerkTrajectory',['../classAssets_1_1Visuo__Haptic__Toolkit_1_1Scripts_1_1Logging_1_1UserTrajectorySimulation_1_1MinJerkTrajectory.html',1,'Assets::Visuo_Haptic_Toolkit::Scripts::Logging::UserTrajectorySimulation']]]
+  ['maxredirectionthreshold_62',['MaxRedirectionThreshold',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#af0ddc884454f477186f5963701f73973',1,'VHToolkit::Redirection::ParametersToolkit']]],
+  ['mjttrajectorygenerator_63',['MJTTrajectoryGenerator',['../classVHToolkit_1_1Simulation_1_1MJTTrajectoryGenerator.html',1,'VHToolkit::Simulation']]],
+  ['movementinprogress_64',['movementInProgress',['../classVHToolkit_1_1Simulation_1_1MJTTrajectoryGenerator.html#ad58f548aa0b61ec6f884e385cbf0e04b',1,'VHToolkit::Simulation::MJTTrajectoryGenerator']]]
 ];

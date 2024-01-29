@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['geslain2022polynom_184',['Geslain2022Polynom',['../classVHToolkit_1_1Redirection_1_1Geslain2022Polynom.html',1,'VHToolkit::Redirection']]]
+  ['han2018continuous_180',['Han2018Continuous',['../classVHToolkit_1_1Redirection_1_1Han2018Continuous.html',1,'VHToolkit::Redirection']]],
+  ['han2018translationalshift_181',['Han2018TranslationalShift',['../classVHToolkit_1_1Redirection_1_1Han2018TranslationalShift.html',1,'VHToolkit::Redirection']]]
 ];

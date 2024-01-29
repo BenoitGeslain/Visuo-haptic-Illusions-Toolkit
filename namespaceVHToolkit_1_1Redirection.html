@@ -111,6 +111,8 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVHToolkit_1_1Redirection_1_1Interaction.html">Interaction</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is the base class for the visuo-haptic techniques managers such as <a class="el" href="classVHToolkit_1_1Redirection_1_1BodyRedirection.html" title="This class allows users to select which body redirection technique to use as well as the relevant par...">BodyRedirection</a>.  <a href="classVHToolkit_1_1Redirection_1_1Interaction.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVHToolkit_1_1Redirection_1_1Techniques.html">Techniques</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVHToolkit_1_1Redirection_1_1Lecuyer2000Swamp.html">Lecuyer2000Swamp</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This class implements the Swamp Illusion by Lécuyer et al., 2000. It is not a visuo-haptic illusion but a pseudo-haptic interaction techique.  <a href="classVHToolkit_1_1Redirection_1_1Lecuyer2000Swamp.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -233,11 +235,10 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The position of the virtual hand is given by <code>physicalHand.position + <a class="el" href="namespaceVHToolkit_1_1Redirection.html">Redirection</a></code>. </p>
+<p>The position of the virtual limb is given by <code>physicalHand.position + <a class="el" href="namespaceVHToolkit_1_1Redirection.html">Redirection</a></code>. </p>
 <dl class="section return"><dt>Returns</dt><dd>The distance between the user's real and virtual hands.</dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>The distance between the user's real hand and the physical target.</dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>The distance between the user's physical hand and the origin.</dd></dl>
-<dl class="section return"><dt>Returns</dt><dd>The distance between the user's physical and virtual head.</dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>The distance between the user's physical and virtual head.</dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>The quaternion rotation between the user's physical and virtual head.</dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>The distance between the user's physical head and the target.</dd></dl>
@@ -250,7 +251,6 @@ Functions</h2></td></tr>
 <p>Applies unaltered physical head rotations to the virtual head GameObject </p>
 <p>Applies unaltered physical head translations to the virtual head GameObject </p>
 <p>Applies unaltered physical hand rotations to the virtual hand GameObjects </p>
-<p>Applies unaltered physical hand translations to the virtual hand GameObjects </p>
 <p>Rotate the virtual head by the given angle (in degrees) around the world's y axis </p>
 
 </div>
