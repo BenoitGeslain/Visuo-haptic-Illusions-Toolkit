@@ -3,39 +3,42 @@ using System.Linq;
 using UnityEngine;
 using static VHToolkit.Future;
 
-[System.Serializable]
+namespace VHToolkit.UserInput {
 
-public class SceneController : MonoBehaviour {
-	[SerializeField] private GameObject toolkitRoot;
-	[SerializeField] private GameObject resetCubesButton;
+	[System.Serializable]
 
-	[SerializeField] private List<Transform> cubes;
-	[SerializeField] private Material pressedMaterial;
-	private Material unpressedMaterial;
-	private MeshRenderer mesh;
+	public class SceneController : MonoBehaviour {
+		[SerializeField] private GameObject toolkitRoot;
+		[SerializeField] private GameObject resetCubesButton;
 
-	private List<Vector3> cubesInitialPosition;
+		[SerializeField] private List<Transform> cubes;
+		[SerializeField] private Material pressedMaterial;
+		private Material unpressedMaterial;
+		private MeshRenderer mesh;
 
-	private void Start() {
-		mesh = GetComponent<MeshRenderer>();
-		unpressedMaterial = mesh.material;
-		cubesInitialPosition = cubes.ConvertAll(cube => cube.position);
-	}
+		private List<Vector3> cubesInitialPosition;
 
-	private void OnTriggerEnter(Collider other) {
-		mesh.material = pressedMaterial;
-		ResetCubes();
-		Debug.Log("Collider Enter");
-	}
+		private void Start() {
+			mesh = GetComponent<MeshRenderer>();
+			unpressedMaterial = mesh.material;
+			cubesInitialPosition = cubes.ConvertAll(cube => cube.position);
+		}
 
-	private void OnTriggerExit(Collider other) {
-		mesh.material = unpressedMaterial;
-		Debug.Log("Collider Exit");
-	}
+		private void OnTriggerEnter(Collider other) {
+			mesh.material = pressedMaterial;
+			ResetCubes();
+			Debug.Log("Collider Enter");
+		}
 
-	public void ResetCubes() {
-		Debug.Log("reset");
-		foreach(var (cube, pos) in cubes.Zip(cubesInitialPosition))
-			cube.position = pos;
+		private void OnTriggerExit(Collider other) {
+			mesh.material = unpressedMaterial;
+			Debug.Log("Collider Exit");
+		}
+
+		public void ResetCubes() {
+			Debug.Log("reset");
+			foreach(var (cube, pos) in cubes.Zip(cubesInitialPosition))
+				cube.position = pos;
+		}
 	}
 }
