@@ -4309,7 +4309,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7088029602675669135, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
       propertyPath: technique
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7088029602675669135, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
       propertyPath: scene.virtualHead
@@ -4330,27 +4330,35 @@ PrefabInstance:
     - target: {fileID: 7088029602675669135, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
       propertyPath: scene.limbs.Array.data[0].physicalLimb
       value: 
-      objectReference: {fileID: 863593683}
+      objectReference: {fileID: 141304831}
     - target: {fileID: 7088029602675669135, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
       propertyPath: scene.limbs.Array.data[1].physicalLimb
       value: 
-      objectReference: {fileID: 141304831}
+      objectReference: {fileID: 141301755}
     - target: {fileID: 7088029602675669135, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
       propertyPath: scene.limbs.Array.data[0].virtualLimb.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7088029602675669135, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
       propertyPath: scene.limbs.Array.data[1].virtualLimb.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7088029602675669135, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
       propertyPath: scene.limbs.Array.data[0].virtualLimb.Array.data[0]
       value: 
-      objectReference: {fileID: 1755371269}
+      objectReference: {fileID: 4453511891982975}
+    - target: {fileID: 7088029602675669135, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
+      propertyPath: scene.limbs.Array.data[0].virtualLimb.Array.data[1]
+      value: 
+      objectReference: {fileID: 6303876425754669076}
     - target: {fileID: 7088029602675669135, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
       propertyPath: scene.limbs.Array.data[1].virtualLimb.Array.data[0]
       value: 
-      objectReference: {fileID: 6303876425754669076}
+      objectReference: {fileID: 4453512880699475}
+    - target: {fileID: 7088029602675669135, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
+      propertyPath: scene.limbs.Array.data[1].virtualLimb.Array.data[1]
+      value: 
+      objectReference: {fileID: 3300481182696120806}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
