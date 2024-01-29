@@ -104,7 +104,7 @@ namespace VHToolkit.Redirection {
         /// <param name="t">The enumeration defining which technique to call Redirect(...) from.</param>
         public void SetTechnique(WRTechnique t) => technique = t;
 
-		public Quaternion GetAngularRedirection() => scene.GetHeadToHeadRotation();
+		public Quaternion GetAngularRedirection() => scene.HeadToHeadRedirection;
 
 		public float GetTranslationalRedirection() => scene.GetHeadToHeadDistance();	// TODO : maybe should be a vector 3 between heads instead of magn
 

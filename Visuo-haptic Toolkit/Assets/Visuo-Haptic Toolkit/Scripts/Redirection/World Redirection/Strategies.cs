@@ -23,7 +23,7 @@ namespace VHToolkit.Redirection {
 
 		public override Vector3 SteerTo(Scene scene) {
 			float distanceToTarget = scene.GetHeadToTargetDistance();
-			float angleToTargets = (distanceToTarget < scene.radius ? Mathf.PI / 3 : Mathf.Asin(scene.radius / distanceToTarget)) * Mathf.Rad2Deg;
+			float angleToTargets = (distanceToTarget < scene.steerToOrbitRadius ? Mathf.PI / 3 : Mathf.Asin(scene.steerToOrbitRadius / distanceToTarget)) * Mathf.Rad2Deg;
 			var v = Vector3.ProjectOnPlane(scene.targets[0].position - scene.physicalHead.position, Vector3.up);
             Vector3 leftTarget = Quaternion.Euler(0f, angleToTargets, 0f) * v;
 			Vector3 rightTarget = Quaternion.Euler(0f, -angleToTargets, 0f) * v;

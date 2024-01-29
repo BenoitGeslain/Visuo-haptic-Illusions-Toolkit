@@ -10,11 +10,11 @@ namespace VHToolkit.Redirection {
 	///  Information about the user such as the user's position or the targets are encapsulated inside Scene.
 	/// </summary>
 	public class WorldRedirectionTechnique : RedirectionTechnique {
-		public void CopyHeadAndHandTransform(Scene scene) {
+		public void CopyHeadAndLimbTransform(Scene scene) {
 			scene.CopyHeadRotations();
 			scene.CopyHeadTranslations();
 
-			scene.CopyHandRotations();
+			scene.CopyLimbTranslationAndRotation();
 		}
 	}
 
@@ -24,9 +24,8 @@ namespace VHToolkit.Redirection {
 	/// </summary>
 	public class Razzaque2001OverTimeRotation: WorldRedirectionTechnique {
 		public override void Redirect(Scene scene) {
-			CopyHeadAndHandTransform(scene);
-
 			scene.RotateVirtualHeadY(GetRedirection(scene));
+			CopyHeadAndLimbTransform(scene);
 		}
 
 		public static float GetRedirection(Scene scene) {
@@ -34,12 +33,12 @@ namespace VHToolkit.Redirection {
 			angleToTarget = (angleToTarget > 180f)? angleToTarget - 360 : angleToTarget;
 
 			return Mathf.Abs(angleToTarget) > Toolkit.Instance.parameters.RotationalError
-				? - Mathf.Sign(angleToTarget) * Toolkit.Instance.parameters.OverTimeRotation * Time.deltaTime
+				? Mathf.Sign(angleToTarget) * Toolkit.Instance.parameters.OverTimeRotation * Time.deltaTime
 				: 0f;
 		}
 
 		public static float GetRedirectionReset(Scene scene) {
-			float angleToTarget = scene.GetHeadToHeadRotation().eulerAngles.y;
+			float angleToTarget = scene.HeadToHeadRedirection.eulerAngles.y;
 			angleToTarget = (angleToTarget > 180f)? angleToTarget - 360 : angleToTarget;
 
 			Debug.Log(angleToTarget);
@@ -55,9 +54,8 @@ namespace VHToolkit.Redirection {
 	/// </summary>
 	public class Razzaque2001Rotational: WorldRedirectionTechnique {
 		public override void Redirect(Scene scene) {
-			CopyHeadAndHandTransform(scene);
-
 			scene.RotateVirtualHeadY(GetRedirection(scene));
+			CopyHeadAndLimbTransform(scene);
 		}
 
 		public static float GetRedirection(Scene scene) {
@@ -65,7 +63,8 @@ namespace VHToolkit.Redirection {
 			float instantRotation = scene.GetHeadInstantRotationY();
 
 			if (Mathf.Abs(angleToTarget) > Toolkit.Instance.parameters.RotationalError && Mathf.Abs(instantRotation) > Toolkit.Instance.parameters.RotationThreshold) {
-				return instantRotation * ((Mathf.Sign(scene.GetHeadAngleToTarget()) == Mathf.Sign(instantRotation))
+				Debug.Log($"{instantRotation} - {instantRotation * ((Mathf.Sign(scene.GetHeadAngleToTarget()) != Mathf.Sign(instantRotation))? Toolkit.Instance.parameters.GainsRotational.opposite - 1 : Toolkit.Instance.parameters.GainsRotational.same - 1)}");
+				return instantRotation * ((Mathf.Sign(scene.GetHeadAngleToTarget()) != Mathf.Sign(instantRotation))
 					? Toolkit.Instance.parameters.GainsRotational.opposite - 1
 					: Toolkit.Instance.parameters.GainsRotational.same - 1);
 			}
@@ -73,11 +72,11 @@ namespace VHToolkit.Redirection {
 		}
 
 		public static float GetRedirectionReset(Scene scene) {
-			float angleToTarget = scene.GetHeadToHeadRotation().eulerAngles.y;
+			float angleToTarget = scene.HeadToHeadRedirection.eulerAngles.y;
 			float instantRotation = scene.GetHeadInstantRotationY();
 
 			if (Mathf.Abs(instantRotation) > Toolkit.Instance.parameters.RotationThreshold && Mathf.Abs(angleToTarget) > Toolkit.Instance.parameters.RotationalError) {
-				return instantRotation * ((Mathf.Sign(scene.GetHeadAngleToTarget()) == Mathf.Sign(instantRotation))
+				return instantRotation * ((Mathf.Sign(scene.GetHeadAngleToTarget()) != Mathf.Sign(instantRotation))
 					? Toolkit.Instance.parameters.GainsRotational.opposite - 1
 					: Toolkit.Instance.parameters.GainsRotational.same - 1);
 			}
@@ -91,16 +90,15 @@ namespace VHToolkit.Redirection {
 	/// </summary>
 	public class Razzaque2001Curvature: WorldRedirectionTechnique {
 		public override void Redirect(Scene scene) {
-			CopyHeadAndHandTransform(scene);
-
 			scene.RotateVirtualHeadY(GetRedirection(scene));
+			CopyHeadAndLimbTransform(scene);
 		}
 
 		public static float GetRedirection(Scene scene) {
 			float instantTranslation = scene.GetHeadInstantTranslationForward().magnitude;
 
 			return instantTranslation > Toolkit.Instance.parameters.WalkingThreshold * Time.deltaTime
-				? - Mathf.Sign(Vector3.Cross(scene.physicalHead.forward, scene.forwardTarget).y) * instantTranslation * Toolkit.Instance.CurvatureRadiusToRotationRate()
+				? Mathf.Sign(Vector3.Cross(scene.physicalHead.forward, scene.forwardTarget).y) * instantTranslation * Toolkit.Instance.CurvatureRadiusToRotationRate()
 				: 0f;
 		}
 	}
@@ -140,8 +138,6 @@ namespace VHToolkit.Redirection {
 		static Razzaque2001Hybrid Weighted(float x, float y, float z) => new((a, b, c) => a * x + b * y + c * z);
 
 		public override void Redirect(Scene scene) {
-			CopyHeadAndHandTransform(scene);
-
 			float angle = aggregate(
 				Razzaque2001OverTimeRotation.GetRedirection(scene),
 				Razzaque2001Rotational.GetRedirection(scene),
@@ -157,6 +153,8 @@ namespace VHToolkit.Redirection {
 
 			scene.previousRedirection = angle;
 			scene.RotateVirtualHeadY(angle);
+
+			CopyHeadAndLimbTransform(scene);
 		}
 
 		private float ApplyDampening(Scene scene, float angle) {
@@ -174,21 +172,20 @@ namespace VHToolkit.Redirection {
 	/// </summary>
 	public class Steinicke2008Translational: WorldRedirectionTechnique {
 		public override void Redirect(Scene scene) {
-			CopyHeadAndHandTransform(scene);
-
             scene.virtualHead.Translate(Vector3.Scale(scene.GetHeadInstantTranslation(), Toolkit.Instance.parameters.GainsTranslational - Vector3.one), relativeTo: Space.World);
+			CopyHeadAndLimbTransform(scene);
 		}
 	}
 
+	// TODO: fix with HeadToHeadRedirection
 	/// <summary>
 	/// This class implements the world warping technique from Azmandian et al., 2016. This technique applies a gain to the user's head rotation in order to co-localize a physical object
 	/// and its virtual counterpart.
 	/// </summary>
 	public class Azmandian2016World: WorldRedirectionTechnique {
 		public override void Redirect(Scene scene) {
-			CopyHeadAndHandTransform(scene);
-
 			scene.virtualHead.RotateAround(scene.origin.position, Vector3.up, GetRedirection(scene));
+			CopyHeadAndLimbTransform(scene);
 		}
 
 		public static float GetRedirection(Scene scene) {
@@ -200,7 +197,7 @@ namespace VHToolkit.Redirection {
 				float instantRotation = scene.GetHeadInstantRotationY();
 
 				if (Mathf.Abs(instantRotation) > Toolkit.Instance.parameters.RotationThreshold && Mathf.Abs(angle) > Toolkit.Instance.parameters.RotationalError) {
-					var gain = (Mathf.Sign(angle) == Mathf.Sign(instantRotation)) ? Toolkit.Instance.parameters.GainsRotational.same : Toolkit.Instance.parameters.GainsRotational.opposite;
+					var gain = (Mathf.Sign(angle) != Mathf.Sign(instantRotation)) ? Toolkit.Instance.parameters.GainsRotational.same : Toolkit.Instance.parameters.GainsRotational.opposite;
 					var bound = Mathf.Abs(gain * instantRotation);
 					return Mathf.Clamp(angle, -bound, bound);
 				}
@@ -221,7 +218,7 @@ namespace VHToolkit.Redirection {
 
 	public class NoWorldRedirection: WorldRedirectionTechnique {
 		public override void Redirect(Scene scene) {
-			CopyHeadAndHandTransform(scene);
+			CopyHeadAndLimbTransform(scene);
 		}
 	}
 }

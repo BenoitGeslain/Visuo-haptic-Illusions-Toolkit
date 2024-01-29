@@ -64,8 +64,6 @@ namespace VHToolkit.Redirection {
 				scene.physicalHead.GetPositionAndRotation(out scene.previousHeadPosition, out scene.previousHeadRotation);
 			}
 
-			scene.physicalTargetPosition = scene.physicalTarget.position;
-			scene.virtualTargetPosition = scene.virtualTarget.position;
 		}
 
 		/// <summary>
@@ -112,20 +110,18 @@ namespace VHToolkit.Redirection {
 		/// <param name="t">BRTechnique</param>
         public void SetTechnique(BRTechnique t) => technique = t;
 
-		public List<Vector3> GetRedirection() => scene.Redirection;
+		public List<Vector3> GetRedirection() => scene.LimbRedirection;
 
 		public Transform GetPhysicalTarget() => scene.physicalTarget;
 
 		public void SetPhysicalTarget(Transform physicalTarget) {
 			scene.physicalTarget = physicalTarget;
-			scene.physicalTargetPosition = scene.physicalTarget.position;
 		}
 
 		public Transform GetVirtualarget() => scene.virtualTarget;
 
 		public void SetVirtualTarget(Transform virtualTarget) {
 			scene.virtualTarget = virtualTarget;
-			scene.virtualTargetPosition = scene.virtualTarget.position;
 		}
 
 		/// <summary>

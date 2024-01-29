@@ -60,7 +60,7 @@ namespace VHToolkit.Visualisation {
 		}
 
 		private void ShowOrbit(Scene scene) {
-			Vector3 previousRadius = new(0f, 0f, scene.radius);
+			Vector3 previousRadius = new(0f, 0f, scene.steerToOrbitRadius);
 			Vector3 currentRadius;
 			Quaternion stepRotation = Quaternion.Euler(0f, 360f / orbitResolution, 0f);
 
@@ -83,12 +83,12 @@ namespace VHToolkit.Visualisation {
 			Vector3 vectorToTarget = Vector3.ProjectOnPlane(scene.targets[0].position - scene.physicalHead.position, Vector3.up);
 			Vector3 leftTarget, rightTarget;
 
-			if (distanceToTarget < scene.radius) {
-				var length = 0.5f * (distanceToTarget + Mathf.Sqrt(4 * Mathf.Pow(scene.radius, 2f) - 3 * Mathf.Pow(distanceToTarget, 2f)));
+			if (distanceToTarget < scene.steerToOrbitRadius) {
+				var length = 0.5f * (distanceToTarget + Mathf.Sqrt(4 * Mathf.Pow(scene.steerToOrbitRadius, 2f) - 3 * Mathf.Pow(distanceToTarget, 2f)));
 				leftTarget =  Quaternion.Euler(0f, 60f, 0f) * (length * vectorToTarget.normalized);
                 rightTarget = Quaternion.Euler(0f, -60f, 0f) * (length * vectorToTarget.normalized);
 			} else {
-				float angleToTargetsInRadians = Mathf.Asin(scene.radius / distanceToTarget);
+				float angleToTargetsInRadians = Mathf.Asin(scene.steerToOrbitRadius / distanceToTarget);
 				float angleToTargetsInDegrees = angleToTargetsInRadians * Mathf.Rad2Deg;
 
 				leftTarget = Quaternion.Euler(0f, angleToTargetsInDegrees, 0f) * vectorToTarget * Mathf.Cos(angleToTargetsInRadians);
