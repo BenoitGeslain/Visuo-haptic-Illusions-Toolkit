@@ -8,7 +8,7 @@ var searchData=
   ['scenecalibration_112',['SceneCalibration',['../classVHToolkit_1_1Calibration_1_1SceneCalibration.html',1,'VHToolkit::Calibration']]],
   ['scenecalibrationeditor_113',['SceneCalibrationEditor',['../classVHToolkit_1_1Calibration_1_1SceneCalibrationEditor.html',1,'VHToolkit::Calibration']]],
   ['sceneclassmap_114',['SceneClassMap',['../classVHToolkit_1_1Logging_1_1RedirectionDataMap_1_1SceneClassMap.html#a67f267d851682f382da131775c29bdc8',1,'VHToolkit.Logging.RedirectionDataMap.SceneClassMap.SceneClassMap()'],['../classVHToolkit_1_1Logging_1_1RedirectionDataMap_1_1SceneClassMap.html',1,'VHToolkit.Logging.RedirectionDataMap.SceneClassMap']]],
-  ['scenecontroller_115',['SceneController',['../classSceneController.html',1,'']]],
+  ['scenecontroller_115',['SceneController',['../classVHToolkit_1_1UserInput_1_1SceneController.html',1,'VHToolkit::UserInput']]],
   ['secondpainting_116',['SecondPainting',['../classVHToolkit_1_1Demo_1_1CorridorRedirection.html#a83670c3428480398e980b778cb82c537a7fce953c4fba8466937af0ddf4f5d719',1,'VHToolkit::Demo::CorridorRedirection']]],
   ['setapplydampening_117',['SetApplyDampening',['../classVHToolkit_1_1Redirection_1_1WorldRedirection.html#a28c628d01ef48ab24d609df4cbfad9a7',1,'VHToolkit::Redirection::WorldRedirection']]],
   ['setapplysmoothing_118',['SetApplySmoothing',['../classVHToolkit_1_1Redirection_1_1WorldRedirection.html#a6fdf680b8d109bd5df0e4430b0239af1',1,'VHToolkit::Redirection::WorldRedirection']]],

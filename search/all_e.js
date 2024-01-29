@@ -17,7 +17,7 @@ var searchData=
   ['removephysicallimb_97',['RemovePhysicalLimb',['../classVHToolkit_1_1Redirection_1_1Interaction.html#a74588fea10ef444f522072f1c52cf3a8',1,'VHToolkit::Redirection::Interaction']]],
   ['reset_98',['Reset',['../namespaceVHToolkit.html#ae85c0749a52f7728da28fbcc0274a1f4a526d688f37a86d3c3f27d0c5016eb71d',1,'VHToolkit.Reset()'],['../namespaceVHToolkit.html#a875a5018b7a275ae89347294e657e8d4a526d688f37a86d3c3f27d0c5016eb71d',1,'VHToolkit.Reset()']]],
   ['resetbodyredirection_99',['ResetBodyRedirection',['../classVHToolkit_1_1Redirection_1_1ResetBodyRedirection.html',1,'VHToolkit::Redirection']]],
-  ['resetcubes_100',['ResetCubes',['../classSceneController.html#aeabacdb6107f93b9449fe77d43244ebc',1,'SceneController']]],
+  ['resetcubes_100',['ResetCubes',['../classVHToolkit_1_1UserInput_1_1SceneController.html#a6e265a5b2f2ccb183d272f03b81499fe',1,'VHToolkit::UserInput::SceneController']]],
   ['resetredirection_101',['ResetRedirection',['../classVHToolkit_1_1Redirection_1_1WorldRedirection.html#a1bfe877cd739eb827d8e0c22ca9993ed',1,'VHToolkit.Redirection.WorldRedirection.ResetRedirection()'],['../classVHToolkit_1_1Redirection_1_1BodyRedirection.html#aa951539f8a1a279c72c1dba293cdfb70',1,'VHToolkit.Redirection.BodyRedirection.ResetRedirection()']]],
   ['resetredirectioncoeff_102',['ResetRedirectionCoeff',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a560f097571f1c80286a9038ccda2014f',1,'VHToolkit::Redirection::ParametersToolkit']]],
   ['resetworldredirection_103',['ResetWorldRedirection',['../classVHToolkit_1_1Redirection_1_1ResetWorldRedirection.html',1,'VHToolkit::Redirection']]],
