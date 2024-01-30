@@ -219,9 +219,26 @@ namespace VHToolkit.Redirection {
 		}
 	}
 
-	public class NoWorldRedirection: WorldRedirectionTechnique {
+	public class NoWorldRedirection : WorldRedirectionTechnique {
 		public override void Redirect(Scene scene) {
 			CopyHeadAndHandTransform(scene);
 		}
 	}
+
+	public class TestRedirection : WorldRedirectionTechnique
+	{
+		GameObject Moncube;
+		public override void Redirect(Scene scene)
+		{
+			//CopyHeadAndHandTransform(scene);
+			if (!Moncube)
+			{
+				Moncube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+				Moncube.transform.position = MathTools.ProjectToHorizontalPlane(scene.physicalHead.transform.position);
+
+			}
+			Moncube.transform.position = MathTools.ProjectToHorizontalPlane(scene.physicalHead.transform.position);
+		}
+	}
+        
 }

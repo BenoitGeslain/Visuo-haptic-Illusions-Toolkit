@@ -33,8 +33,9 @@ namespace VHToolkit {
 		Razzaque2001Curvature,
 		Razzaque2001Hybrid,
 		Azmandian2016World,
-		Steinicke2008Translational
-	}
+		Steinicke2008Translational,
+        TestRedirection
+    }
 
 	public enum WRStrategy {
 		NoSteering,

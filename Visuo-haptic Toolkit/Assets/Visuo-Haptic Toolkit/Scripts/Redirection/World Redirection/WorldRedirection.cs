@@ -30,6 +30,7 @@ namespace VHToolkit.Redirection {
 				WRTechnique.Razzaque2001Curvature => new Razzaque2001Curvature(),
 				WRTechnique.Razzaque2001Hybrid => new Razzaque2001Hybrid(),
 				WRTechnique.Azmandian2016World => new Azmandian2016World(),
+				WRTechnique.TestRedirection => new TestRedirection(),
 				_ => null
 			};
 
