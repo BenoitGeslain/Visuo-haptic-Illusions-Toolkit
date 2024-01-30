@@ -20,7 +20,7 @@ namespace VHToolkit.Logging
     public record RedirectionData {
         public DateTime timeStamp = DateTime.Now;
         public string Technique => script switch {
-			WorldRedirection => (script as WorldRedirection)._technique.ToString(),
+			WorldRedirection => (script as WorldRedirection).Technique.ToString(),
             BodyRedirection => (script as BodyRedirection).Technique.ToString(),
             _ => ""
         };

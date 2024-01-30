@@ -21,7 +21,7 @@ namespace VHToolkit.Redirection.BodyRedirection {
 
 		private void OnEnable() {
 
-			technique = serializedObject.FindProperty("technique");
+			technique = serializedObject.FindProperty("_technique");
             techniqueInstance = serializedObject.FindProperty("techniqueInstance");
 
 			physicalLimbs = serializedObject.FindProperty("scene.limbs");

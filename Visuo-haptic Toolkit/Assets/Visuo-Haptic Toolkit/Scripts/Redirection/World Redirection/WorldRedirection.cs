@@ -11,7 +11,7 @@ namespace VHToolkit.Redirection.WorldRedirection {
 	/// </summary>
 	public class WorldRedirection : Interaction {
 
-		public WRTechnique _technique;
+		[SerializeField] private WRTechnique _technique;
 		public WRTechnique Technique {get => _technique; set => _technique = value;}
         private WRTechnique previousTechnique;
 		public WorldRedirectionTechnique techniqueInstance;

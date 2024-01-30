@@ -29,7 +29,7 @@ namespace VHToolkit.Redirection.WorldRedirection {
         readonly string[] targetsStrategies = { "SteerToCenter", "SteerToMultipleTargets", "SteerInDirection" };
 
 		private void OnEnable() {
-			technique = serializedObject.FindProperty("technique");
+			technique = serializedObject.FindProperty("_technique");
 			strategy = serializedObject.FindProperty("strategy");
 
 			// Scene
