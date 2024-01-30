@@ -110,26 +110,20 @@ namespace VHToolkit.Redirection {
 		/// <param name="t">BRTechnique</param>
         public void SetTechnique(BRTechnique t) => technique = t;
 
-		public List<Vector3> GetRedirection() => scene.LimbRedirection;
-
 		public Transform GetPhysicalTarget() => scene.physicalTarget;
 
-		public void SetPhysicalTarget(Transform physicalTarget) {
-			scene.physicalTarget = physicalTarget;
-		}
+        public void SetPhysicalTarget(Transform physicalTarget) => scene.physicalTarget = physicalTarget;
 
-		public Transform GetVirtualarget() => scene.virtualTarget;
+        public Transform GetVirtualTarget() => scene.virtualTarget;
 
-		public void SetVirtualTarget(Transform virtualTarget) {
-			scene.virtualTarget = virtualTarget;
-		}
+        public void SetVirtualTarget(Transform virtualTarget) => scene.virtualTarget = virtualTarget;
 
-		/// <summary>
-		/// Returns whether a redirection is applied to the user's virtual and physical hand
-		/// </summary>
-		/// <returns>Returns a bool:
-		/// true if the virtual hand of the user is not co-localised to the physical hand.
-		/// false otherwise.</returns>
+        /// <summary>
+        /// Returns whether a redirection is applied to the user's virtual and physical hand
+        /// </summary>
+        /// <returns>Returns a bool:
+        /// true if the virtual hand of the user is not co-localised to the physical hand.
+        /// false otherwise.</returns>
         public bool IsRedirecting() => scene.GetHandRedirectionDistance().SelectMany(x => x).Any(x => x > Vector3.kEpsilon);
     }
 }

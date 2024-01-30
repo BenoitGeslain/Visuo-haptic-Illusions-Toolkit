@@ -50,6 +50,7 @@ namespace VHToolkit.Redirection {
 		[Ignore] public Transform virtualHead;
 
         [Ignore] public Transform physicalTarget;
+
         [Ignore] public Transform virtualTarget;
         [Ignore] public Transform origin;
 		[Ignore] public List<Transform> targets;
@@ -126,11 +127,7 @@ namespace VHToolkit.Redirection {
         /// <summary>
         /// Applies unaltered physical head rotations to the virtual head GameObject
         /// </summary>
-        // public void CopyHeadRotations() => HeadToHeadRedirection = HeadToHeadRedirection * physicalHead.rotation * Quaternion.Inverse(previousHeadRotation);
-        public void CopyHeadRotations()
-        {
-            virtualHead.rotation = HeadToHeadRedirection * physicalHead.rotation;
-        }
+        public void CopyHeadRotations() => virtualHead.rotation = HeadToHeadRedirection * physicalHead.rotation;
 
         /// <summary>
         /// Applies unaltered physical head translations to the virtual head GameObject
