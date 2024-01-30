@@ -17,49 +17,50 @@ You will find
 
 ## List of Implemented Techniques 
 
-| Body Redirection  |    |
-|:-------------- | :--------------: |
-| [Azmandian et al., 2016](https://doi.org/10.1145/2858036.2858226), Body Warping    |[Azmandian et al., 2016](https://doi.org/10.1145/2858036.2858226), Hybrid Warping    |
-| [Han et al., 2019](http://ieeexplore.ieee.org/document/8260974/), Translational Shift    | [Han et al., 2019](http://ieeexplore.ieee.org/document/8260974/), Interpolated Reach *    |
-| [Cheng et al., 2017](http://doi.acm.org/10.1145/3025453.3025753), Sparse Haptics   | [Geslain et al., 2022](https://doi.org/10.1145/3531073.3531100), 2<sup>nd</sup> order polynomials   |
-| [Poupyrev et al., 1996](https://dl.acm.org/doi/10.1145/237091.237102), The Go-Go   | |
+### Body Redirection
+- [Azmandian et al., 2016](https://doi.org/10.1145/2858036.2858226), Body Warping
+- [Azmandian et al., 2016](https://doi.org/10.1145/2858036.2858226), Hybrid Warping
+- [Han et al., 2019](http://ieeexplore.ieee.org/document/8260974/), Translational Shift
+- [Han et al., 2019](http://ieeexplore.ieee.org/document/8260974/), Interpolated Reach *
+- [Cheng et al., 2017](http://doi.acm.org/10.1145/3025453.3025753), Sparse Haptics
+- [Geslain et al., 2022](https://doi.org/10.1145/3531073.3531100), 2<sup>nd</sup> order polynomials
+- [Poupyrev et al., 1996](https://dl.acm.org/doi/10.1145/237091.237102), The Go-Go   | |
 
 \* Sign mistake in equation (3.3). Technique redirects in opposite direction. + B is incorrect.
 
-| World Redirection   |     |
-|:-------------- | :--------------: |
-| [Razzaque et al., 2001](http://dx.doi.org/10.2312/egs.20011036), Over Time Rotation    | [Razzaque et al., 2001](https://diglib.eg.org:443/xmlui/handle/10.2312/egs20011036), Rotational <br />[Steinicke et al., 2008](http://ieeexplore.ieee.org/document/4741303/)    |
-| [Razzaque et al., 2001](https://diglib.eg.org:443/xmlui/handle/10.2312/egs20011036), Curvature <br />[Steinicke et al., 2008](http://ieeexplore.ieee.org/document/4741303/)    | [Razzaque et al., 2001](https://diglib.eg.org:443/xmlui/handle/10.2312/egs20011036), Redirected Walking Hybrid    |
-| [Azmandian et al., 2016](https://doi.org/10.1145/2858036.2858226), World Warping    | [Williams et al., 2006](https://dl.acm.org/doi/10.1145/1140491.1140495), Translational <br />[Steinicke et al., 2008](http://ieeexplore.ieee.org/document/4741303/),    |
+### World Redirection
+- [Razzaque et al., 2001](http://dx.doi.org/10.2312/egs.20011036), Over Time Rotation
+- [Razzaque et al., 2001](https://diglib.eg.org:443/xmlui/handle/10.2312/egs20011036), Rotational / [Steinicke et al., 2008](http://ieeexplore.ieee.org/document/4741303/)
+- [Razzaque et al., 2001](https://diglib.eg.org:443/xmlui/handle/10.2312/egs20011036), Curvature / [Steinicke et al., 2008](http://ieeexplore.ieee.org/document/4741303/)
+- [Razzaque et al., 2001](https://diglib.eg.org:443/xmlui/handle/10.2312/egs20011036), Redirected Walking Hybrid
+- [Azmandian et al., 2016](https://doi.org/10.1145/2858036.2858226), World Warping
+- [Williams et al., 2006](https://dl.acm.org/doi/10.1145/1140491.1140495), Translational / [Steinicke et al., 2008](http://ieeexplore.ieee.org/document/4741303/)
 
-| Pseudo-Haptic   |     |
-|:-------------- | :--------------: |
-| [Lécuyer et al., 2000](https://doi.org/10.1109/VR.2000.840369), Swamp Illusion   | [Lécuyer et al., 2000](https://doi.org/10.1109/VR.2000.840369), Spring stiffness   |
-| [Samad et al., 2019](https://dl.acm.org/doi/10.1145/3290605.3300550), Pseudo-haptic weight   | [Rietzler et al., 2018](https://dl.acm.org/doi/10.1145/3173574.3173702), Breaking the tracking, weight   |
+### Pseudo-Haptic 
+- [Lécuyer et al., 2000](https://doi.org/10.1109/VR.2000.840369), Swamp Illusion
+- [Lécuyer et al., 2000](https://doi.org/10.1109/VR.2000.840369), Spring stiffness
+- [Samad et al., 2019](https://dl.acm.org/doi/10.1145/3290605.3300550), Pseudo-haptic weight
+- [Rietzler et al., 2018](https://dl.acm.org/doi/10.1145/3173574.3173702), Breaking the tracking, weight
 
-| Steering Strategies  |
-|:-------------- |
-| [Langbehn and Steinicke, 2013](https://link.springer.com/referenceworkentry/10.1007/978-3-319-08234-9_253-1), Steer To Center |
-| [Langbehn and Steinicke, 2013](https://link.springer.com/referenceworkentry/10.1007/978-3-319-08234-9_253-1), Steer To Orbit  |
-| [Langbehn and Steinicke, 2013](https://link.springer.com/referenceworkentry/10.1007/978-3-319-08234-9_253-1), Steer To Targets |
-| [Langbehn and Steinicke, 2013](https://link.springer.com/referenceworkentry/10.1007/978-3-319-08234-9_253-1), Steer To Targets + Center |
+### Steering Strategies
+- [Langbehn and Steinicke, 2013](https://link.springer.com/referenceworkentry/10.1007/978-3-319-08234-9_253-1), Steer To Center
+- [Langbehn and Steinicke, 2013](https://link.springer.com/referenceworkentry/10.1007/978-3-319-08234-9_253-1), Steer To Orbit
+- [Langbehn and Steinicke, 2013](https://link.springer.com/referenceworkentry/10.1007/978-3-319-08234-9_253-1), Steer To Targets
+- [Langbehn and Steinicke, 2013](https://link.springer.com/referenceworkentry/10.1007/978-3-319-08234-9_253-1), Steer To Targets + Center
 
 ### Not Yet Implemented (Roadmap)
 
-| World Redirection   |     |
-|:-------------- | :--------------: |
-| [Abtahi and Follmer, 2019](https://dl.acm.org/doi/10.1145/3290605.3300752), World-in-miniature   | &cross;   |
+#### World Redirection 
+- [Abtahi and Follmer, 2019](https://dl.acm.org/doi/10.1145/3290605.3300752), World-in-miniature
 
-| Interpolation   |     |
-|:-------------- | :--------------: |
-| [Kohli et al., 2010](https://doi.org/10.1109/3DUI.2010.5444703), Redirected Touching<br />[Kohli, 2013](https://doi.org/10.17615/34cy-pt44)   | &cross;   |
-| [Zhao et Follmer et al., 2018](https://dl.acm.org/doi/10.1145/3173574.3174118), Complex Boundaries   | &cross;   |
+#### Interpolation
+- [Kohli et al., 2010](https://doi.org/10.1109/3DUI.2010.5444703), Redirected Touching / [Kohli, 2013](https://doi.org/10.17615/34cy-pt44)
+- [Zhao et Follmer et al., 2018](https://dl.acm.org/doi/10.1145/3173574.3174118), Complex Boundaries
 
-| Pseudo-Haptic   |     |
-|:-------------- | :--------------: |
-| [Gomez Jauregui et al., 2014](http://ieeexplore.ieee.org/document/6777424/), Avatar Weight   | &cross;   |
-| [Argelaguet et al., 2013](https://doi.org/10.1145/2501599), Deformable materials   | &cross;   |
-| [Kasahara et al., 2017](http://doi.acm.org/10.1145/3025453.3025962), Malleable Embodiement   | &cross;   |
+#### Pseudo-Haptic
+- [Gomez Jauregui et al., 2014](http://ieeexplore.ieee.org/document/6777424/), Avatar Weight
+- [Argelaguet et al., 2013](https://doi.org/10.1145/2501599), Deformable materials
+- [Kasahara et al., 2017](http://doi.acm.org/10.1145/3025453.3025962), Malleable Embodiement
 
 ## Reporting Issues
 
