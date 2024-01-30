@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace VHToolkit.Redirection {
+namespace VHToolkit.Redirection.WorldRedirection {
 	public class WorldRedirectionStrategy {
 
 		public virtual Vector3 SteerTo(Scene scene) {

@@ -1,8 +1,6 @@
 using UnityEngine;
 
-using VHToolkit.Redirection;
-
-namespace VHToolkit {
+namespace VHToolkit.Redirection {
 	/// <summary>
 	/// Available body redirection techniques.
 	/// </summary>
