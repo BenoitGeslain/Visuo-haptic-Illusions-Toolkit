@@ -1,9 +1,7 @@
 var searchData=
 [
-  ['lecuyer2000swamp_56',['Lecuyer2000Swamp',['../namespaceVHToolkit.html#ae85c0749a52f7728da28fbcc0274a1f4a6e2670a2251c1e1e3dd5a77bfff178d4',1,'VHToolkit.Lecuyer2000Swamp()'],['../classVHToolkit_1_1Redirection_1_1Lecuyer2000Swamp.html',1,'VHToolkit.Redirection.Lecuyer2000Swamp']]],
-  ['left_57',['left',['../classVHToolkit_1_1Redirection_1_1Vector2Horizontal.html#ad4340c9357bb1c63e704a7962d5a51e3',1,'VHToolkit::Redirection::Vector2Horizontal']]],
-  ['limb_58',['Limb',['../structVHToolkit_1_1Redirection_1_1Limb.html#af3b5edba645f4b4e5626ce7c55a152f4',1,'VHToolkit.Redirection.Limb.Limb()'],['../structVHToolkit_1_1Redirection_1_1Limb.html',1,'VHToolkit.Redirection.Limb']]],
-  ['loadcalibration_59',['LoadCalibration',['../classVHToolkit_1_1Calibration_1_1SceneCalibration.html#a9331f5e76e516f952ce2604c01120d53',1,'VHToolkit::Calibration::SceneCalibration']]],
-  ['logging_60',['Logging',['../classVHToolkit_1_1Logging_1_1Logging.html',1,'VHToolkit::Logging']]],
-  ['loggingeditor_61',['LoggingEditor',['../classVHToolkit_1_1Logging_1_1LoggingEditor.html',1,'VHToolkit::Logging']]]
+  ['instance_50',['Instance',['../classVHToolkit_1_1Toolkit.html#afe1ae2083d26fb591401aa0f5fcb4962',1,'VHToolkit::Toolkit']]],
+  ['interaction_51',['Interaction',['../classVHToolkit_1_1Redirection_1_1Interaction.html',1,'VHToolkit::Redirection']]],
+  ['interactionclassmap_52',['InteractionClassMap',['../classVHToolkit_1_1Logging_1_1RedirectionDataMap_1_1InteractionClassMap.html#a7d8b6c0ce46c2b9ae8847f210e9cc247',1,'VHToolkit.Logging.RedirectionDataMap.InteractionClassMap.InteractionClassMap()'],['../classVHToolkit_1_1Logging_1_1RedirectionDataMap_1_1InteractionClassMap.html',1,'VHToolkit.Logging.RedirectionDataMap.InteractionClassMap']]],
+  ['isredirecting_53',['IsRedirecting',['../classVHToolkit_1_1Redirection_1_1BodyRedirection_1_1BodyRedirection.html#a96bd6454a761c45bfa6b1df668a02554',1,'VHToolkit.Redirection.BodyRedirection.BodyRedirection.IsRedirecting()'],['../classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1WorldRedirection.html#a0ddcd855afb66e94af33fed4b806e860',1,'VHToolkit.Redirection.WorldRedirection.WorldRedirection.IsRedirecting()']]]
 ];

@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['dampeningdistancethreshold_288',['DampeningDistanceThreshold',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a643914ca2aedaeedc00c8f3c2f0c6b95',1,'VHToolkit::Redirection::ParametersToolkit']]],
-  ['dampeningrange_289',['DampeningRange',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a7425413ae5e4323d34cd4eb06de237da',1,'VHToolkit::Redirection::ParametersToolkit']]],
-  ['down_290',['down',['../classVHToolkit_1_1Redirection_1_1Vector2Vertical.html#a1c33ecb13b9dfc503da06bfbd34f057e',1,'VHToolkit::Redirection::Vector2Vertical']]]
+  ['controlpoint_282',['controlPoint',['../classVHToolkit_1_1Redirection_1_1BodyRedirection_1_1BodyRedirectionTechnique.html#ac1aea0038cdb84463ab0347ecf12c330',1,'VHToolkit::Redirection::BodyRedirection::BodyRedirectionTechnique']]],
+  ['curvatureradius_283',['CurvatureRadius',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a094b9a6beb61e1b1ae42f33a87db3091',1,'VHToolkit::Redirection::ParametersToolkit']]]
 ];

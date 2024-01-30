@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['calibrate_240',['Calibrate',['../classVHToolkit_1_1Calibration_1_1SceneCalibration.html#a07045e508620ef2a903359bfdd970bd3',1,'VHToolkit::Calibration::SceneCalibration']]],
-  ['copyheadandlimbtransform_241',['CopyHeadAndLimbTransform',['../classVHToolkit_1_1Redirection_1_1WorldRedirectionTechnique.html#afb55d59c05ad0e93f57e01e6a5270328',1,'VHToolkit::Redirection::WorldRedirectionTechnique']]],
-  ['createnewfile_242',['CreateNewFile',['../classVHToolkit_1_1Logging_1_1Logging.html#a1f3aaeabf70901177f1e871be4a3a395',1,'VHToolkit::Logging::Logging']]],
-  ['curvatureradiustorotationrate_243',['CurvatureRadiusToRotationRate',['../classVHToolkit_1_1Toolkit.html#ac4e50fc0ac7cc5f20c520a60f1ebc4cc',1,'VHToolkit.Toolkit.CurvatureRadiusToRotationRate()'],['../classVHToolkit_1_1Toolkit.html#a815378c477baad9f5a9451503b063682',1,'VHToolkit.Toolkit.CurvatureRadiusToRotationRate(float radius)']]]
+  ['calibrate_241',['Calibrate',['../classVHToolkit_1_1Calibration_1_1SceneCalibration.html#a07045e508620ef2a903359bfdd970bd3',1,'VHToolkit::Calibration::SceneCalibration']]],
+  ['copyheadandlimbtransform_242',['CopyHeadAndLimbTransform',['../classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1WorldRedirectionTechnique.html#aeb7c04cb4ec281a3920a03d81f4f1ba1',1,'VHToolkit::Redirection::WorldRedirection::WorldRedirectionTechnique']]],
+  ['createnewfile_243',['CreateNewFile',['../classVHToolkit_1_1Logging_1_1Logging.html#a1f3aaeabf70901177f1e871be4a3a395',1,'VHToolkit::Logging::Logging']]],
+  ['curvatureradiustorotationrate_244',['CurvatureRadiusToRotationRate',['../classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1Razzaque2001Curvature.html#aa6c6750762fd8e7688123e2315cf2731',1,'VHToolkit::Redirection::WorldRedirection::Razzaque2001Curvature']]]
 ];
