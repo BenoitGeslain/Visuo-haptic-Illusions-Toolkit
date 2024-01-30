@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Visuo-haptic Illusions Toolkit: VHToolkit.Redirection.SteerToMultipleTargets Class Reference</title>
+<title>Visuo-haptic Illusions Toolkit: VHToolkit.Redirection.WorldRedirection.WorldRedirectionStrategy Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -61,36 +61,39 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespaceVHToolkit.html">VHToolkit</a></li><li class="navelem"><a class="el" href="namespaceVHToolkit_1_1Redirection.html">Redirection</a></li><li class="navelem"><a class="el" href="classVHToolkit_1_1Redirection_1_1SteerToMultipleTargets.html">SteerToMultipleTargets</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespaceVHToolkit.html">VHToolkit</a></li><li class="navelem"><a class="el" href="namespaceVHToolkit_1_1Redirection.html">Redirection</a></li><li class="navelem"><a class="el" href="namespaceVHToolkit_1_1Redirection_1_1WorldRedirection.html">WorldRedirection</a></li><li class="navelem"><a class="el" href="classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1WorldRedirectionStrategy.html">WorldRedirectionStrategy</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="classVHToolkit_1_1Redirection_1_1SteerToMultipleTargets-members.html">List of all members</a>  </div>
+<a href="classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1WorldRedirectionStrategy-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">VHToolkit.Redirection.SteerToMultipleTargets Class Reference</div>  </div>
+<div class="title">VHToolkit.Redirection.WorldRedirection.WorldRedirectionStrategy Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="dynheader">
-Inheritance diagram for VHToolkit.Redirection.SteerToMultipleTargets:</div>
+Inheritance diagram for VHToolkit.Redirection.WorldRedirection.WorldRedirectionStrategy:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classVHToolkit_1_1Redirection_1_1SteerToMultipleTargets.png" usemap="#VHToolkit.Redirection.SteerToMultipleTargets_map" alt=""/>
-  <map id="VHToolkit.Redirection.SteerToMultipleTargets_map" name="VHToolkit.Redirection.SteerToMultipleTargets_map">
-<area href="classVHToolkit_1_1Redirection_1_1WorldRedirectionStrategy.html" alt="VHToolkit.Redirection.WorldRedirectionStrategy" shape="rect" coords="0,0,282,24"/>
+  <img src="classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1WorldRedirectionStrategy.png" usemap="#VHToolkit.Redirection.WorldRedirection.WorldRedirectionStrategy_map" alt=""/>
+  <map id="VHToolkit.Redirection.WorldRedirection.WorldRedirectionStrategy_map" name="VHToolkit.Redirection.WorldRedirection.WorldRedirectionStrategy_map">
+<area href="classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1NoSteering.html" alt="VHToolkit.Redirection.WorldRedirection.NoSteering" shape="rect" coords="0,56,383,80"/>
+<area href="classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1SteerInDirection.html" alt="VHToolkit.Redirection.WorldRedirection.SteerInDirection" shape="rect" coords="393,56,776,80"/>
+<area href="classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1SteerToCenter.html" alt="VHToolkit.Redirection.WorldRedirection.SteerToCenter" shape="rect" coords="786,56,1169,80"/>
+<area href="classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1SteerToMultipleTargets.html" alt="VHToolkit.Redirection.WorldRedirection.SteerToMultipleTargets" shape="rect" coords="1179,56,1562,80"/>
+<area href="classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1SteerToOrbit.html" alt="VHToolkit.Redirection.WorldRedirection.SteerToOrbit" shape="rect" coords="1572,56,1955,80"/>
   </map>
 </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a04c16b195a592c314e3769e15bd0edf8"><td class="memItemLeft" align="right" valign="top">override Vector3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVHToolkit_1_1Redirection_1_1SteerToMultipleTargets.html#a04c16b195a592c314e3769e15bd0edf8">SteerTo</a> (<a class="el" href="namespaceVHToolkit_1_1Redirection.html#aa3ec964b2baf3fc23c0b779c89dafea1">Scene</a> scene)</td></tr>
-<tr class="memdesc:a04c16b195a592c314e3769e15bd0edf8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select the target that has the smallest bearing with the orientation of the user's head. Return a vector pointing from the physical head in the direction of the selected target.  <a href="classVHToolkit_1_1Redirection_1_1SteerToMultipleTargets.html#a04c16b195a592c314e3769e15bd0edf8">More...</a><br /></td></tr>
-<tr class="separator:a04c16b195a592c314e3769e15bd0edf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeab6964b7b2e0b169c74781de3c57bb0"><td class="memItemLeft" align="right" valign="top">virtual Vector3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1WorldRedirectionStrategy.html#aeab6964b7b2e0b169c74781de3c57bb0">SteerTo</a> (<a class="el" href="namespaceVHToolkit_1_1Redirection.html#aa3ec964b2baf3fc23c0b779c89dafea1">Scene</a> scene)</td></tr>
+<tr class="separator:aeab6964b7b2e0b169c74781de3c57bb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a04c16b195a592c314e3769e15bd0edf8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a04c16b195a592c314e3769e15bd0edf8">&#9670;&nbsp;</a></span>SteerTo()</h2>
+<a id="aeab6964b7b2e0b169c74781de3c57bb0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeab6964b7b2e0b169c74781de3c57bb0">&#9670;&nbsp;</a></span>SteerTo()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -99,7 +102,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">override Vector3 VHToolkit.Redirection.SteerToMultipleTargets.SteerTo </td>
+          <td class="memname">virtual Vector3 VHToolkit.Redirection.WorldRedirection.WorldRedirectionStrategy.SteerTo </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="namespaceVHToolkit_1_1Redirection.html#aa3ec964b2baf3fc23c0b779c89dafea1">Scene</a>&#160;</td>
           <td class="paramname"><em>scene</em></td><td>)</td>
@@ -113,16 +116,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Select the target that has the smallest bearing with the orientation of the user's head. Return a vector pointing from the physical head in the direction of the selected target. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">scene</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
-
-<p>Reimplemented from <a class="el" href="classVHToolkit_1_1Redirection_1_1WorldRedirectionStrategy.html#afc134cdffe2fa3e53c67b5f0d63884b3">VHToolkit.Redirection.WorldRedirectionStrategy</a>.</p>
+<p>Reimplemented in <a class="el" href="classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1SteerInDirection.html#a125c4fa52d8b5a826b574caa153942ea">VHToolkit.Redirection.WorldRedirection.SteerInDirection</a>, <a class="el" href="classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1SteerToMultipleTargets.html#ab4db0153098875c0cd201541348c9736">VHToolkit.Redirection.WorldRedirection.SteerToMultipleTargets</a>, <a class="el" href="classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1SteerToOrbit.html#a06927e88f6f5c76ee97157103502a685">VHToolkit.Redirection.WorldRedirection.SteerToOrbit</a>, <a class="el" href="classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1SteerToCenter.html#ace7d6ac90dc6ee262726aef510ea34b1">VHToolkit.Redirection.WorldRedirection.SteerToCenter</a>, and <a class="el" href="classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1NoSteering.html#a6ea45145e0fedb205fb486f77074673e">VHToolkit.Redirection.WorldRedirection.NoSteering</a>.</p>
 
 </div>
 </div>
