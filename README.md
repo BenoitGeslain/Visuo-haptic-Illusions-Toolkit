@@ -30,11 +30,11 @@ You will find
 
 ### World Redirection
 - [Razzaque et al., 2001](http://dx.doi.org/10.2312/egs.20011036), Over Time Rotation
-- [Razzaque et al., 2001](https://diglib.eg.org:443/xmlui/handle/10.2312/egs20011036), Rotational / [Steinicke et al., 2008](http://ieeexplore.ieee.org/document/4741303/)
-- [Razzaque et al., 2001](https://diglib.eg.org:443/xmlui/handle/10.2312/egs20011036), Curvature / [Steinicke et al., 2008](http://ieeexplore.ieee.org/document/4741303/)
+- [Razzaque et al., 2001](https://diglib.eg.org:443/xmlui/handle/10.2312/egs20011036), Rotational
+- [Razzaque et al., 2001](https://diglib.eg.org:443/xmlui/handle/10.2312/egs20011036), Curvature
 - [Razzaque et al., 2001](https://diglib.eg.org:443/xmlui/handle/10.2312/egs20011036), Redirected Walking Hybrid
 - [Azmandian et al., 2016](https://doi.org/10.1145/2858036.2858226), World Warping
-- [Williams et al., 2006](https://dl.acm.org/doi/10.1145/1140491.1140495), Translational / [Steinicke et al., 2008](http://ieeexplore.ieee.org/document/4741303/)
+- [Williams et al., 2006](https://dl.acm.org/doi/10.1145/1140491.1140495), Translational
 
 ### Pseudo-Haptic 
 - [Lécuyer et al., 2000](https://doi.org/10.1109/VR.2000.840369), Swamp Illusion
@@ -54,7 +54,7 @@ You will find
 - [Abtahi and Follmer, 2019](https://dl.acm.org/doi/10.1145/3290605.3300752), World-in-miniature
 
 #### Interpolation
-- [Kohli et al., 2010](https://doi.org/10.1109/3DUI.2010.5444703), Redirected Touching / [Kohli, 2013](https://doi.org/10.17615/34cy-pt44)
+- [Kohli et al., 2010](https://doi.org/10.1109/3DUI.2010.5444703), Redirected Touching
 - [Zhao et Follmer et al., 2018](https://dl.acm.org/doi/10.1145/3173574.3174118), Complex Boundaries
 
 #### Pseudo-Haptic
