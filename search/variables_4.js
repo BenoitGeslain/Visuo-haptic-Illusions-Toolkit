@@ -1,5 +1,8 @@
 var searchData=
 [
-  ['faster_287',['faster',['../classVHToolkit_1_1Redirection_1_1Vector2Gain.html#a912c903c4f0e74ff2f48e33de79de57d',1,'VHToolkit::Redirection::Vector2Gain']]],
-  ['forward_288',['forward',['../structVHToolkit_1_1MathTools_1_1PositionAndRotation2D.html#afe44746f26bf7c1b7423cfab084e10f6',1,'VHToolkit::MathTools::PositionAndRotation2D']]]
+  ['gain_287',['Gain',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#af361c0356a86eb8809f45df3764e7150',1,'VHToolkit::Redirection::ParametersToolkit']]],
+  ['gainsrotational_288',['GainsRotational',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a070e19c49bd46fdbf679838a63c0d835',1,'VHToolkit::Redirection::ParametersToolkit']]],
+  ['gainstranslational_289',['GainsTranslational',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#ae896d09a13ce2ceac12246a27d08f0a5',1,'VHToolkit::Redirection::ParametersToolkit']]],
+  ['gogoactivationdistance_290',['GoGoActivationDistance',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#ad2dba65335476ca517eea9082289e9cd',1,'VHToolkit::Redirection::ParametersToolkit']]],
+  ['gogocoefficient_291',['GoGoCoefficient',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a407f646762ccc4b60cf5ec74563dfc02',1,'VHToolkit::Redirection::ParametersToolkit']]]
 ];

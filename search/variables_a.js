@@ -1,7 +1,10 @@
 var searchData=
 [
-  ['parameters_300',['parameters',['../classVHToolkit_1_1Toolkit.html#a23bd9c7867224443a868b64895f76ba0',1,'VHToolkit::Toolkit']]],
-  ['pathtofile_301',['pathToFile',['../classVHToolkit_1_1Logging_1_1Logging.html#ae2d6b73da5f57d73f43120a6fdaed2b7',1,'VHToolkit::Logging::Logging']]],
-  ['physicallimb_302',['physicalLimb',['../structVHToolkit_1_1Redirection_1_1Limb.html#a8d31b03daff9e346ed193512d9d6810a',1,'VHToolkit::Redirection::Limb']]],
-  ['position_303',['position',['../structVHToolkit_1_1MathTools_1_1PositionAndRotation2D.html#aa2cad0ad190f17285128db49feb5971c',1,'VHToolkit::MathTools::PositionAndRotation2D']]]
+  ['redirect_302',['redirect',['../classVHToolkit_1_1Redirection_1_1Interaction.html#ac2e21c5b6037bfb7231e232cb3dc80a0',1,'VHToolkit::Redirection::Interaction']]],
+  ['redirectionbuffer_303',['RedirectionBuffer',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a74cfe8ad097461a4712ead219bc7e53d',1,'VHToolkit::Redirection::ParametersToolkit']]],
+  ['redirectionlateness_304',['redirectionLateness',['../classVHToolkit_1_1Redirection_1_1BodyRedirection_1_1BodyRedirectionTechnique.html#a92396f65fe07df468f26546220697d62',1,'VHToolkit::Redirection::BodyRedirection::BodyRedirectionTechnique']]],
+  ['resetredirectioncoeff_305',['ResetRedirectionCoeff',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a560f097571f1c80286a9038ccda2014f',1,'VHToolkit::Redirection::ParametersToolkit']]],
+  ['right_306',['right',['../classVHToolkit_1_1Redirection_1_1Vector2Horizontal.html#a97d18f0a38a10765a760a8e95871280f',1,'VHToolkit::Redirection::Vector2Horizontal']]],
+  ['rotationalerror_307',['RotationalError',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a7dad5be9259e7c1b014af0adf62be72e',1,'VHToolkit::Redirection::ParametersToolkit']]],
+  ['rotationthreshold_308',['RotationThreshold',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#ab2d38a498e13a6c48d9a51022c699a45',1,'VHToolkit::Redirection::ParametersToolkit']]]
 ];

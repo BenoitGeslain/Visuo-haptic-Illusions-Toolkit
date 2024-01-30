@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['a_280',['a',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a039363f9e945c6ec6cdbf41c31b0670e',1,'VHToolkit::Redirection::ParametersToolkit']]],
-  ['active_281',['active',['../classVHToolkit_1_1Visualisation_1_1WRVisuals.html#a52d5319848f95d322a490d8c8d1f864b',1,'VHToolkit::Visualisation::WRVisuals']]]
+  ['controlpoint_280',['controlPoint',['../classVHToolkit_1_1Redirection_1_1BodyRedirection_1_1BodyRedirectionTechnique.html#ac1aea0038cdb84463ab0347ecf12c330',1,'VHToolkit::Redirection::BodyRedirection::BodyRedirectionTechnique']]],
+  ['curvatureradius_281',['CurvatureRadius',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a094b9a6beb61e1b1ae42f33a87db3091',1,'VHToolkit::Redirection::ParametersToolkit']]]
 ];

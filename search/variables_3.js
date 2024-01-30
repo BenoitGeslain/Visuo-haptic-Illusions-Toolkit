@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['dampeningdistancethreshold_284',['DampeningDistanceThreshold',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a643914ca2aedaeedc00c8f3c2f0c6b95',1,'VHToolkit::Redirection::ParametersToolkit']]],
-  ['dampeningrange_285',['DampeningRange',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a7425413ae5e4323d34cd4eb06de237da',1,'VHToolkit::Redirection::ParametersToolkit']]],
-  ['down_286',['down',['../classVHToolkit_1_1Redirection_1_1Vector2Vertical.html#a1c33ecb13b9dfc503da06bfbd34f057e',1,'VHToolkit::Redirection::Vector2Vertical']]]
+  ['faster_285',['faster',['../classVHToolkit_1_1Redirection_1_1Vector2Gain.html#a912c903c4f0e74ff2f48e33de79de57d',1,'VHToolkit::Redirection::Vector2Gain']]],
+  ['forward_286',['forward',['../structVHToolkit_1_1MathTools_1_1PositionAndRotation2D.html#afe44746f26bf7c1b7423cfab084e10f6',1,'VHToolkit::MathTools::PositionAndRotation2D']]]
 ];

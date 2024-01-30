@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['han2018continuous_46',['Han2018Continuous',['../classVHToolkit_1_1Redirection_1_1BodyRedirection_1_1Han2018Continuous.html',1,'VHToolkit::Redirection::BodyRedirection']]],
-  ['han2018interpolatedreach_47',['Han2018InterpolatedReach',['../namespaceVHToolkit.html#ae85c0749a52f7728da28fbcc0274a1f4aab278652904b8edb8be9a7bd262c71c9',1,'VHToolkit']]],
-  ['han2018translationalshift_48',['Han2018TranslationalShift',['../namespaceVHToolkit.html#ae85c0749a52f7728da28fbcc0274a1f4ab5b05ec6c6effa0128c0089e39c3c394',1,'VHToolkit.Han2018TranslationalShift()'],['../classVHToolkit_1_1Redirection_1_1BodyRedirection_1_1Han2018TranslationalShift.html',1,'VHToolkit.Redirection.BodyRedirection.Han2018TranslationalShift']]],
-  ['horizontalangles_49',['HorizontalAngles',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#aefce33e96a1666c786b42e28954238d3',1,'VHToolkit::Redirection::ParametersToolkit']]]
+  ['instance_49',['Instance',['../classVHToolkit_1_1Toolkit.html#afe1ae2083d26fb591401aa0f5fcb4962',1,'VHToolkit::Toolkit']]],
+  ['interaction_50',['Interaction',['../classVHToolkit_1_1Redirection_1_1Interaction.html',1,'VHToolkit::Redirection']]],
+  ['interactionclassmap_51',['InteractionClassMap',['../classVHToolkit_1_1Logging_1_1RedirectionDataMap_1_1InteractionClassMap.html#a7d8b6c0ce46c2b9ae8847f210e9cc247',1,'VHToolkit.Logging.RedirectionDataMap.InteractionClassMap.InteractionClassMap()'],['../classVHToolkit_1_1Logging_1_1RedirectionDataMap_1_1InteractionClassMap.html',1,'VHToolkit.Logging.RedirectionDataMap.InteractionClassMap']]],
+  ['isredirecting_52',['IsRedirecting',['../classVHToolkit_1_1Redirection_1_1BodyRedirection_1_1BodyRedirection.html#a96bd6454a761c45bfa6b1df668a02554',1,'VHToolkit.Redirection.BodyRedirection.BodyRedirection.IsRedirecting()'],['../classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1WorldRedirection.html#a0ddcd855afb66e94af33fed4b806e860',1,'VHToolkit.Redirection.WorldRedirection.WorldRedirection.IsRedirecting()']]]
 ];
