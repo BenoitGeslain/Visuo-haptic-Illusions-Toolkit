@@ -228,17 +228,47 @@ namespace VHToolkit.Redirection {
 	public class TestRedirection : WorldRedirectionTechnique
 	{
 		GameObject Moncube;
-		public override void Redirect(Scene scene)
+        Func<Vector2, float> RepulsiveFUnc;
+		Vector2 UserPosition;
+        Vector2 LastUserPosition;
+        public override void Redirect(Scene scene)
 		{
 			CopyHeadAndHandTransform(scene);
-			if (!Moncube)
-			{
-				Moncube = GameObject.Find("2duser");
-				Moncube.transform.position = MathTools.ProjectToHorizontalPlane(scene.physicalHead.transform.position);
+            Position2d(scene);
+			Gradientcompute(scene);
 
-			}
-			Moncube.transform.position = MathTools.ProjectToHorizontalPlane(scene.physicalHead.transform.position);
-		}
+			//foreach (Collider2D collider in scene.GetAllObstaclesCollider())
+			//{
+			//	Debug.Log (collider.gameObject.name);
+			//}
+
+
+        }
+
+		void Position2d (Scene scene)
+		{
+            if (!Moncube)
+            {
+                Moncube = GameObject.Find("2duser");
+            }
+            Moncube.transform.position = (MathTools.ProjectToHorizontalPlane(scene.physicalHead.transform.position));
+        }
+
+		void Gradientcompute (Scene scene)
+		{
+            RepulsiveFUnc = MathTools.RepulsivePotential(scene.GetAllObstaclesCollider());
+
+            UserPosition = Moncube.transform.position;
+
+            if (UserPosition != LastUserPosition)
+            {
+                 Vector2 Gradient = MathTools.Gradient2(RepulsiveFUnc, UserPosition);
+
+                 Debug.Log(Gradient);
+
+                 LastUserPosition = UserPosition;
+            }
+        }
 	}
         
 }
