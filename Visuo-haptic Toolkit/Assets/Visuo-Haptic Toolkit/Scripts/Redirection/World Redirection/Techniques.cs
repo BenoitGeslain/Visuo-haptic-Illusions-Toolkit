@@ -230,10 +230,10 @@ namespace VHToolkit.Redirection {
 		GameObject Moncube;
 		public override void Redirect(Scene scene)
 		{
-			//CopyHeadAndHandTransform(scene);
+			CopyHeadAndHandTransform(scene);
 			if (!Moncube)
 			{
-				Moncube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+				Moncube = GameObject.Find("2duser");
 				Moncube.transform.position = MathTools.ProjectToHorizontalPlane(scene.physicalHead.transform.position);
 
 			}
