@@ -2,6 +2,7 @@ using System.Linq;
 using UnityEngine;
 
 using VHToolkit.Redirection;
+using VHToolkit.Redirection.BodyRedirection;
 
 namespace VHToolkit.Simulation {
 	public class MJTTrajectoryGenerator : MonoBehaviour {

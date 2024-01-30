@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using TMPro;
+
 using UnityEngine;
 // using Valve.VR.InteractionSystem;
 
-namespace VHToolkit.Redirection {
+using VHToolkit.Redirection.WorldRedirection;
+
+namespace VHToolkit.Redirection.BodyRedirection {
     /// <summary>
     ///  This class is the most conceptual class of body interaction techniques defining the important function to call: Redirect().
 	///  Information about the user such as the user's position or the targets are encapsulated inside Scene.

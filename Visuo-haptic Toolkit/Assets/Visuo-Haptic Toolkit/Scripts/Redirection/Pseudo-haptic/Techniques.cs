@@ -3,10 +3,11 @@ using System.Linq;
 
 using UnityEngine;
 
+using VHToolkit.Redirection.BodyRedirection;
 
 // TODO handle collision detection
 // TODO handle offset reduction
-namespace VHToolkit.Redirection {
+namespace VHToolkit.Redirection.PseudoHaptics {
 
     /// <summary>
     /// This class implements the Swamp Illusion by Lécuyer et al., 2000. It is not a visuo-haptic illusion but a pseudo-haptic interaction techique.

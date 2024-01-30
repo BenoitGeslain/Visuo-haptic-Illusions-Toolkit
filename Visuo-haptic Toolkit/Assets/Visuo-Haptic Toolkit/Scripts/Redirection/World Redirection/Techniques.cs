@@ -3,7 +3,7 @@ using System.Linq;
 
 using UnityEngine;
 
-namespace VHToolkit.Redirection {
+namespace VHToolkit.Redirection.WorldRedirection {
 
 	/// <summary>
 	///  This class is the most conceptual class of  world redirection defining the important function to call: Redirect().
@@ -98,9 +98,11 @@ namespace VHToolkit.Redirection {
 			float instantTranslation = scene.GetHeadInstantTranslationForward().magnitude;
 
 			return instantTranslation > Toolkit.Instance.parameters.WalkingThreshold * Time.deltaTime
-				? Mathf.Sign(Vector3.Cross(scene.physicalHead.forward, scene.forwardTarget).y) * instantTranslation * Toolkit.Instance.CurvatureRadiusToRotationRate()
+				? Mathf.Sign(Vector3.Cross(scene.physicalHead.forward, scene.forwardTarget).y) * instantTranslation * CurvatureRadiusToRotationRate()
 				: 0f;
 		}
+
+		public static float CurvatureRadiusToRotationRate() => 180f / (Mathf.PI * Toolkit.Instance.parameters.CurvatureRadius);
 	}
 
 

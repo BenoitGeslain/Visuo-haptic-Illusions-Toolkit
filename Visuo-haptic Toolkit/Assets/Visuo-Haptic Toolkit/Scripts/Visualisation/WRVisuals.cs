@@ -2,7 +2,9 @@ using System.Collections.Generic;
 using System.Linq;
 
 using UnityEngine;
+
 using VHToolkit.Redirection;
+using VHToolkit.Redirection.WorldRedirection;
 
 namespace VHToolkit.Visualisation {
 	public class WRVisuals : MonoBehaviour {

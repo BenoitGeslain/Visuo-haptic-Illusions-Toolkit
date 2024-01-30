@@ -4,8 +4,7 @@ using System.Linq;
 
 using UnityEngine;
 
-using VHToolkit;
-using VHToolkit.Redirection;
+using VHToolkit.Redirection.WorldRedirection;
 
 namespace VHToolkit.Demo {
 	public class CorridorRedirection : MonoBehaviour {
@@ -39,13 +38,10 @@ namespace VHToolkit.Demo {
 
 			if (state != CorridorStates.Calibration) {
 				int currentPainting = (int)state - 1;
-				int nextPainting = (int)state;
 
 				redirectionApplied = redirectionScript.GetAngularRedirection().eulerAngles.y;
 				if (redirectionApplied > 180f)
 					redirectionApplied = 360f - redirectionApplied;
-
-				// Debug.Log((Math.Abs(redirectionApplied) - redirectionAmount.Take(currentPainting).Sum()) + ", " + redirectionAmount[currentPainting]);
 				// If the correct redirection has been applied, stop the redirection
 				if (currentPainting >= 0 && Math.Abs(redirectionApplied) - redirectionAmount.Take(currentPainting).Sum() > redirectionAmount[currentPainting]) {
 					redirectionScript.StopRedirection();

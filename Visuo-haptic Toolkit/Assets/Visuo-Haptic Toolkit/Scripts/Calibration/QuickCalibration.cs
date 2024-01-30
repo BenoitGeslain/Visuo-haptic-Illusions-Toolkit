@@ -16,9 +16,6 @@ namespace VHToolkit.Calibration {
 
 		private bool wasPressingButton = false;
 		private readonly List<InputDevice> inputDevices = new();
-		private WorldRedirection script;
-
-        private void Start() => script = Toolkit.Instance.gameObject.GetComponent<WorldRedirection>();
 
         private void Update() {
 			InputDevices.GetDevicesWithCharacteristics(characteristics, inputDevices);
