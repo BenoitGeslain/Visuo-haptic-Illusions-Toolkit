@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Linq;
 
 using UnityEngine;
@@ -229,19 +230,14 @@ namespace VHToolkit.Redirection {
 	{
 		GameObject Moncube;
         Func<Vector2, float> RepulsiveFUnc;
-		Vector2 UserPosition;
-        Vector2 LastUserPosition;
+        Vector2 LastPositionObjet;
+		GameObject PtitGradient;
         public override void Redirect(Scene scene)
 		{
 			CopyHeadAndHandTransform(scene);
             Position2d(scene);
-			Gradientcompute(scene);
-
-			//foreach (Collider2D collider in scene.GetAllObstaclesCollider())
-			//{
-			//	Debug.Log (collider.gameObject.name);
-			//}
-
+			Gradientcompute(scene, Moncube.transform.position);
+			GradientsDraw(scene);
 
         }
 
@@ -254,20 +250,56 @@ namespace VHToolkit.Redirection {
             Moncube.transform.position = (MathTools.ProjectToHorizontalPlane(scene.physicalHead.transform.position));
         }
 
-		void Gradientcompute (Scene scene)
+		Vector2 Gradientcompute (Scene scene,Vector2 PositionObjet)
 		{
             RepulsiveFUnc = MathTools.RepulsivePotential(scene.GetAllObstaclesCollider());
+			Vector2 CalculGradient = Vector2.one;
 
-            UserPosition = Moncube.transform.position;
-
-            if (UserPosition != LastUserPosition)
+            if (PositionObjet != LastPositionObjet)
             {
-                 Vector2 Gradient = MathTools.Gradient2(RepulsiveFUnc, UserPosition);
+                 CalculGradient = MathTools.Gradient2(RepulsiveFUnc, PositionObjet);
 
-                 Debug.Log(Gradient);
-
-                 LastUserPosition = UserPosition;
+                LastPositionObjet = PositionObjet;
             }
+
+			return CalculGradient;
+        }
+
+		void GradientsDraw (Scene scene)
+		{
+			GameObject[] ListeGradients;
+
+            if (!PtitGradient)
+			{
+                PtitGradient = Resources.Load<GameObject>("PtitGradient");
+
+                ListeGradients = new GameObject[50];
+                Vector2 map_size = GameObject.Find("Map").GetComponent<MeshCollider>().bounds.size;
+                Vector2 map_center = GameObject.Find("Map").GetComponent<MeshCollider>().bounds.center;
+                int pas = 5;
+                int totalpas = (int)Math.Floor(map_size.x / pas) * (int)Math.Floor(map_size.y / pas);
+
+
+
+                int i = 0;
+
+                for (int x = (int)(map_center.x - map_size.x / 2) + 5; x < map_center.x + map_size.x / 2; x += 5)
+                {
+                    for (int y = (int)(map_center.y - map_size.y / 2) + 5; y < map_center.y + map_size.y / 2; y += 5)
+                    {
+                        Vector2 Gradobject = Gradientcompute(scene, new Vector2(x, y));
+                        ListeGradients[i] = UnityEngine.Object.Instantiate(PtitGradient);
+                        ListeGradients[i].transform.position = new Vector3(x, y, 0);
+                        ListeGradients[i].GetComponent<Renderer>().material.color = new Color(1f * Gradobject.magnitude, 1f * Gradobject.magnitude, 1f);
+
+                        i++;
+                    }
+                }
+            }
+
+
+
+			
         }
 	}
         
