@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-namespace VHToolkit.Redirection {
+namespace VHToolkit.Redirection.WorldRedirection {
 
 	/// <summary>
 	/// This class allows users to select through the inspector or set through the API which
@@ -11,7 +11,8 @@ namespace VHToolkit.Redirection {
 	/// </summary>
 	public class WorldRedirection : Interaction {
 
-		public WRTechnique technique;
+		[SerializeField] private WRTechnique _technique;
+		public WRTechnique Technique {get => _technique; set => _technique = value;}
         private WRTechnique previousTechnique;
 		public WorldRedirectionTechnique techniqueInstance;
 		public WRStrategy strategy;
@@ -21,7 +22,7 @@ namespace VHToolkit.Redirection {
 		/// Updates the techniqueInstance according to the enumeration technique chosen.
 		/// </summary>
 		private void UpdateTechnique() {
-			techniqueInstance = technique switch {
+			techniqueInstance = _technique switch {
 				WRTechnique.None => new NoWorldRedirection(),
 				WRTechnique.Reset => new ResetWorldRedirection(),
 				WRTechnique.Razzaque2001OverTimeRotation => new Razzaque2001OverTimeRotation(),
@@ -55,7 +56,7 @@ namespace VHToolkit.Redirection {
 		/// </summary>
 		private void OnEnable() {
 			UpdateTechnique();
-			previousTechnique = technique;
+			previousTechnique = Technique;
 
 			scene.previousHeadPosition = scene.physicalHead.position;
 			scene.previousHeadRotation = scene.physicalHead.rotation;
@@ -71,9 +72,9 @@ namespace VHToolkit.Redirection {
 		/// initializes the previous head positions.
 		/// </summary>
 		private void LateUpdate() {
-			if (previousTechnique != technique || techniqueInstance == null) {
+			if (previousTechnique != Technique || techniqueInstance == null) {
 				UpdateTechnique();
-				previousTechnique = technique;
+				previousTechnique = Technique;
 			}
 
 			if (!redirect)
@@ -90,21 +91,9 @@ namespace VHToolkit.Redirection {
 		/// <summary>
 		/// A wrapper around SetTechnique(BRTechnique t) to use the ResetRedirection technique.
 		/// </summary>
-		public void ResetRedirection() => SetTechnique(WRTechnique.Reset);
+		public void ResetRedirection() => Technique = WRTechnique.Reset;
 
-		/// <summary>
-		/// Getter for the enumeration technique.
-		/// </summary>
-		/// <returns>Returns the enumeration technique</returns>
-		public WRTechnique GetTechnique() => technique;
-
-        /// <summary>
-        /// Setter for the enumeration BRTechnique. updateTechnique() gets called on the next Update().
-        /// </summary>
-        /// <param name="t">The enumeration defining which technique to call Redirect(...) from.</param>
-        public void SetTechnique(WRTechnique t) => technique = t;
-
-		public Quaternion GetAngularRedirection() => scene.GetHeadToHeadRotation();
+		public Quaternion GetAngularRedirection() => scene.HeadToHeadRedirection;
 
 		public float GetTranslationalRedirection() => scene.GetHeadToHeadDistance();	// TODO : maybe should be a vector 3 between heads instead of magn
 

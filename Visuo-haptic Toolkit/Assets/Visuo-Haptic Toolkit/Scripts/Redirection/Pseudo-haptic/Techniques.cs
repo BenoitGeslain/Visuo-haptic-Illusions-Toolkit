@@ -3,17 +3,18 @@ using System.Linq;
 
 using UnityEngine;
 
+using VHToolkit.Redirection.BodyRedirection;
 
 // TODO handle collision detection
 // TODO handle offset reduction
-namespace VHToolkit.Redirection {
+namespace VHToolkit.Redirection.PseudoHaptics {
 
     /// <summary>
     /// This class implements the Swamp Illusion by Lécuyer et al., 2000. It is not a visuo-haptic illusion but a pseudo-haptic interaction techique.
     /// </summary>
     public class Lecuyer2000Swamp : BodyRedirectionTechnique {
         public override void Redirect(Scene scene) {
-            foreach ((var limb, var t) in scene.limbs.Zip(scene.GetHandInstantTranslation())) {
+            foreach ((var limb, var t) in scene.limbs.Zip(scene.GetLimbInstantTranslation())) {
                 foreach(Transform vlimb in limb.virtualLimb) {
                     var distanceToOrigin = (vlimb.position - scene.origin.position).ProjectToHorizontalPlane();
                     bool insideSwamp = MathF.Max(MathF.Abs(distanceToOrigin.x), MathF.Abs(distanceToOrigin.y)) * 2 < Toolkit.Instance.parameters.SwampSquareLength;
@@ -31,7 +32,7 @@ namespace VHToolkit.Redirection {
             float ratio = 0.65f;
             float normalizedMass = 1.5f; // high is heavy, low is light (though what this means is unclear)
             var gainVector = new Vector3(ratio, 1f, ratio) / normalizedMass;
-            foreach((var limb, var t) in scene.limbs.Zip(scene.GetHandInstantTranslation())) {
+            foreach((var limb, var t) in scene.limbs.Zip(scene.GetLimbInstantTranslation())) {
                 limb.virtualLimb.ForEach(vLimb => vLimb.Translate(Vector3.Scale(t, gainVector), relativeTo: Space.World));
             }
         }

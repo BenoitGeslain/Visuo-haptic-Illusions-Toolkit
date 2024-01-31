@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 
-namespace VHToolkit.Redirection {
+namespace VHToolkit.Redirection.BodyRedirection {
 	[CustomPropertyDrawer(typeof(BodyRedirectionTechnique))]
 	public class BodyRedirectionTechniquePropertyDrawer: PropertyDrawer {
 

@@ -1,8 +1,6 @@
 using UnityEngine;
 
-using VHToolkit.Redirection;
-
-namespace VHToolkit {
+namespace VHToolkit.Redirection {
 	/// <summary>
 	/// Available body redirection techniques.
 	/// </summary>
@@ -58,9 +56,5 @@ namespace VHToolkit {
                 Destroy(this);
             }
         }
-
-        public float CurvatureRadiusToRotationRate() => CurvatureRadiusToRotationRate(parameters.CurvatureRadius);
-
-        public static float CurvatureRadiusToRotationRate(float radius) => 180f / (Mathf.PI * radius);
     }
 }

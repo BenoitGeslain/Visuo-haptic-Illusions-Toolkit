@@ -2,9 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.XR;
-
+using VHToolkit.Demo;
 using VHToolkit.Redirection;
 
 namespace VHToolkit.Calibration {
@@ -16,15 +15,9 @@ namespace VHToolkit.Calibration {
 		[SerializeField] private InputDeviceCharacteristics characteristics = InputDeviceCharacteristics.Controller & InputDeviceCharacteristics.TrackedDevice;
 
 		private bool wasPressingButton = false;
-		private List<InputDevice> inputDevices;
-		private WorldRedirection script;
+		private readonly List<InputDevice> inputDevices = new();
 
-		private void Start() {
-			script = Toolkit.Instance.gameObject.GetComponent<WorldRedirection>();
-		}
-
-		private void Update() {
-			inputDevices = new List<InputDevice>();
+        private void Update() {
 			InputDevices.GetDevicesWithCharacteristics(characteristics, inputDevices);
 
 			if (inputDevices.Any()) {

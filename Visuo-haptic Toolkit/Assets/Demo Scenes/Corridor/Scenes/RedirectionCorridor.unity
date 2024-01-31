@@ -238,7 +238,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &141216271
 GameObject:
   m_ObjectHideFlags: 0
@@ -2594,7 +2594,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2088035589824280552, guid: 6d63fb2e981061a478424f44b761a15d, type: 3}
       propertyPath: m_Name
-      value: VR Heaset
+      value: VR Headset
       objectReference: {fileID: 0}
     - target: {fileID: 2088035589824280552, guid: 6d63fb2e981061a478424f44b761a15d, type: 3}
       propertyPath: m_Layer
@@ -3876,7 +3876,7 @@ Transform:
   m_GameObject: {fileID: 1589834309}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.07, y: 0.42999998, z: -1.3299999}
+  m_LocalPosition: {x: 0.07, y: 0.42999998, z: -0.59}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4301,7 +4301,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7088029602675669135, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
       propertyPath: strategy
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7088029602675669135, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
       propertyPath: m_Enabled
@@ -4309,16 +4309,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7088029602675669135, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
       propertyPath: technique
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7088029602675669135, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
       propertyPath: scene.virtualHead
       value: 
-      objectReference: {fileID: 2055129418}
+      objectReference: {fileID: 1915547540}
     - target: {fileID: 7088029602675669135, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
       propertyPath: scene.physicalHead
       value: 
-      objectReference: {fileID: 2094990288}
+      objectReference: {fileID: 141383211}
     - target: {fileID: 7088029602675669135, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
       propertyPath: scene.limbs.Array.size
       value: 2
@@ -4330,27 +4330,35 @@ PrefabInstance:
     - target: {fileID: 7088029602675669135, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
       propertyPath: scene.limbs.Array.data[0].physicalLimb
       value: 
-      objectReference: {fileID: 863593683}
+      objectReference: {fileID: 141304831}
     - target: {fileID: 7088029602675669135, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
       propertyPath: scene.limbs.Array.data[1].physicalLimb
       value: 
-      objectReference: {fileID: 141304831}
+      objectReference: {fileID: 141301755}
     - target: {fileID: 7088029602675669135, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
       propertyPath: scene.limbs.Array.data[0].virtualLimb.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7088029602675669135, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
       propertyPath: scene.limbs.Array.data[1].virtualLimb.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7088029602675669135, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
       propertyPath: scene.limbs.Array.data[0].virtualLimb.Array.data[0]
       value: 
-      objectReference: {fileID: 1755371269}
+      objectReference: {fileID: 4453511891982975}
+    - target: {fileID: 7088029602675669135, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
+      propertyPath: scene.limbs.Array.data[0].virtualLimb.Array.data[1]
+      value: 
+      objectReference: {fileID: 6303876425754669076}
     - target: {fileID: 7088029602675669135, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
       propertyPath: scene.limbs.Array.data[1].virtualLimb.Array.data[0]
       value: 
-      objectReference: {fileID: 6303876425754669076}
+      objectReference: {fileID: 4453512880699475}
+    - target: {fileID: 7088029602675669135, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
+      propertyPath: scene.limbs.Array.data[1].virtualLimb.Array.data[1]
+      value: 
+      objectReference: {fileID: 3300481182696120806}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4374,7 +4382,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1755371269
 Transform:
   m_ObjectHideFlags: 0
@@ -4869,7 +4877,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1915547540
 Transform:
   m_ObjectHideFlags: 0
@@ -5017,7 +5025,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2055129418
 Transform:
   m_ObjectHideFlags: 0
@@ -5135,7 +5143,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2094990288
 Transform:
   m_ObjectHideFlags: 0

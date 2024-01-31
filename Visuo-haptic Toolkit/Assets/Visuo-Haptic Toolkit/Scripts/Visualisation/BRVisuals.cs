@@ -1,8 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
+
 using UnityEngine;
+
 using VHToolkit.Redirection;
+using VHToolkit.Redirection.BodyRedirection;
 
 namespace VHToolkit.Visualisation {
 	public class BRVisuals : MonoBehaviour {
@@ -33,7 +34,7 @@ namespace VHToolkit.Visualisation {
 			}
 
 			// draw Lécuyer's swamp if applicable
-			if (BRMainScript.GetTechnique() == BRTechnique.Lecuyer2000Swamp) {
+			if (BRMainScript.Technique == BRTechnique.Lecuyer2000Swamp) {
 				foreach(var vlimb in scene.virtualLimbs) {
 					Vector3 distanceToOrigin = vlimb.position - scene.origin.position;
 					Color c = (MathF.Max(MathF.Abs(distanceToOrigin[0]), MathF.Abs(distanceToOrigin[2])) < Toolkit.Instance.parameters.SwampSquareLength/2) ?

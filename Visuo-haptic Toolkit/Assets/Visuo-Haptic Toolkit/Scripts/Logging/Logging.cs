@@ -9,6 +9,8 @@ using CsvHelper.Configuration;
 using UnityEngine;
 
 using VHToolkit.Redirection;
+using VHToolkit.Redirection.BodyRedirection;
+using VHToolkit.Redirection.WorldRedirection;
 
 namespace VHToolkit.Logging
 {
@@ -18,8 +20,8 @@ namespace VHToolkit.Logging
     public record RedirectionData {
         public DateTime timeStamp = DateTime.Now;
         public string Technique => script switch {
-            WorldRedirection => (script as WorldRedirection).technique.ToString(),
-            BodyRedirection => (script as BodyRedirection).GetTechnique().ToString(),
+			WorldRedirection => (script as WorldRedirection).Technique.ToString(),
+            BodyRedirection => (script as BodyRedirection).Technique.ToString(),
             _ => ""
         };
 

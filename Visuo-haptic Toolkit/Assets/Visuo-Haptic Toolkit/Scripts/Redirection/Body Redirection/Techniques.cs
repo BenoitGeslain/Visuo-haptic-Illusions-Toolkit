@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using TMPro;
+
 using UnityEngine;
 // using Valve.VR.InteractionSystem;
 
-namespace VHToolkit.Redirection {
+using VHToolkit.Redirection.WorldRedirection;
+
+namespace VHToolkit.Redirection.BodyRedirection {
     /// <summary>
     ///  This class is the most conceptual class of body interaction techniques defining the important function to call: Redirect().
 	///  Information about the user such as the user's position or the targets are encapsulated inside Scene.
@@ -25,7 +27,7 @@ namespace VHToolkit.Redirection {
 	/// </summary>
 	public class Azmandian2016Body: BodyRedirectionTechnique {
 
-        public override void Redirect(Scene scene) => scene.Redirection = GetRedirection(scene);
+        public override void Redirect(Scene scene) => scene.LimbRedirection = GetRedirection(scene);
 
         public static List<Vector3> GetRedirection(Scene scene) => scene.limbs.ConvertAll(
 			limb => {
@@ -54,7 +56,7 @@ namespace VHToolkit.Redirection {
             float WRRedirection = handTargetDistance.FirstOrDefault() * Azmandian2016World.GetRedirection(scene);
 			// todo follow multiple limbs and not just first limb
 
-			scene.Redirection = BRRedirection;
+			scene.LimbRedirection = BRRedirection;
 			scene.virtualHead.RotateAround(scene.origin.position, Vector3.up, WRRedirection);
 		}
 	}
@@ -67,7 +69,7 @@ namespace VHToolkit.Redirection {
 
         public override void Redirect(Scene scene) {
 			// If the hand is inside the redirection boundary, instantly applies the redirection
-			scene.Redirection = scene.GetPhysicalHandOriginDistance().ConvertAll(
+			scene.LimbRedirection = scene.GetPhysicalHandOriginDistance().ConvertAll(
 				d =>  d > Toolkit.Instance.parameters.RedirectionBuffer
                 ? scene.virtualTarget.position - scene.physicalTarget.position
                 : Vector3.zero
@@ -84,7 +86,7 @@ namespace VHToolkit.Redirection {
 		public override void Redirect(Scene scene) {
 			List<float> D = scene.GetPhysicalHandTargetDistance();
 			float B = Vector3.Magnitude(scene.physicalTarget.position - scene.origin.position) + Toolkit.Instance.parameters.RedirectionBuffer;
-			scene.Redirection = D.ConvertAll(d => Math.Max(1 - d / B, 0f) * (scene.virtualTarget.position- scene.physicalTarget.position));
+			scene.LimbRedirection = D.ConvertAll(d => Math.Max(1 - d / B, 0f) * (scene.virtualTarget.position- scene.physicalTarget.position));
 		}
 	}
 
@@ -95,7 +97,7 @@ namespace VHToolkit.Redirection {
 
 		public override void Redirect(Scene scene) {
             List<float> alpha = scene.GetPhysicalHandOriginDistance().Zip(scene.GetPhysicalHandTargetDistance(), (s, p) => s / (s + p)).ToList();
-			scene.Redirection = alpha.ConvertAll(a => a * (scene.virtualTarget.position - scene.physicalTarget.position));
+			scene.LimbRedirection = alpha.ConvertAll(a => a * (scene.virtualTarget.position - scene.physicalTarget.position));
 		}
 	}
 
@@ -130,7 +132,7 @@ namespace VHToolkit.Redirection {
 			float a2 = this.redirectionLateness / (D * D);
             float[] coeffsByIncreasingPower = { 1f, -1f / D - a2 * D, a2 };	// {a0, a1, a2}
 			List<float> ratio = scene.GetPhysicalHandTargetDistance().ConvertAll(d =>  (float) coeffsByIncreasingPower.Select((a, i) => a * Math.Pow(d, i)).Sum());
-			scene.Redirection = ratio.ConvertAll(r => r * (scene.virtualTarget.position - scene.physicalTarget.position));
+			scene.LimbRedirection = ratio.ConvertAll(r => r * (scene.virtualTarget.position - scene.physicalTarget.position));
 		}
 	}
 
@@ -145,7 +147,7 @@ namespace VHToolkit.Redirection {
 		public override void Redirect(Scene scene) {
 			// Offset the head position by 0.2m to approximate the chest position then compute the chest to hand vector
 			List<Vector3> chestToHand = scene.limbs.ConvertAll(limb => limb.physicalLimb.position + 0.2f * Vector3.up - scene.physicalHead.position);
-			scene.Redirection = chestToHand.ConvertAll(d => d.magnitude > Toolkit.Instance.parameters.GoGoActivationDistance
+			scene.LimbRedirection = chestToHand.ConvertAll(d => d.magnitude > Toolkit.Instance.parameters.GoGoActivationDistance
                 ? Toolkit.Instance.parameters.GoGoCoefficient * Mathf.Pow(d.magnitude - Toolkit.Instance.parameters.GoGoActivationDistance, 2) * d.normalized
                 : Vector3.zero);
 		}
@@ -158,7 +160,7 @@ namespace VHToolkit.Redirection {
     public class ResetBodyRedirection : BodyRedirectionTechnique {
 
         public override void Redirect(Scene scene) {
-            foreach ((var limb, var t) in scene.limbs.Zip(scene.GetHandInstantTranslation())) {
+            foreach ((var limb, var t) in scene.limbs.Zip(scene.GetLimbInstantTranslation())) {
 				limb.virtualLimb.ForEach(vlimb => vlimb.Translate(t + t.magnitude * Toolkit.Instance.parameters.ResetRedirectionCoeff * (limb.physicalLimb.position - vlimb.position).normalized, relativeTo: Space.World));
         	};
     	}
@@ -171,7 +173,7 @@ namespace VHToolkit.Redirection {
     public class NoBodyRedirection : BodyRedirectionTechnique {
 
         public override void Redirect(Scene scene) {
-			foreach((var limb, var t) in scene.limbs.Zip(scene.GetHandInstantTranslation())) {
+			foreach((var limb, var t) in scene.limbs.Zip(scene.GetLimbInstantTranslation())) {
                 limb.virtualLimb.ForEach(vlimb => vlimb.Translate(t, relativeTo: Space.World));
             }
         }

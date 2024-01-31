@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEditor;
 
-namespace VHToolkit.Redirection {
+namespace VHToolkit.Redirection.WorldRedirection {
 	/// <summary>
 	/// Custom editor for the body redirection scene. Allows to show the Geslain2022Polynom parameters only if it is selected.
 	/// </summary>
@@ -29,7 +29,7 @@ namespace VHToolkit.Redirection {
         readonly string[] targetsStrategies = { "SteerToCenter", "SteerToMultipleTargets", "SteerInDirection" };
 
 		private void OnEnable() {
-			technique = serializedObject.FindProperty("technique");
+			technique = serializedObject.FindProperty("_technique");
 			strategy = serializedObject.FindProperty("strategy");
 
 			// Scene

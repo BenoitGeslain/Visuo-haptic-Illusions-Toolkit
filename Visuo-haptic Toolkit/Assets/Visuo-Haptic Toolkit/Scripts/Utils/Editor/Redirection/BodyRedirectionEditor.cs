@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 
-namespace VHToolkit.Redirection {
+namespace VHToolkit.Redirection.BodyRedirection {
 	/// <summary>
 	/// Custom editor for the body redirection scene. Allows to show the Geslain2022Polynom parameters only if it is selected.
 	/// </summary>
@@ -21,7 +21,7 @@ namespace VHToolkit.Redirection {
 
 		private void OnEnable() {
 
-			technique = serializedObject.FindProperty("technique");
+			technique = serializedObject.FindProperty("_technique");
             techniqueInstance = serializedObject.FindProperty("techniqueInstance");
 
 			physicalLimbs = serializedObject.FindProperty("scene.limbs");
