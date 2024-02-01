@@ -34,7 +34,7 @@ namespace VHToolkit {
 		Razzaque2001Hybrid,
 		Azmandian2016World,
 		Steinicke2008Translational,
-        TestRedirection
+        AfpRedirection
     }
 
 	public enum WRStrategy {
