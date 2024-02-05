@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2471130349239008866}
   - component: {fileID: 3663243202209297085}
   m_Layer: 12
-  m_Name: Target
+  m_Name: WorldRedirectionTarget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

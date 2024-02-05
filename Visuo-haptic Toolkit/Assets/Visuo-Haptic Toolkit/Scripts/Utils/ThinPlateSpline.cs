@@ -6,10 +6,8 @@ using MathNet.Numerics.LinearAlgebra;
 using System.Collections.Generic;
 
 
-namespace VHToolkit
-{
-    public static class ThinPlateSpline
-    {
+namespace VHToolkit {
+    public static class ThinPlateSpline {
         public static Func<Vector2, float> Solve(Vector2[] x, float[] y) => SolveSmoothed(x, y, 0f);
 
         // The notation follows [Eberly 96, Thin-Plate Splines] at https://www.geometrictools.com/Documentation/ThinPlateSplines.pdf.
