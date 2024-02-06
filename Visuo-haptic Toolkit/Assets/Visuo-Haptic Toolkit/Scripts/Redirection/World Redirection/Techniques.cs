@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 
 using UnityEngine;
@@ -236,16 +237,30 @@ namespace VHToolkit.Redirection {
 		Sprite Fleche = Resources.Load<Sprite>("gradient/fleche");
         Sprite Warning = Resources.Load<Sprite>("gradient/warning");
 		int totalpas;
+		List<Collider2D> Obstaclescolliders;
         public override void Redirect(Scene scene)
 		{
-			CopyHeadAndHandTransform(scene);
+            Obstaclescolliders = scene.GetAllObstaclesCollider();
+
+            CopyHeadAndHandTransform(scene);
             Position2d(scene);
 			Gradientcompute(scene, Moncube.transform.position);
 			GradientsDraw(scene);
+			RaycasttoObstaclesDraw(scene);
 
         }
 
-		void Position2d (Scene scene)
+		void RaycasttoObstaclesDraw(Scene scene)
+		{
+			foreach (Collider2D obscol in Obstaclescolliders)
+			{
+				Vector2 Closestpt = obscol.ClosestPoint(Moncube.transform.position);
+				Debug.DrawLine (Moncube.transform.position,Closestpt,Color.red,.01f);
+			}
+
+        }
+
+        void Position2d (Scene scene)
 		{
             if (!Moncube)
             {
