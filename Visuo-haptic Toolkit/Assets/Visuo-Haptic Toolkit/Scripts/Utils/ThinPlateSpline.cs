@@ -4,6 +4,7 @@ using VHToolkit;
 using System;
 using MathNet.Numerics.LinearAlgebra;
 using System.Collections.Generic;
+using System.Collections;
 
 
 namespace VHToolkit {
@@ -51,5 +52,15 @@ namespace VHToolkit {
 
         private static float ScalarProduct(this IEnumerable<float> first, IEnumerable<float> second) =>
             first.Zip(second, (a, b) => a * b).Sum();
+
+        // See e.g. Rohit Saboo's PhD thesis, eqs (3.2) - (3.3)
+        // Warning: no diffeomorphism guaranty
+        public static Func<Vector3, Vector3> SabooSmoothedDisplacementField(Vector3[] x, Vector3[] y, float lambda) {
+            Debug.Assert(x.Length == y.Length);
+            Debug.Assert(lambda >= 0);
+            var components = Enumerable.Range(0, 3).Select(i => SolveSmoothed(x, Array.ConvertAll(y, yy => yy[i]), lambda)).ToArray();
+
+            return (point) => new(components[0](point), components[1](point), components[2](point));
+        }
     }
 }
