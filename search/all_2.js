@@ -8,6 +8,7 @@ var searchData=
   ['corridorredirection_18',['CorridorRedirection',['../classVHToolkit_1_1Demo_1_1CorridorRedirection.html',1,'VHToolkit::Demo']]],
   ['corridorstates_19',['CorridorStates',['../classVHToolkit_1_1Demo_1_1CorridorRedirection.html#a83670c3428480398e980b778cb82c537',1,'VHToolkit::Demo::CorridorRedirection']]],
   ['createnewfile_20',['CreateNewFile',['../classVHToolkit_1_1Logging_1_1Logging.html#a1f3aaeabf70901177f1e871be4a3a395',1,'VHToolkit::Logging::Logging']]],
-  ['curvatureradius_21',['CurvatureRadius',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a094b9a6beb61e1b1ae42f33a87db3091',1,'VHToolkit::Redirection::ParametersToolkit']]],
-  ['curvatureradiustorotationrate_22',['CurvatureRadiusToRotationRate',['../classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1Razzaque2001Curvature.html#aa6c6750762fd8e7688123e2315cf2731',1,'VHToolkit::Redirection::WorldRedirection::Razzaque2001Curvature']]]
+  ['cubesredirection_21',['CubesRedirection',['../classCubesRedirection.html',1,'']]],
+  ['curvatureradius_22',['CurvatureRadius',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a094b9a6beb61e1b1ae42f33a87db3091',1,'VHToolkit::Redirection::ParametersToolkit']]],
+  ['curvatureradiustorotationrate_23',['CurvatureRadiusToRotationRate',['../classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1Razzaque2001Curvature.html#aa6c6750762fd8e7688123e2315cf2731',1,'VHToolkit::Redirection::WorldRedirection::Razzaque2001Curvature']]]
 ];
