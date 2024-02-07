@@ -11,7 +11,6 @@ namespace VHToolkit.Demo {
 	public class CorridorRedirection : MonoBehaviour {
 
 		public enum CorridorStates {
-			Calibration = -1,
 			None,
 			FirstPainting,
 			SecondPainting,
@@ -37,16 +36,14 @@ namespace VHToolkit.Demo {
 
 		private void Update() {
 
-			if (state != CorridorStates.Calibration) {
-				int currentPainting = (int)state - 1;
+			int currentPainting = (int)state - 1;
 
-				redirectionApplied = redirectionScript.GetAngularRedirection().eulerAngles.y;
-				if (redirectionApplied > 180f)
-					redirectionApplied = 360f - redirectionApplied;
-				// If the correct redirection has been applied, stop the redirection
-				if (currentPainting >= 0 && Math.Abs(redirectionApplied) - redirectionAmount.Take(currentPainting).Sum() > redirectionAmount[currentPainting]) {
-					redirectionScript.StopRedirection();
-				}
+			redirectionApplied = redirectionScript.GetAngularRedirection().eulerAngles.y;
+			if (redirectionApplied > 180f)
+				redirectionApplied = 360f - redirectionApplied;
+			// If the correct redirection has been applied, stop the redirection
+			if (currentPainting >= 0 && Math.Abs(redirectionApplied) - redirectionAmount.Take(currentPainting).Sum() > redirectionAmount[currentPainting]) {
+				redirectionScript.StopRedirection();
 			}
 		}
 
