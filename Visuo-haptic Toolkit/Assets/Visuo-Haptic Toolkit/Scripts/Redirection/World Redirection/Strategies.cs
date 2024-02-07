@@ -68,7 +68,7 @@ namespace VHToolkit.Redirection.WorldRedirection {
         /// <returns></returns>
         public override Vector3 SteerTo(Scene scene) {
 			Debug.DrawRay(scene.physicalHead.position, Vector3.Reflect(scene.targets[0].position, scene.physicalHead.right));
-            return scene.physicalHead.right;
+            return - scene.physicalHead.right;
         }
     }
 }

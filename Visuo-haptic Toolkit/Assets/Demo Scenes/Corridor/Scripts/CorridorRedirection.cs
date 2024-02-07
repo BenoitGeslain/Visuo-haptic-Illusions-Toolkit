@@ -11,6 +11,7 @@ namespace VHToolkit.Demo {
 	public class CorridorRedirection : MonoBehaviour {
 
 		public enum CorridorStates {
+			Calibration = -1,
 			None,
 			FirstPainting,
 			SecondPainting,
