@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-
 using UnityEngine;
 using VHToolkit.Redirection;
 
@@ -9,12 +8,26 @@ namespace VHToolkit.Visualisation
     public class ApfVisualisation : MonoBehaviour
 
     {
+        private List<Collider2D> Obstaclescolliders;
+        GameObject PhysicalUser2d;
+        GameObject[] ListeGradients;
+        GameObject PtitGradient;
+        Sprite Fleche = Resources.Load<Sprite>("gradient/fleche");
+        Sprite Warning = Resources.Load<Sprite>("gradient/warning");
+		int totalpas;
+
+        public void OnEnable ()
+
+        {
+            Obstaclescolliders = ApfRedirection.GetAllObstaclesCollider();
+            PhysicalUser2d = GameObject.Find("2duser");
+        }
         void RaycasttoObstaclesDraw(Scene scene)
         {
             foreach (Collider2D obscol in Obstaclescolliders)
             {
-                Vector2 Closestpt = obscol.ClosestPoint(Moncube.transform.position);
-                Debug.DrawLine(Moncube.transform.position, Closestpt, Color.red, .01f);
+                Vector2 Closestpt = obscol.ClosestPoint(PhysicalUser2d.transform.position);
+                Debug.DrawLine(PhysicalUser2d.transform.position, Closestpt, Color.red, .01f);
             }
 
         }
@@ -31,7 +44,7 @@ namespace VHToolkit.Visualisation
                 Vector2 map_center = GameObject.Find("Map").GetComponent<MeshCollider>().bounds.center;
                 int pas = 1;
 
-                totalpas = (int)Math.Floor(map_size.x / pas) * (int)Math.Floor(map_size.y / pas);
+                totalpas = (int)System.Math.Floor(map_size.x / pas) * (int)System.Math.Floor(map_size.y / pas);
                 ListeGradients = new GameObject[totalpas];
 
 
@@ -43,10 +56,10 @@ namespace VHToolkit.Visualisation
                     for (int y = (int)(map_center.y - map_size.y / 2) + pas; y < map_center.y + map_size.y / 2; y += pas)
                     {
 
-                        Vector2 Gradobject = Gradientcompute(scene, new Vector2(x, y));
+                        Vector2 Gradobject = ApfRedirection.Gradientcompute(new Vector2(x, y));
 
 
-                        ListeGradients[i] = UnityEngine.Object.Instantiate(PtitGradient);
+                        ListeGradients[i] = Instantiate(PtitGradient);
                         ListeGradients[i].transform.position = new Vector3(x, y, 2);
 
                         float angleRadian = Mathf.Atan2(Gradobject.y, Gradobject.x);
@@ -79,11 +92,7 @@ namespace VHToolkit.Visualisation
                     if (gradientgameobj != null)
                     {
 
-
-                        float x = gradientgameobj.transform.position.x;
-                        float y = gradientgameobj.transform.position.y;
-
-                        Vector2 Gradobject = Gradientcompute(scene, new Vector2(x, y));
+                        Vector2 Gradobject =ApfRedirection.Gradientcompute(gradientgameobj.transform.position);
 
                         float angleRadian = Mathf.Atan2(Gradobject.y, Gradobject.x);
                         float angleEnDegres = angleRadian * Mathf.Rad2Deg;

@@ -77,13 +77,9 @@ namespace VHToolkit.Redirection {
 	public class ApfRedirection : WorldRedirectionStrategy
 	{
 		GameObject PhysicalUser2d;
-        Func<Vector2, float> RepulsiveFUnc;
-        Vector2 LastPositionObjet;
-		GameObject PtitGradient;
-        GameObject[] ListeGradients;
-		Sprite Fleche = Resources.Load<Sprite>("gradient/fleche");
-        Sprite Warning = Resources.Load<Sprite>("gradient/warning");
-		int totalpas;
+		
+        
+
 		List<Collider2D> Obstaclescolliders;
 		Vector3 gradient = Vector2.zero;
         public override Vector3 SteerTo(Scene scene)
@@ -102,7 +98,7 @@ namespace VHToolkit.Redirection {
 
 		}
 
-		List<Collider2D> GetAllObstaclesCollider()
+		public static List<Collider2D> GetAllObstaclesCollider()
         {
             GameObject[] Obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
 			List<Collider2D> ObstaclesColliders = new();
@@ -115,15 +111,7 @@ namespace VHToolkit.Redirection {
 			return ObstaclesColliders;
         }
 
-		void RaycasttoObstaclesDraw(Scene scene)
-		{
-			foreach (Collider2D obscol in Obstaclescolliders)
-			{
-				Vector2 Closestpt = obscol.ClosestPoint(Moncube.transform.position);
-				Debug.DrawLine (Moncube.transform.position,Closestpt,Color.red,.01f);
-			}
 
-        }
 
         void Position2d (Scene scene)
 		{
@@ -134,116 +122,21 @@ namespace VHToolkit.Redirection {
             PhysicalUser2d.transform.position = MathTools.ProjectToHorizontalPlane(scene.physicalHead.transform.position);
         }
 
-		public Vector2 Gradientcompute (Vector2 PositionObjet)
+		public static Vector2 Gradientcompute (Vector2 PositionObjet)
 		{
-            RepulsiveFUnc = MathTools.RepulsivePotential(GetAllObstaclesCollider());
-			Vector2 CalculGradient = Vector2.one;
+            Func <Vector2,float> RepulsiveFUnc ()
+			{
+				return MathTools.RepulsivePotential(GetAllObstaclesCollider());
+			}
 
-            if (PositionObjet != LastPositionObjet)
-            {
-                 CalculGradient = MathTools.Gradient2(RepulsiveFUnc, PositionObjet);
 
-                LastPositionObjet = PositionObjet;
-            }
+            var CalculGradient = MathTools.Gradient2(RepulsiveFUnc(), PositionObjet);
+
 
 			return CalculGradient;
         }
 
-		void GradientsDraw (Scene scene)
-		{
-
-
-			if (ListeGradients == null)
-			{
-				PtitGradient = Resources.Load<GameObject>("gradient/flechego");
-
-				Vector2 map_size = GameObject.Find("Map").GetComponent<MeshCollider>().bounds.size;
-				Vector2 map_center = GameObject.Find("Map").GetComponent<MeshCollider>().bounds.center;
-				int pas = 1;
-
-				totalpas = (int)Math.Floor(map_size.x / pas) * (int)Math.Floor(map_size.y / pas);
-				ListeGradients = new GameObject[totalpas];
-
-
-
-				int i = 0;
-
-				for (int x = (int)(map_center.x - map_size.x / 2) + pas; x < map_center.x + map_size.x / 2; x += pas)
-				{
-					for (int y = (int)(map_center.y - map_size.y / 2) + pas; y < map_center.y + map_size.y / 2; y += pas)
-					{
-
-						Vector2 Gradobject = Gradientcompute(scene, new Vector2(x, y));
-
-
-						ListeGradients[i] = UnityEngine.Object.Instantiate(PtitGradient);
-						ListeGradients[i].transform.position = new Vector3(x, y, 2);
-
-						float angleRadian = Mathf.Atan2(Gradobject.y, Gradobject.x);
-						float angleEnDegres = angleRadian * Mathf.Rad2Deg;
-
-						if (!float.IsNaN(Gradobject.x) && !float.IsNaN(Gradobject.y))
-						{
-
-							Quaternion nouvelleRotation = Quaternion.Euler(0, 0, angleEnDegres);
-
-							ListeGradients[i].transform.rotation = nouvelleRotation;
-							ListeGradients[i].GetComponent<Renderer>().material.color = new Color(1f * Gradobject.magnitude, 1f * Gradobject.magnitude, 1f);
-
-						}
-
-						else
-						{
-							ListeGradients[i].GetComponent<SpriteRenderer>().sprite = Warning;
-
-						}
-						i++;
-					}
-				}
-			}
-
-			else if (totalpas>0 && ListeGradients.Length == totalpas)
-			{
-				foreach (GameObject gradientgameobj in ListeGradients)
-				{
-					if (gradientgameobj != null)
-					{
-
-
-						float x = gradientgameobj.transform.position.x;
-						float y = gradientgameobj.transform.position.y;
-
-						Vector2 Gradobject = Gradientcompute(scene, new Vector2(x, y));
-				
-						float angleRadian = Mathf.Atan2(Gradobject.y, Gradobject.x);
-						float angleEnDegres = angleRadian * Mathf.Rad2Deg;
-
-						if (!float.IsNaN(Gradobject.x) && !float.IsNaN(Gradobject.y))
-						{
-
-							Quaternion nouvelleRotation = Quaternion.Euler(0, 0, angleEnDegres);
-
-							gradientgameobj.transform.rotation = nouvelleRotation;
-							gradientgameobj.GetComponent<Renderer>().material.color = new Color(1f * Gradobject.magnitude, 1f * Gradobject.magnitude, 1f);
-							gradientgameobj.GetComponent<SpriteRenderer>().sprite = Fleche;
-						}
-
-						else
-						{
-							gradientgameobj.GetComponent<SpriteRenderer>().sprite = Warning;
-
-						}
-
-					}
-
-
-                }
-			}
-
-
-
-			
-        }
+		
 	}
 	
 }

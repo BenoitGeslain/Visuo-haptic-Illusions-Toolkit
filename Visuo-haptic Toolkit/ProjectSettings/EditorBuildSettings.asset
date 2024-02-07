@@ -20,7 +20,7 @@ EditorBuildSettings:
     path: Assets/Demo Scenes/Corridor/Scenes/RedirectionCorridor.unity
     guid: 9ee13add4993cae41b8452bdd2c8a832
   m_configObjects:
-    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 7871a6cd7edfb6e4e90388d9be0cd361, type: 2}
+    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 8d91bae2a9de97b44bb70e880b89208e, type: 2}
     Unity.XR.OpenVR.Settings: {fileID: 11400000, guid: b6bf661543b159f4f93e0c7221185c37, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: a97d743e00b72d34aa6f816a86f166d6, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: f15c911359537b241b84e33fd34fbf49, type: 2}
