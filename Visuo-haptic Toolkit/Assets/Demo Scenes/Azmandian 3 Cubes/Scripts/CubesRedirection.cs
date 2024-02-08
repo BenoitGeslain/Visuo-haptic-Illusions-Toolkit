@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-using VHToolkit.Redirection;
 using VHToolkit.Redirection.BodyRedirection;
 
 public class CubesRedirection : MonoBehaviour {
@@ -47,10 +46,8 @@ public class CubesRedirection : MonoBehaviour {
 	}
 
 	private void NextCube() {
-		Debug.Log($"Next Cube {currentCube}");
 		VirtualCubes[currentCube].GetComponent<MeshRenderer>().material = regular;
 		VirtualCubes[currentCube].GetComponentInChildren<ParticleSystem>().Stop();
-		Debug.Log(VirtualCubes[currentCube].GetComponentInChildren<ParticleSystem>().emission.enabled);
 
 		currentCube = (currentCube + 1) % VirtualCubes.Count;
 
