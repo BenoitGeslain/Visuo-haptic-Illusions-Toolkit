@@ -14,7 +14,7 @@ public class CubesRedirection : MonoBehaviour {
 	}
 
 	[SerializeField] private CubesState state;
-	[SerializeField] private int currentCube;
+	[SerializeField] private int currentCube = 0;
 
 	[SerializeField] private Transform realCube;
 	[SerializeField] private List<Transform> VirtualCubes;
@@ -25,20 +25,21 @@ public class CubesRedirection : MonoBehaviour {
 
 	private void Start() {
 		script = this.GetComponent<BodyRedirection>();
+		VirtualCubes.ForEach(cube => cube.GetComponentInChildren<ParticleSystem>().Stop());
+		VirtualCubes[currentCube].GetComponent<MeshRenderer>().material = magic;
 	}
 
 	private void Update() {
 		switch (state) {
 			case CubesState.ReachOrigin:
-				if (script.scene.GetPhysicalHandOriginDistance().Any(d => d <= 0.02f)) {
-					currentCube = (currentCube + 1) % VirtualCubes.Count;
+				if (script.scene.GetPhysicalHandOriginDistance().Any(d => d <= 0.1f)) {
 					script.scene.virtualTarget = VirtualCubes[currentCube];
 					state = CubesState.ReachCube;
 				}
 				break;
 			case CubesState.ReachCube:
-				if (script.scene.GetPhysicalHandTargetDistance().Any(d => d <= 0.02f)) {
-					// currentCube = (currentCube + 1) % VirtualCubes.Count;
+				if (script.scene.GetPhysicalHandTargetDistance().Any(d => d <= 0.1f)) {
+					NextCube();
 					state = CubesState.ReachOrigin;
 				}
 				break;
@@ -46,15 +47,15 @@ public class CubesRedirection : MonoBehaviour {
 	}
 
 	private void NextCube() {
+		Debug.Log($"Next Cube {currentCube}");
 		VirtualCubes[currentCube].GetComponent<MeshRenderer>().material = regular;
-		var emission = VirtualCubes[currentCube].GetComponentInChildren<ParticleSystem>().emission;
-		emission.enabled = false;
+		VirtualCubes[currentCube].GetComponentInChildren<ParticleSystem>().Stop();
+		Debug.Log(VirtualCubes[currentCube].GetComponentInChildren<ParticleSystem>().emission.enabled);
 
-		currentCube = ++currentCube % VirtualCubes.Count;
+		currentCube = (currentCube + 1) % VirtualCubes.Count;
 
 		VirtualCubes[currentCube].GetComponent<MeshRenderer>().material = magic;
-		emission = VirtualCubes[currentCube].GetComponentInChildren<ParticleSystem>().emission;
-		emission.enabled = true;
+		VirtualCubes[currentCube].GetComponentInChildren<ParticleSystem>().Play();
 
 	}
 }
