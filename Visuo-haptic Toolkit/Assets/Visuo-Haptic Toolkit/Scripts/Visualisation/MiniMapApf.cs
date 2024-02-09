@@ -8,6 +8,12 @@ namespace VHToolkit.Visualisation
     public class ApfVisualisation : MonoBehaviour
 
     {
+        [SerializeField]
+        public bool TraitObjet;
+
+        [SerializeField]
+        public bool AffichageGradient;
+
         private List<Collider2D> Obstaclescolliders;
         GameObject PhysicalUser2d;
         GameObject[] ListeGradients;
@@ -20,9 +26,20 @@ namespace VHToolkit.Visualisation
 
         {
             Obstaclescolliders = ApfRedirection.GetAllObstaclesCollider();
+            
+        }
+
+        public void Start()
+        {
             PhysicalUser2d = GameObject.Find("2duser");
         }
-        void RaycasttoObstaclesDraw(Scene scene)
+
+        public void Update()
+        {
+            if (TraitObjet) RaycasttoObstaclesDraw();
+            if (AffichageGradient) GradientsDraw();
+        }
+        void RaycasttoObstaclesDraw()
         {
             foreach (Collider2D obscol in Obstaclescolliders)
             {
@@ -32,7 +49,7 @@ namespace VHToolkit.Visualisation
 
         }
 
-        void GradientsDraw(Scene scene)
+        void GradientsDraw()
         {
 
 
