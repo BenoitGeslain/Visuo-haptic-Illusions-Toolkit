@@ -1,8 +1,7 @@
 # Visuo-haptic Illusions
 
 
-## Les informations et le code de ce répertoire ne sont pas à jour. Le répertoire actuel de développement du projet est
-[ici](https://github.com/BenoitGeslain/Visuo-haptic-Illusions-Toolkit).
+## Les informations et le code de ce répertoire ne sont pas à jour. Le répertoire actuel de développement du projet est [ici](https://github.com/BenoitGeslain/Visuo-haptic-Illusions-Toolkit).
 
 Ce projet est un toolkit pour l'emploi et le développement d'illusions visuo-haptiques en réalité virtuelle, conçu comme un plugin Unity.
 
