@@ -1,30 +1,11 @@
 # Visuo-haptic Illusions
 
 
-## Les informations et le code de ce répertoire ne sont pas à jour. Le répertoire actuel de développement du projet est [ici](https://github.com/BenoitGeslain/Visuo-haptic-Illusions-Toolkit).
+## Les informations et le code de ce répertoire ne sont pas à jour. Le dépôt actuel de développement du projet est [ici](https://github.com/BenoitGeslain/Visuo-haptic-Illusions-Toolkit).
 
 Ce projet est un toolkit pour l'emploi et le développement d'illusions visuo-haptiques en réalité virtuelle, conçu comme un plugin Unity.
 
-- Ajouter licence MIT
-- Logging
-  - Automatiquement logger tous les champs de scene pour n'avoir qu'à modifier la classe sans aller dans logging.
-- Simulation
-  - Générer trajectoire de main avec
-    - le Minimum Jerk Model
-    - une courbe de Bézier ?
-  - Générer trajectoire de marche avec ???
-- Redirection
-  - Cacher les éléments non pertinents en fonction de la méthode sélectionnée
-- User Input
-  - Ajouter déplacements et rotation de la tête
-- Fonctionnalité : Avoir plusieurs ToolkitXXXRedirection in the scene pour combiner World et Body Warping
-
-## Dependencies
-
-- [Unity XR Plugin](https://github.com/ValveSoftware/unity-xr-plugin)
-- Text Mesh Pro
-
-## Contribuer
+## Contribuer. Attention, se référer au [dépôt actuel](https://github.com/BenoitGeslain/Visuo-haptic-Illusions-Toolkit).
 
 Nous sommes nombreux à travailler sur le projet, pour que le code soit toujours formaté de la même manière et reste facile à lire, on va utiliser le format [The One True Brace Style](https://en.wikipedia.org/wiki/Indentation_style#Variant:_1TBS_(OTBS)) pour structurer le code et le [camelCase](https://fr.wikipedia.org/wiki/Camel_case) pour nommer les variables. Le One True Brace Style n'est pas le format que Unity et VS utilisent par défaut donc essayez de faire attention. Si vous êtes sur VSCode, je peux vous montrer comment le configurer pour que ça soit le défaut.
 
@@ -120,7 +101,8 @@ Benoît Geslain (benoit.geslain@sii.fr)
 Bruno Jartoux (bruno.jartoux@sii.fr)
 
 ### Copyright and licensing
-Copyright (c) 2023 SII Société pour l’Informatique Industrielle
+PLEASE REFER TO MAIN REPOSITORY AT https://github.com/BenoitGeslain/Visuo-haptic-Illusions-Toolkit FOR UP-TO-DATE INFORMATION
+Copyright (c) 2023-2024 SII Société pour l’Informatique Industrielle
 This project is licensed under the open-source MIT X11 license, see the LICENSE file.
 In particular, you may not distribute any copy or substantial portion of this project
 without the contents of the LICENSE file.
