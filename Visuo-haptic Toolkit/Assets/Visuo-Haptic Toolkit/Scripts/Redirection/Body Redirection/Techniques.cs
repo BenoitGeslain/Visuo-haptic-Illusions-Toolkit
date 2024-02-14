@@ -85,7 +85,7 @@ namespace VHToolkit.Redirection.BodyRedirection {
 
 		public override void Redirect(Scene scene) {
 			List<float> D = scene.GetPhysicalHandTargetDistance();
-			float B = Vector3.Magnitude(scene.physicalTarget.position - scene.origin.position) + Toolkit.Instance.parameters.RedirectionBuffer;
+			float B = Vector3.Magnitude(scene.physicalTarget.position - scene.origin.position) - Toolkit.Instance.parameters.RedirectionBuffer;
 			scene.LimbRedirection = D.ConvertAll(d => Math.Max(1 - d / B, 0f) * (scene.virtualTarget.position- scene.physicalTarget.position));
 		}
 	}
