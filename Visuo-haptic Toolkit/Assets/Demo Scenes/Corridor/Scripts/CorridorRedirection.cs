@@ -10,47 +10,33 @@ using VHToolkit.Redirection.WorldRedirection;
 namespace VHToolkit.Demo {
 	public class CorridorRedirection : MonoBehaviour {
 
-		public enum CorridorStates {
-			Calibration = -1,
-			None,
-			FirstPainting,
-			SecondPainting,
-			ThirdPainting,
-			FourthPainting
-		}
-
 		private WorldRedirection redirectionScript;
 
 		[SerializeField] private Transform UserHead;
 
-		public CorridorStates state = CorridorStates.None;
 		[SerializeField] private float redirectionApplied;
 		[SerializeField] private List<Transform> paintingReferences;
-		[Range(0, 45)]
-		[SerializeField] private List<float> redirectionAmount;
+		[Range(0, 360)]
+		[SerializeField] private float redirectionAmount;
+		[SerializeField] private Transform start, end;
+		private float NormalizedDistance => Mathf.InverseLerp(start.position.z, end.position.z, UserHead.position.z);
 
 		private void Start() {
 			redirectionScript = Toolkit.Instance.gameObject.GetComponent<WorldRedirection>();
-			if (paintingReferences.Count != redirectionAmount.Count)
-				Debug.LogWarning("Different numbers of painting references and redirection amounts.");
 		}
 
 		private void Update() {
-
-			int currentPainting = (int)state - 1;
 
 			redirectionApplied = redirectionScript.GetAngularRedirection().eulerAngles.y;
 			if (redirectionApplied > 180f)
 				redirectionApplied = 360f - redirectionApplied;
 			// If the correct redirection has been applied, stop the redirection
-			if (currentPainting >= 0 && Math.Abs(redirectionApplied) - redirectionAmount.Take(currentPainting).Sum() > redirectionAmount[currentPainting]) {
+			if (Math.Abs(redirectionApplied) > NormalizedDistance * redirectionAmount) {
 				redirectionScript.StopRedirection();
+			} else {
+				redirectionScript.StartRedirection();
 			}
-		}
-
-		public void SetState(CorridorStates s) {
-			state = (CorridorStates)Math.Max((int)state, (int)s);
-			redirectionScript.StartRedirection();
+			// Debug.Log(NormalizedDistance);
 		}
 	}
 }

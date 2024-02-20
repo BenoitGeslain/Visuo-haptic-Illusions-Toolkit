@@ -150,10 +150,8 @@ namespace VHToolkit.Redirection {
         /// <summary>
         /// Rotate the virtual head by the given angle (in degrees) around the world's y axis
         /// </summary>
-        public void RotateVirtualHeadY(float angle)
-        {
+        public void RotateVirtualHeadY(float angle) {
             HeadToHeadRedirection = Quaternion.Euler(0f, angle, 0f) * HeadToHeadRedirection;
-			Debug.Log($"{angle} {HeadToHeadRedirection}");
 		}
 	}
 }

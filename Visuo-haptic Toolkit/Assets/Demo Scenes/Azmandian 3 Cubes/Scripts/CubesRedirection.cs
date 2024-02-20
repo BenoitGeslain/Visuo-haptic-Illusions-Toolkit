@@ -9,7 +9,6 @@ public class CubesRedirection : MonoBehaviour {
 	public enum CubesState {
 		ReachOrigin,
 		ReachCube
-
 	}
 
 	[SerializeField] private CubesState state;

@@ -13,7 +13,7 @@ namespace VHToolkit.Calibration {
 				Debug.Log("Resetting world position");
 				world.SetPositionAndRotation(new(physicalHead.position.x, 0f, physicalHead.position.z),
 											 Quaternion.Euler(0f, physicalHead.rotation.eulerAngles.y, 0f));
-				this.GetComponent<CorridorRedirection>().state = 0;
+				// this.GetComponent<CorridorRedirection>().state = 0;
 			}
 		}
 	}
