@@ -35,7 +35,6 @@ namespace VHToolkit.Logging {
 
 		private void Start() {
 			scene = Toolkit.Instance.GetComponent<WorldRedirection>().scene;
-			startTime = DateTime.Now;
 			InvokeRepeating(nameof(SendMessage), 1f, 0.5f);
 			loggingTechnique = new();
 		}
@@ -44,6 +43,7 @@ namespace VHToolkit.Logging {
 			if (client == null || !client.Connected) {
 				try {
 					client = new TcpClient("localhost", 13000);
+					startTime = DateTime.Now;
 				} catch (SocketException e) { }
 			} else {
 				string json = JsonUtility.ToJson(redirectionData);
