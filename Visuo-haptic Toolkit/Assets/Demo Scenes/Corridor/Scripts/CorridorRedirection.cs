@@ -31,7 +31,7 @@ namespace VHToolkit.Demo {
 			if (redirectionApplied > 180f)
 				redirectionApplied = 360f - redirectionApplied;
 			// If the correct redirection has been applied, stop the redirection
-			if (Math.Abs(redirectionApplied) > NormalizedDistance * redirectionAmount) {
+			if (Math.Abs(redirectionApplied) > redirectionAmount) {
 				redirectionScript.StopRedirection();
 			} else {
 				redirectionScript.StartRedirection();

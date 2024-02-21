@@ -159,6 +159,14 @@ namespace VHToolkit.Redirection.WorldRedirection {
 			CopyHeadAndLimbTransform(scene);
 		}
 
+		public float GetRedirection(Scene scene) {
+			return aggregate(
+				Razzaque2001OverTimeRotation.GetRedirection(scene),
+				Razzaque2001Rotational.GetRedirection(scene),
+				Razzaque2001Curvature.GetRedirection(scene)
+			);
+		}
+
 		private float ApplyDampening(Scene scene, float angle) {
 			float dampenedAngle = angle * Mathf.Sin(Mathf.Min(scene.GetHeadAngleToTarget() / Toolkit.Instance.parameters.DampeningRange, 1f) * Mathf.PI/2);
 			float dampenedAngleDistance = dampenedAngle * Mathf.Min(scene.GetHeadToTargetDistance() / Toolkit.Instance.parameters.DampeningDistanceThreshold, 1f);
