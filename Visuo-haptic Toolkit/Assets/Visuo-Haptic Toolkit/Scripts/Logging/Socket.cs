@@ -19,7 +19,7 @@ namespace VHToolkit.Logging {
 			this.rotational += rotational;
 			this.curvature += curvature;
 			this.hybrid += hybrid;
-			this.total += total;
+			this.total = total;
 			this.time = time;
 		}
 	}
@@ -41,9 +41,10 @@ namespace VHToolkit.Logging {
 		}
 
 		private void SendMessage() {
-			if (client == null) {
-				// Prefer a using declaration to ensure the instance is Disposed later.
-				client = new TcpClient("localhost", 13000);
+			if (client == null || !client.Connected) {
+				try {
+					client = new TcpClient("localhost", 13000);
+				} catch (SocketException e) { }
 			} else {
 				string json = JsonUtility.ToJson(redirectionData);
 				Debug.Log($"Sending: {json}");
@@ -65,7 +66,7 @@ namespace VHToolkit.Logging {
 								Razzaque2001Rotational.GetRedirection(scene),
 								Razzaque2001Curvature.GetRedirection(scene),
 								loggingTechnique.GetRedirection(scene),
-								scene.HeadToHeadRedirection.eulerAngles.y,
+								(scene.HeadToHeadRedirection.eulerAngles.y > 180f) ? 360f- scene.HeadToHeadRedirection.eulerAngles.y : scene.HeadToHeadRedirection.eulerAngles.y,
 								(float)(DateTime.Now - startTime).TotalSeconds);
 		}
 	}
