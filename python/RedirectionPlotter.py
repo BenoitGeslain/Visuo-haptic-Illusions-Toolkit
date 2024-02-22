@@ -1,9 +1,10 @@
 import socket
 import json
 import matplotlib.pyplot as plt
-import time
-from datetime import datetime
 import re
+
+import matplotlib
+matplotlib.use('TkAgg')
 
 plt.ion() # turn on interactive mode (otherwise the window arises not before "show()"
 fig = plt.figure(figsize=(10,6), constrained_layout=True)
@@ -42,7 +43,6 @@ while True:
             hybrid.append(d["hybrid"])
             tots.append(d["total"])
             ys.append(d["time"])
-
 
             ax1.clear()
             ax2.clear()
