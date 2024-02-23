@@ -5,7 +5,7 @@ var searchData=
   ['controlpoint_16',['controlPoint',['../classVHToolkit_1_1Redirection_1_1BodyRedirection_1_1BodyRedirectionTechnique.html#ac1aea0038cdb84463ab0347ecf12c330',1,'VHToolkit::Redirection::BodyRedirection::BodyRedirectionTechnique']]],
   ['copyheadandlimbtransform_17',['CopyHeadAndLimbTransform',['../classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1WorldRedirectionTechnique.html#aeb7c04cb4ec281a3920a03d81f4f1ba1',1,'VHToolkit::Redirection::WorldRedirection::WorldRedirectionTechnique']]],
   ['corridorredirection_18',['CorridorRedirection',['../classVHToolkit_1_1Demo_1_1CorridorRedirection.html',1,'VHToolkit::Demo']]],
-  ['createnewfile_19',['CreateNewFile',['../classVHToolkit_1_1Logging_1_1Logging.html#a1f3aaeabf70901177f1e871be4a3a395',1,'VHToolkit.Logging.Logging.CreateNewFile()'],['../classVHToolkit_1_1Logging_1_1JsonLogging.html#ac947a9cc29ad451cf42c35a39855f158',1,'VHToolkit.Logging.JsonLogging.CreateNewFile()']]],
+  ['createnewfile_19',['CreateNewFile',['../classVHToolkit_1_1Logging_1_1JsonLogging.html#ac947a9cc29ad451cf42c35a39855f158',1,'VHToolkit.Logging.JsonLogging.CreateNewFile()'],['../classVHToolkit_1_1Logging_1_1Logging.html#a1f3aaeabf70901177f1e871be4a3a395',1,'VHToolkit.Logging.Logging.CreateNewFile()']]],
   ['cubesredirection_20',['CubesRedirection',['../classCubesRedirection.html',1,'']]],
   ['cubesstate_21',['CubesState',['../classCubesRedirection.html#a50d9c599f4116189058e71871878df23',1,'CubesRedirection']]],
   ['curvature_22',['curvature',['../structVHToolkit_1_1Logging_1_1WorldRedirectionData.html#a9c3c8f897417975e25b6cd4023b86bb6',1,'VHToolkit::Logging::WorldRedirectionData']]],
