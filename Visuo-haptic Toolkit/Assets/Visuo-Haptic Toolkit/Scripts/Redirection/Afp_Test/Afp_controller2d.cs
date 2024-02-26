@@ -37,6 +37,7 @@ namespace VHToolkit.Redirection
         [SerializeField] GameObject GradientPrefab;
         [SerializeField] Shader shad;
         Renderer rend;
+        readonly System.Random rand = new System.Random();
         const int STEPS = 60;
         float[] DensityTable;
         float maxX;
@@ -88,31 +89,12 @@ namespace VHToolkit.Redirection
                 Debug.Log($"INIT: X[{minX}:{maxX}] Y[{minY}:{maxY}]");
                 Debug.Log($"INIT: width:{width} height:{height}");
 
-                for (int y = 0; y < STEPS; y++) {
-                    for (int x = 0; x < STEPS; x++) {
-
-                        Vector2 Position = new Vector2(minX + (x*stepX) + (stepX/2), minY + (y*stepY) + (stepY/2));
-                        Vector2 Gradient = MathTools.Gradient2(RepulsiveFUnc, Position);
-
-                        float Magnitude = Gradient.magnitude;
-                        float Valeur = Math.Min(1, Math.Max(0, Magnitude));
-
-                        DensityTable[x + (y * STEPS)] = Valeur;
-                        Debug.Log($"{stepX * x:0.0} - {stepY * y:0.0} : {Valeur}");
-                    }
-
-                }
-
-                float MaxDen = DensityTable.Max();
-
                 map = Instantiate(GradientPrefab);
                 map.transform.position = new Vector3((minX + maxX) / 2, (minY + maxY) / 2, 6.8f);
                 map.transform.localScale = new Vector3(width, height, 0);
-
                 rend = map.GetComponent<Renderer>();
-                rend.material.shader = shad;
-                rend.material.SetFloat("_MaxDen", MaxDen);
-                rend.material.SetFloatArray("_DensityTable", DensityTable);
+
+                UpdateShader();
             }
             
         }
@@ -122,7 +104,11 @@ namespace VHToolkit.Redirection
         {
             GetGradient();
             MoveUserKeyboard();
+            InvokeRepeating("UpdateShader", 6f, 5f);
+        }
 
+        void UpdateShader()
+        {
             for (int y = 0; y < STEPS; y++)
             {
                 for (int x = 0; x < STEPS; x++)
@@ -135,18 +121,16 @@ namespace VHToolkit.Redirection
                     float Valeur = Math.Min(1, Math.Max(0, Magnitude));
 
                     DensityTable[x + (y * STEPS)] = Valeur;
-                    Debug.Log($"{stepX * x:0.0} - {stepY * y:0.0} : {Valeur}");
+                    //Debug.Log($"{stepX * x:0.0} - {stepY * y:0.0} : {Valeur}");
                 }
 
             }
 
             float MaxDen = DensityTable.Max();
 
-            rend = map.GetComponent<Renderer>();
             rend.material.shader = shad;
             rend.material.SetFloat("_MaxDen", MaxDen);
             rend.material.SetFloatArray("_DensityTable", DensityTable);
-
         }
 
         void GetAllObstaclesCollider()
