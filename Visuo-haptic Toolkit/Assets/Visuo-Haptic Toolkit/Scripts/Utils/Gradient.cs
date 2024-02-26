@@ -37,11 +37,28 @@ namespace VHToolkit {
 
         public static Vector2 ProjectToHorizontalPlane(this Vector3 v) => new(v.x, v.z);
 
-        public static Func<Vector2, float> RepulsivePotential(List<Collider2D> obstacles) =>
+        public static Func<Vector2, float> RepulsivePotential2D(List<Collider2D> obstacles) =>
             (x) => obstacles.Sum(o => 1 / Vector2.Distance(x, o.ClosestPoint(x)));
 
-        public static Func<Vector2, float> RepulsivePotential3d(List<Collider> obstacles) =>
-    (x) => obstacles.Sum(o => 1 / Vector2.Distance(x, o.ClosestPoint(x)));
+        public static Func<Vector3, float> RepulsivePotential3D(List<Collider> obstacles) =>
+            (x) => obstacles.Sum(o => 1 / Vector3.Distance(x, o.ClosestPoint(x)));
+
+
+        // maxence
+        public static Vector2 Gradient2v2(Vector2 x, List<Collider2D> obstaclescolliders)
+        {
+            Func<Vector2,float> RepulsivePotential = (x) => obstaclescolliders.Sum(o => 1 / Vector2.Distance(x, o.ClosestPoint(x)));
+            var eps = Vector2.kEpsilon;
+            return new Vector2(
+                RepulsivePotential(x + eps * Vector2.right) - RepulsivePotential(x + eps * Vector2.left),
+                RepulsivePotential(x + eps * Vector2.up) - RepulsivePotential(x + eps * Vector2.down)
+            ) / (2 * eps);
+        }
+
+
+  
+
+
 
         // The potential is given as || x - goal || / 2.
         public static Vector2 GradientOfAttractivePotential(Vector2 goal, Vector2 x) => (x - goal).normalized / 2;

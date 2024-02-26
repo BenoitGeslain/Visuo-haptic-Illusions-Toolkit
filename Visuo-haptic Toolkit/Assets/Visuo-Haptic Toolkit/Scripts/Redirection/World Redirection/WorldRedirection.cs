@@ -42,7 +42,9 @@ namespace VHToolkit.Redirection {
 				WRStrategy.SteerToOrbit => new SteerToOrbit(),
 				WRStrategy.SteerToMultipleTargets => new SteerToMultipleTargets(),
 				WRStrategy.SteerInDirection => new SteerInDirection(),
-				_ => null
+                WRStrategy.APFRedirection => new ApfRedirection(),
+                WRStrategy.APFRedirection2 => new APFRedirection2(),
+                _ => null
 			};
 
 			if (strategyInstance is null)

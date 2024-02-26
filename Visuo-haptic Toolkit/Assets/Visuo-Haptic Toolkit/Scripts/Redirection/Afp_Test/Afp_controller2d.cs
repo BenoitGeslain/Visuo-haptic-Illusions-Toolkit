@@ -11,17 +11,17 @@ namespace VHToolkit.Redirection
 //MathTools.Gradient2() //retourner gradient a partir d'une fonction et position x
 //MathTools.ProjectToHorizontalPlane () // modifier Vecteur position x->y
 //MathTools.RepulsivePotential() // calcul repultion a partir d'une liste de colliders
-//MathTools.GradientOfAttractivePotential() // calcul attraction � partir de x et xgoal
+//MathTools.GradientOfAttractivePotential() // calcul attraction ï¿½ partir de x et xgoal
 
 {
 
     public class Afp_controller2d : MonoBehaviour
     {
         [SerializeField]
-        [Tooltip ("mettre le tracking r�el de la position du casque utilisateur")]
+        [Tooltip ("mettre le tracking rï¿½el de la position du casque utilisateur")]
         GameObject Physical_headset;
         [SerializeField]
-        [Tooltip("position cible id�al (centre de la pi�ce?)")]
+        [Tooltip("position cible idï¿½al (centre de la piï¿½ce?)")]
         Vector2 xgoal;
         [SerializeField]
         [Tooltip("Orientation gradient")]
@@ -54,8 +54,8 @@ namespace VHToolkit.Redirection
         void Start()
         {
             GetAllObstaclesCollider();
-            // initialisation de la fonction repulsive dans start, les obstacles sont consid�r�s immobiles
-            RepulsiveFUnc = MathTools.RepulsivePotential(ObstaclesColliders);
+            // initialisation de la fonction repulsive dans start, les obstacles sont considï¿½rï¿½s immobiles
+            RepulsiveFUnc = MathTools.RepulsivePotential3D(ObstaclesColliders);
 
             DensityTable = new float[STEPS * STEPS];
 
@@ -162,7 +162,7 @@ namespace VHToolkit.Redirection
 
         }
 
-        // tentative de repr�senter l'orientation du gradient (pour Th�o!)
+        // tentative de reprï¿½senter l'orientation du gradient (pour Thï¿½o!)
         void GradientRepresentation (Vector2 Gradient)
         {
             gradientobject.transform.position = Physical_headset.transform.position + gradientobject.transform.right * 1.3f;
@@ -171,7 +171,7 @@ namespace VHToolkit.Redirection
 
             Debug.Log($"Mag: {Gradient.magnitude}");
 
-            // repr�senter l'orientation
+            // reprï¿½senter l'orientation
             float angleRadian = Mathf.Atan2(Gradient.y, Gradient.x);
             float angleEnDegres = angleRadian * Mathf.Rad2Deg;
 
@@ -179,7 +179,7 @@ namespace VHToolkit.Redirection
 
             gradientobject.transform.rotation = nouvelleRotation;
 
-            //repr�senter la taille
+            //reprï¿½senter la taille
 
             Vector3 nouvelleTaille = new Vector3(Gradient.magnitude, gradientobject.transform.localScale.y, gradientobject.transform.localScale.z);
 
@@ -190,11 +190,11 @@ namespace VHToolkit.Redirection
         void MoveUserKeyboard()
         {
             float rotationSpeed = 50f; // Vitesse de rotation (ajustez selon vos besoins)
-            float horizontalInput = Input.GetAxis("Horizontal"); // R�cup�re l'entr�e des touches gauche/droite
+            float horizontalInput = Input.GetAxis("Horizontal"); // Rï¿½cupï¿½re l'entrï¿½e des touches gauche/droite
             Physical_headset.transform.Rotate(Vector3.up, -horizontalInput * rotationSpeed * Time.deltaTime);
 
-            float moveSpeed = 5f; // Vitesse de d�placement (ajustez selon vos besoins)
-            float verticalInput = Input.GetAxis("Vertical"); // R�cup�re l'entr�e des touches haut/bas
+            float moveSpeed = 5f; // Vitesse de dï¿½placement (ajustez selon vos besoins)
+            float verticalInput = Input.GetAxis("Vertical"); // Rï¿½cupï¿½re l'entrï¿½e des touches haut/bas
             Physical_headset.transform.Translate(Vector3.forward * verticalInput * moveSpeed * Time.deltaTime);
         }
 

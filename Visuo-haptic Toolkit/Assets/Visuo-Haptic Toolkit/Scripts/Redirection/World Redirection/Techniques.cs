@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 
 using UnityEngine;
@@ -219,9 +221,10 @@ namespace VHToolkit.Redirection {
 		}
 	}
 
-	public class NoWorldRedirection: WorldRedirectionTechnique {
+	public class NoWorldRedirection : WorldRedirectionTechnique {
 		public override void Redirect(Scene scene) {
 			CopyHeadAndHandTransform(scene);
 		}
 	}
+
 }
