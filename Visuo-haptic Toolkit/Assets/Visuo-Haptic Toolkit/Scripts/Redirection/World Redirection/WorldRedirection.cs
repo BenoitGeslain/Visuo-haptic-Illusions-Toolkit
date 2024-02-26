@@ -30,7 +30,6 @@ namespace VHToolkit.Redirection {
 				WRTechnique.Razzaque2001Curvature => new Razzaque2001Curvature(),
 				WRTechnique.Razzaque2001Hybrid => new Razzaque2001Hybrid(),
 				WRTechnique.Azmandian2016World => new Azmandian2016World(),
-				WRTechnique.AfpRedirection => new AfpRedirection(),
 				_ => null
 			};
 
@@ -43,7 +42,9 @@ namespace VHToolkit.Redirection {
 				WRStrategy.SteerToOrbit => new SteerToOrbit(),
 				WRStrategy.SteerToMultipleTargets => new SteerToMultipleTargets(),
 				WRStrategy.SteerInDirection => new SteerInDirection(),
-				_ => null
+                WRStrategy.APFRedirection => new ApfRedirection(),
+                WRStrategy.APFRedirection2 => new APFRedirection2(),
+                _ => null
 			};
 
 			if (strategyInstance is null)

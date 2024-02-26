@@ -33,8 +33,7 @@ namespace VHToolkit {
 		Razzaque2001Curvature,
 		Razzaque2001Hybrid,
 		Azmandian2016World,
-		Steinicke2008Translational,
-        AfpRedirection
+		Steinicke2008Translational
     }
 
 	public enum WRStrategy {
@@ -42,7 +41,9 @@ namespace VHToolkit {
 		SteerToCenter,
 		SteerToOrbit,
 		SteerToMultipleTargets,
-		SteerInDirection
+		SteerInDirection,
+		APFRedirection,
+		APFRedirection2
 	}
 
 	public class Toolkit : MonoBehaviour {
