@@ -38,7 +38,7 @@ namespace VHToolkit.Redirection
         {
             GetAllObstaclesCollider();
             // initialisation de la fonction repulsive dans start, les obstacles sont considérés immobiles
-            RepulsiveFUnc = MathTools.RepulsivePotential(ObstaclesColliders);
+            RepulsiveFUnc = MathTools.RepulsivePotential2D(ObstaclesColliders);
 
 
         }

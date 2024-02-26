@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 
 namespace VHToolkit.Redirection {
 	public class WorldRedirectionStrategy {
@@ -74,225 +75,259 @@ namespace VHToolkit.Redirection {
         }
     }
 
-    public class APFRedirection2 : WorldRedirectionStrategy
+    public class ApfRedirection : WorldRedirectionStrategy
     {
-        GameObject Moncube;
-        Func<Vector2, float> RepulsiveFUnc;
-        Vector2 LastPositionObjet;
-        GameObject PtitGradient;
-        GameObject[] ListeGradients;
-        Sprite Fleche = Resources.Load<Sprite>("gradient/fleche");
-        Sprite Warning = Resources.Load<Sprite>("gradient/warning");
-        int totalpas;
-        List<Collider2D> Obstaclescolliders;
+
+        private static Func<Vector3, float> RepulsiveFunction()
+        {
+            List<Collider> colliders = new List<Collider>(GameObject.FindGameObjectsWithTag("Obstacle").Select(o => o.GetComponent<Collider>()));
+            return MathTools.RepulsivePotential3D(colliders);
+        }
 
         public override Vector3 SteerTo(Scene scene)
         {
-            Obstaclescolliders = scene.GetAllObstaclesCollider();
-
-            Position2d(scene);
-            Vector2 vec = Gradientcompute(scene, Moncube.transform.position);
-
-            GradientsDraw(scene);
-            RaycasttoObstaclesDraw(scene);
-
-            return new Vector3(vec.x, 0f, vec.y);
+            Vector2 gradient = ComputeGradient(scene);
+            return gradient;
         }
 
-        void RaycasttoObstaclesDraw(Scene scene)
+        public static Vector2 ComputeGradient(Scene scene)
         {
-            foreach (Collider2D obscol in Obstaclescolliders)
-            {
-                Vector2 Closestpt = obscol.ClosestPoint(Moncube.transform.position);
-                Debug.DrawLine(Moncube.transform.position, Closestpt, Color.red, .01f);
-            }
-
+            return ComputeGradient(scene.physicalHead.position);
         }
 
-        void Position2d(Scene scene)
+        public static Vector2 ComputeGradient(Vector3 position)
         {
-            if (!Moncube)
-            {
-                Moncube = GameObject.Find("2duser");
-            }
-            Moncube.transform.position = (MathTools.ProjectToHorizontalPlane(scene.physicalHead.transform.position));
+            Vector2 gradient = MathTools.Gradient3(
+                RepulsiveFunction(),
+                MathTools.ProjectToHorizontalPlane(position)
+            );
+            Debug.Log($"{position.x:0.0}:{position.z:0.0} - {gradient.magnitude}");
+            return gradient;
         }
 
-        Vector2 Gradientcompute(Scene scene, Vector2 PositionObjet)
-        {
-            RepulsiveFUnc = MathTools.RepulsivePotential(scene.GetAllObstaclesCollider());
-            Vector2 CalculGradient = Vector2.one;
-
-            if (PositionObjet != LastPositionObjet)
-            {
-                CalculGradient = MathTools.Gradient2(RepulsiveFUnc, PositionObjet);
-
-                LastPositionObjet = PositionObjet;
-            }
-
-            return CalculGradient;
-        }
-
-        void GradientsDraw(Scene scene)
-        {
-
-
-            if (ListeGradients == null)
-            {
-                PtitGradient = Resources.Load<GameObject>("gradient/flechego");
-
-                Vector2 map_size = GameObject.Find("Map").GetComponent<MeshCollider>().bounds.size;
-                Vector2 map_center = GameObject.Find("Map").GetComponent<MeshCollider>().bounds.center;
-                int pas = 1;
-
-                totalpas = (int)Math.Floor(map_size.x / pas) * (int)Math.Floor(map_size.y / pas);
-                ListeGradients = new GameObject[totalpas];
-
-
-
-                int i = 0;
-
-                for (int x = (int)(map_center.x - map_size.x / 2) + pas; x < map_center.x + map_size.x / 2; x += pas)
-                {
-                    for (int y = (int)(map_center.y - map_size.y / 2) + pas; y < map_center.y + map_size.y / 2; y += pas)
-                    {
-
-                        Vector2 Gradobject = Gradientcompute(scene, new Vector2(x, y));
-
-
-                        ListeGradients[i] = UnityEngine.Object.Instantiate(PtitGradient);
-                        ListeGradients[i].transform.position = new Vector3(x, y, 2);
-
-                        float angleRadian = Mathf.Atan2(Gradobject.y, Gradobject.x);
-                        float angleEnDegres = angleRadian * Mathf.Rad2Deg;
-
-                        if (!float.IsNaN(Gradobject.x) && !float.IsNaN(Gradobject.y))
-                        {
-
-                            Quaternion nouvelleRotation = Quaternion.Euler(0, 0, angleEnDegres);
-
-                            ListeGradients[i].transform.rotation = nouvelleRotation;
-                            ListeGradients[i].GetComponent<Renderer>().material.color = new Color(1f * Gradobject.magnitude, 1f * Gradobject.magnitude, 1f);
-
-                        }
-
-                        else
-                        {
-                            ListeGradients[i].GetComponent<SpriteRenderer>().sprite = Warning;
-
-                        }
-                        i++;
-                    }
-                }
-            }
-
-            else if (totalpas > 0 && ListeGradients.Length == totalpas)
-            {
-                foreach (GameObject gradientgameobj in ListeGradients)
-                {
-                    if (gradientgameobj != null)
-                    {
-
-
-                        float x = gradientgameobj.transform.position.x;
-                        float y = gradientgameobj.transform.position.y;
-
-                        Vector2 Gradobject = Gradientcompute(scene, new Vector2(x, y));
-
-                        float angleRadian = Mathf.Atan2(Gradobject.y, Gradobject.x);
-                        float angleEnDegres = angleRadian * Mathf.Rad2Deg;
-
-                        if (!float.IsNaN(Gradobject.x) && !float.IsNaN(Gradobject.y))
-                        {
-
-                            Quaternion nouvelleRotation = Quaternion.Euler(0, 0, angleEnDegres);
-
-                            gradientgameobj.transform.rotation = nouvelleRotation;
-                            gradientgameobj.GetComponent<Renderer>().material.color = new Color(1f * Gradobject.magnitude, 1f * Gradobject.magnitude, 1f);
-                            gradientgameobj.GetComponent<SpriteRenderer>().sprite = Fleche;
-                        }
-
-                        else
-                        {
-                            gradientgameobj.GetComponent<SpriteRenderer>().sprite = Warning;
-
-                        }
-
-                    }
-
-
-                }
-            }
-
-
-
-
-        }
     }
 
-    public class ApfRedirection : WorldRedirectionStrategy
-	{
-		GameObject PhysicalUser2d;
+    // BACKUPS
+    //   public class ApfRedirection : WorldRedirectionStrategy
+    //{
+    //	GameObject PhysicalUser2d;
 
-        [SerializeField] public GameObject User2d;
+    //       [SerializeField] public GameObject User2d;
 
-		List<Collider2D> Obstaclescolliders;
-		Vector3 gradient = Vector2.zero;
-        public override Vector3 SteerTo(Scene scene)
-		{
-			Operateur(scene);
-			return gradient;
-            
-        }
+    //	List<Collider2D> Obstaclescolliders;
+    //	Vector3 gradient = Vector2.zero;
 
-		void Operateur (Scene scene)
+    //       public override Vector3 SteerTo(Scene scene)
+    //	{
+    //		Operateur(scene);
+    //		return gradient;
 
-		{
-			Obstaclescolliders = GetAllObstaclesCollider();
-			Position2d(scene);
-			gradient = Gradientcompute (PhysicalUser2d.transform.position);
+    //       }
 
-		}
+    //	void Operateur (Scene scene)
 
-		public static List<Collider2D> GetAllObstaclesCollider()
-        {
-            GameObject[] Obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
-			List<Collider2D> ObstaclesColliders = new();
+    //	{
+    //		Obstaclescolliders = GetAllObstaclesCollider();
+    //		Position2d(scene);
+    //		gradient = Gradientcompute (PhysicalUser2d.transform.position);
 
-            for (int i = 0; i < Obstacles.Length; i++)
-            {
-                ObstaclesColliders.Add(Obstacles[i].GetComponent<Collider2D>());
-            }
+    //	}
 
-			return ObstaclesColliders;
-        }
+    //	public static List<Collider2D> GetAllObstaclesCollider()
+    //       {
+    //           GameObject[] Obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
+    //		List<Collider2D> ObstaclesColliders = new();
 
+    //           for (int i = 0; i < Obstacles.Length; i++)
+    //           {
+    //               ObstaclesColliders.Add(Obstacles[i].GetComponent<Collider2D>());
+    //           }
 
-
-        void Position2d (Scene scene)
-		{
-            if (!PhysicalUser2d)
-            {
-                PhysicalUser2d = GameObject.Find("2duser");
-            }
-            PhysicalUser2d.transform.position = MathTools.ProjectToHorizontalPlane(scene.physicalHead.transform.position);
-        }
-
-		public static Vector2 Gradientcompute (Vector2 PositionObjet)
-		{
-            Func <Vector2,float> RepulsiveFUnc ()
-			{
-				return MathTools.RepulsivePotential(GetAllObstaclesCollider());
-			}
+    //		return ObstaclesColliders;
+    //       }
 
 
-            var CalculGradient = MathTools.Gradient2(RepulsiveFUnc(), PositionObjet);
+
+    //       void Position2d (Scene scene)
+    //	{
+    //           if (!PhysicalUser2d)
+    //           {
+    //               PhysicalUser2d = GameObject.Find("2duser");
+    //           }
+    //           PhysicalUser2d.transform.position = MathTools.ProjectToHorizontalPlane(scene.physicalHead.transform.position);
+    //       }
+
+    //	public static Vector2 Gradientcompute (Vector2 PositionObjet)
+    //	{
+    //           Func <Vector2,float> RepulsiveFUnc ()
+    //		{
+    //			return MathTools.RepulsivePotential(GetAllObstaclesCollider());
+    //		}
 
 
-			return CalculGradient;
-        }
+    //           var CalculGradient = MathTools.Gradient2(RepulsiveFUnc(), PositionObjet);
 
-		
-	}
-	
+
+    //		return CalculGradient;
+    //       }
+
+
+    //}
+
+    //public class APFRedirection2 : WorldRedirectionStrategy
+    //{
+    //    GameObject Moncube;
+    //    Func<Vector2, float> RepulsiveFUnc;
+    //    Vector2 LastPositionObjet;
+    //    GameObject PtitGradient;
+    //    GameObject[] ListeGradients;
+    //    Sprite Fleche = Resources.Load<Sprite>("gradient/fleche");
+    //    Sprite Warning = Resources.Load<Sprite>("gradient/warning");
+    //    int totalpas;
+    //    List<Collider2D> Obstaclescolliders;
+
+    //    public override Vector3 SteerTo(Scene scene)
+    //    {
+    //        Obstaclescolliders = scene.GetAllObstaclesCollider();
+
+    //        Position2d(scene);
+    //        Vector2 vec = Gradientcompute(scene, Moncube.transform.position);
+
+    //        GradientsDraw(scene);
+    //        RaycasttoObstaclesDraw(scene);
+
+    //        return new Vector3(vec.x, 0f, vec.y);
+    //    }
+
+    //    void RaycasttoObstaclesDraw(Scene scene)
+    //    {
+    //        foreach (Collider2D obscol in Obstaclescolliders)
+    //        {
+    //            Vector2 Closestpt = obscol.ClosestPoint(Moncube.transform.position);
+    //            Debug.DrawLine(Moncube.transform.position, Closestpt, Color.red, .01f);
+    //        }
+
+    //    }
+
+    //    void Position2d(Scene scene)
+    //    {
+    //        if (!Moncube)
+    //        {
+    //            Moncube = GameObject.Find("2duser");
+    //        }
+    //        Moncube.transform.position = (MathTools.ProjectToHorizontalPlane(scene.physicalHead.transform.position));
+    //    }
+
+    //    Vector2 Gradientcompute(Scene scene, Vector2 PositionObjet)
+    //    {
+    //        RepulsiveFUnc = MathTools.RepulsivePotential2D(scene.GetAllObstaclesCollider());
+    //        Vector2 CalculGradient = Vector2.one;
+
+    //        if (PositionObjet != LastPositionObjet)
+    //        {
+    //            CalculGradient = MathTools.Gradient2(RepulsiveFUnc, PositionObjet);
+
+    //            LastPositionObjet = PositionObjet;
+    //        }
+
+    //        return CalculGradient;
+    //    }
+
+    //    void GradientsDraw(Scene scene)
+    //    {
+
+
+    //        if (ListeGradients == null)
+    //        {
+    //            PtitGradient = Resources.Load<GameObject>("gradient/flechego");
+
+    //            Vector2 map_size = GameObject.Find("Map").GetComponent<MeshCollider>().bounds.size;
+    //            Vector2 map_center = GameObject.Find("Map").GetComponent<MeshCollider>().bounds.center;
+    //            int pas = 1;
+
+    //            totalpas = (int)Math.Floor(map_size.x / pas) * (int)Math.Floor(map_size.y / pas);
+    //            ListeGradients = new GameObject[totalpas];
+
+
+
+    //            int i = 0;
+
+    //            for (int x = (int)(map_center.x - map_size.x / 2) + pas; x < map_center.x + map_size.x / 2; x += pas)
+    //            {
+    //                for (int y = (int)(map_center.y - map_size.y / 2) + pas; y < map_center.y + map_size.y / 2; y += pas)
+    //                {
+
+    //                    Vector2 Gradobject = Gradientcompute(scene, new Vector2(x, y));
+
+
+    //                    ListeGradients[i] = UnityEngine.Object.Instantiate(PtitGradient);
+    //                    ListeGradients[i].transform.position = new Vector3(x, y, 2);
+
+    //                    float angleRadian = Mathf.Atan2(Gradobject.y, Gradobject.x);
+    //                    float angleEnDegres = angleRadian * Mathf.Rad2Deg;
+
+    //                    if (!float.IsNaN(Gradobject.x) && !float.IsNaN(Gradobject.y))
+    //                    {
+
+    //                        Quaternion nouvelleRotation = Quaternion.Euler(0, 0, angleEnDegres);
+
+    //                        ListeGradients[i].transform.rotation = nouvelleRotation;
+    //                        ListeGradients[i].GetComponent<Renderer>().material.color = new Color(1f * Gradobject.magnitude, 1f * Gradobject.magnitude, 1f);
+
+    //                    }
+
+    //                    else
+    //                    {
+    //                        ListeGradients[i].GetComponent<SpriteRenderer>().sprite = Warning;
+
+    //                    }
+    //                    i++;
+    //                }
+    //            }
+    //        }
+
+    //        else if (totalpas > 0 && ListeGradients.Length == totalpas)
+    //        {
+    //            foreach (GameObject gradientgameobj in ListeGradients)
+    //            {
+    //                if (gradientgameobj != null)
+    //                {
+
+
+    //                    float x = gradientgameobj.transform.position.x;
+    //                    float y = gradientgameobj.transform.position.y;
+
+    //                    Vector2 Gradobject = Gradientcompute(scene, new Vector2(x, y));
+
+    //                    float angleRadian = Mathf.Atan2(Gradobject.y, Gradobject.x);
+    //                    float angleEnDegres = angleRadian * Mathf.Rad2Deg;
+
+    //                    if (!float.IsNaN(Gradobject.x) && !float.IsNaN(Gradobject.y))
+    //                    {
+
+    //                        Quaternion nouvelleRotation = Quaternion.Euler(0, 0, angleEnDegres);
+
+    //                        gradientgameobj.transform.rotation = nouvelleRotation;
+    //                        gradientgameobj.GetComponent<Renderer>().material.color = new Color(1f * Gradobject.magnitude, 1f * Gradobject.magnitude, 1f);
+    //                        gradientgameobj.GetComponent<SpriteRenderer>().sprite = Fleche;
+    //                    }
+
+    //                    else
+    //                    {
+    //                        gradientgameobj.GetComponent<SpriteRenderer>().sprite = Warning;
+
+    //                    }
+
+    //                }
+
+
+    //            }
+    //        }
+
+
+
+
+    //    }
+    //}
+
 }

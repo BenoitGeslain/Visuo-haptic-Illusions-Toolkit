@@ -23,10 +23,8 @@ namespace VHToolkit.Visualisation
 		int totalpas;
 
         public void OnEnable ()
-
         {
-            Obstaclescolliders = ApfRedirection.GetAllObstaclesCollider();
-            
+            Obstaclescolliders = GameObject.FindGameObjectsWithTag("Obstacle").Select(o => o.GetComponent<Collider2D>()).ToList();
         }
 
         public void Start()
@@ -73,7 +71,7 @@ namespace VHToolkit.Visualisation
                     for (int y = (int)(map_center.y - map_size.y / 2) + pas; y < map_center.y + map_size.y / 2; y += pas)
                     {
 
-                        Vector2 Gradobject = ApfRedirection.Gradientcompute(new Vector2(x, y));
+                        Vector2 Gradobject = ApfRedirection.ComputeGradient(new Vector2(x, y));
 
 
                         ListeGradients[i] = Instantiate(PtitGradient);
@@ -109,7 +107,7 @@ namespace VHToolkit.Visualisation
                     if (gradientgameobj != null)
                     {
 
-                        Vector2 Gradobject =ApfRedirection.Gradientcompute(gradientgameobj.transform.position);
+                        Vector2 Gradobject =ApfRedirection.ComputeGradient(gradientgameobj.transform.position);
 
                         float angleRadian = Mathf.Atan2(Gradobject.y, Gradobject.x);
                         float angleEnDegres = angleRadian * Mathf.Rad2Deg;
