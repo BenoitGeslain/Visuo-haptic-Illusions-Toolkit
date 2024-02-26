@@ -28,10 +28,10 @@ namespace VHToolkit.Redirection
         GameObject gradientobject;
 
         GameObject[] Obstacles;
-        List<Collider2D> ObstaclesColliders = new ();
+        List<Collider> ObstaclesColliders = new ();
         Vector2 UserPosition;
         Vector2 LastUserPosition;
-        Func<Vector2, float> RepulsiveFUnc;
+        Func<Vector3, float> RepulsiveFunc;
 
         [SerializeField] Shader GradientHeatmapShader;
         [SerializeField] GameObject GradientPrefab;
@@ -55,7 +55,7 @@ namespace VHToolkit.Redirection
         {
             GetAllObstaclesCollider();
             // initialisation de la fonction repulsive dans start, les obstacles sont considï¿½rï¿½s immobiles
-            RepulsiveFUnc = MathTools.RepulsivePotential3D(ObstaclesColliders);
+            RepulsiveFunc = MathTools.RepulsivePotential3D(ObstaclesColliders);
 
             DensityTable = new float[STEPS * STEPS];
 
@@ -66,7 +66,7 @@ namespace VHToolkit.Redirection
                 maxY = ObstaclesColliders[0].bounds.max.y;
                 minY = ObstaclesColliders[0].bounds.min.y;
 
-                foreach (Collider2D col in ObstaclesColliders.Skip(1)) {
+                foreach (Collider col in ObstaclesColliders.Skip(1)) {
 
                     float iMaxX = col.bounds.max.x;
                     float iMinX = col.bounds.min.x;
@@ -115,7 +115,7 @@ namespace VHToolkit.Redirection
                 {
 
                     Vector2 Position = new Vector2(minX + (x * stepX) + (stepX / 2), minY + (y * stepY) + (stepY / 2));
-                    Vector2 Gradient = MathTools.Gradient2(RepulsiveFUnc, Position);
+                    Vector2 Gradient = MathTools.Gradient3(RepulsiveFunc, Position);
 
                     float Magnitude = Gradient.magnitude;
                     float Valeur = Math.Min(1, Math.Max(0, Magnitude));
@@ -139,7 +139,7 @@ namespace VHToolkit.Redirection
 
             for (int i=0; i<Obstacles.Length;i++)
             {
-                ObstaclesColliders.Add (Obstacles[i].GetComponent<Collider2D>());
+                ObstaclesColliders.Add (Obstacles[i].GetComponent<Collider>());
             }
         }
 
@@ -156,13 +156,13 @@ namespace VHToolkit.Redirection
 
         void GradientCompute ()
         {
-            Vector2 Gradient = MathTools.Gradient2(RepulsiveFUnc, UserPosition);
+            Vector2 Gradient = MathTools.Gradient3(RepulsiveFunc, UserPosition);
 
             GradientRepresentation(Gradient);
 
         }
 
-        // tentative de reprï¿½senter l'orientation du gradient (pour Thï¿½o!)
+        // tentative de representation l'orientation du gradient (pour Theo!)
         void GradientRepresentation (Vector2 Gradient)
         {
             gradientobject.transform.position = Physical_headset.transform.position + gradientobject.transform.right * 1.3f;
@@ -171,7 +171,7 @@ namespace VHToolkit.Redirection
 
             Debug.Log($"Mag: {Gradient.magnitude}");
 
-            // reprï¿½senter l'orientation
+            // representer l'orientation
             float angleRadian = Mathf.Atan2(Gradient.y, Gradient.x);
             float angleEnDegres = angleRadian * Mathf.Rad2Deg;
 
@@ -179,7 +179,7 @@ namespace VHToolkit.Redirection
 
             gradientobject.transform.rotation = nouvelleRotation;
 
-            //reprï¿½senter la taille
+            //representer la taille
 
             Vector3 nouvelleTaille = new Vector3(Gradient.magnitude, gradientobject.transform.localScale.y, gradientobject.transform.localScale.z);
 
@@ -190,11 +190,11 @@ namespace VHToolkit.Redirection
         void MoveUserKeyboard()
         {
             float rotationSpeed = 50f; // Vitesse de rotation (ajustez selon vos besoins)
-            float horizontalInput = Input.GetAxis("Horizontal"); // Rï¿½cupï¿½re l'entrï¿½e des touches gauche/droite
+            float horizontalInput = Input.GetAxis("Horizontal"); // Recupere l'input gauche/droite
             Physical_headset.transform.Rotate(Vector3.up, -horizontalInput * rotationSpeed * Time.deltaTime);
 
-            float moveSpeed = 5f; // Vitesse de dï¿½placement (ajustez selon vos besoins)
-            float verticalInput = Input.GetAxis("Vertical"); // Rï¿½cupï¿½re l'entrï¿½e des touches haut/bas
+            float moveSpeed = 5f; // Vitesse de deplacement (ajustez selon vos besoins)
+            float verticalInput = Input.GetAxis("Vertical"); // Recupere l'input haut/bas
             Physical_headset.transform.Translate(Vector3.forward * verticalInput * moveSpeed * Time.deltaTime);
         }
 

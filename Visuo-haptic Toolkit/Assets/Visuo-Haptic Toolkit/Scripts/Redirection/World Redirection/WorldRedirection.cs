@@ -43,7 +43,6 @@ namespace VHToolkit.Redirection {
 				WRStrategy.SteerToMultipleTargets => new SteerToMultipleTargets(),
 				WRStrategy.SteerInDirection => new SteerInDirection(),
                 WRStrategy.APFRedirection => new ApfRedirection(),
-                WRStrategy.APFRedirection2 => new APFRedirection2(),
                 _ => null
 			};
 

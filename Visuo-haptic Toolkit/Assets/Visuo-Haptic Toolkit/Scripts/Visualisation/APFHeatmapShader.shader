@@ -15,8 +15,9 @@ Shader "Unlit/HeatmapShader"
             #pragma vertex vert
             #pragma fragment frag
 
-            float _DensityTable[3600];
+            float _DensityTable[4096];
             float _MaxDen;
+            float _UnitsPerSide;
 
             struct v2f {
                 float2 uv : TEXCOORD0;
@@ -37,9 +38,9 @@ Shader "Unlit/HeatmapShader"
             fixed4 frag (v2f i) : SV_Target
             {
                 float r,g,b; // red, green, blue
-                int x = (i.uv.x * 60); // position en X sur le quad
-                int y = (i.uv.y * 60); // position en Y sur le quad
-                float d = _DensityTable[x+(y*60)]; // valeur en position X, Y comprise entre 0 et 1
+                int x = (i.uv.x * _UnitsPerSide); // position en X sur le quad
+                int y = (i.uv.y * _UnitsPerSide); // position en Y sur le quad
+                float d = _DensityTable[x+(y*_UnitsPerSide)]; // valeur en position X, Y
 
                 float ratio = 1/_MaxDen;
                 float val = d * ratio;

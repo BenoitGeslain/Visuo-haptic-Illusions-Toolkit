@@ -78,12 +78,8 @@ namespace VHToolkit.Redirection {
     public class ApfRedirection : WorldRedirectionStrategy
     {
 
-        private static Func<Vector3, float> RepulsiveFunction()
-        {
-            List<Collider> colliders = new List<Collider>(GameObject.FindGameObjectsWithTag("Obstacle").Select(o => o.GetComponent<Collider>()));
-            return MathTools.RepulsivePotential3D(colliders);
-        }
-
+        private static Func<Vector3, float> RepulsiveFunction() => MathTools.RepulsivePotential3D(GameObject.FindGameObjectsWithTag("Obstacle").Select(o => o.GetComponent<Collider>()).ToList());
+ 
         public override Vector3 SteerTo(Scene scene)
         {
             Vector2 gradient = ComputeGradient(scene);
@@ -101,7 +97,7 @@ namespace VHToolkit.Redirection {
                 RepulsiveFunction(),
                 MathTools.ProjectToHorizontalPlane(position)
             );
-            Debug.Log($"{position.x:0.0}:{position.z:0.0} - {gradient.magnitude}");
+            //Debug.Log($"{position.x:0.0}:{position.z:0.0} - {gradient.magnitude}");
             return gradient;
         }
 
