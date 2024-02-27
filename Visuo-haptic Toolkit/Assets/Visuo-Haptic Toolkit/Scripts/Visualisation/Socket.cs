@@ -12,7 +12,7 @@ namespace VHToolkit.Logging {
 	[Serializable]
 	struct WorldRedirectionData {
 		[SerializeField] public float overTime, rotational, curvature, hybrid, total;
-		[SerializeField] public float time;
+		[SerializeField] float time;
 
 		public void AddTo(float overTime, float rotational, float curvature, float hybrid, float total, float time) {
 			this.overTime += Mathf.Abs(overTime);
@@ -31,7 +31,7 @@ namespace VHToolkit.Logging {
 
 		private Razzaque2001Hybrid loggingTechnique;
 
-		private WorldRedirectionData redirectionData;
+		private WorldRedirectionData redirectionData = new();
 
 		private void Start() {
 			scene = Toolkit.Instance.GetComponent<WorldRedirection>().scene;
@@ -51,7 +51,6 @@ namespace VHToolkit.Logging {
 			} else {
 				Thread thread = new(() => SendMessage(client, redirectionData));
 				thread.Start();
-				redirectionData = new();
 			}
 		}
 
@@ -73,14 +72,12 @@ namespace VHToolkit.Logging {
 		}
 
 		private void Update() {
-			if (client != null && client.Connected) {
 				redirectionData.AddTo(Razzaque2001OverTimeRotation.GetRedirection(scene),
 									Razzaque2001Rotational.GetRedirection(scene),
 									Razzaque2001Curvature.GetRedirection(scene),
 									loggingTechnique.GetRedirection(scene),
 									(scene.HeadToHeadRedirection.eulerAngles.y > 180f) ? 360f - scene.HeadToHeadRedirection.eulerAngles.y : scene.HeadToHeadRedirection.eulerAngles.y,
 									(float)(DateTime.Now - startTime).TotalSeconds);
-			}
 		}
 	}
 }
