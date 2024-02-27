@@ -10,12 +10,12 @@ namespace VHToolkit
             var weights = new float[x.Length];
             int idx = 0;
             foreach (var (origin, targ) in x.Zip(target)) {
-                var d = Vector3.Distance(origin, position);
+                var d = (origin - position).sqrMagnitude;
                 if (Mathf.Approximately(d, 0)) {
                     return targ;
                 }
                 else {
-                    weights[idx++] =  Mathf.Pow(d, -p);
+                    weights[idx++] =  Mathf.Pow(d, -p / 2);
                 }
             }
             return target.Zip(weights, (t, w) => w * t).Aggregate(Vector3.zero, (a, b) => a + b) / weights.Sum();

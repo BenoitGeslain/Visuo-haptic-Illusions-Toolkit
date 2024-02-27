@@ -117,6 +117,7 @@ namespace VHToolkit.Redirection.WorldRedirection {
 
 		readonly Func<float, float, float, float> aggregate;
 
+
         /// <summary>
         /// By default, the aggregation function is the maximum by absolute value.
         /// </summary>

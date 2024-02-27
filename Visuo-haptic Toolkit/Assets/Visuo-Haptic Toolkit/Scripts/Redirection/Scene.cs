@@ -66,11 +66,12 @@ namespace VHToolkit.Redirection {
 		[Ignore] public Vector3 previousHeadPosition;
 		[Ignore] public Quaternion previousHeadRotation;
 		[Ignore] public float previousRedirection;
+		[Ignore] public Vector3 strategyDirection;
 
-        /// <summary>
-        /// The position of the virtual limb is given by <c>physicalHand.position + Redirection</c>.
-        /// </summary>
-        [Ignore] public List<Vector3> LimbRedirection {
+		/// <summary>
+		/// The position of the virtual limb is given by <c>physicalHand.position + Redirection</c>.
+		/// </summary>
+		[Ignore] public List<Vector3> LimbRedirection {
             get => limbs.ConvertAll(limb => limb.virtualLimb[0].position - limb.physicalLimb.position);
             set {
 				foreach ((var limb, var v) in limbs.Zip(value)) {

@@ -1099,6 +1099,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7088029602675669135, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
+      propertyPath: scene.strategyDirection.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7088029602675669135, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
       propertyPath: scene.targets.Array.data[0]
       value: 
       objectReference: {fileID: 1201636907}
@@ -1140,10 +1144,10 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 200869264966477082, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 358983255}
+      addedObject: {fileID: 358983254}
     - targetCorrespondingSourceObject: {fileID: 200869264966477082, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 358983254}
+      addedObject: {fileID: 358983255}
     - targetCorrespondingSourceObject: {fileID: 200869264966477082, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
       insertIndex: -1
       addedObject: {fileID: 358983261}

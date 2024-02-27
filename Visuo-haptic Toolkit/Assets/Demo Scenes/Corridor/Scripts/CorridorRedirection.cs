@@ -21,11 +21,9 @@ namespace VHToolkit.Demo {
 		[SerializeField] private Transform start, end;
 		private float NormalizedDistance => Mathf.InverseLerp(start.position.z, end.position.z, UserHead.position.z);
 
-		private void Start() {
-			redirectionScript = Toolkit.Instance.gameObject.GetComponent<WorldRedirection>();
-		}
+        private void Start() => redirectionScript = Toolkit.Instance.gameObject.GetComponent<WorldRedirection>();
 
-		private void Update() {
+        private void Update() {
 
 			redirectionApplied = redirectionScript.GetAngularRedirection().eulerAngles.y;
 			if (redirectionApplied > 180f)
@@ -36,7 +34,6 @@ namespace VHToolkit.Demo {
 			} else {
 				redirectionScript.StartRedirection();
 			}
-			// Debug.Log(NormalizedDistance);
 		}
 	}
 }

@@ -24,9 +24,10 @@ namespace VHToolkit.Redirection.WorldRedirection {
 		SerializedProperty applyDampening;
 		SerializedProperty applySmoothing;
 		SerializedProperty redirect;
+		SerializedProperty direction;
 
-        readonly string[] strategyTechniques = { "Razzaque2001OverTimeRotation", "Razzaque2001Rotational", "Razzaque2001Curvature", "Razzaque2001Hybrid" };
-        readonly string[] targetsStrategies = { "SteerToCenter", "SteerToMultipleTargets", "SteerInDirection" };
+		readonly string[] strategyTechniques = { "Razzaque2001OverTimeRotation", "Razzaque2001Rotational", "Razzaque2001Curvature", "Razzaque2001Hybrid" };
+        readonly string[] targetsStrategies = { "SteerToCenter", "SteerToMultipleTargets" };
 
 		private void OnEnable() {
 			technique = serializedObject.FindProperty("_technique");
@@ -41,10 +42,10 @@ namespace VHToolkit.Redirection.WorldRedirection {
 			virtualTarget = serializedObject.FindProperty("scene.virtualTarget");
 			origin = serializedObject.FindProperty("scene.origin");
 			targetsScene = serializedObject.FindProperty("scene.targets");
-			radius = serializedObject.FindProperty("scene.radius");
 			applyDampening = serializedObject.FindProperty("scene.applyDampening");
 			applySmoothing = serializedObject.FindProperty("scene.applySmoothing");
 			redirect = serializedObject.FindProperty("redirect");
+			direction = serializedObject.FindProperty("scene.strategyDirection");
 		}
 
 		public override void OnInspectorGUI() {
@@ -82,12 +83,12 @@ namespace VHToolkit.Redirection.WorldRedirection {
 			if (strategyTechniques.Contains(technique.enumNames[technique.enumValueIndex])) {
 				if (targetsStrategies.Contains(strategy.enumNames[strategy.enumValueIndex])) {
 					EditorGUILayout.PropertyField(targetsScene, new GUIContent ("Targets"));
-				} else if (strategy.enumNames[strategy.enumValueIndex] == "SteerToOrbit") {
-					EditorGUILayout.PropertyField(radius, new GUIContent ("Radius"));
+					EditorGUILayout.PropertyField(applyDampening, new GUIContent("Apply Dampening"));
+					EditorGUILayout.PropertyField(applySmoothing, new GUIContent("Apply Smoothing"));
+				} else if (strategy.enumNames[strategy.enumValueIndex] == "SteerInDirection") {
+					EditorGUILayout.PropertyField(direction, new GUIContent ("Direction"));
 				}
 
-				EditorGUILayout.PropertyField(applyDampening, new GUIContent ("Apply Dampening"));
-				EditorGUILayout.PropertyField(applySmoothing, new GUIContent ("Apply Smoothing"));
 			}
 
 			serializedObject.ApplyModifiedProperties();
