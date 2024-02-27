@@ -112,7 +112,7 @@ namespace VHToolkit.Redirection {
         public float GetHeadInstantRotationY() {
 			// float instantRotation = (Quaternion.Inverse(physicalHead.rotation) * GetHeadInstantRotation() * physicalHead.rotation ).eulerAngles.y;
 			float instantRotation = GetHeadInstantRotation().eulerAngles.y;
-			return (instantRotation > 180f)? 360 - instantRotation : instantRotation;
+			return (instantRotation > 180f)? 360f - instantRotation : instantRotation;
 		}
 
 		/// <returns>The instant linear velocity of the physical head using the last frame's position</returns>

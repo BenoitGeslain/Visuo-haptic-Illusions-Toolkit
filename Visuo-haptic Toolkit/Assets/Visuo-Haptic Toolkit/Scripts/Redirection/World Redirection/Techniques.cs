@@ -30,7 +30,7 @@ namespace VHToolkit.Redirection.WorldRedirection {
 
 		public static float GetRedirection(Scene scene) {
 			float angleToTarget = scene.GetHeadAngleToTarget();
-			angleToTarget = (angleToTarget > 180f)? angleToTarget - 360 : angleToTarget;
+			angleToTarget = (angleToTarget > 180f)? angleToTarget - 360f : angleToTarget;
 
 			return Mathf.Abs(angleToTarget) > Toolkit.Instance.parameters.RotationalError
 				? Mathf.Sign(angleToTarget) * Toolkit.Instance.parameters.OverTimeRotation * Time.deltaTime
@@ -39,7 +39,7 @@ namespace VHToolkit.Redirection.WorldRedirection {
 
 		public static float GetRedirectionReset(Scene scene) {
 			float angleToTarget = scene.HeadToHeadRedirection.eulerAngles.y;
-			angleToTarget = (angleToTarget > 180f)? angleToTarget - 360 : angleToTarget;
+			angleToTarget = (angleToTarget > 180f)? angleToTarget - 360f : angleToTarget;
 
 			Debug.Log(angleToTarget);
 			return Mathf.Abs(angleToTarget) > Toolkit.Instance.parameters.RotationalError

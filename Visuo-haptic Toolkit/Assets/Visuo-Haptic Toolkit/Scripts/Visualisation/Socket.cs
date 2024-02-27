@@ -33,10 +33,13 @@ namespace VHToolkit.Logging {
 
 		private WorldRedirectionData redirectionData = new();
 
+		private WorldRedirection script;
+
 		private void Start() {
 			scene = Toolkit.Instance.GetComponent<WorldRedirection>().scene;
 			InvokeRepeating(nameof(StartSendingMessages), 1f, 0.5f);
 			loggingTechnique = new();
+			script = GetComponent<WorldRedirection>();
 		}
 
 		private void StartSendingMessages() {
@@ -56,7 +59,6 @@ namespace VHToolkit.Logging {
 
 		private void SendMessage(TcpClient client, WorldRedirectionData redirectionData) {
 			string json = JsonUtility.ToJson(redirectionData);
-			Debug.Log(json);
 			Debug.Log($"Sending: {json}");
 			// Translate the passed message into ASCII and store it as a Byte array.
 			Byte[] messageBytes = System.Text.Encoding.ASCII.GetBytes(json);
@@ -72,11 +74,11 @@ namespace VHToolkit.Logging {
 		}
 
 		private void Update() {
-				redirectionData.AddTo(Razzaque2001OverTimeRotation.GetRedirection(scene),
-									Razzaque2001Rotational.GetRedirection(scene),
-									Razzaque2001Curvature.GetRedirection(scene),
-									loggingTechnique.GetRedirection(scene),
-									(scene.HeadToHeadRedirection.eulerAngles.y > 180f) ? 360f - scene.HeadToHeadRedirection.eulerAngles.y : scene.HeadToHeadRedirection.eulerAngles.y,
+				redirectionData.AddTo(script.redirect ? Razzaque2001OverTimeRotation.GetRedirection(scene): 0,
+									script.redirect ? Razzaque2001Rotational.GetRedirection(scene): 0,
+									script.redirect ? Razzaque2001Curvature.GetRedirection(scene): 0,
+									script.redirect ? loggingTechnique.GetRedirection(scene) : 0,
+									scene.HeadToHeadRedirection.eulerAngles.y,
 									(float)(DateTime.Now - startTime).TotalSeconds);
 		}
 	}

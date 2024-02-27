@@ -26,8 +26,8 @@ namespace VHToolkit.Demo {
         private void Update() {
 
 			redirectionApplied = redirectionScript.GetAngularRedirection().eulerAngles.y;
-			if (redirectionApplied > 180f)
-				redirectionApplied = 360f - redirectionApplied;
+			// if (redirectionApplied > 180f)
+			// 	redirectionApplied -= 360f;
 			// If the correct redirection has been applied, stop the redirection
 			if (Math.Abs(redirectionApplied) > redirectionAmount) {
 				redirectionScript.StopRedirection();

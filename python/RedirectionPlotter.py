@@ -45,19 +45,17 @@ while True:
 
             ax1.set_xticks(list(map(int, ys[::10])))
             ax1.set_xlim((ys[-1] - 30, ys[-1]))
+            ax1.set_ylim((0, 190))
             ax1.set_title('Redirection amounts over time')
-            ax1.set_ylabel('Redirection per second (degrees)')
-            # for series, color, label in zip((otrs, rs, cs), 'rgy', ('Over time\nrotation', 'Rotational', 'Curvature')):
-            #     ax1.plot(ys[-60:], series[-60:], color=color, label=label, linewidth=0.5, linestyle="dashed")
+            ax1.set_ylabel('Redirection (degrees)')
             ax1.stackplot(ys[-60:], otrs[-60:], rs[-60:], cs[-60:], labels=('Over time\nrotation', 'Rotational', 'Curvature'), linewidth=0.5, linestyle="dashed")
-            # ax1.fill_between(ys[-60:], hybrid[-60:], color='b', alpha=0.2)
-            # ax1.plot(ys[-60:], hybrid[-60:], color='b', label='Hybrid', linewidth=0.5)
 
-            ax2.set_xticks(list(map(int, ys[::10])))
-            ax2.set_xlim((ys[-1] - 30, ys[-1]))
-            ax2.set_xlabel('Time from start (seconds)', loc='right')
-            ax2.set_ylabel('Redirection amount (degrees)')
-            ax2.plot(ys[-60:], tots[-60:], color='m', label='Total\nredirection', linewidth=1)
+            # ax2.set_xticks(list(map(int, ys[::10])))
+            # ax2.set_xlim((ys[-1] - 30, ys[-1]))
+            ax2.set_ylim((0, 190))
+            # ax2.set_title('Redirection amounts over time')
+            ax2.set_ylabel('Redirection (degrees)')
+            ax2.stackplot(ys, otrs, rs, cs, labels=('Over time\nrotation', 'Rotational', 'Curvature'), linewidth=0.5, linestyle="dashed")
 
             for ax in (ax1, ax2):
                 ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
