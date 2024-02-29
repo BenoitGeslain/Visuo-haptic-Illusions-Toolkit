@@ -1,3 +1,4 @@
+using Oculus.Interaction.Input;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ public class GradientVisuals : MonoBehaviour
     [Header("Heatmap")]
     [InspectorName("Enable Heatmap")] public bool heatmapEnabled;
     public GameObject heatmapQuadPrefab;
-    [Range(1,64)] [Tooltip("The higher the finer")] public int HeatmapMeshFineness;
+    [Range(1,64)] [Tooltip("The higher the finer")] public int heatmapMeshFineness = 16;
 
     // public vectors
     [Header("Vector Field")]
@@ -42,12 +43,12 @@ public class GradientVisuals : MonoBehaviour
     private GameObject hmQuad;
 
     // private vector
-    private GameObject PhysicalUser2d;
-    private GameObject[] ListeGradients;
-    private GameObject PtitGradient;
-    private int totalpas;
-    private Sprite Fleche;
-    private Sprite Warning;
+    private GameObject vfPhysicalUser2d;
+    private GameObject[] vfListeGradients;
+    private GameObject vfPtitGradient;
+    private int vfTotalpas;
+    private Sprite vfFleche;
+    private Sprite vfWarning;
 
 
 
@@ -60,9 +61,9 @@ public class GradientVisuals : MonoBehaviour
         InvokeRepeating("CheckOnBools", 3f, 1f);
 
         // vf todo
-        PhysicalUser2d = GameObject.Find("2duser");
-        Fleche = Resources.Load<Sprite>("gradient/fleche");
-        Warning = Resources.Load<Sprite>("gradient/warning");
+        vfPhysicalUser2d = GameObject.Find("2duser");
+        vfFleche = Resources.Load<Sprite>("gradient/fleche");
+        vfWarning = Resources.Load<Sprite>("gradient/warning");
 }
 
     void Update()
@@ -82,7 +83,7 @@ public class GradientVisuals : MonoBehaviour
         bool hmChanged = heatmapEnabled != heatmapStateSave;
         bool vfChanged = vectorsEnabled != vectorsStateSave;
 
-        if ((hmChanged && heatmapEnabled) || (vfChanged && vectorsEnabled)) InitVisualsTransform();
+        if ((hmChanged && heatmapEnabled) || (vfChanged && vectorsEnabled)) InitVisualsTransform(hmChanged && heatmapEnabled, vfChanged && vectorsEnabled);
         if (hmChanged && !heatmapEnabled) CloseHeatmap();
         if (vfChanged && !vectorsEnabled) CloseVectorField();
 
@@ -90,8 +91,10 @@ public class GradientVisuals : MonoBehaviour
         vectorsStateSave = vectorsEnabled;
     }
 
-    private void InitVisualsTransform()
+    private void InitVisualsTransform(bool initHeatmap = false, bool initVectors = false)
     {
+        if (!initHeatmap && !initVectors) return;
+
         obstaclesCollider = new List<Collider>(GameObject.FindGameObjectsWithTag(obstacleTab).Select(o => o.GetComponent<Collider>()));
 
         if (obstaclesCollider.Any())
@@ -124,23 +127,35 @@ public class GradientVisuals : MonoBehaviour
             width = maxX - minX;
             depth = maxZ - minZ;
 
-            stepX = width / HeatmapMeshFineness;
-            stepZ = depth / HeatmapMeshFineness;
+            stepX = width / heatmapMeshFineness;
+            stepZ = depth / heatmapMeshFineness;
 
             Log($"APF GRADIENT VISUALS INIT : X[{minX}:{maxX}] Z[{minZ}:{maxZ}]");
             Log($"APF GRADIENT VISUALS INIT : width:{width} height:{depth}");
 
             // heatmap
-            hmQuad = Instantiate(heatmapQuadPrefab);
-            hmQuad.transform.position = new Vector3((minX + maxX) / 2, 0f, (minZ + maxZ) / 2);
-            hmQuad.transform.localScale = new Vector2(width, depth);
+            if (initHeatmap)
+            {
+                hmQuad = Instantiate(heatmapQuadPrefab, this.transform);
+                hmQuad.transform.position = new Vector3((minX + maxX) / 2, 0f, (minZ + maxZ) / 2);
+                hmQuad.transform.localScale = new Vector2(width, depth);
 
-            hmRend = hmQuad.GetComponent<Renderer>();
+                hmRend = hmQuad.GetComponent<Renderer>();
 
-            UpdateHeatmap();
-            InvokeRepeating("UpdateHeatmap", 3f, 1f);
-            
-            // vectors todo
+                UpdateHeatmap();
+                InvokeRepeating("UpdateHeatmap", 3f, 1f);
+            } 
+            else if (hmQuad != null)
+            {
+                hmQuad.transform.position = new Vector3((minX + maxX) / 2, hmQuad.transform.position.y, (minZ + maxZ) / 2);
+                hmQuad.transform.localScale = new Vector2(width, depth);
+            }
+
+            // vectors
+            if (initVectors)
+            {
+                // TODO
+            }
 
         }
         else
@@ -155,12 +170,12 @@ public class GradientVisuals : MonoBehaviour
 
     public void UpdateHeatmap()
     {
-        stepX = width / HeatmapMeshFineness;
-        stepZ = depth / HeatmapMeshFineness;
+        stepX = width / heatmapMeshFineness;
+        stepZ = depth / heatmapMeshFineness;
 
-        for (int z = 0; z < HeatmapMeshFineness; z++)
+        for (int z = 0; z < heatmapMeshFineness; z++)
         {
-            for (int x = 0; x < HeatmapMeshFineness; x++)
+            for (int x = 0; x < heatmapMeshFineness; x++)
             {
 
                 Vector3 position = new Vector3(minX + (x * stepX) + (stepX / 2), 0, minZ + (z * stepZ) + (stepZ / 2));
@@ -169,7 +184,7 @@ public class GradientVisuals : MonoBehaviour
                 float magnitude = gradient.magnitude;;
                 //float Valeur = Math.Min(1, Math.Max(0, Magnitude));
 
-                hmDensityTable[x + (z * HeatmapMeshFineness)] = magnitude;
+                hmDensityTable[x + (z * heatmapMeshFineness)] = magnitude;
                 Log($"{stepX * x:0.0} - {stepZ * z:0.0} : {magnitude}");
             }
 
@@ -177,7 +192,7 @@ public class GradientVisuals : MonoBehaviour
 
         float maxDen = hmDensityTable.Max();
 
-        hmRend.material.SetFloat("_UnitsPerSide", HeatmapMeshFineness);
+        hmRend.material.SetFloat("_UnitsPerSide", heatmapMeshFineness);
         hmRend.material.SetFloat("_MaxDen", maxDen);
         hmRend.material.SetFloatArray("_DensityTable", hmDensityTable);
     }
@@ -186,18 +201,20 @@ public class GradientVisuals : MonoBehaviour
     {
         CancelInvoke("UpdateHeatmap");
         GameObject.Destroy(hmQuad);
+        hmQuad = null;
         hmRend = null;
     }
 
 
-    // Vectors todo
+    // Vectors
+    // TODO
 
     void RaycasttoObstaclesDraw()
     {
         foreach (Collider obscol in obstaclesCollider)
         {
-            Vector3 Closestpt = obscol.ClosestPoint(PhysicalUser2d.transform.position);
-            UnityEngine.Debug.DrawLine(PhysicalUser2d.transform.position, Closestpt, Color.red, .01f);
+            Vector3 Closestpt = obscol.ClosestPoint(vfPhysicalUser2d.transform.position);
+            UnityEngine.Debug.DrawLine(vfPhysicalUser2d.transform.position, Closestpt, Color.red, .01f);
         }
 
     }
@@ -206,16 +223,16 @@ public class GradientVisuals : MonoBehaviour
     {
 
 
-        if (ListeGradients == null)
+        if (vfListeGradients == null)
         {
-            PtitGradient = Resources.Load<GameObject>("gradient/flechego");
+            vfPtitGradient = Resources.Load<GameObject>("gradient/flechego");
 
             Vector2 map_size = GameObject.Find("Map").GetComponent<MeshCollider>().bounds.size;
             Vector2 map_center = GameObject.Find("Map").GetComponent<MeshCollider>().bounds.center;
             int pas = 1;
 
-            totalpas = (int)System.Math.Floor(map_size.x / pas) * (int)System.Math.Floor(map_size.y / pas);
-            ListeGradients = new GameObject[totalpas];
+            vfTotalpas = (int)System.Math.Floor(map_size.x / pas) * (int)System.Math.Floor(map_size.y / pas);
+            vfListeGradients = new GameObject[vfTotalpas];
 
 
 
@@ -229,8 +246,8 @@ public class GradientVisuals : MonoBehaviour
                     Vector2 Gradobject = ApfRedirection.ComputeGradient(new Vector2(x, y));
 
 
-                    ListeGradients[i] = Instantiate(PtitGradient);
-                    ListeGradients[i].transform.position = new Vector3(x, y, 2);
+                    vfListeGradients[i] = Instantiate(vfPtitGradient);
+                    vfListeGradients[i].transform.position = new Vector3(x, y, 2);
 
                     float angleRadian = Mathf.Atan2(Gradobject.y, Gradobject.x);
                     float angleEnDegres = angleRadian * Mathf.Rad2Deg;
@@ -240,14 +257,14 @@ public class GradientVisuals : MonoBehaviour
 
                         Quaternion nouvelleRotation = Quaternion.Euler(0, 0, angleEnDegres);
 
-                        ListeGradients[i].transform.rotation = nouvelleRotation;
-                        ListeGradients[i].GetComponent<Renderer>().material.color = new Color(1f * Gradobject.magnitude, 1f * Gradobject.magnitude, 1f);
+                        vfListeGradients[i].transform.rotation = nouvelleRotation;
+                        vfListeGradients[i].GetComponent<Renderer>().material.color = new Color(1f * Gradobject.magnitude, 1f * Gradobject.magnitude, 1f);
 
                     }
 
                     else
                     {
-                        ListeGradients[i].GetComponent<SpriteRenderer>().sprite = Warning;
+                        vfListeGradients[i].GetComponent<SpriteRenderer>().sprite = vfWarning;
 
                     }
                     i++;
@@ -255,9 +272,9 @@ public class GradientVisuals : MonoBehaviour
             }
         }
 
-        else if (totalpas > 0 && ListeGradients.Length == totalpas)
+        else if (vfTotalpas > 0 && vfListeGradients.Length == vfTotalpas)
         {
-            foreach (GameObject gradientgameobj in ListeGradients)
+            foreach (GameObject gradientgameobj in vfListeGradients)
             {
                 if (gradientgameobj != null)
                 {
@@ -274,12 +291,12 @@ public class GradientVisuals : MonoBehaviour
 
                         gradientgameobj.transform.rotation = nouvelleRotation;
                         gradientgameobj.GetComponent<Renderer>().material.color = new Color(1f * Gradobject.magnitude, 1f * Gradobject.magnitude, 1f);
-                        gradientgameobj.GetComponent<SpriteRenderer>().sprite = Fleche;
+                        gradientgameobj.GetComponent<SpriteRenderer>().sprite = vfFleche;
                     }
 
                     else
                     {
-                        gradientgameobj.GetComponent<SpriteRenderer>().sprite = Warning;
+                        gradientgameobj.GetComponent<SpriteRenderer>().sprite = vfWarning;
 
                     }
 

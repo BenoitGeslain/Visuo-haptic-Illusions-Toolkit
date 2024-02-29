@@ -2279,10 +2279,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e80b3563113a695488b712d8b37d5eda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heatmapQuadPrefab: {fileID: 3973517385662518282, guid: 437537830c8a19d42a6c39be05919293, type: 3}
   obstacleTab: Obstacle
-  subdivionsPerSide: 35
-  verbose: 1
+  verbose: 0
+  heatmapEnabled: 1
+  heatmapQuadPrefab: {fileID: 3973517385662518282, guid: 437537830c8a19d42a6c39be05919293, type: 3}
+  heatmapMeshFineness: 0
+  vectorsEnabled: 0
+  traitObjet: 0
 --- !u!4 &1634858490
 Transform:
   m_ObjectHideFlags: 0
