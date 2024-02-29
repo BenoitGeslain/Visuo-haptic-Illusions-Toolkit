@@ -10,5 +10,6 @@ var searchData=
   ['cubesstate_21',['CubesState',['../classCubesRedirection.html#a50d9c599f4116189058e71871878df23',1,'CubesRedirection']]],
   ['curvature_22',['curvature',['../structVHToolkit_1_1Logging_1_1WorldRedirectionData.html#a9c3c8f897417975e25b6cd4023b86bb6',1,'VHToolkit::Logging::WorldRedirectionData']]],
   ['curvatureradius_23',['CurvatureRadius',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a094b9a6beb61e1b1ae42f33a87db3091',1,'VHToolkit::Redirection::ParametersToolkit']]],
-  ['curvatureradiustorotationrate_24',['CurvatureRadiusToRotationRate',['../classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1Razzaque2001Curvature.html#aa6c6750762fd8e7688123e2315cf2731',1,'VHToolkit::Redirection::WorldRedirection::Razzaque2001Curvature']]]
+  ['curvatureradiustorotationrate_24',['CurvatureRadiusToRotationRate',['../classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1Razzaque2001Curvature.html#aa6c6750762fd8e7688123e2315cf2731',1,'VHToolkit::Redirection::WorldRedirection::Razzaque2001Curvature']]],
+  ['curvaturesum_25',['curvatureSum',['../structVHToolkit_1_1Logging_1_1WorldRedirectionData.html#aae09df0088af38142459c1032866b58c',1,'VHToolkit::Logging::WorldRedirectionData']]]
 ];
