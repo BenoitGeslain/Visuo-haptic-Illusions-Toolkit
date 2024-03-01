@@ -11,35 +11,39 @@ namespace VHToolkit.Logging {
 
 	[Serializable]
 	struct WorldRedirectionData {
-		[SerializeField] public float overTime, rotational, curvature, hybrid, total;
+		[SerializeField] public float overTime, rotational, curvature;
+		[SerializeField] public float overTimeSum, rotationalSum, curvatureSum;
 		[SerializeField] float time;
 
-		public void AddTo(float overTime, float rotational, float curvature, float hybrid, float total, float time) {
-			this.overTime += Mathf.Abs(overTime);
-			this.rotational += Mathf.Abs(rotational);
-			this.curvature += Mathf.Abs(curvature);
-			this.hybrid += Mathf.Abs(hybrid);
-			this.total = total;
+		public void AddTo(float overTime, float rotational, float curvature, float time) {
+			this.overTime = Mathf.Abs(overTime);
+			this.rotational = Mathf.Abs(rotational);
+			this.curvature = Mathf.Abs(curvature);
+
+			this.overTimeSum += Mathf.Abs(overTime);
+			this.rotationalSum += Mathf.Abs(rotational);
+			this.curvatureSum += Mathf.Abs(curvature);
 			this.time = time;
 		}
 	}
 	public class Socket : MonoBehaviour {
 		private Scene scene;
+		private WorldRedirection script;
 		private DateTime startTime;
 
 		private TcpClient client;
 
 		private Razzaque2001Hybrid loggingTechnique;
 
-		private WorldRedirectionData redirectionData = new();
-
-		private WorldRedirection script;
+		private WorldRedirectionData redirectionData;
 
 		private void Start() {
-			scene = Toolkit.Instance.GetComponent<WorldRedirection>().scene;
+			script = Toolkit.Instance.GetComponent<WorldRedirection>();
+			scene = script.scene;
 			InvokeRepeating(nameof(StartSendingMessages), 1f, 0.5f);
 			loggingTechnique = new();
-			script = GetComponent<WorldRedirection>();
+
+			redirectionData = new();
 		}
 
 		private void StartSendingMessages() {
@@ -69,17 +73,15 @@ namespace VHToolkit.Logging {
 			try {
 				// Send the message to the connected TcpServer.
 				stream.Write(messageBytes, 0, messageBytes.Length);
-				stream.Flush();
+				// stream.Flush();
 			} catch (SocketException) {Debug.LogWarning("Socket closed.");}
 		}
 
 		private void Update() {
-				redirectionData.AddTo(script.redirect ? Razzaque2001OverTimeRotation.GetRedirection(scene): 0,
-									script.redirect ? Razzaque2001Rotational.GetRedirection(scene): 0,
-									script.redirect ? Razzaque2001Curvature.GetRedirection(scene): 0,
-									script.redirect ? loggingTechnique.GetRedirection(scene) : 0,
-									scene.HeadToHeadRedirection.eulerAngles.y,
-									(float)(DateTime.Now - startTime).TotalSeconds);
+				redirectionData.AddTo((script.redirect) ? Razzaque2001OverTimeRotation.GetRedirection(scene) : 0f,
+										(script.redirect) ? Razzaque2001Rotational.GetRedirection(scene) : 0f,
+										(script.redirect) ? Razzaque2001Curvature.GetRedirection(scene) : 0f,
+										(float)(DateTime.Now - startTime).TotalSeconds);
 		}
 	}
 }
