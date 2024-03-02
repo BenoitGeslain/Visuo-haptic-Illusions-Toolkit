@@ -1,0 +1,55 @@
+# Translations template for PROJECT.
+# Copyright (C) 2024 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+#
+
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2024-03-02 19:34+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.14.0\n"
+
+#: RedirectionPlotter.py:51
+msgid "Redirection amounts over time"
+msgstr "Quantité de redirection au cours du temps"
+
+#: RedirectionPlotter.py:52
+msgid "Redirection Applied to User (degrees)"
+msgstr "Redirection appliquée à l'utilisateur (degrés)"
+
+#: RedirectionPlotter.py:53
+msgid "Over time rotation"
+msgstr "Rotation constante dans le temps"
+
+#: RedirectionPlotter.py:53 RedirectionPlotter.py:60
+msgid "Rotational"
+msgstr "Rotationnelle"
+
+#: RedirectionPlotter.py:53 RedirectionPlotter.py:60
+msgid "Curvature"
+msgstr "Courbure"
+
+#: RedirectionPlotter.py:58
+msgid "Time from start (seconds)"
+msgstr "Temps depuis le démarrage (secondes)"
+
+#: RedirectionPlotter.py:59
+msgid "Redirection per Second (degrees/s)"
+msgstr "Redirection par seconde (degrés/s)"
+
+#: RedirectionPlotter.py:60
+msgid "Over Time Rotation"
+msgstr "Rotation constante dans le temps"
+
+#: RedirectionPlotter.py:65
+msgid "Redirection source"
+msgstr "Source de redirection"
+
