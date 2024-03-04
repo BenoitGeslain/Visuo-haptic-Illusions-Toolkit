@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e581f0f440a7c904aa70c37c0de08866, type: 3}
-  m_Name: Literature Parameters
+  m_Name: High Parameters (Literature)
   m_EditorClassIdentifier: 
   HorizontalAngles:
     left: -4.38

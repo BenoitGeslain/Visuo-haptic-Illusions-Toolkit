@@ -24,6 +24,8 @@ namespace VHToolkit.Redirection {
 		[Tooltip("Coefficient that controls the amount of redirection to remove according to the real hand translation when selecting the ResetRedirection technique. Value is in XXXX.")]	// TODO check this
 		public float ResetRedirectionCoeff = 0.087f;
 
+
+
 		[Header("World Warping")]
 		[Tooltip("The error in rotation where users are considered to be in the correct direction. Value is in °.")]
 		public float RotationalError = 0.5f;
@@ -47,11 +49,15 @@ namespace VHToolkit.Redirection {
 		[Tooltip("The maximum gain in rotation that can be applied to the user's point of view in rotation. Value has no unit and is not a percentage. [Steinicke et al., 2010]")]
 		public Vector2Rotation GainsRotational;
 		[Tooltip("The maximum gain in translation that can be applied to the user's point of view in rotation. Value is in °/m and is not a percentage.")]
-		public float CurvatureRadius = 7.5f;
+		public float CurvatureRadius = 15f;
+
+
 
 		[Header("3D Interpolation")]
 		[Tooltip("")]
 		public Vector3 a;
+
+
 
 		[Header("Pseudo-Haptic")]
 		[Tooltip("The size of the area around the origin where the Swamp illusion defined by [Lécuyer et al., 2000] is applied. Value is in m.")]

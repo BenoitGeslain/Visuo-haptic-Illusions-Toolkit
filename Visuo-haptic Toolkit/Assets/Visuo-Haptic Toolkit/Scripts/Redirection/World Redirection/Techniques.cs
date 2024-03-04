@@ -32,8 +32,8 @@ namespace VHToolkit.Redirection.WorldRedirection {
 			float angleToTarget = scene.GetHeadAngleToTarget();
 			angleToTarget = (angleToTarget > 180f)? angleToTarget - 360f : angleToTarget;
 
-			return Mathf.Abs(angleToTarget) > Toolkit.Instance.parameters.RotationalError
-				? Mathf.Sign(angleToTarget) * Toolkit.Instance.parameters.OverTimeRotation * Time.deltaTime
+			return Mathf.Abs(angleToTarget) > scene.parameters.RotationalError
+				? Mathf.Sign(angleToTarget) * scene.parameters.OverTimeRotation * Time.deltaTime
 				: 0f;
 		}
 
@@ -42,8 +42,8 @@ namespace VHToolkit.Redirection.WorldRedirection {
 			angleToTarget = (angleToTarget > 180f)? angleToTarget - 360f : angleToTarget;
 
 			Debug.Log(angleToTarget);
-			return Mathf.Abs(angleToTarget) > Toolkit.Instance.parameters.RotationalError
-				? - Mathf.Sign(angleToTarget) * Toolkit.Instance.parameters.OverTimeRotation * Time.deltaTime
+			return Mathf.Abs(angleToTarget) > scene.parameters.RotationalError
+				? - Mathf.Sign(angleToTarget) * scene.parameters.OverTimeRotation * Time.deltaTime
 				: 0f;
 		}
 	}
@@ -62,11 +62,11 @@ namespace VHToolkit.Redirection.WorldRedirection {
 			float angleToTarget = scene.GetHeadAngleToTarget();
 			float instantRotation = scene.GetHeadInstantRotationY();
 
-			if (Mathf.Abs(angleToTarget) > Toolkit.Instance.parameters.RotationalError && Mathf.Abs(instantRotation) > Toolkit.Instance.parameters.RotationThreshold) {
-				Debug.Log($"{instantRotation} - {instantRotation * ((Mathf.Sign(scene.GetHeadAngleToTarget()) != Mathf.Sign(instantRotation))? Toolkit.Instance.parameters.GainsRotational.opposite - 1 : Toolkit.Instance.parameters.GainsRotational.same - 1)}");
+			if (Mathf.Abs(angleToTarget) > scene.parameters.RotationalError && Mathf.Abs(instantRotation) > scene.parameters.RotationThreshold) {
+				Debug.Log($"{instantRotation} - {instantRotation * ((Mathf.Sign(scene.GetHeadAngleToTarget()) != Mathf.Sign(instantRotation))? scene.parameters.GainsRotational.opposite - 1 : scene.parameters.GainsRotational.same - 1)}");
 				return instantRotation * ((Mathf.Sign(scene.GetHeadAngleToTarget()) != Mathf.Sign(instantRotation))
-					? Toolkit.Instance.parameters.GainsRotational.opposite - 1
-					: Toolkit.Instance.parameters.GainsRotational.same - 1);
+					? scene.parameters.GainsRotational.opposite - 1
+					: scene.parameters.GainsRotational.same - 1);
 			}
 			return 0f;
 		}
@@ -75,10 +75,10 @@ namespace VHToolkit.Redirection.WorldRedirection {
 			float angleToTarget = scene.HeadToHeadRedirection.eulerAngles.y;
 			float instantRotation = scene.GetHeadInstantRotationY();
 
-			if (Mathf.Abs(instantRotation) > Toolkit.Instance.parameters.RotationThreshold && Mathf.Abs(angleToTarget) > Toolkit.Instance.parameters.RotationalError) {
+			if (Mathf.Abs(instantRotation) > scene.parameters.RotationThreshold && Mathf.Abs(angleToTarget) > scene.parameters.RotationalError) {
 				return instantRotation * ((Mathf.Sign(scene.GetHeadAngleToTarget()) != Mathf.Sign(instantRotation))
-					? Toolkit.Instance.parameters.GainsRotational.opposite - 1
-					: Toolkit.Instance.parameters.GainsRotational.same - 1);
+					? scene.parameters.GainsRotational.opposite - 1
+					: scene.parameters.GainsRotational.same - 1);
 			}
 			return 0f;
 		}
@@ -97,12 +97,12 @@ namespace VHToolkit.Redirection.WorldRedirection {
 		public static float GetRedirection(Scene scene) {
 			float instantTranslation = scene.GetHeadInstantTranslationForward().magnitude;
 
-			return instantTranslation > Toolkit.Instance.parameters.WalkingThreshold * Time.deltaTime
-				? Mathf.Sign(Vector3.Cross(scene.physicalHead.forward, scene.forwardTarget).y) * instantTranslation * CurvatureRadiusToRotationRate()
+			return instantTranslation > scene.parameters.WalkingThreshold * Time.deltaTime
+				? Mathf.Sign(Vector3.Cross(scene.physicalHead.forward, scene.forwardTarget).y) * instantTranslation * CurvatureRadiusToRotationRate(scene)
 				: 0f;
 		}
 
-		public static float CurvatureRadiusToRotationRate() => 180f / (Mathf.PI * Toolkit.Instance.parameters.CurvatureRadius);
+		public static float CurvatureRadiusToRotationRate(Scene scene) => 180f / (Mathf.PI * scene.parameters.CurvatureRadius);
 	}
 
 
@@ -169,12 +169,12 @@ namespace VHToolkit.Redirection.WorldRedirection {
 		}
 
 		private float ApplyDampening(Scene scene, float angle) {
-			float dampenedAngle = angle * Mathf.Sin(Mathf.Min(scene.GetHeadAngleToTarget() / Toolkit.Instance.parameters.DampeningRange, 1f) * Mathf.PI/2);
-			float dampenedAngleDistance = dampenedAngle * Mathf.Min(scene.GetHeadToTargetDistance() / Toolkit.Instance.parameters.DampeningDistanceThreshold, 1f);
-			return (scene.GetHeadToTargetDistance() < Toolkit.Instance.parameters.DampeningDistanceThreshold)? dampenedAngleDistance : dampenedAngle;
+			float dampenedAngle = angle * Mathf.Sin(Mathf.Min(scene.GetHeadAngleToTarget() / scene.parameters.DampeningRange, 1f) * Mathf.PI/2);
+			float dampenedAngleDistance = dampenedAngle * Mathf.Min(scene.GetHeadToTargetDistance() / scene.parameters.DampeningDistanceThreshold, 1f);
+			return (scene.GetHeadToTargetDistance() < scene.parameters.DampeningDistanceThreshold)? dampenedAngleDistance : dampenedAngle;
 		}
 
-		public float ApplySmoothing(Scene scene, float angle) => (1 - Toolkit.Instance.parameters.SmoothingFactor) * scene.previousRedirection + Toolkit.Instance.parameters.SmoothingFactor * angle;
+		public float ApplySmoothing(Scene scene, float angle) => (1 - scene.parameters.SmoothingFactor) * scene.previousRedirection + scene.parameters.SmoothingFactor * angle;
 	}
 
 	/// <summary>
@@ -183,7 +183,7 @@ namespace VHToolkit.Redirection.WorldRedirection {
 	/// </summary>
 	public class Steinicke2008Translational: WorldRedirectionTechnique {
 		public override void Redirect(Scene scene) {
-            scene.virtualHead.Translate(Vector3.Scale(scene.GetHeadInstantTranslation(), Toolkit.Instance.parameters.GainsTranslational - Vector3.one), relativeTo: Space.World);
+            scene.virtualHead.Translate(Vector3.Scale(scene.GetHeadInstantTranslation(), scene.parameters.GainsTranslational - Vector3.one), relativeTo: Space.World);
 			CopyHeadAndLimbTransform(scene);
 		}
 	}
@@ -203,12 +203,12 @@ namespace VHToolkit.Redirection.WorldRedirection {
 			float angleBetweenTargets = Vector3.SignedAngle(Vector3.ProjectOnPlane(scene.physicalTarget.position - scene.origin.position, Vector3.up), scene.virtualTarget.position - scene.origin.position, Vector3.up);
 			float angleBetweenHeads = Vector3.SignedAngle(Vector3.ProjectOnPlane(scene.physicalHead.forward, Vector3.up), scene.virtualHead.forward, Vector3.up);
 
-			if (Mathf.Abs(angleBetweenTargets - angleBetweenHeads) > Toolkit.Instance.parameters.RotationalError) {
+			if (Mathf.Abs(angleBetweenTargets - angleBetweenHeads) > scene.parameters.RotationalError) {
 				float angle = angleBetweenTargets - angleBetweenHeads;
 				float instantRotation = scene.GetHeadInstantRotationY();
 
-				if (Mathf.Abs(instantRotation) > Toolkit.Instance.parameters.RotationThreshold && Mathf.Abs(angle) > Toolkit.Instance.parameters.RotationalError) {
-					var gain = (Mathf.Sign(angle) != Mathf.Sign(instantRotation)) ? Toolkit.Instance.parameters.GainsRotational.same : Toolkit.Instance.parameters.GainsRotational.opposite;
+				if (Mathf.Abs(instantRotation) > scene.parameters.RotationThreshold && Mathf.Abs(angle) > scene.parameters.RotationalError) {
+					var gain = (Mathf.Sign(angle) != Mathf.Sign(instantRotation)) ? scene.parameters.GainsRotational.same : scene.parameters.GainsRotational.opposite;
 					var bound = Mathf.Abs(gain * instantRotation);
 					return Mathf.Clamp(angle, -bound, bound);
 				}

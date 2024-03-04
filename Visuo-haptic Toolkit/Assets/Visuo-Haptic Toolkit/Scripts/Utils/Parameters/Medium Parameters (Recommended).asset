@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e581f0f440a7c904aa70c37c0de08866, type: 3}
-  m_Name: Recommended Parameters
+  m_Name: Medium Parameters (Recommended)
   m_EditorClassIdentifier: 
   HorizontalAngles:
     left: -4.38
@@ -32,7 +32,7 @@ MonoBehaviour:
   DampeningDistanceThreshold: 1.25
   DampeningRange: 1.57
   SmoothingFactor: 0.2
-  OverTimeRotation: 0.2
+  OverTimeRotation: 1
   GainsTranslational: {x: 1, y: 1, z: 1}
   GainsRotational:
     same: 1.05

@@ -49,9 +49,7 @@ namespace VHToolkit.Logging {
 		private void StartSendingMessages() {
 			if (client == null || !client.Connected) {
 				try {
-					client = new TcpClient("localhost", 13000) {
-						ReceiveTimeout = 500
-					};
+					client = new TcpClient("localhost", 13000);
 					startTime = DateTime.Now;
 				}
 				catch (SocketException) {}

@@ -68,6 +68,8 @@ namespace VHToolkit.Redirection {
 		[Ignore] public float previousRedirection;
 		[Ignore] public Vector3 strategyDirection;
 
+		[Ignore] public ParametersToolkit parameters;
+
 		/// <summary>
 		/// The position of the virtual limb is given by <c>physicalHand.position + Redirection</c>.
 		/// </summary>
