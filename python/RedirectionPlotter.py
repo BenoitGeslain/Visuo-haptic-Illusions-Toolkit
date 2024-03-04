@@ -2,12 +2,14 @@ import socket
 import json
 import matplotlib.pyplot as plt
 import re
+import os
 
 import matplotlib
 matplotlib.use('TkAgg')
 
 import gettext
-gettext.translation('messages', localedir='./locales',languages=['fr']).install()
+def _(x): return x
+# gettext.translation('messages', localedir='.\locales',languages=['fr']).install()
 
 
 plt.ion() # turn on interactive mode

@@ -79,9 +79,9 @@ namespace VHToolkit.Logging {
 
 		private void Update() {
 				redirectionData.AddTo((script.redirect) ? Razzaque2001OverTimeRotation.GetRedirection(scene) : 0f,
-										(script.redirect) ? Razzaque2001Rotational.GetRedirection(scene) : 0f,
-										(script.redirect) ? Razzaque2001Curvature.GetRedirection(scene) : 0f,
-										(float)(DateTime.Now - startTime).TotalSeconds);
+									  (script.redirect) ? Razzaque2001Rotational.GetRedirection(scene) : 0f,
+									  (script.redirect) ? Razzaque2001Curvature.GetRedirection(scene) : 0f,
+									  (float)(DateTime.Now - startTime).TotalSeconds);
 		}
 	}
 }

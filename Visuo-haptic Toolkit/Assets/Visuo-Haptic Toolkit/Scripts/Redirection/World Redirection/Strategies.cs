@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 namespace VHToolkit.Redirection.WorldRedirection {
@@ -39,20 +40,8 @@ namespace VHToolkit.Redirection.WorldRedirection {
 		/// <param name="scene"></param>
 		/// <returns></returns>
 		public override Vector3 SteerTo(Scene scene) {
-            // Equivalent code in later .Net versions:
-            // Func<Transform, float> bearing = (Transform t) => Vector3.Angle(Vector3.ProjectOnPlane(scene.physicalHead.forward, Vector3.up), Vector3.ProjectOnPlane(t.position - scene.physicalHead.position, Vector3.up));
-            // Transform target = scene.targets.Min(bearing);
-
-            float smallestBearing = 360f;
-			Transform target = null;
-			foreach (Transform t in scene.targets) {
-				float a = Vector3.Angle(Vector3.ProjectOnPlane(scene.physicalHead.forward, Vector3.up), Vector3.ProjectOnPlane(t.position - scene.physicalHead.position, Vector3.up));
-				// a *= (scene.physicalHead.position - t.position).sqrMagnitude;
-				if (a < smallestBearing) {
-					smallestBearing = a;
-					target = t;
-				}
-			}
+            float bearing(Transform t) => Vector3.Angle(Vector3.ProjectOnPlane(scene.physicalHead.forward, Vector3.up), Vector3.ProjectOnPlane(t.position - scene.physicalHead.position, Vector3.up));
+            Transform target = scene.targets.MinBy(bearing);
 			scene.selectedTarget = target;
 			return target.position - scene.physicalHead.position;
 		}

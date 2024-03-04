@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 
 using UnityEngine;
-// using Valve.VR.InteractionSystem;
 
 using VHToolkit.Redirection.WorldRedirection;
 
