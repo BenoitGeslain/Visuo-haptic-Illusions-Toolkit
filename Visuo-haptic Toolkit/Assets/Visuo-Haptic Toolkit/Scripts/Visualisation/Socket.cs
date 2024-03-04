@@ -71,14 +71,14 @@ namespace VHToolkit.Logging {
 			try {
 				// Send the message to the connected TcpServer.
 				stream.Write(messageBytes, 0, messageBytes.Length);
-				// stream.Flush();
+				stream.Flush();
 			} catch (SocketException) {Debug.LogWarning("Socket closed.");}
 		}
 
 		private void Update() {
-				redirectionData.AddTo((script.redirect) ? Razzaque2001OverTimeRotation.GetRedirection(scene) : 0f,
-									  (script.redirect) ? Razzaque2001Rotational.GetRedirection(scene) : 0f,
-									  (script.redirect) ? Razzaque2001Curvature.GetRedirection(scene) : 0f,
+				redirectionData.AddTo((script.redirect && scene.enableHybridOverTime) ? Razzaque2001OverTimeRotation.GetRedirection(scene) : 0f,
+									  (script.redirect && scene.enableHybridRotational) ? Razzaque2001Rotational.GetRedirection(scene) : 0f,
+									  (script.redirect && scene.enableHybridCurvature) ? Razzaque2001Curvature.GetRedirection(scene) : 0f,
 									  (float)(DateTime.Now - startTime).TotalSeconds);
 		}
 	}

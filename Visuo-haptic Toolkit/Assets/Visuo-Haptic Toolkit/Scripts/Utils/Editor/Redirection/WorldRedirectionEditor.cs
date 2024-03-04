@@ -92,17 +92,33 @@ namespace VHToolkit.Redirection.WorldRedirection {
 			// Debug.Log(someComponent.scene.parameters);
 			// Debug.Log(someComponent.scene.parameters.OverTimeRotation);
 
-			if (new string[] {"Razzaque2001OverTimeRotation", "Razzaque2001Hybrid"}.Contains(technique.enumNames[technique.enumValueIndex])) {
+			if (technique.enumNames[technique.enumValueIndex] == "Razzaque2001OverTimeRotation") {
 				EditorGUILayout.PropertyField(parametersObject.FindProperty("OverTimeRotation"), new GUIContent("Over Time Rotation Rate"));
 			}
-			if (new string[] { "Razzaque2001Rotational", "Razzaque2001Hybrid" }.Contains(technique.enumNames[technique.enumValueIndex])) {
+			if (technique.enumNames[technique.enumValueIndex] == "Razzaque2001Rotational") {
 				EditorGUILayout.PropertyField(parametersObject.FindProperty("GainsRotational"), new GUIContent("Rotational Gains"));
 			}
-			if (new string[] { "Razzaque2001Curvature", "Razzaque2001Hybrid" }.Contains(technique.enumNames[technique.enumValueIndex])) {
+			if (technique.enumNames[technique.enumValueIndex] == "Razzaque2001Curvature") {
 				EditorGUILayout.PropertyField(parametersObject.FindProperty("CurvatureRadius"), new GUIContent("Curvature Radius"));
 			}
 			if (technique.enumNames[technique.enumValueIndex] == "Razzaque2001Hybrid") {
-				// TODO: Radio list to choose which techniques to activate
+				EditorGUILayout.PropertyField(serializedObject.FindProperty("scene.enableHybridOverTime"), new GUIContent("Enable Over Time Rotation"));
+				EditorGUILayout.PropertyField(parametersObject.FindProperty("OverTimeRotation"), new GUIContent("Over Time Rotation Rate"));
+				EditorGUILayout.Space(2);
+				EditorGUILayout.PropertyField(serializedObject.FindProperty("scene.enableHybridRotational"), new GUIContent("Enable Rotational"));
+				EditorGUILayout.PropertyField(parametersObject.FindProperty("GainsRotational"), new GUIContent("Rotational Gains"));
+				EditorGUILayout.Space(2);
+				EditorGUILayout.PropertyField(serializedObject.FindProperty("scene.enableHybridCurvature"), new GUIContent("Enable Curvature"));
+				EditorGUILayout.PropertyField(parametersObject.FindProperty("CurvatureRadius"), new GUIContent("Curvature Radius"));
+				EditorGUILayout.Space(2);
+				EditorGUILayout.PropertyField(serializedObject.FindProperty("scene.aggregateFunction"), new GUIContent("Aggregate Function"));
+				WorldRedirection script = target as WorldRedirection;
+				script.techniqueInstance = script.scene.aggregateFunction switch {
+					HybridAggregate.Max => Razzaque2001Hybrid.Max(),
+					HybridAggregate.Sum => Razzaque2001Hybrid.Sum(),
+					HybridAggregate.WeightedSum => Razzaque2001Hybrid.Weighted(1/3,1/3,1/3),	// TODO: add weights inside interface
+					_ => Razzaque2001Hybrid.Max()
+				};
 			}
 			// if (technique.enumNames[technique.enumValueIndex] == "Azmandian2016World") {
 			// 	EditorGUILayout.PropertyField(parametersObject.FindProperty("GainsRotational"), new GUIContent("Gains Rotational"));
@@ -121,13 +137,18 @@ namespace VHToolkit.Redirection.WorldRedirection {
 					EditorGUILayout.PropertyField(targetsScene, new GUIContent ("Targets"));
 					EditorGUILayout.PropertyField(applyDampening, new GUIContent("Apply Dampening"));
 					EditorGUILayout.PropertyField(applySmoothing, new GUIContent("Apply Smoothing"));
+				} else if (strategy.enumNames[strategy.enumValueIndex] == "SteerToOrbit") {
+					EditorGUILayout.Space(5);
+					EditorGUILayout.LabelField("Strategy Parameters", EditorStyles.boldLabel);
+					var steerToOrbitRadius = parametersObject.FindProperty("steerToOrbitRadius");
+					EditorGUILayout.PropertyField(steerToOrbitRadius, new GUIContent("Orbit Radius"));
 				} else if (strategy.enumNames[strategy.enumValueIndex] == "SteerInDirection") {
 					EditorGUILayout.Space(5);
 					EditorGUILayout.LabelField("Strategy Parameters", EditorStyles.boldLabel);
-					EditorGUILayout.PropertyField(direction, new GUIContent ("Direction"));
+					EditorGUILayout.PropertyField(direction, new GUIContent("Direction"));
 				}
 
-			}
+		}
 
 			serializedObject.ApplyModifiedProperties();
 			parametersObject.ApplyModifiedProperties();

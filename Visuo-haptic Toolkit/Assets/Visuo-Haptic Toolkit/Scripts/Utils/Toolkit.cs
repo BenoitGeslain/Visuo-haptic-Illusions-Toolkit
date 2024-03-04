@@ -42,6 +42,12 @@ namespace VHToolkit.Redirection {
 		SteerInDirection
 	}
 
+	public enum HybridAggregate {
+		Max,
+		Sum,
+		WeightedSum
+	}
+
 	public class Toolkit : MonoBehaviour {
 		public static Toolkit Instance { get; private set; }
 

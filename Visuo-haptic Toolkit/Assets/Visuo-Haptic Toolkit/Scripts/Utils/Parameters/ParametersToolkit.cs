@@ -27,6 +27,7 @@ namespace VHToolkit.Redirection {
 
 
 		[Header("World Warping")]
+		// Common params
 		[Tooltip("The error in rotation where users are considered to be in the correct direction. Value is in °.")]
 		public float RotationalError = 0.5f;
 		[Tooltip("The minimum head rotation required to apply a world redirection. Value is in °/s.")]
@@ -34,6 +35,7 @@ namespace VHToolkit.Redirection {
 		[Tooltip("The speed threshold defining if the user is considered to be standing still or walking. Value is in m/s. [Hogson and Bachmann, 2013]")]
 		public float WalkingThreshold = 0.2f;
 
+		// SteerToCenter and Targets params
 		[Tooltip("The distance within which the dampening effect is applied on Redirected Walking (Hybrid). Value is in m. [Hogson and Bachmann, 2013]")]
 		public float DampeningDistanceThreshold = 1.25f;
 		[Tooltip("The dampening range. Value is in °.")]
@@ -42,6 +44,11 @@ namespace VHToolkit.Redirection {
 		[Tooltip("The soothing factor preventing abrupt changes. Value has no unit. [Hogson and Bachmann, 2013]")]
 		public float SmoothingFactor = 0.2f;
 
+		// SteerToOrbit params
+		[Tooltip("The radius of the orbit around which the user is redirected with the SteerToOrbit techniques described in [TODO]")]
+		public float steerToOrbitRadius = 5f;
+
+		// Techniques params
 		[Tooltip("The maximum rotation that can be applied to the user's point of view in rotation along the vertical axis (Y). Value is in °/s.")]
 		public float OverTimeRotation = 0.2f;
 		[Tooltip("The maximum gain in translation that can be applied to the user's point of view in translation (akin to a C/D ratio). Value has no unit and is not a percentage.")]

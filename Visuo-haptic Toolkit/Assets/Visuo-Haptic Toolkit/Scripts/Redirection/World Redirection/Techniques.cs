@@ -115,13 +115,13 @@ namespace VHToolkit.Redirection.WorldRedirection {
 	/// </summary>
 	public class Razzaque2001Hybrid: WorldRedirectionTechnique {
 
-		readonly Func<float, float, float, float> aggregate;
+		public Func<float, float, float, float> aggregate;
 
 
         /// <summary>
         /// By default, the aggregation function is the maximum by absolute value.
         /// </summary>
-        public Razzaque2001Hybrid() : base() => aggregate = (a, b, c) => (new float[] { a, b, c }).OrderByDescending(Mathf.Abs).First();
+        public Razzaque2001Hybrid() : base() => Max();
 
         /// <summary>
         /// Constructor taking a parameter, an aggregation function (float, float, float) -> float.
@@ -129,22 +129,28 @@ namespace VHToolkit.Redirection.WorldRedirection {
         /// <param name="aggregate"></param>
         public Razzaque2001Hybrid(Func<float, float, float, float> aggregate) : base() => this.aggregate = aggregate;
 
-        /// <summary>
-        /// Static factory method for using sum-aggregation.
-        /// </summary>
-        /// <param name="aggregate"></param>
-        static Razzaque2001Hybrid Sum() => new((a, b, c) => a + b + c);
+		/// <summary>
+		/// Static factory method for using Maximum value aggregation.
+		/// </summary>
+		/// <param name="aggregate"></param>
+		public static Razzaque2001Hybrid Max() => new((a, b, c) => (new float[] { a, b, c }).OrderByDescending(Mathf.Abs).First());
+
+		/// <summary>
+		/// Static factory method for using sum-aggregation.
+		/// </summary>
+		/// <param name="aggregate"></param>
+		public static Razzaque2001Hybrid Sum() => new((a, b, c) => a + b + c);
 
 		/// <summary>
 		/// Static factory method for using weighted-sum-aggregation.
 		/// </summary>
-		static Razzaque2001Hybrid Weighted(float x, float y, float z) => new((a, b, c) => a * x + b * y + c * z);
+		public static Razzaque2001Hybrid Weighted(float x, float y, float z) => new((a, b, c) => a * x + b * y + c * z);
 
 		public override void Redirect(Scene scene) {
 			float angle = aggregate(
-				Razzaque2001OverTimeRotation.GetRedirection(scene),
-				Razzaque2001Rotational.GetRedirection(scene),
-				Razzaque2001Curvature.GetRedirection(scene)
+				scene.enableHybridOverTime ? Razzaque2001OverTimeRotation.GetRedirection(scene) : 0,
+				scene.enableHybridRotational ? Razzaque2001Rotational.GetRedirection(scene) : 0,
+				scene.enableHybridCurvature ? Razzaque2001Curvature.GetRedirection(scene) : 0
 			);
 
 			if (scene.applyDampening) {

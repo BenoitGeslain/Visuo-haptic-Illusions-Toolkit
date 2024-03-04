@@ -54,7 +54,6 @@ namespace VHToolkit.Redirection {
         [Ignore] public Transform virtualTarget;
         [Ignore] public Transform origin;
 		[Ignore] public List<Transform> targets;
-		[Ignore] public float steerToOrbitRadius = 5f;
 		[Ignore] public bool applyDampening = false;
 		[Ignore] public bool applySmoothing = false;
 
@@ -69,6 +68,10 @@ namespace VHToolkit.Redirection {
 		[Ignore] public Vector3 strategyDirection;
 
 		[Ignore] public ParametersToolkit parameters;
+		[Ignore] public HybridAggregate aggregateFunction;
+		[Ignore] public bool enableHybridOverTime = true;
+		[Ignore] public bool enableHybridRotational = true;
+		[Ignore] public bool enableHybridCurvature = true;
 
 		/// <summary>
 		/// The position of the virtual limb is given by <c>physicalHand.position + Redirection</c>.

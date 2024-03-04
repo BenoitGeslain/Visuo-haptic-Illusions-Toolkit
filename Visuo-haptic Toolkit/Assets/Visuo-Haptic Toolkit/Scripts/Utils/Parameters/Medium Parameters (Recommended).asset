@@ -32,7 +32,8 @@ MonoBehaviour:
   DampeningDistanceThreshold: 1.25
   DampeningRange: 1.57
   SmoothingFactor: 0.2
-  OverTimeRotation: 1
+  steerToOrbitRadius: 5
+  OverTimeRotation: 0.2
   GainsTranslational: {x: 1, y: 1, z: 1}
   GainsRotational:
     same: 1.05
