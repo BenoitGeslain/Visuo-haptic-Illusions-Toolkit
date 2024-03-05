@@ -9,11 +9,31 @@ using CsvHelper.Configuration;
 using UnityEngine;
 
 using VHToolkit.Redirection;
+using VHToolkit.Redirection.BodyRedirection;
+using VHToolkit.Redirection.WorldRedirection;
 using Newtonsoft.Json;
 
 namespace VHToolkit.Logging
 {
-    public class JsonLogging : MonoBehaviour
+	public record JsonRedirectionData
+	{
+		public DateTime timeStamp = DateTime.Now;
+		public string Technique => script switch
+		{
+			WorldRedirection => (script as WorldRedirection).Technique.ToString(),
+			BodyRedirection => (script as BodyRedirection).Technique.ToString(),
+			_ => ""
+		};
+
+		public Interaction script;
+
+		public JsonRedirectionData(Interaction script)
+		{
+			this.script = script;
+		}
+	}
+
+	public class JsonLogging : MonoBehaviour
 	{
 
 		public string pathToFile = "LoggedData\\";
@@ -21,7 +41,7 @@ namespace VHToolkit.Logging
 		private string fileName;
 		private readonly int bufferSize = 10; // number of records kept before writing to disk
 
-		private List<RedirectionData> records = new();
+		private List<JsonRedirectionData> records = new();
 
 		private Interaction script;
 
@@ -33,7 +53,7 @@ namespace VHToolkit.Logging
 
 		private void Update()
 		{
-			void writeRecords<Data, DataMap>(List<Data> records) where DataMap : ClassMap<Data>
+			void writeRecords<Data>(List<Data> records)
 			{
 				if (records.Count > bufferSize)
 				{
@@ -45,8 +65,8 @@ namespace VHToolkit.Logging
 				}
 			}
 
-			records.Add(new RedirectionData(script));
-			writeRecords<RedirectionData, RedirectionDataMap>(records);
+			records.Add(new JsonRedirectionData(script));
+			writeRecords(records);
 		}
 
 		public void CreateNewFile()
@@ -54,7 +74,7 @@ namespace VHToolkit.Logging
 			fileName = $"{pathToFile}{fileNamePrefix}{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.json";
 			using StreamWriter writer = new(fileName);
 			using CsvWriter csv = new(writer, CultureInfo.InvariantCulture);
-			records = new List<RedirectionData>();
+			records = new List<JsonRedirectionData>();
 		}
 	}
 }
