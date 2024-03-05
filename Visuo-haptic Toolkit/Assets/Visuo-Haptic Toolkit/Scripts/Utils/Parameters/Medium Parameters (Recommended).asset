@@ -39,6 +39,7 @@ MonoBehaviour:
     same: 1.05
     opposite: 0.975
   CurvatureRadius: 15
+  HybridWeights: {x: 1, y: 1, z: 1}
   a: {x: 0, y: 0, z: 0}
   SwampSquareLength: 0.25
   SwampCDRatio: 0.75

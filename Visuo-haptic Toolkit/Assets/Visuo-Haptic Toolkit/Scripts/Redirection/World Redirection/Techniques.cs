@@ -141,12 +141,12 @@ namespace VHToolkit.Redirection.WorldRedirection {
 		/// <param name="aggregate"></param>
 		public static Razzaque2001Hybrid Sum() => new((a, b, c) => a + b + c);
 
-		/// <summary>
-		/// Static factory method for using weighted-sum-aggregation.
-		/// </summary>
-		public static Razzaque2001Hybrid Weighted(float x, float y, float z) => new((a, b, c) => a * x + b * y + c * z);
+        /// <summary>
+        /// Static factory method for using weighted-sum-aggregation.
+        /// </summary>
+        public static Razzaque2001Hybrid Weighted(float x, float y, float z) => new((a, b, c) => a * x + b * y + c * z);
 
-		public override void Redirect(Scene scene) {
+        public override void Redirect(Scene scene) {
 			float angle = aggregate(
 				scene.enableHybridOverTime ? Razzaque2001OverTimeRotation.GetRedirection(scene) : 0,
 				scene.enableHybridRotational ? Razzaque2001Rotational.GetRedirection(scene) : 0,
