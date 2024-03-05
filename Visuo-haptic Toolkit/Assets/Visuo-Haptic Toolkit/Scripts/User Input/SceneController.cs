@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using static VHToolkit.Future;
 
 namespace VHToolkit.UserInput {
 
@@ -37,7 +35,7 @@ namespace VHToolkit.UserInput {
 
 		public void ResetCubes() {
 			Debug.Log("reset");
-			foreach(var (cube, pos) in cubes.Zip(cubesInitialPosition))
+			foreach (var (cube, pos) in cubes.Zip(cubesInitialPosition))
 				cube.position = pos;
 		}
 	}

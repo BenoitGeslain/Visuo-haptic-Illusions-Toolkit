@@ -9,11 +9,10 @@ namespace VHToolkit.Redirection.WorldRedirection {
 	///  This class is the most conceptual class of  world redirection defining the important function to call: Redirect().
 	///  Information about the user such as the user's position or the targets are encapsulated inside Scene.
 	/// </summary>
-	public class WorldRedirectionTechnique : RedirectionTechnique {
+	public abstract class WorldRedirectionTechnique : RedirectionTechnique {
 		public void CopyHeadAndLimbTransform(Scene scene) {
 			scene.CopyHeadRotations();
 			scene.CopyHeadTranslations();
-
 			scene.CopyLimbTranslationAndRotation();
 		}
 	}
@@ -22,7 +21,7 @@ namespace VHToolkit.Redirection.WorldRedirection {
 	/// This class implements the rotation over time technique from Razzaque et al., 2001. This technique rotates the user's virtual head around the vertical axis by a fixed amount
 	/// in the opposite direction of the forward target. This is done in order to push the user to turn towards the target.
 	/// </summary>
-	public class Razzaque2001OverTimeRotation: WorldRedirectionTechnique {
+	public class Razzaque2001OverTimeRotation : WorldRedirectionTechnique {
 		public override void Redirect(Scene scene) {
 			scene.RotateVirtualHeadY(GetRedirection(scene));
 			CopyHeadAndLimbTransform(scene);
@@ -30,7 +29,7 @@ namespace VHToolkit.Redirection.WorldRedirection {
 
 		public static float GetRedirection(Scene scene) {
 			float angleToTarget = scene.GetHeadAngleToTarget();
-			angleToTarget = (angleToTarget > 180f)? angleToTarget - 360f : angleToTarget;
+			angleToTarget = (angleToTarget > 180f) ? angleToTarget - 360f : angleToTarget;
 
 			return Mathf.Abs(angleToTarget) > scene.parameters.RotationalError
 				? Mathf.Sign(angleToTarget) * scene.parameters.OverTimeRotation * Time.deltaTime
@@ -39,11 +38,11 @@ namespace VHToolkit.Redirection.WorldRedirection {
 
 		public static float GetRedirectionReset(Scene scene) {
 			float angleToTarget = scene.HeadToHeadRedirection.eulerAngles.y;
-			angleToTarget = (angleToTarget > 180f)? angleToTarget - 360f : angleToTarget;
+			angleToTarget = (angleToTarget > 180f) ? angleToTarget - 360f : angleToTarget;
 
 			Debug.Log(angleToTarget);
 			return Mathf.Abs(angleToTarget) > scene.parameters.RotationalError
-				? - Mathf.Sign(angleToTarget) * scene.parameters.OverTimeRotation * Time.deltaTime
+				? -Mathf.Sign(angleToTarget) * scene.parameters.OverTimeRotation * Time.deltaTime
 				: 0f;
 		}
 	}
@@ -52,7 +51,7 @@ namespace VHToolkit.Redirection.WorldRedirection {
 	/// This class implements the rotationnal technique from Razzaque et al., 2001. This technique rotates the user's virtual head around the vertical axis by an amount proportional
 	/// to their angular speed in the opposite direction of the forward target. This is done in order to push the user to turn towards the target.
 	/// </summary>
-	public class Razzaque2001Rotational: WorldRedirectionTechnique {
+	public class Razzaque2001Rotational : WorldRedirectionTechnique {
 		public override void Redirect(Scene scene) {
 			scene.RotateVirtualHeadY(GetRedirection(scene));
 			CopyHeadAndLimbTransform(scene);
@@ -63,7 +62,7 @@ namespace VHToolkit.Redirection.WorldRedirection {
 			float instantRotation = scene.GetHeadInstantRotationY();
 
 			if (Mathf.Abs(angleToTarget) > scene.parameters.RotationalError && Mathf.Abs(instantRotation) > scene.parameters.RotationThreshold) {
-				Debug.Log($"{instantRotation} - {instantRotation * ((Mathf.Sign(scene.GetHeadAngleToTarget()) != Mathf.Sign(instantRotation))? scene.parameters.GainsRotational.opposite - 1 : scene.parameters.GainsRotational.same - 1)}");
+				Debug.Log($"{instantRotation} - {instantRotation * ((Mathf.Sign(scene.GetHeadAngleToTarget()) != Mathf.Sign(instantRotation)) ? scene.parameters.GainsRotational.opposite - 1 : scene.parameters.GainsRotational.same - 1)}");
 				return instantRotation * ((Mathf.Sign(scene.GetHeadAngleToTarget()) != Mathf.Sign(instantRotation))
 					? scene.parameters.GainsRotational.opposite - 1
 					: scene.parameters.GainsRotational.same - 1);
@@ -88,7 +87,7 @@ namespace VHToolkit.Redirection.WorldRedirection {
 	/// This class implements the curvature technique from Razzaque et al., 2001. This technique rotates the user's virtual head around the vertical axis by an amount proportional
 	/// to their linear speed in the opposite direction of the forward target. This is done in order to push the user to turn towards the target.
 	/// </summary>
-	public class Razzaque2001Curvature: WorldRedirectionTechnique {
+	public class Razzaque2001Curvature : WorldRedirectionTechnique {
 		public override void Redirect(Scene scene) {
 			scene.RotateVirtualHeadY(GetRedirection(scene));
 			CopyHeadAndLimbTransform(scene);
@@ -113,27 +112,27 @@ namespace VHToolkit.Redirection.WorldRedirection {
 	/// - the curvature technique
 	/// to the user's head.
 	/// </summary>
-	public class Razzaque2001Hybrid: WorldRedirectionTechnique {
+	public class Razzaque2001Hybrid : WorldRedirectionTechnique {
 
 		public Func<float, float, float, float> aggregate = (a, b, c) => a + b + c;
 
 
-        /// <summary>
-        /// By default, the aggregation function is the sum of redirection components.
-        /// </summary>
-        public Razzaque2001Hybrid() : base() => Sum();
+		/// <summary>
+		/// By default, the aggregation function is the sum of redirection components.
+		/// </summary>
+		public Razzaque2001Hybrid() : base() => Sum();
 
-        /// <summary>
-        /// Constructor taking a parameter, an aggregation function (float, float, float) -> float.
-        /// </summary>
-        /// <param name="aggregate"></param>
-        public Razzaque2001Hybrid(Func<float, float, float, float> aggregate) : base() => this.aggregate = aggregate;
+		/// <summary>
+		/// Constructor taking a parameter, an aggregation function (float, float, float) -> float.
+		/// </summary>
+		/// <param name="aggregate"></param>
+		public Razzaque2001Hybrid(Func<float, float, float, float> aggregate) : base() => this.aggregate = aggregate;
 
 		/// <summary>
 		/// Static factory method for using Maximum value aggregation.
 		/// </summary>
 		/// <param name="aggregate"></param>
-		public static Razzaque2001Hybrid Max() => new((a, b, c) => (new float[] { a, b, c }).OrderByDescending(Mathf.Abs).First());
+		public static Razzaque2001Hybrid Max() => new((a, b, c) => (new float[] { a, b, c }).MinBy(Mathf.Abs));
 
 		/// <summary>
 		/// Static factory method for using sum-aggregation.
@@ -141,12 +140,12 @@ namespace VHToolkit.Redirection.WorldRedirection {
 		/// <param name="aggregate"></param>
 		public static Razzaque2001Hybrid Sum() => new((a, b, c) => a + b + c);
 
-        /// <summary>
-        /// Static factory method for using weighted-sum-aggregation.
-        /// </summary>
-        public static Razzaque2001Hybrid Weighted(float x, float y, float z) => new((a, b, c) => a * x + b * y + c * z);
+		/// <summary>
+		/// Static factory method for using weighted-sum-aggregation.
+		/// </summary>
+		public static Razzaque2001Hybrid Weighted(float x, float y, float z) => new((a, b, c) => a * x + b * y + c * z);
 
-        public override void Redirect(Scene scene) {
+		public override void Redirect(Scene scene) {
 			float angle = aggregate(
 				scene.enableHybridOverTime ? Razzaque2001OverTimeRotation.GetRedirection(scene) : 0,
 				scene.enableHybridRotational ? Razzaque2001Rotational.GetRedirection(scene) : 0,
@@ -175,9 +174,9 @@ namespace VHToolkit.Redirection.WorldRedirection {
 		}
 
 		private float ApplyDampening(Scene scene, float angle) {
-			float dampenedAngle = angle * Mathf.Sin(Mathf.Min(scene.GetHeadAngleToTarget() / scene.parameters.DampeningRange, 1f) * Mathf.PI/2);
+			float dampenedAngle = angle * Mathf.Sin(Mathf.Min(scene.GetHeadAngleToTarget() / scene.parameters.DampeningRange, 1f) * Mathf.PI / 2);
 			float dampenedAngleDistance = dampenedAngle * Mathf.Min(scene.GetHeadToTargetDistance() / scene.parameters.DampeningDistanceThreshold, 1f);
-			return (scene.GetHeadToTargetDistance() < scene.parameters.DampeningDistanceThreshold)? dampenedAngleDistance : dampenedAngle;
+			return (scene.GetHeadToTargetDistance() < scene.parameters.DampeningDistanceThreshold) ? dampenedAngleDistance : dampenedAngle;
 		}
 
 		public float ApplySmoothing(Scene scene, float angle) => (1 - scene.parameters.SmoothingFactor) * scene.previousRedirection + scene.parameters.SmoothingFactor * angle;
@@ -187,9 +186,11 @@ namespace VHToolkit.Redirection.WorldRedirection {
 	/// This class implements the translationnal technique from Steinicke et al., 2008. This technique scales the user's displacement in order to virtually increase the space
 	/// the user can explore freely.
 	/// </summary>
-	public class Steinicke2008Translational: WorldRedirectionTechnique {
+	public class Steinicke2008Translational : WorldRedirectionTechnique {
 		public override void Redirect(Scene scene) {
-            scene.virtualHead.Translate(Vector3.Scale(scene.GetHeadInstantTranslation(), scene.parameters.GainsTranslational - Vector3.one), relativeTo: Space.World);
+			scene.virtualHead.Translate(
+				Vector3.Scale(scene.GetHeadInstantTranslation(), scene.parameters.GainsTranslational - Vector3.one),
+				relativeTo: Space.World);
 			CopyHeadAndLimbTransform(scene);
 		}
 	}
@@ -199,7 +200,7 @@ namespace VHToolkit.Redirection.WorldRedirection {
 	/// This class implements the world warping technique from Azmandian et al., 2016. This technique applies a gain to the user's head rotation in order to co-localize a physical object
 	/// and its virtual counterpart.
 	/// </summary>
-	public class Azmandian2016World: WorldRedirectionTechnique {
+	public class Azmandian2016World : WorldRedirectionTechnique {
 		public override void Redirect(Scene scene) {
 			scene.virtualHead.RotateAround(scene.origin.position, Vector3.up, GetRedirection(scene));
 			CopyHeadAndLimbTransform(scene);
@@ -227,15 +228,11 @@ namespace VHToolkit.Redirection.WorldRedirection {
 	/// This class does not implement a redirection technique but reset the rotation between the user's physical and virtual head by using the over time rotation
 	/// and rotationnal technique from Razzaque et al., 2001.
 	/// </summary>
-	public class ResetWorldRedirection: WorldRedirectionTechnique {
-		public override void Redirect(Scene scene) {
-
-		}
+	public class ResetWorldRedirection : WorldRedirectionTechnique {
+		public override void Redirect(Scene scene) { }
 	}
 
-	public class NoWorldRedirection: WorldRedirectionTechnique {
-		public override void Redirect(Scene scene) {
-			CopyHeadAndLimbTransform(scene);
-		}
+	public class NoWorldRedirection : WorldRedirectionTechnique {
+		public override void Redirect(Scene scene) => CopyHeadAndLimbTransform(scene);
 	}
 }
