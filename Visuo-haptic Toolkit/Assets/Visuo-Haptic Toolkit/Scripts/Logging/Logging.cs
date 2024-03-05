@@ -23,7 +23,7 @@ namespace VHToolkit.Logging
         public string Technique => script switch {
 			WorldRedirection => (script as WorldRedirection).Technique.ToString(),
             BodyRedirection => (script as BodyRedirection).Technique.ToString(),
-            _ => "NA"
+            _ => ""
         };
 
         public Interaction script;
