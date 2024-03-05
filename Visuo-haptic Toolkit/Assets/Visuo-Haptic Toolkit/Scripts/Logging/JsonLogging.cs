@@ -1,10 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Globalization;
-
-using CsvHelper;
-using CsvHelper.Configuration;
 
 using UnityEngine;
 
@@ -14,10 +10,25 @@ using VHToolkit.Redirection.WorldRedirection;
 using Newtonsoft.Json;
 
 namespace VHToolkit.Logging
-{
+{	
+	public record VirtualLimbData {
+		private readonly Transform vlimb;
+		public string Orientation => vlimb.rotation.normalized.ToString();
+		public string Position => vlimb.position.ToString();
+
+        public VirtualLimbData(Transform vlimb) => this.vlimb = vlimb;
+    }
+	public record PhysicalLimbData {
+		private readonly Limb limb;
+		public string Orientation => limb.physicalLimb.rotation.normalized.ToString();
+		public string Position => limb.physicalLimb.position.ToString();
+		public List<VirtualLimbData> VirtualLimbs => limb.virtualLimb.ConvertAll(vlimb => new VirtualLimbData(vlimb));
+
+		public PhysicalLimbData(Limb l) => limb = l;
+	}
 	public record JsonRedirectionData
 	{
-		public DateTime timeStamp = DateTime.Now;
+		public readonly DateTime TimeStamp = DateTime.Now;
 		public string Technique => script switch
 		{
 			WorldRedirection => (script as WorldRedirection).Technique.ToString(),
@@ -25,7 +36,8 @@ namespace VHToolkit.Logging
 			_ => ""
 		};
 
-		public Interaction script;
+		private readonly Interaction script;
+		public List<PhysicalLimbData> Limbs => script.scene.limbs.ConvertAll(l => new PhysicalLimbData(l));
 
 		public JsonRedirectionData(Interaction script)
 		{
@@ -33,6 +45,9 @@ namespace VHToolkit.Logging
 		}
 	}
 
+	/// <summary>
+	/// Logs structured data in the JSON Lines format.
+	/// </summary>
 	public class JsonLogging : MonoBehaviour
 	{
 
@@ -59,7 +74,7 @@ namespace VHToolkit.Logging
 				{
 					using var writer = new StreamWriter(fileName, append: true);
 					foreach (var record in records) {
-						// writer.WriteLine(JsonConvert.SerializeObject(record));
+						writer.WriteLine(JsonConvert.SerializeObject(record));
 					}
 					records.Clear();
 				}
@@ -71,9 +86,9 @@ namespace VHToolkit.Logging
 
 		public void CreateNewFile()
 		{
-			fileName = $"{pathToFile}{fileNamePrefix}{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.json";
-			using StreamWriter writer = new(fileName);
-			using CsvWriter csv = new(writer, CultureInfo.InvariantCulture);
+			Debug.Log("Create Json log file.");
+			Directory.CreateDirectory(pathToFile);
+			fileName = $"{pathToFile}{fileNamePrefix}{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.jsonl";
 			records = new List<JsonRedirectionData>();
 		}
 	}

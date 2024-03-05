@@ -23,7 +23,7 @@ namespace VHToolkit.Logging
         public string Technique => script switch {
 			WorldRedirection => (script as WorldRedirection).Technique.ToString(),
             BodyRedirection => (script as BodyRedirection).Technique.ToString(),
-            _ => "NA"
+            _ => ""
         };
 
         public Interaction script;
@@ -51,19 +51,12 @@ namespace VHToolkit.Logging
 			public SceneClassMap() {
 				// Warning! Non-logged attributes in Scene MUST be ignored ([Ignore])
 				// AutoMap(new CsvConfiguration(CultureInfo.InvariantCulture) {MemberTypes = MemberTypes.Fields | MemberTypes.Properties | MemberTypes.None});
-				// Map(m => m.limbs.Select(limb => limb.PhysicalLimb.position).ToList()).Name("PhysicalLimbPosition");
-				// Map(m => m.limbs.Select(limb => limb.PhysicalLimb.rotation).ToList()).Name("PhysicalLimbOrientation");
-				// Map(m => m.limbs.Select(limb => limb.PhysicalLimb.rotation.eulerAngles).ToList()).Name("PhysicalLimbOrientationEuler");
-				// Map(m => m.limbs.SelectMany(limb => limb.VirtualLimb.Select(vlimb => vlimb.position)).ToList()).Name("VirtualLimbPosition");
-				// Map(m => m.limbs.SelectMany(limb => limb.VirtualLimb.Select(vlimb => vlimb.rotation)).ToList()).Name("VirtualLimbOrientation");
-				// Map(m => m.limbs.SelectMany(limb => limb.VirtualLimb.Select(vlimb => vlimb.rotation.eulerAngles)).ToList()).Name("VirtualLimbOrientationEuler");
-
+			
 			/* 	Map(m => m.physicalTarget.position).Name("PhysicalTargetPosition");
 				Map(m => m.physicalTarget.rotation).Name("PhysicalTargetOrientation");
 				Map(m => m.physicalTarget.rotation.eulerAngles).Name("PhysicalTargetOrientationEuler");
 				Map(m => m.virtualTarget.position).Name("VirtualTargetPosition");
 				Map(m => m.virtualTarget.rotation).Name("VirtualTargetOrientation");
-				Map(m => m.virtualTarget.rotation.eulerAngles).Name("VirtualTargetOrientationEuler");
 				Map(m => m.origin.position).Name("OriginPosition"); */
 			}
 		}
@@ -75,13 +68,13 @@ namespace VHToolkit.Logging
         }
 		public RedirectionDataMap() {
 			Map(m => m.timeStamp).TypeConverterOption.Format("yyyy/MM/dd-HH:mm:ss.fff").Index(0).Name("TimeStamp");
-			Map(m => m.Technique).Index(1);
+			Map(m => m.Technique).Index(1).Name("Technique");
 			Map(m => m.physicalLimbIndex).Index(2).Name("Physical index");
 			Map(m => m.virtualLimbIndex).Index(3).Name("Virtual index");
-			Map(m => m.physicalLimb.position);
-			Map(m => m.physicalLimb.rotation);
-			Map(m => m.virtualLimb.position).Name("VirtualLimbPosition");
-			Map(m => m.virtualLimb.rotation);
+			Map(m => m.physicalLimb.position).Name("Physical limb position");
+			Map(m => m.physicalLimb.rotation).Name("Physical limb orientation");
+			Map(m => m.virtualLimb.position).Name("Virtual limb position");
+			Map(m => m.virtualLimb.rotation).Name("Virtual limb orientation");
 			References<InteractionClassMap>(m => m.script);
 		}
 	}
@@ -115,10 +108,9 @@ namespace VHToolkit.Logging
 					records.Clear();
 				}
             }
-			Debug.Log($"Writing records for {script.scene.limbs.Count} limbs.");
+
   			for (int i = 0; i < script.scene.limbs.Count; i++) {
 				for (int j = 0; j < script.scene.limbs[i].virtualLimb.Count; j++) {
-					Debug.Log($"Record {i}:{j}.");
 					records.Add(new RedirectionData(script, i, j));
 				}
 			}
@@ -128,6 +120,7 @@ namespace VHToolkit.Logging
 
 		public void CreateNewFile() {
 			Debug.Log("Create log file.");
+			Directory.CreateDirectory(pathToFile);
 			fileName = $"{pathToFile}{fileNamePrefix}{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.csv";
 
 			void writeHeaders<Data, DataMap>(out List<Data> records) where DataMap : ClassMap<Data> {
