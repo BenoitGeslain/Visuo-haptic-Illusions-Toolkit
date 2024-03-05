@@ -3,13 +3,13 @@ import json
 import matplotlib.pyplot as plt
 import re
 import os
+import pathlib
 
 import matplotlib
 matplotlib.use('TkAgg')
 
 import gettext
-def _(x): return x
-# gettext.translation('messages', localedir='.\locales',languages=['fr']).install()
+gettext.translation('messages', localedir=pathlib.Path(__file__).parent / 'locales',languages=['fr_FR'], fallback=True).install()
 
 
 plt.ion() # turn on interactive mode
