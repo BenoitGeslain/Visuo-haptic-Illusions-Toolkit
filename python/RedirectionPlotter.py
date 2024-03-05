@@ -1,3 +1,4 @@
+import itertools
 import socket
 from gettext import translation
 import json
@@ -25,7 +26,7 @@ box = ax2.get_position()
 ax2.set_position([box.x0, box.y0, box.width, box.height * 0.9])
 
 
-otrs, rs, cs, otrsSum, rsSum, csSum, ys = ([] for _ in range(7))
+otrs, rs, cs, otrsSum, rsSum, csSum, ys, maxSums = ([] for _ in range(8))
 
 
 serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -45,10 +46,11 @@ while True:
                 print("Connection reset")
                 break
             for m in re.finditer(r'\{[^}]*}', chunk):
+                print(m[0])
                 d = json.loads(m[0])
                 for k, l in {
                     "overTime": otrs, "rotational": rs, "curvature": cs, "overTimeSum": otrsSum,
-                    "rotationalSum": rsSum, "curvatureSum": csSum, "time": ys
+                    "rotationalSum": rsSum, "curvatureSum": csSum, "time": ys, "maxSums": maxSums
                 }.items():
                     l.append(d[k])
 
@@ -59,7 +61,7 @@ while True:
             ax1.set_title(_('Redirection amounts over time'), y=1.35)
             ax1.set_ylabel(_('Redirection Applied to User (degrees)'))
             labels=(_('Over time rotation'), _('Rotational'), _('Curvature'))
-            ax1.stackplot(ys, otrsSum, rsSum, csSum, labels=labels, colors="rgb")
+            ax1.stackplot(ys, otrsSum, rsSum, csSum, *zip(*maxSums), labels=labels + labels, colors="rgbrgb")
             # ax1.plot(ys[-60:], hybrid[-60:], color='b', label='Hybrid', linewidth=0.5)
 
             # ax2.set_xticks(list(map(int, ys[::10])))
