@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Net.Sockets;
 using System.Threading;
 
@@ -14,15 +15,23 @@ namespace VHToolkit.Logging {
 		[SerializeField] public float overTime, rotational, curvature;
 		[SerializeField] public float overTimeSum, rotationalSum, curvatureSum;
 		[SerializeField] float time;
+		[SerializeField] float[] maxSums;
 
-		public void AddTo(float overTime, float rotational, float curvature, float time) {
+        public void AddTo(float overTime, float rotational, float curvature, float time) {
+			if (this.maxSums is null || this.maxSums.Length != 3) {
+				this.maxSums = new float[3];
+			}
 			this.overTime = Mathf.Abs(overTime);
 			this.rotational = Mathf.Abs(rotational);
 			this.curvature = Mathf.Abs(curvature);
+			var tmp = new float[] {this.overTime, this.rotational, this.curvature}.ToList();
+			var m = tmp.Max();
+			var maxComponentIndex = tmp.IndexOf(m);
 
 			this.overTimeSum += Mathf.Abs(overTime);
 			this.rotationalSum += Mathf.Abs(rotational);
 			this.curvatureSum += Mathf.Abs(curvature);
+			this.maxSums[maxComponentIndex] += m;
 			this.time = time;
 		}
 	}

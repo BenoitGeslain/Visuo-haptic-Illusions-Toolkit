@@ -115,13 +115,13 @@ namespace VHToolkit.Redirection.WorldRedirection {
 	/// </summary>
 	public class Razzaque2001Hybrid: WorldRedirectionTechnique {
 
-		public Func<float, float, float, float> aggregate;
+		public Func<float, float, float, float> aggregate = (a, b, c) => a + b + c;
 
 
         /// <summary>
-        /// By default, the aggregation function is the maximum by absolute value.
+        /// By default, the aggregation function is the sum of redirection components.
         /// </summary>
-        public Razzaque2001Hybrid() : base() => Max();
+        public Razzaque2001Hybrid() : base() => Sum();
 
         /// <summary>
         /// Constructor taking a parameter, an aggregation function (float, float, float) -> float.
