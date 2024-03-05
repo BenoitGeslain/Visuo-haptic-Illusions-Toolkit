@@ -45,7 +45,7 @@ namespace VHToolkit.Visualisation {
 					MultipleTargets(scene);
 					break;
 				case WRStrategy.SteerInDirection:
-					CenterTarget(scene);
+					// CenterTarget(scene);
 					break;
 				default:
 					targets.Clear();
