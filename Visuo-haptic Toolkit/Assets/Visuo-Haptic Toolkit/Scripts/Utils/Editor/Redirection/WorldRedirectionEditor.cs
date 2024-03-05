@@ -83,14 +83,9 @@ namespace VHToolkit.Redirection.WorldRedirection {
 			EditorGUILayout.Space(5);
 			EditorGUILayout.LabelField("Technique Parameters", EditorStyles.boldLabel);
 
-			EditorGUILayout.PropertyField(parameters, new GUIContent("Parameters"));
 
-			// WorldRedirection someComponent = target as WorldRedirection;
-			// // if (someComponent == null)
-			// // 	someComponent = CreateInstance<ParametersToolkit>();
-			// Debug.Log(someComponent.scene);
-			// Debug.Log(someComponent.scene.parameters);
-			// Debug.Log(someComponent.scene.parameters.OverTimeRotation);
+			EditorGUILayout.PropertyField(redirect, new GUIContent("Redirect"));
+			EditorGUILayout.PropertyField(parameters, new GUIContent("Parameters"));
 
 			if (technique.enumNames[technique.enumValueIndex] == "Razzaque2001OverTimeRotation") {
 				EditorGUILayout.PropertyField(parametersObject.FindProperty("OverTimeRotation"), new GUIContent("Over Time Rotation Rate"));
@@ -112,17 +107,25 @@ namespace VHToolkit.Redirection.WorldRedirection {
 				EditorGUILayout.PropertyField(parametersObject.FindProperty("CurvatureRadius"), new GUIContent("Curvature Radius"));
 				EditorGUILayout.Space(2);
 				EditorGUILayout.PropertyField(serializedObject.FindProperty("scene.aggregateFunction"), new GUIContent("Aggregate Function"));
-				EditorGUILayout.PropertyField(parametersObject.FindProperty("HybridWeights"), new GUIContent("HybridWeights"));
 
 				WorldRedirection script = target as WorldRedirection;
-				script.techniqueInstance = script.scene.aggregateFunction switch {
-					HybridAggregate.Max => Razzaque2001Hybrid.Max(),
-					HybridAggregate.Sum => Razzaque2001Hybrid.Sum(),
-					HybridAggregate.WeightedSum => Razzaque2001Hybrid.Weighted(script.scene.parameters.HybridWeights.x,
+				switch (script.scene.aggregateFunction) {
+					case HybridAggregate.Max:
+						script.techniqueInstance = Razzaque2001Hybrid.Max();
+						break;
+					case HybridAggregate.Sum:
+						script.techniqueInstance = Razzaque2001Hybrid.Sum();
+						break;
+					case HybridAggregate.WeightedSum:
+						EditorGUILayout.PropertyField(parametersObject.FindProperty("HybridWeights"), new GUIContent("HybridWeights"));
+						script.techniqueInstance = Razzaque2001Hybrid.Weighted(script.scene.parameters.HybridWeights.x,
 																			   script.scene.parameters.HybridWeights.y,
-																			   script.scene.parameters.HybridWeights.z),
-					_ => Razzaque2001Hybrid.Max()
-				};
+																			   script.scene.parameters.HybridWeights.z);
+						break;
+					default:
+						script.techniqueInstance = Razzaque2001Hybrid.Max();
+						break;
+				}
 			}
 			// if (technique.enumNames[technique.enumValueIndex] == "Azmandian2016World") {
 			// 	EditorGUILayout.PropertyField(parametersObject.FindProperty("GainsRotational"), new GUIContent("Gains Rotational"));
@@ -130,8 +133,6 @@ namespace VHToolkit.Redirection.WorldRedirection {
 			if (technique.enumNames[technique.enumValueIndex] == "Steinicke2008Translational") {
 				EditorGUILayout.PropertyField(parametersObject.FindProperty("GainsTranslational"), new GUIContent("Translational Gains"));
 			}
-
-			EditorGUILayout.PropertyField(redirect, new GUIContent("Redirect"));
 
 			// Hides targets, dampening and smoothing if
 			if (strategyTechniques.Contains(technique.enumNames[technique.enumValueIndex])) {
