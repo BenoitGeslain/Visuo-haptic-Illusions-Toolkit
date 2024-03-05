@@ -57,6 +57,8 @@ namespace VHToolkit.Redirection {
 		public Vector2Rotation GainsRotational;
 		[Tooltip("The maximum gain in translation that can be applied to the user's point of view in rotation. Value is in °/m and is not a percentage.")]
 		public float CurvatureRadius = 15f;
+		[Tooltip("The weights used for the Razzaque2001Hybrid technique using the WeightedSum function.")]
+		public Vector3 HybridWeights = new(1f, 1f, 1f);
 
 
 

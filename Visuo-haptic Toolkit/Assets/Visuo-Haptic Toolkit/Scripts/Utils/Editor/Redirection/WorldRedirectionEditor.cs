@@ -112,11 +112,15 @@ namespace VHToolkit.Redirection.WorldRedirection {
 				EditorGUILayout.PropertyField(parametersObject.FindProperty("CurvatureRadius"), new GUIContent("Curvature Radius"));
 				EditorGUILayout.Space(2);
 				EditorGUILayout.PropertyField(serializedObject.FindProperty("scene.aggregateFunction"), new GUIContent("Aggregate Function"));
+				EditorGUILayout.PropertyField(parametersObject.FindProperty("HybridWeights"), new GUIContent("HybridWeights"));
+
 				WorldRedirection script = target as WorldRedirection;
 				script.techniqueInstance = script.scene.aggregateFunction switch {
 					HybridAggregate.Max => Razzaque2001Hybrid.Max(),
 					HybridAggregate.Sum => Razzaque2001Hybrid.Sum(),
-					HybridAggregate.WeightedSum => Razzaque2001Hybrid.Weighted(1/3,1/3,1/3),	// TODO: add weights inside interface
+					HybridAggregate.WeightedSum => Razzaque2001Hybrid.Weighted(script.scene.parameters.HybridWeights.x,
+																			   script.scene.parameters.HybridWeights.y,
+																			   script.scene.parameters.HybridWeights.z),
 					_ => Razzaque2001Hybrid.Max()
 				};
 			}
