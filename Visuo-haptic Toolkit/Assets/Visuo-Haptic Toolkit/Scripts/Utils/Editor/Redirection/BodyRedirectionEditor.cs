@@ -22,7 +22,7 @@ namespace VHToolkit.Redirection.BodyRedirection {
 		private void OnEnable() {
 
 			technique = serializedObject.FindProperty("_technique");
-            techniqueInstance = serializedObject.FindProperty("techniqueInstance");
+			techniqueInstance = serializedObject.FindProperty("techniqueInstance");
 
 			physicalLimbs = serializedObject.FindProperty("scene.limbs");
 			physicalHead = serializedObject.FindProperty("scene.physicalHead");
@@ -40,7 +40,7 @@ namespace VHToolkit.Redirection.BodyRedirection {
 
 			serializedObject.Update();
 
-			EditorGUILayout.PropertyField(technique, new GUIContent ("Technique"));
+			EditorGUILayout.PropertyField(technique, new GUIContent("Redirection technique"));
 
 			EditorGUILayout.Space(5);
 			EditorGUILayout.LabelField("User Parameters", EditorStyles.boldLabel);
@@ -52,7 +52,8 @@ namespace VHToolkit.Redirection.BodyRedirection {
 			if (technique.enumNames[technique.enumValueIndex] == "Azmandian2016Hybrid") {
 				EditorGUILayout.PropertyField(physicalHead, new GUIContent("Physical Head"));
 				EditorGUILayout.PropertyField(virtualHead, new GUIContent("Virtual Head"));
-			} else if (technique.enumNames[technique.enumValueIndex] == "Poupyrev1996GoGo") {
+			}
+			else if (technique.enumNames[technique.enumValueIndex] == "Poupyrev1996GoGo") {
 				EditorGUILayout.PropertyField(physicalHead, new GUIContent("Physical Head"));
 			}
 
@@ -68,7 +69,7 @@ namespace VHToolkit.Redirection.BodyRedirection {
 
 			// Hides redirectionLateness and controlpoint fields if the technique is not Geslain2022Polynom
 			if (technique.enumNames[technique.enumValueIndex] == "Geslain2022Polynom") {
-				EditorGUILayout.PropertyField(techniqueInstance, new GUIContent ("Parameters"));
+				EditorGUILayout.PropertyField(techniqueInstance, new GUIContent("Parameters"));
 			}
 
 			serializedObject.ApplyModifiedProperties();

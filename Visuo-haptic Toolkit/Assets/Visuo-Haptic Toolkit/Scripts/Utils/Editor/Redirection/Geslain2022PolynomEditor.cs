@@ -3,15 +3,13 @@ using UnityEditor;
 
 namespace VHToolkit.Redirection.BodyRedirection {
 	[CustomPropertyDrawer(typeof(BodyRedirectionTechnique))]
-	public class BodyRedirectionTechniquePropertyDrawer: PropertyDrawer {
+	public class BodyRedirectionTechniquePropertyDrawer : PropertyDrawer {
 
 		public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
 
 			// Property redirectionLateness
 			EditorGUI.BeginProperty(position, label, property);
-
 			EditorGUI.PropertyField(position, property.FindPropertyRelative("redirectionLateness"));
-
 			EditorGUI.EndProperty();
 
 			// New line
@@ -19,9 +17,7 @@ namespace VHToolkit.Redirection.BodyRedirection {
 
 			// Property controlPoint
 			EditorGUI.BeginProperty(rect, label, property);
-
 			EditorGUI.PropertyField(rect, property.FindPropertyRelative("controlPoint"));
-
 			EditorGUI.EndProperty();
 		}
 	}

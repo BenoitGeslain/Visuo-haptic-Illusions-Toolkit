@@ -14,26 +14,26 @@ namespace VHToolkit.Redirection.BodyRedirection {
 	/// Every frame, the technique calls the Redirect() method of techniqueInstance.
 	/// To add a new redirection function [TODO complete this section]
 	/// </summary>
-	public class BodyRedirection: Interaction {
+	public class BodyRedirection : Interaction {
 
-        /// <summary>
-        /// Currently selected technique, if any. When set, updateTechnique() gets called on the next Update().
-        /// </summary>
-        [SerializeField] private BRTechnique _technique;
+		/// <summary>
+		/// Currently selected technique, if any. When set, updateTechnique() gets called on the next Update().
+		/// </summary>
+		[SerializeField] private BRTechnique _technique;
 
 		public BRTechnique Technique { get => _technique; set => _technique = value; }
 
-        /// <summary>
-        /// Previously selected technique, if any.
-        /// </summary>
-        private BRTechnique previoustechnique;
+		/// <summary>
+		/// Previously selected technique, if any.
+		/// </summary>
+		private BRTechnique previoustechnique;
 
 		[SerializeField] private BodyRedirectionTechnique techniqueInstance;
 
 		/// <summary>
 		/// Updates the techniqueInstance according to the enumeration technique chosen.
 		/// </summary>
-        private void UpdateTechnique() {
+		private void UpdateTechnique() {
 			techniqueInstance = _technique switch {
 				BRTechnique.None => new NoBodyRedirection(),
 				BRTechnique.Reset => new ResetBodyRedirection(),
@@ -71,18 +71,18 @@ namespace VHToolkit.Redirection.BodyRedirection {
 
 		/// <summary>
 		/// Update function called once per frame. This function
-		/// calls updatetechnique() to instantiate the technique class,
+		/// calls UpdateTechnique() to instantiate the technique class,
 		/// calls Redirect(...) from the BodyRedirection class to apply the redirection,
 		/// applies rotations to the physical hand and
 		/// initializes the previous head positions.
 		/// </summary>
-        private void LateUpdate() {
+		private void LateUpdate() {
 			if (previoustechnique != _technique) {
 				UpdateTechnique();
 				previoustechnique = _technique;
 			}
 
-			techniqueInstance?.Redirect(scene);	// Computes and applies the redirection according to the selected redirection technique
+			techniqueInstance?.Redirect(scene); // Computes and applies the redirection according to the selected redirection technique
 
 			// Copy the real hand rotation to the virtual hand to conserve tracking.
 			scene.limbs.ForEach(limb => limb.virtualLimb.ForEach(vlimb => vlimb.rotation = limb.physicalLimb.rotation)); // TODO check Azmandian Body for rotation
@@ -99,14 +99,14 @@ namespace VHToolkit.Redirection.BodyRedirection {
 		/// <summary>
 		/// A wrapper around SetTechnique(BRTechnique t) to use the ResetRedirection technique.
 		/// </summary>
-        public void ResetRedirection() => _technique = BRTechnique.Reset;
+		public void ResetRedirection() => _technique = BRTechnique.Reset;
 
-        /// <summary>
-        /// Returns whether a redirection is applied to the user's virtual and physical hand
-        /// </summary>
-        /// <returns>Returns a bool:
-        /// true if the virtual hand of the user is not co-localised to the physical hand.
-        /// false otherwise.</returns>
-        public bool IsRedirecting() => scene.GetHandRedirectionDistance().SelectMany(x => x).Any(x => x > Vector3.kEpsilon);
-    }
+		/// <summary>
+		/// Returns whether a redirection is applied to the user's virtual and physical hand
+		/// </summary>
+		/// <returns>Returns a bool:
+		/// true if the virtual hand of the user is not co-localised to the physical hand.
+		/// false otherwise.</returns>
+		public bool IsRedirecting() => scene.GetHandRedirectionDistance().SelectMany(x => x).Any(x => x > Vector3.kEpsilon);
+	}
 }
