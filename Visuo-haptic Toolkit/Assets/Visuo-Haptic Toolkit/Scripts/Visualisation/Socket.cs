@@ -17,14 +17,14 @@ namespace VHToolkit.Logging {
 		[SerializeField] float time;
 		[SerializeField] float[] maxSums;
 
-        public void AddTo(float overTime, float rotational, float curvature, float time) {
+		public void AddTo(float overTime, float rotational, float curvature, float time) {
 			if (this.maxSums is null || this.maxSums.Length != 3) {
 				this.maxSums = new float[3];
 			}
 			this.overTime += Mathf.Abs(overTime);
 			this.rotational += Mathf.Abs(rotational);
 			this.curvature += Mathf.Abs(curvature);
-			var tmp = new float[] {overTime, rotational, curvature}.ToList().ConvertAll(Mathf.Abs);
+			var tmp = new float[] { overTime, rotational, curvature }.ToList().ConvertAll(Mathf.Abs);
 			var m = tmp.Max();
 			var maxComponentIndex = tmp.IndexOf(m);
 
@@ -61,8 +61,9 @@ namespace VHToolkit.Logging {
 					client = new TcpClient("localhost", 13000);
 					startTime = DateTime.Now;
 				}
-				catch (SocketException) {}
-			} else {
+				catch (SocketException) { }
+			}
+			else {
 				redirectionData.overTime = 0f;
 				redirectionData.rotational = 0f;
 				redirectionData.curvature = 0f;
@@ -75,7 +76,7 @@ namespace VHToolkit.Logging {
 			string json = JsonUtility.ToJson(redirectionData);
 			Debug.Log($"Sending: {json}");
 			// Translate the passed message into ASCII and store it as a Byte array.
-			Byte[] messageBytes = System.Text.Encoding.ASCII.GetBytes(json);
+			Byte[] messageBytes = System.Text.Encoding.ASCII.GetBytes(json + '\n');
 
 			// Get a client stream for reading and writing.
 			NetworkStream stream = client.GetStream();
@@ -84,15 +85,16 @@ namespace VHToolkit.Logging {
 				// Send the message to the connected TcpServer.
 				stream.Write(messageBytes, 0, messageBytes.Length);
 				stream.Flush();
-			} catch (SocketException) {Debug.LogWarning("Socket closed.");}
+			}
+			catch (SocketException) { Debug.LogWarning("Socket closed."); }
 		}
 
 		private void Update() {
-				redirectionData.AddTo((script.redirect && scene.enableHybridOverTime) ? Razzaque2001OverTimeRotation.GetRedirection(scene) : 0f,
-									  (script.redirect && scene.enableHybridRotational) ? Razzaque2001Rotational.GetRedirection(scene) : 0f,
-									  (script.redirect && scene.enableHybridCurvature) ? Razzaque2001Curvature.GetRedirection(scene) : 0f,
-									  (float)(DateTime.Now - startTime).TotalSeconds);
-				Debug.Log(redirectionData.ToString());
+			redirectionData.AddTo((script.redirect && scene.enableHybridOverTime) ? Razzaque2001OverTimeRotation.GetRedirection(scene) : 0f,
+								  (script.redirect && scene.enableHybridRotational) ? Razzaque2001Rotational.GetRedirection(scene) : 0f,
+								  (script.redirect && scene.enableHybridCurvature) ? Razzaque2001Curvature.GetRedirection(scene) : 0f,
+								  (float)(DateTime.Now - startTime).TotalSeconds);
+			Debug.Log(redirectionData.ToString());
 		}
 	}
 }
