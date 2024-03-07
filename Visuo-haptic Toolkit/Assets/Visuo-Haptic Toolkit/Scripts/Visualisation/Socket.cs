@@ -1,14 +1,15 @@
 using System;
+using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Threading;
-
 using UnityEngine;
 
 using VHToolkit.Redirection;
 using VHToolkit.Redirection.WorldRedirection;
 
 namespace VHToolkit.Logging {
+
 
 	[Serializable]
 	struct WorldRedirectionData {
@@ -42,19 +43,35 @@ namespace VHToolkit.Logging {
 
 		private TcpClient client;
 
+		[SerializeField] private string filename;
+
 		private Razzaque2001Hybrid loggingTechnique;
 
 		private WorldRedirectionData redirectionData;
 
 		private void Start() {
-			script = this.GetComponent<WorldRedirection>();
+			script = GetComponent<WorldRedirection>();
 			scene = script.scene;
 			InvokeRepeating(nameof(StartSendingMessages), 1f, 1f);
 			loggingTechnique = new();
-
 			redirectionData = new();
 		}
 
+		public void LaunchVisualizer() {
+
+			Debug.Log("Launch visualizer");
+			if (filename is null || !filename.EndsWith(".py")) return;
+			// TODO not great for non-windows
+			System.Diagnostics.Process p = new() {
+				StartInfo = new System.Diagnostics.ProcessStartInfo(@"python.exe", this.filename) {
+					RedirectStandardOutput = true,
+					UseShellExecute = false,
+					CreateNoWindow = true
+				}
+			};
+			Debug.Log("Start info OK.");
+			p.Start();
+		}
 		private void StartSendingMessages() {
 			if (client == null || !client.Connected) {
 				try {
