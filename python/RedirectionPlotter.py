@@ -6,10 +6,10 @@ from gettext import translation
 import json
 import pathlib
 import re
+import matplotlib
 import matplotlib.pyplot as plt
 
 
-import matplotlib
 matplotlib.use('TkAgg')
 
 
@@ -33,29 +33,22 @@ otrs, rs, cs, otrsSum, rsSum, csSum, ys, maxSums = ([] for _ in range(8))
 
 
 serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-# bind the socket to a public host, and a well-known port
 serversocket.bind(("localhost", 13000))
-# become a server socket
 serversocket.listen(5)
 
 while True:
     print("Waiting for socket")
     clientsocket, __ = serversocket.accept()
-    with clientsocket:
-        while True:
-            try:
-                chunk = clientsocket.recv(8192).decode()
-            except ConnectionResetError:
-                print("Connection reset")
-                break
-            for m in re.finditer(r'\{[^}]*}', chunk):
-                print(m[0])
-                d = json.loads(m[0])
-                for k, l in {
-                    "overTime": otrs, "rotational": rs, "curvature": cs, "overTimeSum": otrsSum,
-                    "rotationalSum": rsSum, "curvatureSum": csSum, "time": ys, "maxSums": maxSums
-                }.items():
-                    l.append(d[k])
+    with clientsocket.makefile() as file:
+        while file.readable():
+            chunk = file.readline()
+            if not chunk: continue
+            d = json.loads(chunk)
+            for k, l in {
+                "overTime": otrs, "rotational": rs, "curvature": cs, "overTimeSum": otrsSum,
+                "rotationalSum": rsSum, "curvatureSum": csSum, "time": ys, "maxSums": maxSums
+            }.items():
+                l.append(d[k])
 
             ax1.clear()
             ax2.clear()
