@@ -3,6 +3,7 @@ using System.Linq;
 
 using UnityEngine;
 using UnityEditor;
+using System.Collections.Generic;
 
 namespace VHToolkit.Redirection.WorldRedirection {
 	/// <summary>
@@ -10,26 +11,18 @@ namespace VHToolkit.Redirection.WorldRedirection {
 	/// </summary>
 	[CustomEditor(typeof(WorldRedirection))]
 	public class WorldRedirectionEditor : Editor {
-		SerializedProperty technique;
-		SerializedProperty strategy;
-
-		SerializedProperty physicalHand;
-		SerializedProperty physicalHead;
-		SerializedProperty virtualHead;
-		SerializedProperty physicalTarget;
-		SerializedProperty virtualTarget;
-		SerializedProperty origin;
-		SerializedProperty targetsScene;
-		SerializedProperty radius;
-		SerializedProperty applyDampening;
-		SerializedProperty applySmoothing;
-		SerializedProperty redirect;
-		SerializedProperty direction;
-		SerializedProperty parameters;
+		SerializedProperty technique, strategy,
+		physicalHand, physicalHead, virtualHead,
+		physicalTarget, virtualTarget,
+		origin,
+		targetsScene,
+		radius,
+		applyDampening, applySmoothing,
+		redirect, direction,
+		parameters;
 		SerializedObject parametersObject;
-
-		readonly string[] strategyTechniques = { "Razzaque2001OverTimeRotation", "Razzaque2001Rotational", "Razzaque2001Curvature", "Razzaque2001Hybrid" };
-		readonly string[] targetsStrategies = { "SteerToCenter", "SteerToMultipleTargets" };
+		readonly HashSet<string> strategyTechniques = new() { "Razzaque2001OverTimeRotation", "Razzaque2001Rotational", "Razzaque2001Curvature", "Razzaque2001Hybrid" };
+		readonly HashSet<string> targetsStrategies = new() { "SteerToCenter", "SteerToMultipleTargets" };
 
 		private void OnEnable() {
 			technique = serializedObject.FindProperty("_technique");
@@ -53,6 +46,10 @@ namespace VHToolkit.Redirection.WorldRedirection {
 			parametersObject = new SerializedObject(parameters.objectReferenceValue);
 		}
 
+		private void MakePropertyField(SerializedProperty property, string text, string tooltip = null) {
+			EditorGUILayout.PropertyField(property, new GUIContent(text, tooltip));
+		}
+
 		public override void OnInspectorGUI() {
 			GUI.enabled = false;
 			EditorGUILayout.ObjectField("Script:", MonoScript.FromMonoBehaviour((WorldRedirection)target), typeof(WorldRedirection), false);
@@ -64,45 +61,46 @@ namespace VHToolkit.Redirection.WorldRedirection {
 			EditorGUILayout.Space(5);
 			EditorGUILayout.LabelField("User Parameters", EditorStyles.largeLabel);
 
-			EditorGUILayout.PropertyField(physicalHand, new GUIContent("Physical Limbs"));
-			EditorGUILayout.PropertyField(physicalHead, new GUIContent("Physical Head"));
-			EditorGUILayout.PropertyField(virtualHead, new GUIContent("Virtual Head"));
+
+			MakePropertyField(physicalHand, "Physical Limbs", "A list of tracked user limbs.");
+			MakePropertyField(physicalHead, "Physical Head", "Transform tracking the user's real head");
+			MakePropertyField(virtualHead, "Virtual Head", "Transform tracking the user's virtual head");
 
 			if (technique.enumNames[technique.enumValueIndex] == "Azmandian2016World") {
-				EditorGUILayout.PropertyField(physicalTarget, new GUIContent("Physical Target"));
-				EditorGUILayout.PropertyField(virtualTarget, new GUIContent("Virtual Target"));
-				EditorGUILayout.PropertyField(origin, new GUIContent("Origin"));
+				MakePropertyField(physicalTarget, "Physical Target");
+				MakePropertyField(virtualTarget, "Virtual Target");
+				MakePropertyField(origin, "Origin");
 			}
 
 
 			EditorGUILayout.Space(5);
 			EditorGUILayout.LabelField("Technique Parameters", EditorStyles.largeLabel);
 
-			EditorGUILayout.PropertyField(technique, new GUIContent("Redirection technique"));
+			MakePropertyField(technique, "Redirection technique");
 
-			EditorGUILayout.PropertyField(redirect, new GUIContent("Activate Redirection"));
-			EditorGUILayout.PropertyField(parameters, new GUIContent("Numerical Parameters"));
+			MakePropertyField(redirect, "Activate Redirection");
+			MakePropertyField(parameters, "Numerical Parameters");
 
 			if (technique.enumNames[technique.enumValueIndex] == "Razzaque2001OverTimeRotation") {
-				EditorGUILayout.PropertyField(parametersObject.FindProperty("OverTimeRotation"), new GUIContent("Over Time Rotation Rate"));
+				MakePropertyField(parametersObject.FindProperty("OverTimeRotation"), "Over Time Rotation Rate");
 			}
 			if (technique.enumNames[technique.enumValueIndex] == "Razzaque2001Rotational") {
-				EditorGUILayout.PropertyField(parametersObject.FindProperty("GainsRotational"), new GUIContent("Rotational Gains"));
+				MakePropertyField(parametersObject.FindProperty("GainsRotational"), "Rotational Gains");
 			}
 			if (technique.enumNames[technique.enumValueIndex] == "Razzaque2001Curvature") {
-				EditorGUILayout.PropertyField(parametersObject.FindProperty("CurvatureRadius"), new GUIContent("Curvature Radius"));
+				MakePropertyField(parametersObject.FindProperty("CurvatureRadius"), "Curvature Radius");
 			}
 			if (technique.enumNames[technique.enumValueIndex] == "Razzaque2001Hybrid") {
-				EditorGUILayout.PropertyField(serializedObject.FindProperty("scene.enableHybridOverTime"), new GUIContent("Enable Over Time Rotation"));
-				EditorGUILayout.PropertyField(parametersObject.FindProperty("OverTimeRotation"), new GUIContent("Over Time Rotation Rate"));
+				MakePropertyField(serializedObject.FindProperty("scene.enableHybridOverTime"), "Enable Over Time Rotation");
+				MakePropertyField(parametersObject.FindProperty("OverTimeRotation"), "Over Time Rotation Rate");
 				EditorGUILayout.Space(2);
-				EditorGUILayout.PropertyField(serializedObject.FindProperty("scene.enableHybridRotational"), new GUIContent("Enable Rotational"));
-				EditorGUILayout.PropertyField(parametersObject.FindProperty("GainsRotational"), new GUIContent("Rotational Gains"));
+				MakePropertyField(serializedObject.FindProperty("scene.enableHybridRotational"), "Enable Rotational");
+				MakePropertyField(parametersObject.FindProperty("GainsRotational"), "Rotational Gains");
 				EditorGUILayout.Space(2);
-				EditorGUILayout.PropertyField(serializedObject.FindProperty("scene.enableHybridCurvature"), new GUIContent("Enable Curvature"));
-				EditorGUILayout.PropertyField(parametersObject.FindProperty("CurvatureRadius"), new GUIContent("Curvature Radius"));
+				MakePropertyField(serializedObject.FindProperty("scene.enableHybridCurvature"), "Enable Curvature");
+				MakePropertyField(parametersObject.FindProperty("CurvatureRadius"), "Curvature Radius");
 				EditorGUILayout.Space(2);
-				EditorGUILayout.PropertyField(serializedObject.FindProperty("scene.aggregateFunction"), new GUIContent("Aggregate Function"));
+				MakePropertyField(serializedObject.FindProperty("scene.aggregateFunction"), "Aggregate Function");
 
 				WorldRedirection script = target as WorldRedirection;
 				switch (script.scene.aggregateFunction) {
@@ -113,7 +111,7 @@ namespace VHToolkit.Redirection.WorldRedirection {
 						script.techniqueInstance = Razzaque2001Hybrid.Sum();
 						break;
 					case HybridAggregate.WeightedSum:
-						EditorGUILayout.PropertyField(parametersObject.FindProperty("HybridWeights"), new GUIContent("Hybrid Weights"));
+						MakePropertyField(parametersObject.FindProperty("HybridWeights"), "Hybrid Weights");
 						Vector3 w = script.scene.parameters.HybridWeights;
 						script.techniqueInstance = Razzaque2001Hybrid.Weighted(w.x, w.y, w.z);
 						break;
@@ -123,10 +121,10 @@ namespace VHToolkit.Redirection.WorldRedirection {
 				}
 			}
 			// if (technique.enumNames[technique.enumValueIndex] == "Azmandian2016World") {
-			// 	EditorGUILayout.PropertyField(parametersObject.FindProperty("GainsRotational"), new GUIContent("Gains Rotational"));
+			// 	MakePropertyField(parametersObject.FindProperty("GainsRotational"), "Gains Rotational");
 			// }
 			if (technique.enumNames[technique.enumValueIndex] == "Steinicke2008Translational") {
-				EditorGUILayout.PropertyField(parametersObject.FindProperty("GainsTranslational"), new GUIContent("Translational Gains"));
+				MakePropertyField(parametersObject.FindProperty("GainsTranslational"), "Translational Gains");
 			}
 
 
@@ -134,20 +132,20 @@ namespace VHToolkit.Redirection.WorldRedirection {
 			if (strategyTechniques.Contains(technique.enumNames[technique.enumValueIndex])) {
 				EditorGUILayout.Space(5);
 				EditorGUILayout.LabelField("Strategy Parameters", EditorStyles.largeLabel);
-				EditorGUILayout.PropertyField(strategy, new GUIContent("Target selection strategy"));
+				MakePropertyField(strategy, "Target selection strategy");
 
 				if (targetsStrategies.Contains(strategy.enumNames[strategy.enumValueIndex])) {
-					EditorGUILayout.PropertyField(targetsScene, new GUIContent("Targets"));
-					EditorGUILayout.PropertyField(applyDampening, new GUIContent("Apply Dampening"));
-					EditorGUILayout.PropertyField(applySmoothing, new GUIContent("Apply Smoothing"));
+					MakePropertyField(targetsScene, "Targets");
+					MakePropertyField(applyDampening, "Apply Dampening");
+					MakePropertyField(applySmoothing, "Apply Smoothing");
 				}
 				else if (strategy.enumNames[strategy.enumValueIndex] == "SteerToOrbit") {
-					EditorGUILayout.PropertyField(targetsScene, new GUIContent("Targets"));
+					MakePropertyField(targetsScene, "Targets");
 					var steerToOrbitRadius = parametersObject.FindProperty("steerToOrbitRadius");
-					EditorGUILayout.PropertyField(steerToOrbitRadius, new GUIContent("Orbit Radius"));
+					MakePropertyField(steerToOrbitRadius, "Orbit Radius");
 				}
 				else if (strategy.enumNames[strategy.enumValueIndex] == "SteerInDirection") {
-					EditorGUILayout.PropertyField(direction, new GUIContent("Direction"));
+					MakePropertyField(direction, "Direction");
 				}
 
 			}

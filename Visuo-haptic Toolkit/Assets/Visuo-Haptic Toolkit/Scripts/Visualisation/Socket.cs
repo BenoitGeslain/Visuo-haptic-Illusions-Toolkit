@@ -43,6 +43,7 @@ namespace VHToolkit.Logging {
 
 		private TcpClient client;
 
+		[Tooltip("File name for the Python visualization script.")]
 		[SerializeField] private string filename;
 
 		private Razzaque2001Hybrid loggingTechnique;
