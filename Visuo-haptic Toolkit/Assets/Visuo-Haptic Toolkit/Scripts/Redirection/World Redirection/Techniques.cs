@@ -62,8 +62,7 @@ namespace VHToolkit.Redirection.WorldRedirection {
 			float instantRotation = scene.GetHeadInstantRotationY();
 
 			if (Mathf.Abs(angleToTarget) > scene.parameters.RotationalError && Mathf.Abs(instantRotation) > scene.parameters.RotationThreshold) {
-				Debug.Log($"{instantRotation} - {instantRotation * ((Mathf.Sign(scene.GetHeadAngleToTarget()) != Mathf.Sign(instantRotation)) ? scene.parameters.GainsRotational.opposite - 1 : scene.parameters.GainsRotational.same - 1)}");
-				return instantRotation * ((Mathf.Sign(scene.GetHeadAngleToTarget()) != Mathf.Sign(instantRotation))
+				return instantRotation * ((Mathf.Sign(angleToTarget) != Mathf.Sign(instantRotation))
 					? scene.parameters.GainsRotational.opposite - 1
 					: scene.parameters.GainsRotational.same - 1);
 			}
@@ -74,8 +73,8 @@ namespace VHToolkit.Redirection.WorldRedirection {
 			float angleToTarget = scene.HeadToHeadRedirection.eulerAngles.y;
 			float instantRotation = scene.GetHeadInstantRotationY();
 
-			if (Mathf.Abs(instantRotation) > scene.parameters.RotationThreshold && Mathf.Abs(angleToTarget) > scene.parameters.RotationalError) {
-				return instantRotation * ((Mathf.Sign(scene.GetHeadAngleToTarget()) != Mathf.Sign(instantRotation))
+			if (Mathf.Abs(angleToTarget) > scene.parameters.RotationalError && Mathf.Abs(instantRotation) > scene.parameters.RotationThreshold) {
+				return instantRotation * ((Mathf.Sign(angleToTarget) != Mathf.Sign(instantRotation))
 					? scene.parameters.GainsRotational.opposite - 1
 					: scene.parameters.GainsRotational.same - 1);
 			}

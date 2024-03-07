@@ -21,10 +21,10 @@ namespace VHToolkit.Logging {
 			if (this.maxSums is null || this.maxSums.Length != 3) {
 				this.maxSums = new float[3];
 			}
-			this.overTime = Mathf.Abs(overTime);
-			this.rotational = Mathf.Abs(rotational);
-			this.curvature = Mathf.Abs(curvature);
-			var tmp = new float[] {this.overTime, this.rotational, this.curvature}.ToList();
+			this.overTime += Mathf.Abs(overTime);
+			this.rotational += Mathf.Abs(rotational);
+			this.curvature += Mathf.Abs(curvature);
+			var tmp = new float[] {overTime, rotational, curvature}.ToList().ConvertAll(Mathf.Abs);
 			var m = tmp.Max();
 			var maxComponentIndex = tmp.IndexOf(m);
 
@@ -47,9 +47,9 @@ namespace VHToolkit.Logging {
 		private WorldRedirectionData redirectionData;
 
 		private void Start() {
-			script = Toolkit.Instance.GetComponent<WorldRedirection>();
+			script = this.GetComponent<WorldRedirection>();
 			scene = script.scene;
-			InvokeRepeating(nameof(StartSendingMessages), 1f, 0.5f);
+			InvokeRepeating(nameof(StartSendingMessages), 1f, 1f);
 			loggingTechnique = new();
 
 			redirectionData = new();
@@ -63,6 +63,9 @@ namespace VHToolkit.Logging {
 				}
 				catch (SocketException) {}
 			} else {
+				redirectionData.overTime = 0f;
+				redirectionData.rotational = 0f;
+				redirectionData.curvature = 0f;
 				Thread thread = new(() => SendMessage(client, redirectionData));
 				thread.Start();
 			}
@@ -89,6 +92,7 @@ namespace VHToolkit.Logging {
 									  (script.redirect && scene.enableHybridRotational) ? Razzaque2001Rotational.GetRedirection(scene) : 0f,
 									  (script.redirect && scene.enableHybridCurvature) ? Razzaque2001Curvature.GetRedirection(scene) : 0f,
 									  (float)(DateTime.Now - startTime).TotalSeconds);
+				Debug.Log(redirectionData.ToString());
 		}
 	}
 }

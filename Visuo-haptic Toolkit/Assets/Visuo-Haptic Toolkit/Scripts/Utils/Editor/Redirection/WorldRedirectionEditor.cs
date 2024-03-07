@@ -61,11 +61,6 @@ namespace VHToolkit.Redirection.WorldRedirection {
 			serializedObject.Update();
 			parametersObject.Update();
 
-			EditorGUILayout.PropertyField(technique, new GUIContent("Redirection technique"));
-			if (strategyTechniques.Contains(technique.enumNames[technique.enumValueIndex])) {
-				EditorGUILayout.PropertyField(strategy, new GUIContent("Target selection strategy"));
-			}
-
 			EditorGUILayout.Space(5);
 			EditorGUILayout.LabelField("User Parameters", EditorStyles.largeLabel);
 
@@ -83,9 +78,10 @@ namespace VHToolkit.Redirection.WorldRedirection {
 			EditorGUILayout.Space(5);
 			EditorGUILayout.LabelField("Technique Parameters", EditorStyles.largeLabel);
 
+			EditorGUILayout.PropertyField(technique, new GUIContent("Redirection technique"));
 
-			EditorGUILayout.PropertyField(redirect, new GUIContent("Activate redirection"));
-			EditorGUILayout.PropertyField(parameters, new GUIContent("Numerical parameters"));
+			EditorGUILayout.PropertyField(redirect, new GUIContent("Activate Redirection"));
+			EditorGUILayout.PropertyField(parameters, new GUIContent("Numerical Parameters"));
 
 			if (technique.enumNames[technique.enumValueIndex] == "Razzaque2001OverTimeRotation") {
 				EditorGUILayout.PropertyField(parametersObject.FindProperty("OverTimeRotation"), new GUIContent("Over Time Rotation Rate"));
@@ -133,24 +129,24 @@ namespace VHToolkit.Redirection.WorldRedirection {
 				EditorGUILayout.PropertyField(parametersObject.FindProperty("GainsTranslational"), new GUIContent("Translational Gains"));
 			}
 
+
 			// Hides targets, dampening and smoothing if
 			if (strategyTechniques.Contains(technique.enumNames[technique.enumValueIndex])) {
+				EditorGUILayout.Space(5);
+				EditorGUILayout.LabelField("Strategy Parameters", EditorStyles.largeLabel);
+				EditorGUILayout.PropertyField(strategy, new GUIContent("Target selection strategy"));
+
 				if (targetsStrategies.Contains(strategy.enumNames[strategy.enumValueIndex])) {
-					EditorGUILayout.Space(5);
-					EditorGUILayout.LabelField("Strategy Parameters", EditorStyles.largeLabel);
 					EditorGUILayout.PropertyField(targetsScene, new GUIContent("Targets"));
 					EditorGUILayout.PropertyField(applyDampening, new GUIContent("Apply Dampening"));
 					EditorGUILayout.PropertyField(applySmoothing, new GUIContent("Apply Smoothing"));
 				}
 				else if (strategy.enumNames[strategy.enumValueIndex] == "SteerToOrbit") {
-					EditorGUILayout.Space(5);
-					EditorGUILayout.LabelField("Strategy Parameters", EditorStyles.largeLabel);
+					EditorGUILayout.PropertyField(targetsScene, new GUIContent("Targets"));
 					var steerToOrbitRadius = parametersObject.FindProperty("steerToOrbitRadius");
 					EditorGUILayout.PropertyField(steerToOrbitRadius, new GUIContent("Orbit Radius"));
 				}
 				else if (strategy.enumNames[strategy.enumValueIndex] == "SteerInDirection") {
-					EditorGUILayout.Space(5);
-					EditorGUILayout.LabelField("Strategy Parameters", EditorStyles.largeLabel);
 					EditorGUILayout.PropertyField(direction, new GUIContent("Direction"));
 				}
 

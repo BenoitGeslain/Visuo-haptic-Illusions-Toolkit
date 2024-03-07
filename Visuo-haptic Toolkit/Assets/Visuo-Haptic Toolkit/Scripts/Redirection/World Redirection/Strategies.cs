@@ -50,13 +50,14 @@ namespace VHToolkit.Redirection.WorldRedirection {
 
 	class SteerInDirection : WorldRedirectionStrategy {
 		/// <summary>
-		///
+		/// Steers the user in the specified direction relative to the physicalHead orientation.
+		/// This function uses the parameter strategyDirection as its input.
+		/// For example, if strategyDirection is Vector3.right, this function will return physicalHead.right
 		/// </summary>
 		/// <param name="scene"></param>
 		/// <returns></returns>
 		public override Vector3 SteerTo(Scene scene) {
-			Debug.DrawRay(scene.physicalHead.position, scene.strategyDirection);
-			return scene.strategyDirection;
+			return scene.physicalHead.rotation * scene.strategyDirection;
 		}
 	}
 }

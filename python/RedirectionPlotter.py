@@ -1,4 +1,6 @@
-import itertools
+"""Script for user redirection """
+
+import builtins
 import socket
 from gettext import translation
 import json
@@ -14,6 +16,7 @@ matplotlib.use('TkAgg')
 
 localedir = pathlib.Path(__file__).parent / 'locales'
 translation('messages', localedir,languages=['fr_FR'], fallback=True).install()
+_ = builtins.__dict__['_'] #  convince linters '_' is defined
 
 
 plt.ion() # turn on interactive mode
@@ -61,7 +64,10 @@ while True:
             ax1.set_title(_('Redirection amounts over time'), y=1.35)
             ax1.set_ylabel(_('Redirection Applied to User (degrees)'))
             labels=(_('Over time rotation'), _('Rotational'), _('Curvature'))
-            ax1.stackplot(ys, otrsSum, rsSum, csSum, *zip(*maxSums), labels=labels + labels, colors="rgbrgb")
+            ax1.stackplot(
+                ys, otrsSum, rsSum, csSum, *zip(*maxSums),
+                labels=labels + labels,
+                colors="rgbrgb")
             # ax1.plot(ys[-60:], hybrid[-60:], color='b', label='Hybrid', linewidth=0.5)
 
             # ax2.set_xticks(list(map(int, ys[::10])))

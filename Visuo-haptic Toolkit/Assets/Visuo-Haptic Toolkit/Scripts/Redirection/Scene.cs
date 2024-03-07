@@ -97,6 +97,9 @@ namespace VHToolkit.Redirection {
 		/// <returns>The distance between the user's physical and virtual head.</returns>
 		public float GetHeadToHeadDistance() => Vector3.Distance(physicalHead.position, virtualHead.position);
 
+		/// <returns>The Vector3 between the user's physical and virtual head.</returns>
+		public Vector3 GetHeadToHeadVector() => physicalHead.position - virtualHead.position;
+
 		private Quaternion _redirection = Quaternion.identity;
         /// <returns>The quaternion rotation between the user's physical and virtual head.</returns>
         public Quaternion HeadToHeadRedirection {
@@ -117,7 +120,7 @@ namespace VHToolkit.Redirection {
         public float GetHeadInstantRotationY() {
 			// float instantRotation = (Quaternion.Inverse(physicalHead.rotation) * GetHeadInstantRotation() * physicalHead.rotation ).eulerAngles.y;
 			float instantRotation = GetHeadInstantRotation().eulerAngles.y;
-			return (instantRotation > 180f)? 360f - instantRotation : instantRotation;
+			return (instantRotation > 180f)? instantRotation - 360f : instantRotation;
 		}
 
 		/// <returns>The instant linear velocity of the physical head using the last frame's position</returns>
