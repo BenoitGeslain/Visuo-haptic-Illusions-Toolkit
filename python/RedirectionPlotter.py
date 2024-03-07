@@ -59,8 +59,8 @@ while True:
             labels=(_('Over time rotation'), _('Rotational'), _('Curvature'))
             ax1.stackplot(
                 ys, otrsSum, rsSum, csSum, *zip(*maxSums),
-                labels=labels + labels,
-                colors="rgbrgb")
+                labels=list(labels) + [l + '_max' for l in labels],
+                colors="rgbymc")
             # ax1.plot(ys[-60:], hybrid[-60:], color='b', label='Hybrid', linewidth=0.5)
 
             # ax2.set_xticks(list(map(int, ys[::10])))
