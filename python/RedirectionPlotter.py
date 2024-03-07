@@ -32,18 +32,15 @@ ax2.set_position([box.x0, box.y0, box.width, box.height * 0.9])
 otrs, rs, cs, otrsSum, rsSum, csSum, ys, maxSums = ([] for _ in range(8))
 
 
-serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-serversocket.bind(("localhost", 13000))
-serversocket.listen(5)
-
-while True:
-    print("Waiting for socket")
+with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as serversocket:
+    serversocket.bind(("localhost", 13000))
+    serversocket.listen(5)
     clientsocket, __ = serversocket.accept()
     with clientsocket.makefile() as file:
-        while file.readable():
-            chunk = file.readline()
-            if not chunk: continue
-            d = json.loads(chunk)
+        for line in file:
+            if not plt.get_fignums():
+                break
+            d = json.loads(line)
             for k, l in {
                 "overTime": otrs, "rotational": rs, "curvature": cs, "overTimeSum": otrsSum,
                 "rotationalSum": rsSum, "curvatureSum": csSum, "time": ys, "maxSums": maxSums

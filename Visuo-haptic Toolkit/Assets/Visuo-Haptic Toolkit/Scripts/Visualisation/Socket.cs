@@ -50,21 +50,18 @@ namespace VHToolkit.Logging {
 		private WorldRedirectionData redirectionData;
 
 		private void Start() {
-			script = this.GetComponent<WorldRedirection>();
+			script = GetComponent<WorldRedirection>();
 			scene = script.scene;
 			InvokeRepeating(nameof(StartSendingMessages), 1f, 1f);
 			loggingTechnique = new();
-
 			redirectionData = new();
 		}
 
-		// TODO At present, the visualizer will work only once as it always binds to the same port
-		// This should be improved 
 		public void LaunchVisualizer() {
 
 			Debug.Log("Launch visualizer");
 			if (filename is null || !filename.EndsWith(".py")) return;
-
+			// TODO not great for non-windows
 			System.Diagnostics.Process p = new() {
 				StartInfo = new System.Diagnostics.ProcessStartInfo(@"python.exe", this.filename) {
 					RedirectStandardOutput = true,
