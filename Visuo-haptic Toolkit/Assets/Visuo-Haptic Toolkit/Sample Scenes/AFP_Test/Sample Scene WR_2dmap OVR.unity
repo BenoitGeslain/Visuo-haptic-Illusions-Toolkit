@@ -2281,9 +2281,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   obstacleTab: Obstacle
   verbose: 0
+  refreshRate: 0
   heatmapEnabled: 1
   heatmapQuadPrefab: {fileID: 3973517385662518282, guid: 437537830c8a19d42a6c39be05919293, type: 3}
-  heatmapMeshFineness: 0
+  heatmapMeshFineness: 37
+  clampValue: 0
   vectorsEnabled: 0
   traitObjet: 0
 --- !u!4 &1634858490

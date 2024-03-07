@@ -83,7 +83,7 @@ namespace VHToolkit.Redirection {
         public override Vector3 SteerTo(Scene scene)
         {
             Vector2 gradient = ComputeGradient(scene);
-            return gradient;
+            return new Vector3(gradient.x, 0, gradient.y);
         }
 
         public static Vector2 ComputeGradient(Scene scene)

@@ -17,12 +17,15 @@ public class GradientVisuals : MonoBehaviour
     // public general
     public string obstacleTab;
     public bool verbose;
+    public int refreshRate;
 
     // public heatmap
     [Header("Heatmap")]
     [InspectorName("Enable Heatmap")] public bool heatmapEnabled;
     public GameObject heatmapQuadPrefab;
-    [Range(1,64)] [Tooltip("The higher the finer")] public int heatmapMeshFineness = 16;
+    [Range(1,64)] [Tooltip("The higher the finer")] public int heatmapMeshFineness;
+    [Range(1,10)] public float clampValue = 1;
+
 
     // public vectors
     [Header("Vector Field")]
@@ -139,6 +142,7 @@ public class GradientVisuals : MonoBehaviour
                 hmQuad = Instantiate(heatmapQuadPrefab, this.transform);
                 hmQuad.transform.position = new Vector3((minX + maxX) / 2, 0f, (minZ + maxZ) / 2);
                 hmQuad.transform.localScale = new Vector2(width, depth);
+                hmQuad.layer = LayerMask.NameToLayer("Visuals");
 
                 hmRend = hmQuad.GetComponent<Renderer>();
 
@@ -182,15 +186,16 @@ public class GradientVisuals : MonoBehaviour
                 Vector2 gradient = MathTools.Gradient3(repulsiveFunction, position);
 
                 float magnitude = gradient.magnitude;;
-                //float Valeur = Math.Min(1, Math.Max(0, Magnitude));
+                //float hmValue = Mathf.Clamp(magnitude, 0, clampValue);
+                float hmValue = magnitude;
 
-                hmDensityTable[x + (z * heatmapMeshFineness)] = magnitude;
-                Log($"{stepX * x:0.0} - {stepZ * z:0.0} : {magnitude}");
+                hmDensityTable[x + (z * heatmapMeshFineness)] = hmValue;
+                Log($"{stepX * x:0.0} - {stepZ * z:0.0} : {hmValue}");
             }
 
         }
 
-        float maxDen = hmDensityTable.Max();
+        float maxDen = clampValue;
 
         hmRend.material.SetFloat("_UnitsPerSide", heatmapMeshFineness);
         hmRend.material.SetFloat("_MaxDen", maxDen);
