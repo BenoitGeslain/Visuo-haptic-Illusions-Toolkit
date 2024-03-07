@@ -1,14 +1,15 @@
 using System;
+using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Threading;
-
 using UnityEngine;
 
 using VHToolkit.Redirection;
 using VHToolkit.Redirection.WorldRedirection;
 
 namespace VHToolkit.Logging {
+
 
 	[Serializable]
 	struct WorldRedirectionData {
@@ -42,6 +43,8 @@ namespace VHToolkit.Logging {
 
 		private TcpClient client;
 
+		[SerializeField] private string filename;
+
 		private Razzaque2001Hybrid loggingTechnique;
 
 		private WorldRedirectionData redirectionData;
@@ -55,6 +58,23 @@ namespace VHToolkit.Logging {
 			redirectionData = new();
 		}
 
+		// TODO At present, the visualizer will work only once as it always binds to the same port
+		// This should be improved 
+		public void LaunchVisualizer() {
+
+			Debug.Log("Launch visualizer");
+			if (filename is null || !filename.EndsWith(".py")) return;
+
+			System.Diagnostics.Process p = new() {
+				StartInfo = new System.Diagnostics.ProcessStartInfo(@"python.exe", this.filename) {
+					RedirectStandardOutput = true,
+					UseShellExecute = false,
+					CreateNoWindow = true
+				}
+			};
+			Debug.Log("Start info OK.");
+			p.Start();
+		}
 		private void StartSendingMessages() {
 			if (client == null || !client.Connected) {
 				try {
