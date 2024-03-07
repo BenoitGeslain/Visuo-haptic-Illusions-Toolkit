@@ -5,12 +5,13 @@ var searchData=
   ['controlpoint_17',['controlPoint',['../classVHToolkit_1_1Redirection_1_1BodyRedirection_1_1BodyRedirectionTechnique.html#ac1aea0038cdb84463ab0347ecf12c330',1,'VHToolkit::Redirection::BodyRedirection::BodyRedirectionTechnique']]],
   ['copyheadandlimbtransform_18',['CopyHeadAndLimbTransform',['../classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1WorldRedirectionTechnique.html#aeb7c04cb4ec281a3920a03d81f4f1ba1',1,'VHToolkit::Redirection::WorldRedirection::WorldRedirectionTechnique']]],
   ['corridorredirection_19',['CorridorRedirection',['../classVHToolkit_1_1Demo_1_1CorridorRedirection.html',1,'VHToolkit::Demo']]],
-  ['createnewfile_20',['CreateNewFile',['../classVHToolkit_1_1Logging_1_1JsonLogging.html#ac947a9cc29ad451cf42c35a39855f158',1,'VHToolkit.Logging.JsonLogging.CreateNewFile()'],['../classVHToolkit_1_1Logging_1_1Logging.html#a1f3aaeabf70901177f1e871be4a3a395',1,'VHToolkit.Logging.Logging.CreateNewFile()']]],
-  ['csvloggingeditor_21',['CSVLoggingEditor',['../classVHToolkit_1_1Logging_1_1CSVLoggingEditor.html',1,'VHToolkit::Logging']]],
-  ['cubesredirection_22',['CubesRedirection',['../classCubesRedirection.html',1,'']]],
-  ['cubesstate_23',['CubesState',['../classCubesRedirection.html#a50d9c599f4116189058e71871878df23',1,'CubesRedirection']]],
-  ['curvature_24',['curvature',['../structVHToolkit_1_1Logging_1_1WorldRedirectionData.html#a9c3c8f897417975e25b6cd4023b86bb6',1,'VHToolkit::Logging::WorldRedirectionData']]],
-  ['curvatureradius_25',['CurvatureRadius',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a094b9a6beb61e1b1ae42f33a87db3091',1,'VHToolkit::Redirection::ParametersToolkit']]],
-  ['curvatureradiustorotationrate_26',['CurvatureRadiusToRotationRate',['../classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1Razzaque2001Curvature.html#a26f16772d8807b171de440fa25ca5d87',1,'VHToolkit::Redirection::WorldRedirection::Razzaque2001Curvature']]],
-  ['curvaturesum_27',['curvatureSum',['../structVHToolkit_1_1Logging_1_1WorldRedirectionData.html#aae09df0088af38142459c1032866b58c',1,'VHToolkit::Logging::WorldRedirectionData']]]
+  ['corridorrepresentation_20',['CorridorRepresentation',['../classCorridorRepresentation.html',1,'']]],
+  ['createnewfile_21',['CreateNewFile',['../classVHToolkit_1_1Logging_1_1JsonLogging.html#ac947a9cc29ad451cf42c35a39855f158',1,'VHToolkit.Logging.JsonLogging.CreateNewFile()'],['../classVHToolkit_1_1Logging_1_1Logging.html#a1f3aaeabf70901177f1e871be4a3a395',1,'VHToolkit.Logging.Logging.CreateNewFile()']]],
+  ['csvloggingeditor_22',['CSVLoggingEditor',['../classVHToolkit_1_1Logging_1_1CSVLoggingEditor.html',1,'VHToolkit::Logging']]],
+  ['cubesredirection_23',['CubesRedirection',['../classCubesRedirection.html',1,'']]],
+  ['cubesstate_24',['CubesState',['../classCubesRedirection.html#a50d9c599f4116189058e71871878df23',1,'CubesRedirection']]],
+  ['curvature_25',['curvature',['../structVHToolkit_1_1Logging_1_1WorldRedirectionData.html#a9c3c8f897417975e25b6cd4023b86bb6',1,'VHToolkit::Logging::WorldRedirectionData']]],
+  ['curvatureradius_26',['CurvatureRadius',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a094b9a6beb61e1b1ae42f33a87db3091',1,'VHToolkit::Redirection::ParametersToolkit']]],
+  ['curvatureradiustorotationrate_27',['CurvatureRadiusToRotationRate',['../classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1Razzaque2001Curvature.html#a26f16772d8807b171de440fa25ca5d87',1,'VHToolkit::Redirection::WorldRedirection::Razzaque2001Curvature']]],
+  ['curvaturesum_28',['curvatureSum',['../structVHToolkit_1_1Logging_1_1WorldRedirectionData.html#aae09df0088af38142459c1032866b58c',1,'VHToolkit::Logging::WorldRedirectionData']]]
 ];
