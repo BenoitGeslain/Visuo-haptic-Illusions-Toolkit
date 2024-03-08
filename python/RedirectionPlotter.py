@@ -23,10 +23,10 @@ plt.ion() # turn on interactive mode
 fig = plt.figure(figsize=(10,6), constrained_layout=True)
 ax1 = plt.subplot(211)
 box = ax1.get_position()
-ax1.set_position([box.x0, box.y0, box.width, box.height * 0.8])
+ax1.set_position((box.x0, box.y0, box.width, box.height * 0.8))
 ax2 = plt.subplot(212)
 box = ax2.get_position()
-ax2.set_position([box.x0, box.y0, box.width, box.height * 0.9])
+ax2.set_position((box.x0, box.y0, box.width, box.height * 0.9))
 
 
 otrs, rs, cs, otrsSum, rsSum, csSum, ys, maxSums = ([] for _ in range(8))

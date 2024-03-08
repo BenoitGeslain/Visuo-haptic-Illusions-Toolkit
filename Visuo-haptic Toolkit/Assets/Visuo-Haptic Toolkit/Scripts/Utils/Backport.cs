@@ -31,10 +31,12 @@ namespace VHToolkit {
 			TSource result = default;
 			TKey value = default;
 			foreach (var x in source) {
-				var newValue = keySelector(x);
-				if (result is null || newValue.CompareTo(value) < 0) {
-					result = x;
-					value = newValue;
+				if (x != null) {
+					var newValue = keySelector(x);
+					if (result is null || newValue.CompareTo(value) < 0) {
+						result = x;
+						value = newValue;
+					}
 				}
 			}
 			return result;
