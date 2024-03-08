@@ -46,6 +46,9 @@ namespace VHToolkit.Logging {
 		[Tooltip("File name for the Python visualization script.")]
 		[SerializeField] private string filename;
 
+		[Tooltip("File name for the Python visualization script.")]
+		[SerializeField] private string pythonPath;
+
 		private Razzaque2001Hybrid loggingTechnique;
 
 		private WorldRedirectionData redirectionData;
@@ -64,7 +67,7 @@ namespace VHToolkit.Logging {
 			if (filename is null || !filename.EndsWith(".py")) return;
 			// TODO not great for non-windows
 			System.Diagnostics.Process p = new() {
-				StartInfo = new System.Diagnostics.ProcessStartInfo(@"python.exe", this.filename) {
+				StartInfo = new System.Diagnostics.ProcessStartInfo(pythonPath, filename) {
 					RedirectStandardOutput = true,
 					UseShellExecute = false,
 					CreateNoWindow = true
