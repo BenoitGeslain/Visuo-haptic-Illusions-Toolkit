@@ -59,6 +59,7 @@ namespace VHToolkit.Logging {
 			InvokeRepeating(nameof(StartSendingMessages), 1f, 1f);
 			loggingTechnique = new();
 			redirectionData = new();
+			LaunchVisualizer();
 		}
 
 		public void LaunchVisualizer() {
@@ -73,7 +74,6 @@ namespace VHToolkit.Logging {
 					CreateNoWindow = true
 				}
 			};
-			Debug.Log("Start info OK.");
 			p.Start();
 		}
 		private void StartSendingMessages() {
