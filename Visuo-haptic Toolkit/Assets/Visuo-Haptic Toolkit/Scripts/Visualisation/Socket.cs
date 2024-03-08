@@ -44,6 +44,7 @@ namespace VHToolkit.Logging {
 		private TcpClient client;
 
 		[SerializeField] private string filename;
+		[SerializeField] private string pythonPath;
 
 		private Razzaque2001Hybrid loggingTechnique;
 
@@ -55,15 +56,17 @@ namespace VHToolkit.Logging {
 			InvokeRepeating(nameof(StartSendingMessages), 1f, 1f);
 			loggingTechnique = new();
 			redirectionData = new();
+
+			LaunchVisualizer();
 		}
 
 		public void LaunchVisualizer() {
 
-			Debug.Log("Launch visualizer");
+			Debug.Log($"Launch visualizer with Python {pythonPath}");
 			if (filename is null || !filename.EndsWith(".py")) return;
 			// TODO not great for non-windows
 			System.Diagnostics.Process p = new() {
-				StartInfo = new System.Diagnostics.ProcessStartInfo(@"python.exe", this.filename) {
+				StartInfo = new System.Diagnostics.ProcessStartInfo(pythonPath, this.filename) {
 					RedirectStandardOutput = true,
 					UseShellExecute = false,
 					CreateNoWindow = true
@@ -81,11 +84,11 @@ namespace VHToolkit.Logging {
 				catch (SocketException) { }
 			}
 			else {
-				redirectionData.overTime = 0f;
-				redirectionData.rotational = 0f;
-				redirectionData.curvature = 0f;
 				Thread thread = new(() => SendMessage(client, redirectionData));
 				thread.Start();
+				// redirectionData.overTime = 0f;
+				// redirectionData.rotational = 0f;
+				// redirectionData.curvature = 0f;
 			}
 		}
 
