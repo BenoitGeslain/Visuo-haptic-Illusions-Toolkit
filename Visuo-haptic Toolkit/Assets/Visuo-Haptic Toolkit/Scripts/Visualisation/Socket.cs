@@ -85,11 +85,11 @@ namespace VHToolkit.Logging {
 				catch (SocketException) { }
 			}
 			else {
+				Thread thread = new(() => SendMessage(client, redirectionData));
+				thread.Start();
 				redirectionData.overTime = 0f;
 				redirectionData.rotational = 0f;
 				redirectionData.curvature = 0f;
-				Thread thread = new(() => SendMessage(client, redirectionData));
-				thread.Start();
 			}
 		}
 
