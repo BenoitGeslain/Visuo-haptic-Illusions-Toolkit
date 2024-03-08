@@ -46,7 +46,7 @@ namespace VHToolkit.Logging {
 		[Tooltip("File name for the Python visualization script.")]
 		[SerializeField] private string filename;
 
-		[Tooltip("File name for the Python visualization script.")]
+		[Tooltip("File name for the Python executable path.")]
 		[SerializeField] private string pythonPath;
 
 		private Razzaque2001Hybrid loggingTechnique;
@@ -64,7 +64,7 @@ namespace VHToolkit.Logging {
 
 		public void LaunchVisualizer() {
 
-			Debug.Log("Launch visualizer");
+			Debug.Log($"Launch visualizer with Python {pythonPath}");
 			if (filename is null || !filename.EndsWith(".py")) return;
 			// TODO not great for non-windows
 			System.Diagnostics.Process p = new() {
@@ -87,9 +87,9 @@ namespace VHToolkit.Logging {
 			else {
 				Thread thread = new(() => SendMessage(client, redirectionData));
 				thread.Start();
-				redirectionData.overTime = 0f;
-				redirectionData.rotational = 0f;
-				redirectionData.curvature = 0f;
+				// redirectionData.overTime = 0f;
+				// redirectionData.rotational = 0f;
+				// redirectionData.curvature = 0f;
 			}
 		}
 
