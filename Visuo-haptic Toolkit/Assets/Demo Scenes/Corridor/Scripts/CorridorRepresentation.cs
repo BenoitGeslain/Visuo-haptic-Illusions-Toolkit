@@ -6,9 +6,7 @@ public class CorridorRepresentation : MonoBehaviour {
 
 	private WorldRedirection script;
 
-	private void Start() {
-		script = this.GetComponent<WorldRedirection>();
-	}
+	private void Start() => script = GetComponent<WorldRedirection>();
 
 	private void Update() {
 		virtualCorridor.SetPositionAndRotation(physicalCorridor.position, physicalCorridor.rotation);
