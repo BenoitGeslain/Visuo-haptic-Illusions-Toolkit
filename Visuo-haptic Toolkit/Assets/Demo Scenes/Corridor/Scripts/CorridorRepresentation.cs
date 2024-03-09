@@ -6,13 +6,10 @@ public class CorridorRepresentation : MonoBehaviour {
 
 	private WorldRedirection script;
 
-	private void Start() {
-		script = this.GetComponent<WorldRedirection>();
-	}
+	private void Start() => script = GetComponent<WorldRedirection>();
 
 	private void Update() {
-		virtualCorridor.SetPositionAndRotation(physicalCorridor.position, physicalCorridor.rotation);
-		virtualCorridor.position = physicalCorridor.position + script.scene.GetHeadToHeadVector();
+		virtualCorridor.SetPositionAndRotation(physicalCorridor.position + script.scene.GetHeadToHeadVector(), physicalCorridor.rotation);
 		virtualCorridor.RotateAround(script.scene.physicalHead.position, Vector3.up, -script.scene.HeadToHeadRedirection.eulerAngles.y);
 	}
 }
