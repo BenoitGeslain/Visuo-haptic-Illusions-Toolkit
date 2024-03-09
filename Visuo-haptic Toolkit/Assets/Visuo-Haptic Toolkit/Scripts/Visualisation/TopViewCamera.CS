@@ -7,9 +7,6 @@ public class TopViewCamera : MonoBehaviour
 {
     public Transform trackedObject;
 
-    private void Update() => transform.SetPositionAndRotation(
-            new(trackedObject.position.x, transform.position.y, trackedObject.position.z),
-            transform.rotation
-            // Quaternion.Euler(90f, trackedObject.rotation.eulerAngles.y, 0f)
-            );
+    private void Update() => transform.position =
+            new(trackedObject.position.x, transform.position.y, trackedObject.position.z);
 }

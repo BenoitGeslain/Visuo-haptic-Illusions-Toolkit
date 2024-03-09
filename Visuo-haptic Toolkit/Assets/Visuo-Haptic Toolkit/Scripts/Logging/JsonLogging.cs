@@ -51,7 +51,7 @@ namespace VHToolkit.Logging {
 		private string fileName;
 		private readonly int bufferSize = 10; // number of records kept before writing to disk
 
-		private List<JsonRedirectionData> records = new();
+		private Queue<JsonRedirectionData> records = new();
 
 		private Interaction script;
 
@@ -61,7 +61,7 @@ namespace VHToolkit.Logging {
 		}
 
 		private void Update() {
-			void writeRecords<Data>(List<Data> records) {
+			void writeRecords<Data>(Queue<Data> records) {
 				if (records.Count > bufferSize) {
 					using var writer = new StreamWriter(fileName, append: true);
 					foreach (var record in records) {
@@ -71,15 +71,14 @@ namespace VHToolkit.Logging {
 				}
 			}
 
-			records.Add(new JsonRedirectionData(script));
+			records.Enqueue(new JsonRedirectionData(script));
 			writeRecords(records);
 		}
 
 		public void CreateNewFile() {
-			Debug.Log("Create Json log file.");
 			Directory.CreateDirectory(logDirectoryPath);
 			fileName = $"{logDirectoryPath}{optionalFilenamePrefix}{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.jsonl";
-			records = new List<JsonRedirectionData>();
+			records = new Queue<JsonRedirectionData>();
 		}
 	}
 }

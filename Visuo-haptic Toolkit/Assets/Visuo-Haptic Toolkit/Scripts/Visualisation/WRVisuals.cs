@@ -118,9 +118,9 @@ namespace VHToolkit.Visualisation {
 		}
 
 		private void MultipleTargets(Scene scene) {
-			FixTargetCounts(scene.targets.Count);
+			FixTargetCounts(scene.targets.Count(x => x != null));
 
-			foreach (var (first, second) in targets.Zip(scene.targets)) {
+			foreach (var (first, second) in targets.Zip(scene.targets.Where(x => x != null))) {
 				first.transform.position = second.position;
 
 				if (second == scene.selectedTarget) {
