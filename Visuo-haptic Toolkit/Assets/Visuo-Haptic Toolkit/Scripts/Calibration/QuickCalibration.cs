@@ -1,7 +1,5 @@
 using UnityEngine;
 
-using VHToolkit.Demo;
-
 namespace VHToolkit.Calibration {
 
 	public class QuickCalibration : MonoBehaviour {

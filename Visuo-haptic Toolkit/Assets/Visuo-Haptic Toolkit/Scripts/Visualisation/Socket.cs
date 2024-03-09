@@ -101,7 +101,6 @@ namespace VHToolkit.Logging {
 
 		private void SendMessage(TcpClient client, WorldRedirectionData redirectionData) {
 			string json = JsonUtility.ToJson(redirectionData);
-			Debug.Log($"Sending: {json}");
 			// Translate the passed message into ASCII and store it as a Byte array.
 			Byte[] messageBytes = System.Text.Encoding.ASCII.GetBytes(json + '\n');
 
@@ -121,7 +120,6 @@ namespace VHToolkit.Logging {
 								  (script.redirect && scene.enableHybridRotational) ? Razzaque2001Rotational.GetRedirection(scene) : 0f,
 								  (script.redirect && scene.enableHybridCurvature) ? Razzaque2001Curvature.GetRedirection(scene) : 0f,
 								  (float)(DateTime.Now - startTime).TotalSeconds);
-			Debug.Log(redirectionData.ToString());
 		}
 	}
 }

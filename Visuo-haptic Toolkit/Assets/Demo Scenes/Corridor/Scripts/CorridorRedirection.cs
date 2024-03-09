@@ -24,7 +24,6 @@ namespace VHToolkit.Demo {
 		private void Start() => redirectionScript = GetComponent<WorldRedirection>();
 
 		private void Update() {
-
 			redirectionApplied = redirectionScript.GetAngularRedirection().eulerAngles.y;
 			redirectionScript.redirect = redirectionApplied < redirectionAmount;
 		}

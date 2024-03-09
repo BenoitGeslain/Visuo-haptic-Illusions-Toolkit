@@ -60,8 +60,6 @@ namespace VHToolkit.Redirection.WorldRedirection {
 		/// </summary>
 		/// <param name="scene"></param>
 		/// <returns></returns>
-		public override Vector3 SteerTo(Scene scene) {
-			return scene.physicalHead.rotation * scene.strategyDirection;
-		}
+		public override Vector3 SteerTo(Scene scene) => scene.physicalHead.rotation * scene.strategyDirection;
 	}
 }
