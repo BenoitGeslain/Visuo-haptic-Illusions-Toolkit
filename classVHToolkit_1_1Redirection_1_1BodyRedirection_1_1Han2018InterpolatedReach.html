@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Visuo-haptic Illusions Toolkit: VHToolkit.Redirection.BodyRedirection.ResetBodyRedirection Class Reference</title>
+<title>Visuo-haptic Illusions Toolkit: VHToolkit.Redirection.BodyRedirection.Han2018InterpolatedReach Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -61,36 +61,36 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespaceVHToolkit.html">VHToolkit</a></li><li class="navelem"><a class="el" href="namespaceVHToolkit_1_1Redirection.html">Redirection</a></li><li class="navelem"><a class="el" href="namespaceVHToolkit_1_1Redirection_1_1BodyRedirection.html">BodyRedirection</a></li><li class="navelem"><a class="el" href="classVHToolkit_1_1Redirection_1_1BodyRedirection_1_1ResetBodyRedirection.html">ResetBodyRedirection</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespaceVHToolkit.html">VHToolkit</a></li><li class="navelem"><a class="el" href="namespaceVHToolkit_1_1Redirection.html">Redirection</a></li><li class="navelem"><a class="el" href="namespaceVHToolkit_1_1Redirection_1_1BodyRedirection.html">BodyRedirection</a></li><li class="navelem"><a class="el" href="classVHToolkit_1_1Redirection_1_1BodyRedirection_1_1Han2018InterpolatedReach.html">Han2018InterpolatedReach</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="classVHToolkit_1_1Redirection_1_1BodyRedirection_1_1ResetBodyRedirection-members.html">List of all members</a>  </div>
+<a href="classVHToolkit_1_1Redirection_1_1BodyRedirection_1_1Han2018InterpolatedReach-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">VHToolkit.Redirection.BodyRedirection.ResetBodyRedirection Class Reference</div>  </div>
+<div class="title">VHToolkit.Redirection.BodyRedirection.Han2018InterpolatedReach Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This class does not implement a redirection technique but resets the redirection currently applied to the user's hand by slowly reducing the virtual to physical distance to 0.  
- <a href="classVHToolkit_1_1Redirection_1_1BodyRedirection_1_1ResetBodyRedirection.html#details">More...</a></p>
+<p>This class implements the Interpolated Reach technique from Han et al., 2018 renamed Continous in this toolkit as Instant. This technique progressively redirects the user as they get closer to the physical target in a linear way.  
+ <a href="classVHToolkit_1_1Redirection_1_1BodyRedirection_1_1Han2018InterpolatedReach.html#details">More...</a></p>
 <div class="dynheader">
-Inheritance diagram for VHToolkit.Redirection.BodyRedirection.ResetBodyRedirection:</div>
+Inheritance diagram for VHToolkit.Redirection.BodyRedirection.Han2018InterpolatedReach:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classVHToolkit_1_1Redirection_1_1BodyRedirection_1_1ResetBodyRedirection.png" usemap="#VHToolkit.Redirection.BodyRedirection.ResetBodyRedirection_map" alt=""/>
-  <map id="VHToolkit.Redirection.BodyRedirection.ResetBodyRedirection_map" name="VHToolkit.Redirection.BodyRedirection.ResetBodyRedirection_map">
-<area href="classVHToolkit_1_1Redirection_1_1BodyRedirection_1_1BodyRedirectionTechnique.html" title="This class is the most conceptual class of body interaction techniques defining the important functio..." alt="VHToolkit.Redirection.BodyRedirection.BodyRedirectionTechnique" shape="rect" coords="0,56,386,80"/>
-<area href="classVHToolkit_1_1Redirection_1_1RedirectionTechnique.html" alt="VHToolkit.Redirection.RedirectionTechnique" shape="rect" coords="0,0,386,24"/>
+  <img src="classVHToolkit_1_1Redirection_1_1BodyRedirection_1_1Han2018InterpolatedReach.png" usemap="#VHToolkit.Redirection.BodyRedirection.Han2018InterpolatedReach_map" alt=""/>
+  <map id="VHToolkit.Redirection.BodyRedirection.Han2018InterpolatedReach_map" name="VHToolkit.Redirection.BodyRedirection.Han2018InterpolatedReach_map">
+<area href="classVHToolkit_1_1Redirection_1_1BodyRedirection_1_1BodyRedirectionTechnique.html" title="This class is the most conceptual class of body interaction techniques defining the important functio..." alt="VHToolkit.Redirection.BodyRedirection.BodyRedirectionTechnique" shape="rect" coords="0,56,388,80"/>
+<area href="classVHToolkit_1_1Redirection_1_1RedirectionTechnique.html" alt="VHToolkit.Redirection.RedirectionTechnique" shape="rect" coords="0,0,388,24"/>
   </map>
 </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:abeb4472be6687403bf13e7aa8e48ae21"><td class="memItemLeft" align="right" valign="top">override void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVHToolkit_1_1Redirection_1_1BodyRedirection_1_1ResetBodyRedirection.html#abeb4472be6687403bf13e7aa8e48ae21">Redirect</a> (<a class="el" href="namespaceVHToolkit_1_1Redirection.html#aa3ec964b2baf3fc23c0b779c89dafea1">Scene</a> scene)</td></tr>
-<tr class="memdesc:abeb4472be6687403bf13e7aa8e48ae21"><td class="mdescLeft">&#160;</td><td class="mdescRight">This abstract method redirects the Scene transforms according to the other parameters and the equations defined in the corresponding techniques. It needs to be overriden by a child class, and it is called on Update() in *Redirection classes.  <a href="classVHToolkit_1_1Redirection_1_1BodyRedirection_1_1ResetBodyRedirection.html#abeb4472be6687403bf13e7aa8e48ae21">More...</a><br /></td></tr>
-<tr class="separator:abeb4472be6687403bf13e7aa8e48ae21"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e81e311b619583d48bb5936d1a50283"><td class="memItemLeft" align="right" valign="top">override void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVHToolkit_1_1Redirection_1_1BodyRedirection_1_1Han2018InterpolatedReach.html#a9e81e311b619583d48bb5936d1a50283">Redirect</a> (<a class="el" href="namespaceVHToolkit_1_1Redirection.html#aa3ec964b2baf3fc23c0b779c89dafea1">Scene</a> scene)</td></tr>
+<tr class="memdesc:a9e81e311b619583d48bb5936d1a50283"><td class="mdescLeft">&#160;</td><td class="mdescRight">This abstract method redirects the Scene transforms according to the other parameters and the equations defined in the corresponding techniques. It needs to be overriden by a child class, and it is called on Update() in *Redirection classes.  <a href="classVHToolkit_1_1Redirection_1_1BodyRedirection_1_1Han2018InterpolatedReach.html#a9e81e311b619583d48bb5936d1a50283">More...</a><br /></td></tr>
+<tr class="separator:a9e81e311b619583d48bb5936d1a50283"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -100,10 +100,10 @@ Additional Inherited Members</h2></td></tr>
 <tr class="separator:a7886c777bac751617ec68a4375a0854a inherit pro_static_methods_classVHToolkit_1_1Redirection_1_1BodyRedirection_1_1BodyRedirectionTechnique"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This class does not implement a redirection technique but resets the redirection currently applied to the user's hand by slowly reducing the virtual to physical distance to 0. </p>
+<div class="textblock"><p>This class implements the Interpolated Reach technique from Han et al., 2018 renamed Continous in this toolkit as Instant. This technique progressively redirects the user as they get closer to the physical target in a linear way. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="abeb4472be6687403bf13e7aa8e48ae21"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abeb4472be6687403bf13e7aa8e48ae21">&#9670;&nbsp;</a></span>Redirect()</h2>
+<a id="a9e81e311b619583d48bb5936d1a50283"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e81e311b619583d48bb5936d1a50283">&#9670;&nbsp;</a></span>Redirect()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -112,7 +112,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">override void VHToolkit.Redirection.BodyRedirection.ResetBodyRedirection.Redirect </td>
+          <td class="memname">override void VHToolkit.Redirection.BodyRedirection.Han2018InterpolatedReach.Redirect </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="namespaceVHToolkit_1_1Redirection.html#aa3ec964b2baf3fc23c0b779c89dafea1">Scene</a>&#160;</td>
           <td class="paramname"><em>scene</em></td><td>)</td>

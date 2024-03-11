@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['dampeningdistancethreshold_305',['DampeningDistanceThreshold',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a643914ca2aedaeedc00c8f3c2f0c6b95',1,'VHToolkit::Redirection::ParametersToolkit']]],
-  ['dampeningrange_306',['DampeningRange',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a7425413ae5e4323d34cd4eb06de237da',1,'VHToolkit::Redirection::ParametersToolkit']]],
-  ['down_307',['down',['../classVHToolkit_1_1Redirection_1_1Vector2Vertical.html#a1c33ecb13b9dfc503da06bfbd34f057e',1,'VHToolkit::Redirection::Vector2Vertical']]]
+  ['controlpoint_302',['controlPoint',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a0ad9be5aec501914541ef90f13a2b74b',1,'VHToolkit::Redirection::ParametersToolkit']]],
+  ['curvature_303',['curvature',['../structVHToolkit_1_1Logging_1_1WorldRedirectionData.html#a9c3c8f897417975e25b6cd4023b86bb6',1,'VHToolkit::Logging::WorldRedirectionData']]],
+  ['curvatureradius_304',['CurvatureRadius',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a094b9a6beb61e1b1ae42f33a87db3091',1,'VHToolkit::Redirection::ParametersToolkit']]],
+  ['curvaturesum_305',['curvatureSum',['../structVHToolkit_1_1Logging_1_1WorldRedirectionData.html#aae09df0088af38142459c1032866b58c',1,'VHToolkit::Logging::WorldRedirectionData']]]
 ];
