@@ -44,10 +44,10 @@ namespace VHToolkit.Logging {
 		public bool Redirecting => script.redirect;
 
 		public List<PhysicalLimbData> Limbs => script.scene.limbs.ConvertAll(l => new PhysicalLimbData(l));
-		public TransformData PhysicalHead => new(script.scene.physicalHead);
+		public TransformData PhysicalHead => (script.scene.physicalHead == null) ? null : new(script.scene.physicalHead);
 		public List<TransformData> Targets => script.scene.targets.ConvertAll(t => new TransformData(t));
-		public TransformData PhysicalTarget => new(script.scene.physicalTarget);
-		public TransformData VirtualTarget => new(script.scene.virtualTarget);
+		public TransformData PhysicalTarget => (script.scene.physicalTarget == null) ? null : new(script.scene.physicalTarget);
+		public TransformData VirtualTarget => (script.scene.virtualTarget == null) ? null : new(script.scene.virtualTarget);
 		public string StrategyDirection => script.scene.forwardTarget.ToString();
 
 
