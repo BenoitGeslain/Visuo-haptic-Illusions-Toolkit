@@ -10,12 +10,15 @@ var searchData=
   ['simulation_160',['Simulation',['../namespaceVHToolkit_1_1Simulation.html',1,'VHToolkit']]],
   ['userinput_161',['UserInput',['../namespaceVHToolkit_1_1UserInput.html',1,'VHToolkit']]],
   ['vector2gain_162',['Vector2Gain',['../classVHToolkit_1_1Redirection_1_1Vector2Gain.html',1,'VHToolkit::Redirection']]],
-  ['vector2horizontal_163',['Vector2Horizontal',['../classVHToolkit_1_1Redirection_1_1Vector2Horizontal.html',1,'VHToolkit::Redirection']]],
-  ['vector2rotation_164',['Vector2Rotation',['../classVHToolkit_1_1Redirection_1_1Vector2Rotation.html',1,'VHToolkit::Redirection']]],
-  ['vector2vertical_165',['Vector2Vertical',['../classVHToolkit_1_1Redirection_1_1Vector2Vertical.html',1,'VHToolkit::Redirection']]],
-  ['verticalangles_166',['VerticalAngles',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a4d05324688c4c5065efd325f5d54e955',1,'VHToolkit::Redirection::ParametersToolkit']]],
-  ['vhtoolkit_167',['VHToolkit',['../namespaceVHToolkit.html',1,'']]],
-  ['virtuallimb_168',['virtualLimb',['../structVHToolkit_1_1Redirection_1_1Limb.html#a37293638746da06d912876cb55ef4159',1,'VHToolkit::Redirection::Limb']]],
-  ['visualisation_169',['Visualisation',['../namespaceVHToolkit_1_1Visualisation.html',1,'VHToolkit']]],
-  ['worldredirection_170',['WorldRedirection',['../namespaceVHToolkit_1_1Redirection_1_1WorldRedirection.html',1,'VHToolkit::Redirection']]]
+  ['vector2gainpropertydrawer_163',['Vector2GainPropertyDrawer',['../classVector2GainPropertyDrawer.html',1,'']]],
+  ['vector2horizontal_164',['Vector2Horizontal',['../classVHToolkit_1_1Redirection_1_1Vector2Horizontal.html',1,'VHToolkit::Redirection']]],
+  ['vector2horizontalpropertydrawer_165',['Vector2HorizontalPropertyDrawer',['../classVector2HorizontalPropertyDrawer.html',1,'']]],
+  ['vector2rotation_166',['Vector2Rotation',['../classVHToolkit_1_1Redirection_1_1Vector2Rotation.html',1,'VHToolkit::Redirection']]],
+  ['vector2vertical_167',['Vector2Vertical',['../classVHToolkit_1_1Redirection_1_1Vector2Vertical.html',1,'VHToolkit::Redirection']]],
+  ['vector2verticalpropertydrawer_168',['Vector2VerticalPropertyDrawer',['../classVector2VerticalPropertyDrawer.html',1,'']]],
+  ['verticalangles_169',['VerticalAngles',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a4d05324688c4c5065efd325f5d54e955',1,'VHToolkit::Redirection::ParametersToolkit']]],
+  ['vhtoolkit_170',['VHToolkit',['../namespaceVHToolkit.html',1,'']]],
+  ['virtuallimb_171',['virtualLimb',['../structVHToolkit_1_1Redirection_1_1Limb.html#a37293638746da06d912876cb55ef4159',1,'VHToolkit::Redirection::Limb']]],
+  ['visualisation_172',['Visualisation',['../namespaceVHToolkit_1_1Visualisation.html',1,'VHToolkit']]],
+  ['worldredirection_173',['WorldRedirection',['../namespaceVHToolkit_1_1Redirection_1_1WorldRedirection.html',1,'VHToolkit::Redirection']]]
 ];
