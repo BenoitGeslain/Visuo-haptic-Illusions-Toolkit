@@ -13,16 +13,17 @@ MonoBehaviour:
   m_Name: Medium Parameters (Recommended)
   m_EditorClassIdentifier: 
   HorizontalAngles:
-    left: -4.38
+    left: -2.01
     right: 3.81
   VerticalAngles:
     up: 4.48
     down: -4.4
   Gain:
-    faster: 1.07
-    slower: 0.88
+    forward: 0
+    backward: 0
   RedirectionBuffer: 0.1
-  MaxRedirectionThreshold: 0.5
+  redirectionLateness: 0
+  controlPoint: {x: 0, y: 0}
   GoGoCoefficient: 1
   GoGoActivationDistance: 0.167
   ResetRedirectionCoeff: 0.087
