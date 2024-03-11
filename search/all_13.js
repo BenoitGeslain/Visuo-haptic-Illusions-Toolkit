@@ -16,7 +16,6 @@ var searchData=
   ['verticalangles_167',['VerticalAngles',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a4d05324688c4c5065efd325f5d54e955',1,'VHToolkit::Redirection::ParametersToolkit']]],
   ['vhtoolkit_168',['VHToolkit',['../namespaceVHToolkit.html',1,'']]],
   ['virtuallimb_169',['virtualLimb',['../structVHToolkit_1_1Redirection_1_1Limb.html#a37293638746da06d912876cb55ef4159',1,'VHToolkit::Redirection::Limb']]],
-  ['virtuallimbdata_170',['VirtualLimbData',['../namespaceVHToolkit_1_1Logging.html#a9b2b518ab7f054d813c15672700c9e06',1,'VHToolkit::Logging']]],
-  ['visualisation_171',['Visualisation',['../namespaceVHToolkit_1_1Visualisation.html',1,'VHToolkit']]],
-  ['worldredirection_172',['WorldRedirection',['../namespaceVHToolkit_1_1Redirection_1_1WorldRedirection.html',1,'VHToolkit::Redirection']]]
+  ['visualisation_170',['Visualisation',['../namespaceVHToolkit_1_1Visualisation.html',1,'VHToolkit']]],
+  ['worldredirection_171',['WorldRedirection',['../namespaceVHToolkit_1_1Redirection_1_1WorldRedirection.html',1,'VHToolkit::Redirection']]]
 ];
