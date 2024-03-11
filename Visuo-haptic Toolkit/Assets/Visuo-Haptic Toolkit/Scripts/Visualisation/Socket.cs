@@ -43,7 +43,10 @@ namespace VHToolkit.Logging {
 
 		private TcpClient client;
 
+		[Tooltip("File name for the Python visualization script.")]
 		[SerializeField] private string filename;
+
+		[Tooltip("File name for the Python executable path.")]
 		[SerializeField] private string pythonPath;
 
 		private Razzaque2001Hybrid loggingTechnique;
@@ -53,37 +56,41 @@ namespace VHToolkit.Logging {
 		private void Start() {
 			script = GetComponent<WorldRedirection>();
 			scene = script.scene;
-			InvokeRepeating(nameof(StartSendingMessages), 1f, 1f);
 			loggingTechnique = new();
 			redirectionData = new();
-
+			client = new();
 			LaunchVisualizer();
+			InvokeRepeating(nameof(GetClient), 0f, 5f);
+			InvokeRepeating(nameof(StartSendingMessages), 1f, 1f);
 		}
 
 		public void LaunchVisualizer() {
 
 			Debug.Log($"Launch visualizer with Python {pythonPath}");
-			if (filename is null || !filename.EndsWith(".py")) return;
+			if (filename is null || pythonPath is null || !filename.EndsWith(".py") || !pythonPath.EndsWith(".exe")) return;
 			// TODO not great for non-windows
 			System.Diagnostics.Process p = new() {
-				StartInfo = new System.Diagnostics.ProcessStartInfo(pythonPath, this.filename) {
+				StartInfo = new System.Diagnostics.ProcessStartInfo(pythonPath, filename) {
 					RedirectStandardOutput = true,
 					UseShellExecute = false,
 					CreateNoWindow = true
 				}
 			};
-			Debug.Log("Start info OK.");
 			p.Start();
 		}
-		private void StartSendingMessages() {
-			if (client == null || !client.Connected) {
+
+		private void GetClient() {
+			client ??= new();
+			if (!client.Connected) {
 				try {
-					client = new TcpClient("localhost", 13000);
+					client.ConnectAsync("localhost", 13000);
 					startTime = DateTime.Now;
 				}
 				catch (SocketException) { }
 			}
-			else {
+		}
+		private void StartSendingMessages() {
+			if (client != null && client.Connected) {
 				Thread thread = new(() => SendMessage(client, redirectionData));
 				thread.Start();
 				// redirectionData.overTime = 0f;
@@ -94,7 +101,6 @@ namespace VHToolkit.Logging {
 
 		private void SendMessage(TcpClient client, WorldRedirectionData redirectionData) {
 			string json = JsonUtility.ToJson(redirectionData);
-			Debug.Log($"Sending: {json}");
 			// Translate the passed message into ASCII and store it as a Byte array.
 			Byte[] messageBytes = System.Text.Encoding.ASCII.GetBytes(json + '\n');
 
@@ -114,7 +120,6 @@ namespace VHToolkit.Logging {
 								  (script.redirect && scene.enableHybridRotational) ? Razzaque2001Rotational.GetRedirection(scene) : 0f,
 								  (script.redirect && scene.enableHybridCurvature) ? Razzaque2001Curvature.GetRedirection(scene) : 0f,
 								  (float)(DateTime.Now - startTime).TotalSeconds);
-			Debug.Log(redirectionData.ToString());
 		}
 	}
 }

@@ -21,16 +21,11 @@ namespace VHToolkit.Demo {
 		[SerializeField] private Transform start, end;
 		private float NormalizedDistance => Mathf.InverseLerp(start.position.z, end.position.z, UserHead.position.z);
 
-        private void Start() => redirectionScript = this.GetComponent<WorldRedirection>();
+		private void Start() => redirectionScript = GetComponent<WorldRedirection>();
 
-        private void Update() {
-
+		private void Update() {
 			redirectionApplied = redirectionScript.GetAngularRedirection().eulerAngles.y;
-			if (redirectionApplied > redirectionAmount) {
-				redirectionScript.StopRedirection();
-			} else {
-				redirectionScript.StartRedirection();
-			}
+			redirectionScript.redirect = redirectionApplied < redirectionAmount;
 		}
 	}
 }

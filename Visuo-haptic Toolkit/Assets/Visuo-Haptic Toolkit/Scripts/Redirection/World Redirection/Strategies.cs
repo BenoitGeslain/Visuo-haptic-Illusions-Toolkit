@@ -43,7 +43,11 @@ namespace VHToolkit.Redirection.WorldRedirection {
 			float bearing(Transform t) => Vector3.Angle(
 				Vector3.ProjectOnPlane(scene.physicalHead.forward, Vector3.up),
 				Vector3.ProjectOnPlane(t.position - scene.physicalHead.position, Vector3.up));
-			scene.selectedTarget = scene.targets.MinBy(bearing);
+			scene.selectedTarget = scene.targets.Where(t => t != null).MinBy(bearing);
+			if (scene.selectedTarget == null) {
+				Debug.LogWarning("Using SteerToMultipleTargets but scene.targets is empty or all-null.");
+				return scene.physicalHead.forward;
+			}
 			return scene.selectedTarget.position - scene.physicalHead.position;
 		}
 	}
@@ -56,8 +60,6 @@ namespace VHToolkit.Redirection.WorldRedirection {
 		/// </summary>
 		/// <param name="scene"></param>
 		/// <returns></returns>
-		public override Vector3 SteerTo(Scene scene) {
-			return scene.physicalHead.rotation * scene.strategyDirection;
-		}
+		public override Vector3 SteerTo(Scene scene) => scene.physicalHead.rotation * scene.strategyDirection;
 	}
 }

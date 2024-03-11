@@ -8,8 +8,7 @@ namespace VHToolkit.Logging {
 			base.OnInspectorGUI();
 
 			if (GUILayout.Button("Launch visualizer")) {
-				Socket socket = (Socket)target;
-				socket.LaunchVisualizer();
+				(target as Socket).LaunchVisualizer();
 			}
 		}
 	}

@@ -11,8 +11,6 @@ GameObject:
   - component: {fileID: 3345062529341880481}
   - component: {fileID: 7088029602675669135}
   - component: {fileID: 3621196646475796290}
-  - component: {fileID: 2164931620210237325}
-  - component: {fileID: 3527750865740220717}
   m_Layer: 0
   m_Name: ToolkitWorldRedirection
   m_TagString: Untagged
@@ -54,13 +52,10 @@ MonoBehaviour:
     physicalHead: {fileID: 0}
     virtualHead: {fileID: 0}
     physicalTarget: {fileID: 0}
-    physicalTargetPosition: {x: 0, y: 0, z: 0}
     virtualTarget: {fileID: 0}
-    virtualTargetPosition: {x: 0, y: 0, z: 0}
     origin: {fileID: 0}
     targets:
     - {fileID: 0}
-    radius: 5
     applyDampening: 0
     applySmoothing: 0
     selectedTarget: {fileID: 0}
@@ -70,8 +65,14 @@ MonoBehaviour:
     previousHeadPosition: {x: 0, y: 0, z: 0}
     previousHeadRotation: {x: 0, y: 0, z: 0, w: 0}
     previousRedirection: 0
+    strategyDirection: {x: 0, y: 0, z: 0}
+    parameters: {fileID: 0}
+    aggregateFunction: 0
+    enableHybridOverTime: 1
+    enableHybridRotational: 1
+    enableHybridCurvature: 1
   redirect: 1
-  technique: 2
+  _technique: 0
   strategy: 3
 --- !u!114 &3621196646475796290
 MonoBehaviour:
@@ -86,34 +87,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetPrefab: {fileID: 84340963187888445, guid: 786584c1c713db54b9cad6864b80089b, type: 3}
-  active: {fileID: 0}
-  inactive: {fileID: 2100000, guid: fdc7faebe87ef18468772439a4b880b2, type: 2}
+  activeMaterial: {fileID: 0}
+  inactiveMaterial: {fileID: 0}
   orbitResolution: 3
---- !u!114 &2164931620210237325
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 200869264966477082}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f426d30751fd5b14c9c1093c441414b3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  physicalHead: {fileID: 0}
-  world: {fileID: 0}
-  characteristics: 100
---- !u!114 &3527750865740220717
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 200869264966477082}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9825707130c9eb4a9c129292679e71c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parameters: {fileID: 11400000, guid: c39097e50bc3898498d2edf378be3a21, type: 2}
