@@ -15,8 +15,11 @@ namespace VHToolkit.Redirection {
 		public Vector2Gain Gain;
 		[Tooltip("A buffer value where the hand redirection is not applied [Han et al., 2018].")]
 		public float RedirectionBuffer = 0.1f;
-		[Tooltip("A buffer value where the hand redirection is not applied [Han et al., 2018].")]
-		public float MaxRedirectionThreshold = 0.5f;	// what is this?
+		[Tooltip("The second order coefficient for Geslain2022Polynom [Geslain et al., 2022]. If a2 = 0, then the redirection is linear and equivalent to Han et al., 2018. If a2 is -1/D²<a2<1/D², the redirectionfunction doesn't redirect in the opposite direction (-1/D^2) or over redirects (1/D^2).")]
+		[Range(-1f, 1f)]
+		public float redirectionLateness;
+		[Tooltip("Alternative method to set the second order coefficient for Geslain2022Polynom [Geslain et al., 2022]. This point will not be part of the trajectory but is the second control point of the Bézier Curve. The first on is the origin and the third is the target.")]
+		public Vector2 controlPoint;
 		[Tooltip("This coefficient is applied to the PoupyrevGoGo1996 \"redirection\"")]
 		public float GoGoCoefficient = 1f;
 		[Tooltip("The activation distance  for which the PoupyrevGoGo1996 technique starts to remap the virtual hand's movement")]

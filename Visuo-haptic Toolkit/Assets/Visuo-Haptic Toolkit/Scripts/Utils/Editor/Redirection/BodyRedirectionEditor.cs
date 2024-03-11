@@ -11,13 +11,14 @@ namespace VHToolkit.Redirection.BodyRedirection {
 		SerializedProperty techniqueInstance;
 
 		SerializedProperty physicalLimbs;
-		// SerializedProperty virtualLimbs;
 		SerializedProperty physicalHead;
 		SerializedProperty virtualHead;
 		SerializedProperty physicalTarget;
 		SerializedProperty virtualTarget;
 		SerializedProperty origin;
 		SerializedProperty redirect;
+		SerializedProperty parameters;
+		SerializedObject parametersObject;
 
 		private void OnEnable() {
 
@@ -31,6 +32,9 @@ namespace VHToolkit.Redirection.BodyRedirection {
 			virtualTarget = serializedObject.FindProperty("scene.virtualTarget");
 			origin = serializedObject.FindProperty("scene.origin");
 			redirect = serializedObject.FindProperty("redirect");
+
+			parameters = serializedObject.FindProperty("scene.parameters");
+			parametersObject = new SerializedObject(parameters.objectReferenceValue);
 		}
 
 		public override void OnInspectorGUI() {
@@ -61,18 +65,36 @@ namespace VHToolkit.Redirection.BodyRedirection {
 			EditorGUILayout.Space(5);
 			EditorGUILayout.LabelField("Technique Parameters", EditorStyles.boldLabel);
 
-			EditorGUILayout.PropertyField(redirect, new GUIContent("Redirect"));
+			EditorGUILayout.PropertyField(redirect, new GUIContent("Activate Redirection"));
+			EditorGUILayout.PropertyField(parameters, new GUIContent("Numerical Parameters"));
+
+			// If no parameters Scriptable object, update object and don't render the rest of the view
+			if (parameters.objectReferenceValue == null) {
+				serializedObject.ApplyModifiedProperties();
+				return;
+			}
+
+			parametersObject = new SerializedObject(parameters.objectReferenceValue);
+			parametersObject.Update();
 
 			EditorGUILayout.PropertyField(physicalTarget, new GUIContent("Physical Target"));
 			EditorGUILayout.PropertyField(virtualTarget, new GUIContent("Virtual Target"));
 			EditorGUILayout.PropertyField(origin, new GUIContent("Origin"));
 
+			EditorGUILayout.PropertyField(parametersObject.FindProperty("RedirectionBuffer"), new GUIContent("Redirection Buffer"));
+
+			// if ([""].Contains(technique.enumNames[technique.enumValueIndex])) {
+
+			// }
+
+			// TODO: move this techniques's parameters to ParametersSO and expose here
 			// Hides redirectionLateness and controlpoint fields if the technique is not Geslain2022Polynom
-			if (technique.enumNames[technique.enumValueIndex] == "Geslain2022Polynom") {
-				EditorGUILayout.PropertyField(techniqueInstance, new GUIContent("Parameters"));
-			}
+			// if (technique.enumNames[technique.enumValueIndex] == "Geslain2022Polynom") {
+			// 	EditorGUILayout.PropertyField(techniqueInstance, new GUIContent("Parameters"));
+			// }
 
 			serializedObject.ApplyModifiedProperties();
+			parametersObject.ApplyModifiedProperties();
 		}
 	}
 }

@@ -50,7 +50,6 @@ namespace VHToolkit.Redirection.WorldRedirection {
 			direction = serializedObject.FindProperty("scene.strategyDirection");
 
 			parameters = serializedObject.FindProperty("scene.parameters");
-			parametersObject = new SerializedObject(parameters.objectReferenceValue);
 		}
 
 		public override void OnInspectorGUI() {
@@ -59,7 +58,6 @@ namespace VHToolkit.Redirection.WorldRedirection {
 			GUI.enabled = true;
 
 			serializedObject.Update();
-			parametersObject.Update();
 
 			EditorGUILayout.Space(5);
 			EditorGUILayout.LabelField("User Parameters", EditorStyles.largeLabel);
@@ -82,6 +80,15 @@ namespace VHToolkit.Redirection.WorldRedirection {
 
 			EditorGUILayout.PropertyField(redirect, new GUIContent("Activate Redirection"));
 			EditorGUILayout.PropertyField(parameters, new GUIContent("Numerical Parameters"));
+
+			// If no parameters Scriptable object, update object and don't render the rest of the view
+			if (parameters.objectReferenceValue == null) {
+				serializedObject.ApplyModifiedProperties();
+				return;
+			}
+
+			parametersObject = new SerializedObject(parameters.objectReferenceValue);
+			parametersObject.Update();
 
 			if (technique.enumNames[technique.enumValueIndex] == "Razzaque2001OverTimeRotation") {
 				EditorGUILayout.PropertyField(parametersObject.FindProperty("OverTimeRotation"), new GUIContent("Over Time Rotation Rate"));

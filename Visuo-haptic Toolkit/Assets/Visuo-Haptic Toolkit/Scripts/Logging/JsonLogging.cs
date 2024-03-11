@@ -10,31 +10,46 @@ using VHToolkit.Redirection.WorldRedirection;
 using Newtonsoft.Json;
 
 namespace VHToolkit.Logging {
-	public record VirtualLimbData {
-		private readonly Transform vlimb;
-		public string Orientation => vlimb.rotation.normalized.ToString();
-		public string Position => vlimb.position.ToString();
-
-		public VirtualLimbData(Transform vlimb) => this.vlimb = vlimb;
+	public record TransformData {
+		private readonly Transform obj;
+		public string Position => obj.position.ToString();
+		public string Orientation => obj.rotation.normalized.ToString();
+		public TransformData(Transform obj) => this.obj = obj;
 	}
+
 	public record PhysicalLimbData {
 		private readonly Limb limb;
 		public string Orientation => limb.physicalLimb.rotation.normalized.ToString();
 		public string Position => limb.physicalLimb.position.ToString();
-		public List<VirtualLimbData> VirtualLimbs => limb.virtualLimb.ConvertAll(vlimb => new VirtualLimbData(vlimb));
+		public List<TransformData> VirtualLimbs => limb.virtualLimb.ConvertAll(vlimb => new TransformData(vlimb));
 
 		public PhysicalLimbData(Limb l) => limb = l;
 	}
+
 	public record JsonRedirectionData {
 		public readonly DateTime TimeStamp = DateTime.Now;
+		private readonly Interaction script;
+
 		public string Technique => script switch {
+			WorldRedirection => (script as WorldRedirection).strategy.ToString(),
+			BodyRedirection => "",
+			_ => ""
+		};
+
+		public string Strategy => script switch {
 			WorldRedirection => (script as WorldRedirection).Technique.ToString(),
 			BodyRedirection => (script as BodyRedirection).Technique.ToString(),
 			_ => ""
 		};
+		public bool Redirecting => script.redirect;
 
-		private readonly Interaction script;
 		public List<PhysicalLimbData> Limbs => script.scene.limbs.ConvertAll(l => new PhysicalLimbData(l));
+		public TransformData PhysicalHead => new(script.scene.physicalHead);
+		public List<TransformData> Targets => script.scene.targets.ConvertAll(t => new TransformData(t));
+		public TransformData PhysicalTarget => new(script.scene.physicalTarget);
+		public TransformData VirtualTarget => new(script.scene.virtualTarget);
+		public string StrategyDirection => script.scene.forwardTarget.ToString();
+
 
 		public JsonRedirectionData(Interaction script) {
 			this.script = script;

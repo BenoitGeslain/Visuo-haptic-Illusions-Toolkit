@@ -42,7 +42,7 @@ namespace VHToolkit.Redirection.BodyRedirection {
 				BRTechnique.Han2018TranslationalShift => new Han2018TranslationalShift(),
 				BRTechnique.Han2018InterpolatedReach => new Han2018Continuous(),
 				BRTechnique.Cheng2017Sparse => new Cheng2017Sparse(),
-				BRTechnique.Geslain2022Polynom => new Geslain2022Polynom(techniqueInstance.redirectionLateness, techniqueInstance.controlPoint),
+				BRTechnique.Geslain2022Polynom => new Geslain2022Polynom(),
 				BRTechnique.Poupyrev1996GoGo => new Poupyrev1996GoGo(),
 				BRTechnique.Lecuyer2000Swamp => new Lecuyer2000Swamp(),
 				BRTechnique.Samad2019Weight => new Samad2019Weight(),

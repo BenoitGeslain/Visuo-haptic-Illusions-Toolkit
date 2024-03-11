@@ -12,13 +12,7 @@ namespace VHToolkit.Redirection.BodyRedirection {
 	///  Information about the user such as the user's position or the targets are encapsulated inside Scene.
 	/// </summary>
 	[Serializable]
-	public abstract class BodyRedirectionTechnique : RedirectionTechnique {
-
-		[Tooltip("If a2 = 0, then the redirection is linear and equivalent to Han et al., 2018. If a2 is -1/D²<a2<1/D², the redirectionfunction doesn't redirect in the opposite direction (-1/D^2) or over redirects (1/D^2).")]
-		[Range(-1f, 1f)]
-		public float redirectionLateness;
-		public Vector2 controlPoint;
-	}
+	public abstract class BodyRedirectionTechnique : RedirectionTechnique {	}
 
 	/// <summary>
 	/// This class implements the Body Warping technique from Azmandian et al., 2016. This technique redirects the user's virtual hand by an
@@ -69,7 +63,7 @@ namespace VHToolkit.Redirection.BodyRedirection {
 		public override void Redirect(Scene scene) {
 			// If the hand is inside the redirection boundary, instantly applies the redirection
 			scene.LimbRedirection = scene.GetPhysicalHandOriginDistance().ConvertAll(
-				d => d > Toolkit.Instance.parameters.RedirectionBuffer
+				d => d > scene.parameters.RedirectionBuffer
 				? scene.virtualTarget.position - scene.physicalTarget.position
 				: Vector3.zero
 			);
@@ -84,7 +78,8 @@ namespace VHToolkit.Redirection.BodyRedirection {
 
 		public override void Redirect(Scene scene) {
 			List<float> D = scene.GetPhysicalHandTargetDistance();
-			float B = Vector3.Magnitude(scene.physicalTarget.position - scene.origin.position) - Toolkit.Instance.parameters.RedirectionBuffer;
+			Debug.Log(scene.parameters.RedirectionBuffer);
+			float B = Vector3.Magnitude(scene.physicalTarget.position - scene.origin.position) - scene.parameters.RedirectionBuffer;
 			scene.LimbRedirection = D.ConvertAll(d => Math.Max(1 - d / B, 0f) * (scene.virtualTarget.position - scene.physicalTarget.position));
 		}
 	}
@@ -107,20 +102,6 @@ namespace VHToolkit.Redirection.BodyRedirection {
 	[Serializable]
 	public class Geslain2022Polynom : BodyRedirectionTechnique {
 
-		/// <summary>
-		/// Constructor of Geslain2022Polynom
-		/// </summary>
-		/// <param name="redirectionLateness">This parameter defines the shape of the 2nd order polynom. There are 3 important values:
-		/// a2 = 0 simplifies the polynom function to a linear one identical to Han et al. 2018.	// TODO A vérifier
-		/// a2 = 1/D^2 makes the redirection be applied more at the **start** of the redirection, i.e. when the user is **far** from the target.
-		/// a2 = -1/D^2 makes the redirection be applied more at the **end** of the redirection, i.e. when the user is **close** from the target</param>
-		/// <param name="controlPoint">This variable offers another way to parametrise the polynom. The control point represent the second control point of
-		/// a Quadratic Bézier curve (three point Bézier curve).</param>
-		public Geslain2022Polynom(float redirectionLateness, Vector2 controlPoint) : base() {
-			this.redirectionLateness = redirectionLateness; // TODO rename
-			this.controlPoint = controlPoint;
-		}
-
 		/// The redirection is a degree-2 polynomial function of the distance,
 		/// f(d) = a_0 + a_1 * d + a_2 * d^2,
 		/// with limit conditions f(0) = 1 (hence a_0 = 1) and f(D) = 0, where D is the origin - real target distance
@@ -128,7 +109,7 @@ namespace VHToolkit.Redirection.BodyRedirection {
 		/// The input parameter redirectionLateness is a2 * D^2
 		public override void Redirect(Scene scene) {
 			float D = Vector3.Distance(scene.physicalTarget.position, scene.origin.position);
-			float a2 = this.redirectionLateness / (D * D);
+			float a2 = scene.parameters.redirectionLateness / (D * D);
 			float[] coeffsByIncreasingPower = { 1f, -1f / D - a2 * D, a2 }; // {a0, a1, a2}
 			List<float> ratio = scene.GetPhysicalHandTargetDistance().ConvertAll(d => (float)coeffsByIncreasingPower.Select((a, i) => a * Math.Pow(d, i)).Sum());
 			scene.LimbRedirection = ratio.ConvertAll(r => r * (scene.virtualTarget.position - scene.physicalTarget.position));
@@ -146,8 +127,8 @@ namespace VHToolkit.Redirection.BodyRedirection {
 		public override void Redirect(Scene scene) {
 			// Offset the head position by 0.2m to approximate the chest position then compute the chest to hand vector
 			List<Vector3> chestToHand = scene.limbs.ConvertAll(limb => limb.physicalLimb.position + 0.2f * Vector3.up - scene.physicalHead.position);
-			scene.LimbRedirection = chestToHand.ConvertAll(d => d.magnitude > Toolkit.Instance.parameters.GoGoActivationDistance
-				? Toolkit.Instance.parameters.GoGoCoefficient * Mathf.Pow(d.magnitude - Toolkit.Instance.parameters.GoGoActivationDistance, 2) * d.normalized
+			scene.LimbRedirection = chestToHand.ConvertAll(d => d.magnitude > scene.parameters.GoGoActivationDistance
+				? scene.parameters.GoGoCoefficient * Mathf.Pow(d.magnitude - scene.parameters.GoGoActivationDistance, 2) * d.normalized
 				: Vector3.zero);
 		}
 	}
@@ -160,7 +141,7 @@ namespace VHToolkit.Redirection.BodyRedirection {
 
 		public override void Redirect(Scene scene) {
 			foreach ((var limb, var t) in scene.limbs.Zip(scene.GetLimbInstantTranslation())) {
-				limb.virtualLimb.ForEach(vlimb => vlimb.Translate(t + t.magnitude * Toolkit.Instance.parameters.ResetRedirectionCoeff * (limb.physicalLimb.position - vlimb.position).normalized, relativeTo: Space.World));
+				limb.virtualLimb.ForEach(vlimb => vlimb.Translate(t + t.magnitude * scene.parameters.ResetRedirectionCoeff * (limb.physicalLimb.position - vlimb.position).normalized, relativeTo: Space.World));
 			};
 		}
 	}
