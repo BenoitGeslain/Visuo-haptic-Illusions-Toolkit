@@ -1,5 +1,4 @@
-namespace VHToolkit.Redirection
-{
+namespace VHToolkit.Redirection {
     /// <summary>
     /// Wrapper for a pair of <c>float</c> associated with left and right.
     /// </summary>

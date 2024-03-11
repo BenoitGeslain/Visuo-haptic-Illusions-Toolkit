@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEditor;
 
 using System.Collections.Generic;
-using VHToolkit.Redirection.WorldRedirection;
 using VHToolkit.Redirection.PseudoHaptics;
 
 namespace VHToolkit.Redirection.BodyRedirection {
@@ -45,6 +44,10 @@ namespace VHToolkit.Redirection.BodyRedirection {
 			parametersObject = new SerializedObject(parameters.objectReferenceValue);
 		}
 
+		private void MakePropertyField(SerializedProperty property, string text, string tooltip = null) {
+			EditorGUILayout.PropertyField(property, new GUIContent(text, tooltip));
+		}
+
 		public override void OnInspectorGUI() {
 			GUI.enabled = false;
 			EditorGUILayout.ObjectField("Script:", MonoScript.FromMonoBehaviour((BodyRedirection)target), typeof(BodyRedirection), false);
@@ -56,25 +59,24 @@ namespace VHToolkit.Redirection.BodyRedirection {
 			EditorGUILayout.LabelField("User Parameters", EditorStyles.largeLabel);
 
 			// Scene
-			EditorGUILayout.PropertyField(physicalLimbs, new GUIContent("Physical Limbs"));
+			MakePropertyField(physicalLimbs, "Physical Limbs", "The Transform of the user's limbs tracked by the VR SDK");
 
 			// EditorGUILayout.PropertyField(virtualLimbs, new GUIContent("Virtual Limbs"));
 			if (technique.enumNames[technique.enumValueIndex] == nameof(Azmandian2016Hybrid)) {
-				EditorGUILayout.PropertyField(physicalHead, new GUIContent("Physical Head"));
-				EditorGUILayout.PropertyField(virtualHead, new GUIContent("Virtual Head"));
-			}
-			else if (technique.enumNames[technique.enumValueIndex] == nameof(Poupyrev1996GoGo)) {
-				EditorGUILayout.PropertyField(physicalHead, new GUIContent("Physical Head"));
+				MakePropertyField(physicalHead, "Physical Head", "The Transform of the VR headset worn by the user.");
+				MakePropertyField(virtualHead, "Virtual Head", "");
+			} else if (technique.enumNames[technique.enumValueIndex] == nameof(Poupyrev1996GoGo)) {
+				MakePropertyField(physicalHead, "Physical Head", "");
 			}
 
 
 			EditorGUILayout.Space(5);
 			EditorGUILayout.LabelField("Technique Parameters", EditorStyles.largeLabel);
 
-			EditorGUILayout.PropertyField(technique, new GUIContent("Redirection technique"));
+			MakePropertyField(technique, "Redirection technique", "");
 
-			EditorGUILayout.PropertyField(redirect, new GUIContent("Activate Redirection"));
-			EditorGUILayout.PropertyField(parameters, new GUIContent("Numerical Parameters"));
+			MakePropertyField(redirect, "Activate Redirection", "");
+			MakePropertyField(parameters, "Numerical Parameters", "");
 
 			// If no parameters Scriptable object, update object and don't render the rest of the view
 			if (parameters.objectReferenceValue == null) {
@@ -85,9 +87,9 @@ namespace VHToolkit.Redirection.BodyRedirection {
 			parametersObject = new SerializedObject(parameters.objectReferenceValue);
 			parametersObject.Update();
 
-			EditorGUILayout.PropertyField(physicalTarget, new GUIContent("Physical Target"));
-			EditorGUILayout.PropertyField(virtualTarget, new GUIContent("Virtual Target"));
-			EditorGUILayout.PropertyField(origin, new GUIContent("Origin"));
+			MakePropertyField(physicalTarget, "Physical Target", "");
+			MakePropertyField(virtualTarget, "Virtual Target", "");
+			MakePropertyField(origin, "Origin", "");
 
 			// Hides redirectionLateness and controlpoint fields if the technique is not Geslain2022Polynom
 			if (technique.enumNames[technique.enumValueIndex] == nameof(Geslain2022Polynom)) {
