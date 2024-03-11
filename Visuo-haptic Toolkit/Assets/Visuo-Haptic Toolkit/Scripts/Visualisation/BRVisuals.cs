@@ -67,8 +67,8 @@ namespace VHToolkit.Visualisation {
 										  d.x < Toolkit.Instance.parameters.HorizontalAngles.right &&
 										  360 - d.y < Toolkit.Instance.parameters.VerticalAngles.up &&
 										  d.y < Toolkit.Instance.parameters.VerticalAngles.down &&
-										  360 - d.z < Toolkit.Instance.parameters.Gain.faster &&
-										  d.z < Toolkit.Instance.parameters.Gain.slower;
+										  360 - d.z < Toolkit.Instance.parameters.Gain.forward &&
+										  d.z < Toolkit.Instance.parameters.Gain.backward;
 
 			Debug.DrawLine(obj1, obj2, allAnglesBelowThreshold ? Color.yellow : Color.white);
 		}

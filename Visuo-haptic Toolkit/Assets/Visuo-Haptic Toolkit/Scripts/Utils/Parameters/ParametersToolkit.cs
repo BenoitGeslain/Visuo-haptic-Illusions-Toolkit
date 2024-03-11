@@ -11,7 +11,7 @@ namespace VHToolkit.Redirection {
 		public Vector2Horizontal HorizontalAngles;
 		[Tooltip("The thresholds for the up and down direction. These values are used to show whether the targets or the hands are further apart than these value.\nThe recommended values are [] from the measures made by Zenner et al., 2019 using the 75% detection rate. They are also called Just Noticeable Difference or Intervals of Non-detection.\nThis wiki page gives more details and a link to the paper referenced: Anonimized. Values are in degrees.")]
 		public Vector2Vertical VerticalAngles;
-		[Tooltip("The thresholds for the forward (faster) and backward (slower) direction. These values are used to show whether the targets or the hands are further apart than these value.\nThe recommended values are [] from the measures made by Zenner et al., 2019 using the 75% detection rate. They are also called Just Noticeable Difference or Intervals of Non-detection.\nThis wiki page gives more details and a link to the paper referenced: Anonimized. Values are unitless.")]
+		[Tooltip("The thresholds for the forward and backward direction. These values are used to show whether the targets or the hands are further apart than these value.\nThe recommended values are [] from the measures made by Zenner et al., 2019 using the 75% detection rate. They are also called Just Noticeable Difference or Intervals of Non-detection.\nThis wiki page gives more details and a link to the paper referenced: Anonimized. Values are unitless.")]
 		public Vector2Gain Gain;
 		[Tooltip("A buffer value where the hand redirection is not applied [Han et al., 2018].")]
 		public float RedirectionBuffer = 0.1f;
@@ -26,7 +26,6 @@ namespace VHToolkit.Redirection {
 		public float GoGoActivationDistance = 0.167f;
 		[Tooltip("Coefficient that controls the amount of redirection to remove according to the real hand translation when selecting the ResetRedirection technique. Value is in XXXX.")]	// TODO check this
 		public float ResetRedirectionCoeff = 0.087f;
-
 
 
 		[Header("World Warping")]

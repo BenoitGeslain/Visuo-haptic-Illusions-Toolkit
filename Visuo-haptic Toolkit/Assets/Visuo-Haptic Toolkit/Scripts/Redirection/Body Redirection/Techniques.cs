@@ -12,7 +12,16 @@ namespace VHToolkit.Redirection.BodyRedirection {
 	///  Information about the user such as the user's position or the targets are encapsulated inside Scene.
 	/// </summary>
 	[Serializable]
-	public abstract class BodyRedirectionTechnique : RedirectionTechnique {	}
+	public abstract class BodyRedirectionTechnique : RedirectionTechnique {
+		/// <summary>
+		/// Standard bump function used for mollifying the redirection distribution, as is thouroughly common in various fields of applied mathematics and numerical sciences.
+		/// </summary>
+		/// <param name="distance"></param>
+		/// <param name="bufferDistance"></param>
+		/// <returns></returns>
+        protected static float BumpFunction(float distance, float bufferDistance) => (distance < bufferDistance) ?
+                1f - Mathf.Exp(1f + 1 / (Mathf.Pow(distance / bufferDistance, 2) - 1f)) : 1f;
+    }
 
 	/// <summary>
 	/// This class implements the Body Warping technique from Azmandian et al., 2016. This technique redirects the user's virtual hand by an
@@ -26,7 +35,7 @@ namespace VHToolkit.Redirection.BodyRedirection {
 			limb => {
 				var d = scene.physicalTarget.position - scene.origin.position;
 				var warpingRatio = Mathf.Clamp01(Vector3.Dot(d, limb.physicalLimb.position - scene.origin.position) / d.sqrMagnitude);
-				return warpingRatio * (scene.virtualTarget.position - scene.physicalTarget.position);
+				return warpingRatio * BumpFunction((limb.physicalLimb.position - scene.origin.position).magnitude, scene.parameters.RedirectionBuffer) * (scene.virtualTarget.position - scene.physicalTarget.position);
 			}
 		);
 	}
@@ -74,13 +83,14 @@ namespace VHToolkit.Redirection.BodyRedirection {
 	/// This class implements the Interpolated Reach technique from Han et al., 2018 renamed Continous in this toolkit as Instant. This technique progressively redirects the user
 	/// as they get closer to the physical target in a linear way.
 	/// </summary>
-	public class Han2018Continuous : BodyRedirectionTechnique {
+	public class Han2018InterpolatedReach : BodyRedirectionTechnique {
 
 		public override void Redirect(Scene scene) {
 			List<float> D = scene.GetPhysicalHandTargetDistance();
-			Debug.Log(scene.parameters.RedirectionBuffer);
-			float B = Vector3.Magnitude(scene.physicalTarget.position - scene.origin.position) - scene.parameters.RedirectionBuffer;
-			scene.LimbRedirection = D.ConvertAll(d => Math.Max(1 - d / B, 0f) * (scene.virtualTarget.position - scene.physicalTarget.position));
+			float B = Vector3.Magnitude(scene.physicalTarget.position - scene.origin.position);
+			var C = scene.GetPhysicalHandOriginDistance().Select(c => BumpFunction(c, scene.parameters.RedirectionBuffer));
+			var physicalToVirtual = scene.virtualTarget.position - scene.physicalTarget.position;
+			scene.LimbRedirection = D.Zip(C, (d, c) => Math.Max(1 - d / B, 0f) * c * physicalToVirtual).ToList();
 		}
 	}
 
@@ -90,8 +100,9 @@ namespace VHToolkit.Redirection.BodyRedirection {
 	public class Cheng2017Sparse : BodyRedirectionTechnique {
 
 		public override void Redirect(Scene scene) {
-			List<float> alpha = scene.GetPhysicalHandOriginDistance().Zip(scene.GetPhysicalHandTargetDistance(), (s, p) => s / (s + p)).ToList();
-			scene.LimbRedirection = alpha.ConvertAll(a => a * (scene.virtualTarget.position - scene.physicalTarget.position));
+			List<float> alpha = scene.GetPhysicalHandOriginDistance().Zip(scene.GetPhysicalHandTargetDistance(), (s, p) => s / (s + p) * BumpFunction(s, scene.parameters.RedirectionBuffer)).ToList();
+			var physicalToVirtual = scene.virtualTarget.position - scene.physicalTarget.position;
+			scene.LimbRedirection = alpha.ConvertAll(a => a * physicalToVirtual);
 		}
 	}
 
@@ -111,7 +122,7 @@ namespace VHToolkit.Redirection.BodyRedirection {
 			float D = Vector3.Distance(scene.physicalTarget.position, scene.origin.position);
 			float a2 = scene.parameters.redirectionLateness / (D * D);
 			float[] coeffsByIncreasingPower = { 1f, -1f / D - a2 * D, a2 }; // {a0, a1, a2}
-			List<float> ratio = scene.GetPhysicalHandTargetDistance().ConvertAll(d => (float)coeffsByIncreasingPower.Select((a, i) => a * Math.Pow(d, i)).Sum());
+			List<float> ratio = scene.GetPhysicalHandTargetDistance().Zip(scene.GetPhysicalHandOriginDistance(), (s, p) => BumpFunction(p, scene.parameters.RedirectionBuffer) * (float)coeffsByIncreasingPower.Select((a, i) => a * Math.Pow(s, i)).Sum()).ToList();
 			scene.LimbRedirection = ratio.ConvertAll(r => r * (scene.virtualTarget.position - scene.physicalTarget.position));
 		}
 	}

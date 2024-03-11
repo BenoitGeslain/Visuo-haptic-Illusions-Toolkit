@@ -19,12 +19,12 @@ namespace VHToolkit.Redirection
 	}
 
 	/// <summary>
-	/// Wrapper for a pair of <c>float</c> associated with fast and slow.
+	/// Wrapper for a pair of <c>float</c> associated with forward and backward.
 	/// </summary>
 	[System.Serializable]
 	public class Vector2Gain {
-		public float faster;
-		public float slower;
+		public float forward;
+		public float backward;
 	}
 
 	/// <summary>

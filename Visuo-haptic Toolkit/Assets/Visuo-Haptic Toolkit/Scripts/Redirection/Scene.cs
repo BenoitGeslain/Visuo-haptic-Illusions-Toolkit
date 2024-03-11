@@ -80,9 +80,11 @@ namespace VHToolkit.Redirection {
             get => limbs.ConvertAll(limb => limb.virtualLimb[0].position - limb.physicalLimb.position);
             set {
 				foreach ((var limb, var v) in limbs.Zip(value)) {
+					// Debug.Log(limb.virtualLimb.First().position);
 					limb.virtualLimb.ForEach(vLimb => vLimb.position = limb.physicalLimb.position + v);
+					// Debug.Log(limb.virtualLimb.First().position);
 				}
-        	}
+			}
 		}
 
         /// <returns>The distance between the user's real and virtual hands.</returns>
