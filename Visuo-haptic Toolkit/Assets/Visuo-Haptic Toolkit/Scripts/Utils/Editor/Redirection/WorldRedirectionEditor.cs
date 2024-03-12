@@ -87,14 +87,18 @@ namespace VHToolkit.Redirection.WorldRedirection {
 			parametersObject = new SerializedObject(parameters.objectReferenceValue);
 			parametersObject.Update();
 
+			EditorGUILayout.Space(2);
 			if (techniqueName == "Razzaque2001OverTimeRotation") {
 				MakePropertyField(parametersObject.FindProperty("OverTimeRotation"), "Over Time Rotation Rate");
 			}
 			if (techniqueName == "Razzaque2001Rotational") {
 				MakePropertyField(parametersObject.FindProperty("GainsRotational"), "Rotational Gains");
+				MakePropertyField(parametersObject.FindProperty("RotationalError"), "Rotational Error");
+				MakePropertyField(parametersObject.FindProperty("RotationalThreshold"), "Rotational Threshold");
 			}
 			if (techniqueName == "Razzaque2001Curvature") {
 				MakePropertyField(parametersObject.FindProperty("CurvatureRadius"), "Curvature Radius");
+				MakePropertyField(parametersObject.FindProperty("WalkingThreshold"), "Walking Threshold");
 			}
 			if (techniqueName == "Razzaque2001Hybrid") {
 				MakePropertyField(serializedObject.FindProperty("scene.enableHybridOverTime"), "Enable Over Time Rotation");
@@ -102,9 +106,12 @@ namespace VHToolkit.Redirection.WorldRedirection {
 				EditorGUILayout.Space(2);
 				MakePropertyField(serializedObject.FindProperty("scene.enableHybridRotational"), "Enable Rotational");
 				MakePropertyField(parametersObject.FindProperty("GainsRotational"), "Rotational Gains");
+				MakePropertyField(parametersObject.FindProperty("RotationalError"), "Rotational Error");
+				MakePropertyField(parametersObject.FindProperty("RotationalThreshold"), "Rotational Threshold");
 				EditorGUILayout.Space(2);
 				MakePropertyField(serializedObject.FindProperty("scene.enableHybridCurvature"), "Enable Curvature");
 				MakePropertyField(parametersObject.FindProperty("CurvatureRadius"), "Curvature Radius");
+				MakePropertyField(parametersObject.FindProperty("WalkingThreshold"), "Walking Threshold");
 				EditorGUILayout.Space(2);
 				MakePropertyField(serializedObject.FindProperty("scene.aggregateFunction"), "Aggregate Function");
 
@@ -143,17 +150,23 @@ namespace VHToolkit.Redirection.WorldRedirection {
 				if (targetsStrategies.Contains(strategy.enumNames[strategy.enumValueIndex])) {
 					MakePropertyField(targetsScene, "Targets");
 					MakePropertyField(applyDampening, "Apply Dampening");
+					MakePropertyField(parametersObject.FindProperty("DampeningDistanceThreshold"), "Dampening Distance Threshold");
+					MakePropertyField(parametersObject.FindProperty("DampeningRange"), "Dampening Range");
 					MakePropertyField(applySmoothing, "Apply Smoothing");
-				}
-				else if (strategy.enumNames[strategy.enumValueIndex] == "SteerToOrbit") {
+					MakePropertyField(parametersObject.FindProperty("SmoothingFactor"), "Smoothing Factor");
+				} else if (strategy.enumNames[strategy.enumValueIndex] == "SteerToOrbit") {
 					MakePropertyField(targetsScene, "Targets");
-					var steerToOrbitRadius = parametersObject.FindProperty("steerToOrbitRadius");
-					MakePropertyField(steerToOrbitRadius, "Orbit Radius");
+
+					var steerToOrbitRadius = parametersObject.FindProperty("SteerToOrbitRadius");
+					EditorGUILayout.BeginHorizontal();
+					EditorGUILayout.PropertyField(steerToOrbitRadius, new GUIContent("Steer To Orbit Radius"));
+					EditorGUILayout.LabelField("   Rotation Rate: " + (360f / (2 * Mathf.PI * steerToOrbitRadius.floatValue)).ToString("N2") + " °/m/s");
+					GUILayout.EndHorizontal();
+
 				}
 				else if (strategy.enumNames[strategy.enumValueIndex] == "SteerInDirection") {
 					MakePropertyField(direction, "Direction");
 				}
-
 			}
 
 			serializedObject.ApplyModifiedProperties();

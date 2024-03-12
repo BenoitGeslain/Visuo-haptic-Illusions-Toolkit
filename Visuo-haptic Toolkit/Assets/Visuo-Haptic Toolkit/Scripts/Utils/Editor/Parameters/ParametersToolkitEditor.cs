@@ -104,8 +104,9 @@ namespace VHToolkit.Redirection {
 
 			EditorGUILayout.BeginHorizontal();
 			EditorGUILayout.PropertyField(curvatureRadius, new GUIContent ("Curvature Radius"));
-			EditorGUILayout.LabelField("Rotation Rate: " + (360f / (2 * Mathf.PI * curvatureRadius.floatValue)).ToString("N2") + " °/m/s");
+			EditorGUILayout.LabelField("   Rotation Rate: " + (360f / (2 * Mathf.PI * curvatureRadius.floatValue)).ToString("N2") + " °/m/s");
 			GUILayout.EndHorizontal();
+
 			EditorGUILayout.PropertyField(hybridWeights, new GUIContent("Hybrid Sum Weights"));
 
 			serializedObject.ApplyModifiedProperties();
