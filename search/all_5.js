@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['gain_35',['Gain',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#af361c0356a86eb8809f45df3764e7150',1,'VHToolkit::Redirection::ParametersToolkit']]],
   ['gainsrotational_36',['GainsRotational',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a070e19c49bd46fdbf679838a63c0d835',1,'VHToolkit::Redirection::ParametersToolkit']]],
   ['gainstranslational_37',['GainsTranslational',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#ae896d09a13ce2ceac12246a27d08f0a5',1,'VHToolkit::Redirection::ParametersToolkit']]],
   ['geslain2022polynom_38',['Geslain2022Polynom',['../namespaceVHToolkit_1_1Redirection.html#af8073b3c987118e1413b41c5be00892ba881fb348ecec51db4fb0da7eb50da0bc',1,'VHToolkit.Redirection.Geslain2022Polynom()'],['../classVHToolkit_1_1Redirection_1_1BodyRedirection_1_1Geslain2022Polynom.html',1,'VHToolkit.Redirection.BodyRedirection.Geslain2022Polynom']]],
@@ -13,6 +12,7 @@ var searchData=
   ['getredirectionreset_45',['GetRedirectionReset',['../classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1Razzaque2001OverTimeRotation.html#a49bca83b640d3e55dc069f39c1e0688f',1,'VHToolkit.Redirection.WorldRedirection.Razzaque2001OverTimeRotation.GetRedirectionReset()'],['../classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1Razzaque2001Rotational.html#a2a50e83589fd0ca72c7000e0f800d0b8',1,'VHToolkit.Redirection.WorldRedirection.Razzaque2001Rotational.GetRedirectionReset()']]],
   ['gettargets_46',['GetTargets',['../classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1WorldRedirection.html#a708ea0da013be6b2a964e1afdb23a465',1,'VHToolkit::Redirection::WorldRedirection::WorldRedirection']]],
   ['gettranslationalredirection_47',['GetTranslationalRedirection',['../classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1WorldRedirection.html#adee3c0c215464ac239656870da46375d',1,'VHToolkit::Redirection::WorldRedirection::WorldRedirection']]],
-  ['gogoactivationdistance_48',['GoGoActivationDistance',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#ad2dba65335476ca517eea9082289e9cd',1,'VHToolkit::Redirection::ParametersToolkit']]],
-  ['gogocoefficient_49',['GoGoCoefficient',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a407f646762ccc4b60cf5ec74563dfc02',1,'VHToolkit::Redirection::ParametersToolkit']]]
+  ['getwidth_48',['GetWidth',['../classVectorsPropertyDrawer.html#a5535b3f9e7b74624aae96b1b4171dbe9',1,'VectorsPropertyDrawer']]],
+  ['gogoactivationdistance_49',['GoGoActivationDistance',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#ad2dba65335476ca517eea9082289e9cd',1,'VHToolkit::Redirection::ParametersToolkit']]],
+  ['gogocoefficient_50',['GoGoCoefficient',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a407f646762ccc4b60cf5ec74563dfc02',1,'VHToolkit::Redirection::ParametersToolkit']]]
 ];

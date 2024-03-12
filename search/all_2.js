@@ -2,7 +2,7 @@ var searchData=
 [
   ['calibrate_17',['Calibrate',['../classVHToolkit_1_1Calibration_1_1SceneCalibration.html#a07045e508620ef2a903359bfdd970bd3',1,'VHToolkit::Calibration::SceneCalibration']]],
   ['cheng2017sparse_18',['Cheng2017Sparse',['../namespaceVHToolkit_1_1Redirection.html#af8073b3c987118e1413b41c5be00892ba282645738cc7192cb3233f871d2e8eb6',1,'VHToolkit.Redirection.Cheng2017Sparse()'],['../classVHToolkit_1_1Redirection_1_1BodyRedirection_1_1Cheng2017Sparse.html',1,'VHToolkit.Redirection.BodyRedirection.Cheng2017Sparse']]],
-  ['controlpoint_19',['controlPoint',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a0ad9be5aec501914541ef90f13a2b74b',1,'VHToolkit::Redirection::ParametersToolkit']]],
+  ['controlpoint_19',['ControlPoint',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a6fadf0f09e59dd9f081332ef39b602c7',1,'VHToolkit::Redirection::ParametersToolkit']]],
   ['copyheadandlimbtransform_20',['CopyHeadAndLimbTransform',['../classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1WorldRedirectionTechnique.html#aeb7c04cb4ec281a3920a03d81f4f1ba1',1,'VHToolkit::Redirection::WorldRedirection::WorldRedirectionTechnique']]],
   ['corridorredirection_21',['CorridorRedirection',['../classVHToolkit_1_1Demo_1_1CorridorRedirection.html',1,'VHToolkit::Demo']]],
   ['corridorrepresentation_22',['CorridorRepresentation',['../classCorridorRepresentation.html',1,'']]],
