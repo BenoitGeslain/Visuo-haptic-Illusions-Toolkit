@@ -4,12 +4,14 @@ using VHToolkit;
 using System;
 using MathNet.Numerics.LinearAlgebra;
 using System.Collections.Generic;
+using MathNet.Numerics;
+using System.Runtime.InteropServices;
 
 
 namespace VHToolkit {
     public static class ThinPlateSpline {
         // The notation follows [Eberly 96, Thin-Plate Splines] at https://www.geometrictools.com/Documentation/ThinPlateSplines.pdf.
-        static float GreenFunction2D(float distance) => distance * distance * MathF.Log(distance);
+        static float GreenFunction2D(float distance) => (distance == 0f) ? 0f : distance * distance * MathF.Log(distance);
 
         /// <summary>
         // Returns f:R^2 -> R satisfying f(s) = t for each pair (s, t) in x.Zip(y).
@@ -22,6 +24,7 @@ namespace VHToolkit {
 
             var yAsVec = Vector<float>.Build.DenseOfArray(y);
             var N = Mat.DenseOfRowArrays(x.Select(xx => new[] { 1, xx.x, xx.y }));
+            var M = Mat.Dense(x.Length, x.Length, (i, j) => GreenFunction2D(Vector2.Distance(x[i], x[j])));
             // Compute (M + lambda * Id)^-1 only once
             var Minv = Mat.Dense(x.Length, x.Length, (i, j) => GreenFunction2D(Vector2.Distance(x[i], x[j]))).Inverse();
             var temp = N.Transpose() * Minv; // Avoid computing this twice
@@ -91,7 +94,6 @@ namespace VHToolkit {
         public static Func<Vector3, Vector3> SabooDisplacementField(Vector3[] x, Vector3[] y) {
             Debug.Assert(x.Length == y.Length);
             var components = Enumerable.Range(0, 3).Select(i => Solve(x, Array.ConvertAll(y, yy => yy[i]))).ToArray();
-
             return point => new(components[0](point), components[1](point), components[2](point));
         }
 
