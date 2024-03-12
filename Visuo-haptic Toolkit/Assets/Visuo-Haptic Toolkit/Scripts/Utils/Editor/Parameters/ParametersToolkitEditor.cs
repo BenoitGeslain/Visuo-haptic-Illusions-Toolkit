@@ -1,3 +1,4 @@
+using UnityEngine;
 using UnityEditor;
 
 namespace VHToolkit.Redirection {
@@ -8,78 +9,106 @@ namespace VHToolkit.Redirection {
 	[CustomEditor(typeof(ParametersToolkit))]
 	public class ParametersToolkitEditor: Editor {
 
-		SerializedProperty maxAngles;
-		SerializedProperty noRedirectionBuffer;
-		SerializedProperty maxRedirectionThreshold;
-		SerializedProperty resetRedirectionCoeff;
+		// Body Warping
+		SerializedProperty horizontalAngles;
+		SerializedProperty verticalAngles;
+		SerializedProperty depthGain;
+		SerializedProperty redirectionBuffer;
+		SerializedProperty redirectionLateness;
+		SerializedProperty controlPoint;
 		SerializedProperty goGoActivationDistance;
 		SerializedProperty goGoCoefficient;
+		SerializedProperty resetRedirectionCoeff;
 
-		SerializedProperty rotationalEpsilon;
-		SerializedProperty minimumRotation;
+		// World Warping
+		SerializedProperty rotationalError;
+		SerializedProperty rotationalThreshold;
 		SerializedProperty walkingThreshold;
-		SerializedProperty distanceThreshold;
+		SerializedProperty dampeningDistanceThreshold;
 		SerializedProperty dampeningRange;
 		SerializedProperty smoothingFactor;
+		SerializedProperty steerToOrbitRadius;
 		SerializedProperty overTimeRotaton;
 		SerializedProperty gainsTranslational;
 		SerializedProperty gainsRotational;
 		SerializedProperty curvatureRadius;
+		SerializedProperty hybridWeights;
 
 		private void OnEnable() {
-			maxAngles = serializedObject.FindProperty("MaxAngles");
-			noRedirectionBuffer = serializedObject.FindProperty ("NoRedirectionBuffer");
-			maxRedirectionThreshold = serializedObject.FindProperty ("MaxRedirectionThreshold");
-			resetRedirectionCoeff = serializedObject.FindProperty ("ResetRedirectionCoeff");
-			goGoActivationDistance = serializedObject.FindProperty ("GoGoActivationDistance");
-			goGoCoefficient = serializedObject.FindProperty ("GoGoCoefficient");
+			// Body Warping
+			horizontalAngles = serializedObject.FindProperty("HorizontalAngles");
+			verticalAngles = serializedObject.FindProperty("VerticalAngles");
+			depthGain = serializedObject.FindProperty("DepthGain");
+			redirectionBuffer = serializedObject.FindProperty("RedirectionBuffer");
+			redirectionLateness = serializedObject.FindProperty("RedirectionLateness");
+			controlPoint = serializedObject.FindProperty ("ControlPoint");
 
-			rotationalEpsilon = serializedObject.FindProperty("RotationalError");
-			minimumRotation = serializedObject.FindProperty("MinimumRotation");
+			goGoCoefficient = serializedObject.FindProperty ("GoGoCoefficient");
+			goGoActivationDistance = serializedObject.FindProperty("GoGoActivationDistance");
+			resetRedirectionCoeff = serializedObject.FindProperty("ResetRedirectionCoeff");
+
+			// World Warping
+			rotationalError = serializedObject.FindProperty("RotationalError");
+			rotationalThreshold = serializedObject.FindProperty("RotationalThreshold");
 			walkingThreshold = serializedObject.FindProperty("WalkingThreshold");
-			distanceThreshold = serializedObject.FindProperty("DistanceThreshold");
+			dampeningDistanceThreshold = serializedObject.FindProperty("DampeningDistanceThreshold");
 			dampeningRange = serializedObject.FindProperty("DampeningRange");
+
 			smoothingFactor = serializedObject.FindProperty("SmoothingFactor");
+
+			steerToOrbitRadius = serializedObject.FindProperty("SteerToOrbitRadius");
+
 			overTimeRotaton = serializedObject.FindProperty ("OverTimeRotation");
 			gainsTranslational = serializedObject.FindProperty("GainsTranslational");
 			gainsRotational = serializedObject.FindProperty ("GainsRotational");
 			curvatureRadius = serializedObject.FindProperty("CurvatureRadius");
+			hybridWeights = serializedObject.FindProperty("HybridWeights");
 		}
 
-		// public override void OnInspectorGUI() {
-		// 	GUI.enabled = false;
-		// 	EditorGUILayout.ObjectField("Script:", MonoScript.FromScriptableObject((ParametersToolkit)target), typeof(ParametersToolkit), false);
-		// 	GUI.enabled = true;
+		public override void OnInspectorGUI() {
+			GUI.enabled = false;
+			EditorGUILayout.ObjectField("Script:", MonoScript.FromScriptableObject((ParametersToolkit)target), typeof(ParametersToolkit), false);
+			GUI.enabled = true;
 
-		// 	serializedObject.Update();
+			serializedObject.Update();
 
-		// 	// Body Warping
-		// 	EditorGUILayout.PropertyField(maxAngles, new GUIContent ("Threshold Angles"));
-		// 	EditorGUILayout.PropertyField(noRedirectionBuffer, new GUIContent ("No Redirection Buffer"));
-		// 	EditorGUILayout.PropertyField(maxRedirectionThreshold, new GUIContent ("Max Redirection Threshold"));
-		// 	EditorGUILayout.PropertyField(resetRedirectionCoeff, new GUIContent ("Reset Redirection Coefficient"));
-		// 	EditorGUILayout.PropertyField(goGoActivationDistance, new GUIContent ("GoGo Activation Distance"));
-		// 	EditorGUILayout.PropertyField(goGoCoefficient, new GUIContent ("GoGo Coefficient"));
+			EditorGUILayout.Space(5);
+			EditorGUILayout.LabelField("Body/Hand Warping", EditorStyles.largeLabel);
 
-		// 	// World Warping
-		// 	EditorGUILayout.PropertyField(rotationalEpsilon, new GUIContent ("Rotational Epsilon"));
-		// 	EditorGUILayout.PropertyField(minimumRotation, new GUIContent ("Minimum Rotation"));
-		// 	EditorGUILayout.PropertyField(walkingThreshold, new GUIContent ("Walking Threshold"));
+			// Body Warping
+			EditorGUILayout.PropertyField(horizontalAngles, new GUIContent ("Max Horizontal Angles"));
+			EditorGUILayout.PropertyField(verticalAngles, new GUIContent ("Max Vertical Angles"));
+			EditorGUILayout.PropertyField(depthGain, new GUIContent("Max Depth Gain"));
+			EditorGUILayout.PropertyField(redirectionBuffer, new GUIContent ("No Redirection Buffer"));
+			EditorGUILayout.PropertyField(resetRedirectionCoeff, new GUIContent ("Reset Redirection Coefficient"));
+			EditorGUILayout.PropertyField(goGoActivationDistance, new GUIContent ("GoGo Activation Distance"));
+			EditorGUILayout.PropertyField(goGoCoefficient, new GUIContent ("GoGo Coefficient"));
 
-		// 	EditorGUILayout.PropertyField(distanceThreshold, new GUIContent ("Distance Threshold"));
-		// 	EditorGUILayout.PropertyField(dampeningRange, new GUIContent ("Dampening Range"));
-		// 	EditorGUILayout.PropertyField(smoothingFactor, new GUIContent ("Smoothing Factor"));
+			EditorGUILayout.Space(5);
+			EditorGUILayout.LabelField("World Redirection / Redirected Walking", EditorStyles.largeLabel);
 
-		// 	EditorGUILayout.PropertyField(overTimeRotaton, new GUIContent ("Over Time Rotaton"));
-		// 	EditorGUILayout.PropertyField(gainsTranslational, new GUIContent ("Translational Gains"));
-		// 	EditorGUILayout.PropertyField(gainsRotational, new GUIContent ("Rotational Gains"));
+			// World Warping
+			EditorGUILayout.PropertyField(rotationalError, new GUIContent ("Rotational Error"));
+			EditorGUILayout.PropertyField(rotationalThreshold, new GUIContent ("Rotational Threshold"));
+			EditorGUILayout.PropertyField(walkingThreshold, new GUIContent ("Walking Threshold"));
 
-		// 	EditorGUILayout.BeginHorizontal();
-		// 	EditorGUILayout.PropertyField(curvatureRadius, new GUIContent ("Curvature Radius"));
-		// 	EditorGUILayout.LabelField("Rotation Rate: " + (360f / (2 * Mathf.PI * curvatureRadius.floatValue)).ToString("N2") + " °/m/s");
-		// 	GUILayout.EndHorizontal();
+			EditorGUILayout.PropertyField(dampeningDistanceThreshold, new GUIContent ("Dampening Distance Threshold"));
+			EditorGUILayout.PropertyField(dampeningRange, new GUIContent("Dampening Range"));
+			EditorGUILayout.PropertyField(smoothingFactor, new GUIContent ("Smoothing Factor"));
 
-		// 	serializedObject.ApplyModifiedProperties();
-		// }
+			EditorGUILayout.PropertyField(steerToOrbitRadius, new GUIContent("SteerToOrbit Radius"));
+
+			EditorGUILayout.PropertyField(overTimeRotaton, new GUIContent ("Over Time Rotaton"));
+			EditorGUILayout.PropertyField(gainsTranslational, new GUIContent ("Translational Gains"));
+			EditorGUILayout.PropertyField(gainsRotational, new GUIContent ("Rotational Gains"));
+
+			EditorGUILayout.BeginHorizontal();
+			EditorGUILayout.PropertyField(curvatureRadius, new GUIContent ("Curvature Radius"));
+			EditorGUILayout.LabelField("Rotation Rate: " + (360f / (2 * Mathf.PI * curvatureRadius.floatValue)).ToString("N2") + " °/m/s");
+			GUILayout.EndHorizontal();
+			EditorGUILayout.PropertyField(hybridWeights, new GUIContent("Hybrid Sum Weights"));
+
+			serializedObject.ApplyModifiedProperties();
+		}
 	}
 }

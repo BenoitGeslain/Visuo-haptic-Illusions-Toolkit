@@ -57,12 +57,13 @@ namespace VHToolkit.Redirection.WorldRedirection {
 			EditorGUILayout.Space(5);
 			EditorGUILayout.LabelField("User Parameters", EditorStyles.largeLabel);
 
+			string techniqueName = technique.enumNames[technique.enumValueIndex];
 
 			MakePropertyField(physicalHand, "Physical Limbs", "A list of tracked user limbs.");
 			MakePropertyField(physicalHead, "Physical Head", "Transform tracking the user's real head");
 			MakePropertyField(virtualHead, "Virtual Head", "Transform tracking the user's virtual head");
 
-			if (technique.enumNames[technique.enumValueIndex] == "Azmandian2016World") {
+			if (techniqueName == "Azmandian2016World") {
 				MakePropertyField(physicalTarget, "Physical Target");
 				MakePropertyField(virtualTarget, "Virtual Target");
 				MakePropertyField(origin, "Origin");
@@ -86,16 +87,16 @@ namespace VHToolkit.Redirection.WorldRedirection {
 			parametersObject = new SerializedObject(parameters.objectReferenceValue);
 			parametersObject.Update();
 
-			if (technique.enumNames[technique.enumValueIndex] == "Razzaque2001OverTimeRotation") {
+			if (techniqueName == "Razzaque2001OverTimeRotation") {
 				MakePropertyField(parametersObject.FindProperty("OverTimeRotation"), "Over Time Rotation Rate");
 			}
-			if (technique.enumNames[technique.enumValueIndex] == "Razzaque2001Rotational") {
+			if (techniqueName == "Razzaque2001Rotational") {
 				MakePropertyField(parametersObject.FindProperty("GainsRotational"), "Rotational Gains");
 			}
-			if (technique.enumNames[technique.enumValueIndex] == "Razzaque2001Curvature") {
+			if (techniqueName == "Razzaque2001Curvature") {
 				MakePropertyField(parametersObject.FindProperty("CurvatureRadius"), "Curvature Radius");
 			}
-			if (technique.enumNames[technique.enumValueIndex] == "Razzaque2001Hybrid") {
+			if (techniqueName == "Razzaque2001Hybrid") {
 				MakePropertyField(serializedObject.FindProperty("scene.enableHybridOverTime"), "Enable Over Time Rotation");
 				MakePropertyField(parametersObject.FindProperty("OverTimeRotation"), "Over Time Rotation Rate");
 				EditorGUILayout.Space(2);
@@ -125,16 +126,16 @@ namespace VHToolkit.Redirection.WorldRedirection {
 						break;
 				}
 			}
-			// if (technique.enumNames[technique.enumValueIndex] == "Azmandian2016World") {
+			// if (techniqueName == "Azmandian2016World") {
 			// 	MakePropertyField(parametersObject.FindProperty("GainsRotational"), "Gains Rotational");
 			// }
-			if (technique.enumNames[technique.enumValueIndex] == "Steinicke2008Translational") {
+			if (techniqueName == "Steinicke2008Translational") {
 				MakePropertyField(parametersObject.FindProperty("GainsTranslational"), "Translational Gains");
 			}
 
 
 			// Hides targets, dampening and smoothing if
-			if (strategyTechniques.Contains(technique.enumNames[technique.enumValueIndex])) {
+			if (strategyTechniques.Contains(techniqueName)) {
 				EditorGUILayout.Space(5);
 				EditorGUILayout.LabelField("Strategy Parameters", EditorStyles.largeLabel);
 				MakePropertyField(strategy, "Target selection strategy");

@@ -120,7 +120,7 @@ namespace VHToolkit.Redirection.BodyRedirection {
 		/// The input parameter redirectionLateness is a2 * D^2
 		public override void Redirect(Scene scene) {
 			float D = Vector3.Distance(scene.physicalTarget.position, scene.origin.position);
-			float a2 = scene.parameters.redirectionLateness / (D * D);
+			float a2 = scene.parameters.RedirectionLateness / (D * D);
 			float[] coeffsByIncreasingPower = { 1f, -1f / D - a2 * D, a2 }; // {a0, a1, a2}
 			List<float> ratio = scene.GetPhysicalHandTargetDistance().Zip(scene.GetPhysicalHandOriginDistance(), (s, p) => BumpFunction(p, scene.parameters.RedirectionBuffer) * (float)coeffsByIncreasingPower.Select((a, i) => a * Math.Pow(s, i)).Sum()).ToList();
 			scene.LimbRedirection = ratio.ConvertAll(r => r * (scene.virtualTarget.position - scene.physicalTarget.position));

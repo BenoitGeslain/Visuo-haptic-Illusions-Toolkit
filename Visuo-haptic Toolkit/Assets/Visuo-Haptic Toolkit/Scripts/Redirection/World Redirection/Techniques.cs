@@ -61,7 +61,7 @@ namespace VHToolkit.Redirection.WorldRedirection {
 			float angleToTarget = scene.GetHeadAngleToTarget();
 			float instantRotation = scene.GetHeadInstantRotationY();
 
-			if (Mathf.Abs(angleToTarget) > scene.parameters.RotationalError && Mathf.Abs(instantRotation) > scene.parameters.RotationThreshold) {
+			if (Mathf.Abs(angleToTarget) > scene.parameters.RotationalError && Mathf.Abs(instantRotation) > scene.parameters.RotationalThreshold) {
 				return instantRotation * ((Mathf.Sign(angleToTarget) != Mathf.Sign(instantRotation))
 					? scene.parameters.GainsRotational.opposite - 1
 					: scene.parameters.GainsRotational.same - 1);
@@ -73,7 +73,7 @@ namespace VHToolkit.Redirection.WorldRedirection {
 			float angleToTarget = scene.HeadToHeadRedirection.eulerAngles.y;
 			float instantRotation = scene.GetHeadInstantRotationY();
 
-			if (Mathf.Abs(angleToTarget) > scene.parameters.RotationalError && Mathf.Abs(instantRotation) > scene.parameters.RotationThreshold) {
+			if (Mathf.Abs(angleToTarget) > scene.parameters.RotationalError && Mathf.Abs(instantRotation) > scene.parameters.RotationalThreshold) {
 				return instantRotation * ((Mathf.Sign(angleToTarget) != Mathf.Sign(instantRotation))
 					? scene.parameters.GainsRotational.opposite - 1
 					: scene.parameters.GainsRotational.same - 1);
@@ -213,7 +213,7 @@ namespace VHToolkit.Redirection.WorldRedirection {
 				float angle = angleBetweenTargets - angleBetweenHeads;
 				float instantRotation = scene.GetHeadInstantRotationY();
 
-				if (Mathf.Abs(instantRotation) > scene.parameters.RotationThreshold && Mathf.Abs(angle) > scene.parameters.RotationalError) {
+				if (Mathf.Abs(instantRotation) > scene.parameters.RotationalThreshold && Mathf.Abs(angle) > scene.parameters.RotationalError) {
 					var gain = (Mathf.Sign(angle) != Mathf.Sign(instantRotation)) ? scene.parameters.GainsRotational.same : scene.parameters.GainsRotational.opposite;
 					var bound = Mathf.Abs(gain * instantRotation);
 					return Mathf.Clamp(angle, -bound, bound);

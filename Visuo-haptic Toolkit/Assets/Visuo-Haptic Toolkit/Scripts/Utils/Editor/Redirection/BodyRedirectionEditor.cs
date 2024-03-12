@@ -61,11 +61,12 @@ namespace VHToolkit.Redirection.BodyRedirection {
 			// Scene
 			MakePropertyField(physicalLimbs, "Physical Limbs", "The Transform of the user's limbs tracked by the VR SDK");
 
-			// EditorGUILayout.PropertyField(virtualLimbs, new GUIContent("Virtual Limbs"));
-			if (technique.enumNames[technique.enumValueIndex] == nameof(Azmandian2016Hybrid)) {
+			string techniqueName = technique.enumNames[technique.enumValueIndex];
+
+			if (techniqueName == nameof(Azmandian2016Hybrid)) {
 				MakePropertyField(physicalHead, "Physical Head", "The Transform of the VR headset worn by the user.");
 				MakePropertyField(virtualHead, "Virtual Head", "");
-			} else if (technique.enumNames[technique.enumValueIndex] == nameof(Poupyrev1996GoGo)) {
+			} else if (techniqueName == nameof(Poupyrev1996GoGo)) {
 				MakePropertyField(physicalHead, "Physical Head", "");
 			}
 
@@ -92,20 +93,20 @@ namespace VHToolkit.Redirection.BodyRedirection {
 			MakePropertyField(origin, "Origin", "");
 
 			// Hides redirectionLateness and controlpoint fields if the technique is not Geslain2022Polynom
-			if (technique.enumNames[technique.enumValueIndex] == nameof(Geslain2022Polynom)) {
+			if (techniqueName == nameof(Geslain2022Polynom)) {
 				EditorGUILayout.PropertyField(parametersObject.FindProperty("redirectionLateness"), new GUIContent("Redirection Lateness (a2)"));
 				EditorGUILayout.PropertyField(parametersObject.FindProperty("controlPoint"), new GUIContent("ControlPoint"));
-			} else if (technique.enumNames[technique.enumValueIndex] == nameof(Poupyrev1996GoGo)) {
+			} else if (techniqueName == nameof(Poupyrev1996GoGo)) {
 				EditorGUILayout.PropertyField(parametersObject.FindProperty("GoGoCoefficient"), new GUIContent("Coefficient"));
 				EditorGUILayout.PropertyField(parametersObject.FindProperty("GoGoActivationDistance"), new GUIContent("Activation Distance"));
 			}
 
-			if (bufferTechniques.Contains(technique.enumNames[technique.enumValueIndex])) {
+			if (bufferTechniques.Contains(techniqueName)) {
 				EditorGUILayout.PropertyField(parametersObject.FindProperty("RedirectionBuffer"), new GUIContent("Redirection Buffer"));
 			}
 
-			if (noThresholdTechniques.Contains(technique.enumNames[technique.enumValueIndex])) {
-				if (technique.enumNames[technique.enumValueIndex] == nameof(Lecuyer2000Swamp)) {
+			if (noThresholdTechniques.Contains(techniqueName)) {
+				if (techniqueName == nameof(Lecuyer2000Swamp)) {
 					EditorGUILayout.PropertyField(parametersObject.FindProperty("SwampSquareLength"), new GUIContent("Square Side Length"));
 					EditorGUILayout.PropertyField(parametersObject.FindProperty("SwampCDRatio"), new GUIContent("C/D Ratio"));
 				}
@@ -114,7 +115,7 @@ namespace VHToolkit.Redirection.BodyRedirection {
 				EditorGUILayout.LabelField("Threshold Parameters", EditorStyles.largeLabel);
 				EditorGUILayout.PropertyField(parametersObject.FindProperty("HorizontalAngles"), new GUIContent("Max Horizontal Angles"));
 				EditorGUILayout.PropertyField(parametersObject.FindProperty("VerticalAngles"), new GUIContent("Max Vertical Angles"));
-				EditorGUILayout.PropertyField(parametersObject.FindProperty("Gain"), new GUIContent("Max Depth Gain"));
+				EditorGUILayout.PropertyField(parametersObject.FindProperty(nameof(ParametersToolkit.DepthGain)), new GUIContent("Max Depth Gain"));
 			}
 
 			serializedObject.ApplyModifiedProperties();
