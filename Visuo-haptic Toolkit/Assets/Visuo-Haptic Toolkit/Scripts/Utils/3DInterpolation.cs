@@ -25,7 +25,7 @@ public class Interpolation : MonoBehaviour {
 		interpolatedMeshFilter = interpolated.GetComponent<MeshFilter>();
 		modifiedMeshFilter = modified.GetComponent<MeshFilter>();
 
-		for (var i=0; i< n; i++) {
+		for (var i = 0; i < n; i++) {
 			for (var j = 0; j < n; j++) {
 				originalGrid[i * n + j] = GameObject.CreatePrimitive(PrimitiveType.Sphere).transform;
 				originalGrid[i * n + j].name = $"Original Point {i} {j}";
@@ -36,7 +36,7 @@ public class Interpolation : MonoBehaviour {
 				targetGrid[i * n + j] = GameObject.CreatePrimitive(PrimitiveType.Sphere).transform;
 				targetGrid[i * n + j].name = $"target Point {i} {j}";
 				targetGrid[i * n + j].parent = target;
-				targetGrid[i * n + j].position = new(i * l, 0f, j * l);
+				targetGrid[i * n + j].position = originalGrid[i * n + j].position - 0.2f * Vector3.down + 0.5f * UnityEngine.Random.insideUnitSphere;
 				targetGrid[i * n + j].localScale = new(0.1f, 0.1f, 0.1f);
 
 				interpolatedGrid[i * n + j] = GameObject.CreatePrimitive(PrimitiveType.Sphere).transform;
@@ -49,7 +49,12 @@ public class Interpolation : MonoBehaviour {
 	}
 
 	private void Update() {
-		var disp = ThinPlateSpline.SabooDisplacementField(Array.ConvertAll(originalGrid, g => g.position), Array.ConvertAll(targetGrid, g => g.position));
+		var disp = ThinPlateSpline.SabooSmoothedDisplacementField(
+			Array.ConvertAll(originalGrid, g => g.position),
+			Array.ConvertAll(targetGrid, g => g.position),
+			0,
+			true
+			);
 		var tmp = Array.ConvertAll(interpolatedGrid, g => disp(g.position));
 		Debug.Log(tmp.Length);
 		DrawMeshes(tmp);
@@ -60,16 +65,18 @@ public class Interpolation : MonoBehaviour {
 			originalMesh = originalMeshFilter.mesh;
 
 			int[] triangles = new int[(n - 1) * (n - 1) * 6];
-			for (int ti = 0, x = 0; x < n - 1; x++, ti += 6) {
-				triangles[ti] = x;
-				triangles[ti + 4] = triangles[ti + 1] = x + 1;
-				triangles[ti + 3] = triangles[ti + 2] = x + n;
-				triangles[ti + 5] = x + n + 1;
+			for (int ti = 0, x = 0, y = 0; ti + 6 <= (n - 1) * (n - 1) * 6; x++, ti += 6) {
+				if (x == n - 1) {
+					y++; x = 0;
+				}
+				triangles[ti] = x + y * n;
+				triangles[ti + 4] = triangles[ti + 1] = x + y * n + 1;
+				triangles[ti + 3] = triangles[ti + 2] = x + y * n + n;
+				triangles[ti + 5] = x + y * n + n + 1;
+
 			}
 			originalMesh.vertices = Array.ConvertAll(originalGrid, p => p.position);
 			originalMesh.triangles = triangles;
-
-
 		});
 
 		targetMesh = targetMeshFilter.mesh;
