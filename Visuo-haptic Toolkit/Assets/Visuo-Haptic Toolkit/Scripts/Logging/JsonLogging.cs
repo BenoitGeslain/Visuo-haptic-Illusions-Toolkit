@@ -12,15 +12,20 @@ using Newtonsoft.Json;
 namespace VHToolkit.Logging {
 	public record TransformData {
 		private readonly Transform obj;
-		public string Position => obj.position.ToString();
-		public string Orientation => obj.rotation.normalized.ToString();
-		public TransformData(Transform obj) => this.obj = obj;
-	}
+		public string Position => obj != null ? obj.position.ToString() : "NULL";
+		public string Orientation => obj != null ? obj.rotation.normalized.ToString() : "NULL";
+		public TransformData(Transform obj)
+        {
+			// Debug.Log(this.obj);
+			// Debug.Log(this.obj.name);
+			this.obj = obj;
+        }
+    }
 
 	public record PhysicalLimbData {
 		private readonly Limb limb;
-		public string Orientation => limb.physicalLimb.rotation.normalized.ToString();
 		public string Position => limb.physicalLimb.position.ToString();
+		public string Orientation => limb.physicalLimb.rotation.normalized.ToString();
 		public List<TransformData> VirtualLimbs => limb.virtualLimb.ConvertAll(vlimb => new TransformData(vlimb));
 
 		public PhysicalLimbData(Limb l) => limb = l;
@@ -48,8 +53,7 @@ namespace VHToolkit.Logging {
 		public List<TransformData> Targets => script.scene.targets.ConvertAll(t => new TransformData(t));
 		public TransformData PhysicalTarget => (script.scene.physicalTarget == null) ? null : new(script.scene.physicalTarget);
 		public TransformData VirtualTarget => (script.scene.virtualTarget == null) ? null : new(script.scene.virtualTarget);
-		public string StrategyDirection => script.scene.forwardTarget.ToString();
-
+		public string StrategyDirection => (script.scene.forwardTarget == null) ? null : script.scene.forwardTarget.ToString();
 
 		public JsonRedirectionData(Interaction script) {
 			this.script = script;
