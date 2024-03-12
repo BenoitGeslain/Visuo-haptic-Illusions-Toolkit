@@ -18,22 +18,22 @@ MonoBehaviour:
   VerticalAngles:
     up: 4.48
     down: -4.4
-  Gain:
+  DepthGain:
     forward: 0
     backward: 0
   RedirectionBuffer: 0.1
-  redirectionLateness: 0
-  controlPoint: {x: 0, y: 0}
+  RedirectionLateness: 0
+  ControlPoint: {x: 0, y: 0}
   GoGoCoefficient: 1
   GoGoActivationDistance: 0.167
   ResetRedirectionCoeff: 0.087
   RotationalError: 0.5
-  RotationThreshold: 0
+  RotationalThreshold: 0
   WalkingThreshold: 0.2
   DampeningDistanceThreshold: 1.25
   DampeningRange: 1.57
   SmoothingFactor: 0.2
-  steerToOrbitRadius: 5
+  SteerToOrbitRadius: 5
   OverTimeRotation: 0.2
   GainsTranslational: {x: 1, y: 1, z: 1}
   GainsRotational:

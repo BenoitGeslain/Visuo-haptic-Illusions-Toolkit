@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 using UnityEngine;
 
-using VHToolkit.Redirection;
 using VHToolkit.Redirection.WorldRedirection;
 
 namespace VHToolkit.Demo {
@@ -18,8 +16,8 @@ namespace VHToolkit.Demo {
 		[SerializeField] private List<Transform> paintingReferences;
 		[Range(0, 360)]
 		[SerializeField] private float redirectionAmount;
-		[SerializeField] private Transform start, end;
-		private float NormalizedDistance => Mathf.InverseLerp(start.position.z, end.position.z, UserHead.position.z);
+		// [SerializeField] private Transform start, end;
+		// private float NormalizedDistance => Mathf.InverseLerp(start.position.z, end.position.z, UserHead.position.z);
 
 		private void Start() => redirectionScript = GetComponent<WorldRedirection>();
 
