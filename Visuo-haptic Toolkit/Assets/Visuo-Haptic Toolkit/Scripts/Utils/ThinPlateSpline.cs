@@ -4,105 +4,101 @@ using VHToolkit;
 using System;
 using MathNet.Numerics.LinearAlgebra;
 using System.Collections.Generic;
-using MathNet.Numerics;
-using System.Runtime.InteropServices;
 
 
 namespace VHToolkit {
-    public static class ThinPlateSpline {
-        // The notation follows [Eberly 96, Thin-Plate Splines] at https://www.geometrictools.com/Documentation/ThinPlateSplines.pdf.
-        static float GreenFunction2D(float distance) => (distance == 0f) ? 0f : distance * distance * MathF.Log(distance);
+	public static class ThinPlateSpline {
+		// The notation follows [Eberly 96, Thin-Plate Splines] at https://www.geometrictools.com/Documentation/ThinPlateSplines.pdf.
+		static float GreenFunction2D(float distance) => (distance == 0f) ? 0f : distance * distance * MathF.Log(distance);
 
-        /// <summary>
-        // Returns f:R^2 -> R satisfying f(s) = t for each pair (s, t) in x.Zip(y).
-        // Among all such functions, f minimizes the energy ∬ ∑ᵢⱼ (∂ᵢ∂ⱼf)².
-        /// </summary>
-        public static Func<Vector2, float> Solve(Vector2[] x, float[] y)
-        {
-            Debug.Assert(x.Length == y.Length);
-            var Mat = Matrix<float>.Build;
 
-            var yAsVec = Vector<float>.Build.DenseOfArray(y);
-            var N = Mat.DenseOfRowArrays(x.Select(xx => new[] { 1, xx.x, xx.y }));
-            var M = Mat.Dense(x.Length, x.Length, (i, j) => GreenFunction2D(Vector2.Distance(x[i], x[j])));
-            // Compute (M + lambda * Id)^-1 only once
-            var Minv = Mat.Dense(x.Length, x.Length, (i, j) => GreenFunction2D(Vector2.Distance(x[i], x[j]))).Inverse();
-            var temp = N.Transpose() * Minv; // Avoid computing this twice
-            var b = (temp * N).Inverse() * temp * yAsVec;
-            var w = Minv * (yAsVec - N * b);
+		/// <summary>
+		// Returns f:R^2 -> R satisfying f(s) = t for each pair (s, t) in x.Zip(y).
+		// Among all such functions, f minimizes the energy  (∑ₖ |f(x[k]) - y[k]|²) + λ ∬ ∑ᵢⱼ (∂ᵢ∂ⱼf)².
+		/// </summary>
 
-            return point => x.Select(xx => Vector2.Distance(xx, point)).ScalarProduct(w) + b[0] + b[1] * point.x + b[2] * point.y;
-        }
+		public static Func<Vector2, float> SolveSmoothed(Vector2[] x, float[] y, float lambda) {
+			Debug.Assert(x.Length == y.Length);
+			Debug.Assert(lambda >= 0);
+			var Mat = Matrix<float>.Build;
 
-        /// <summary>
-        // Returns f:R^2 -> R satisfying f(s) = t for each pair (s, t) in x.Zip(y).
-        // Among all such functions, f minimizes the energy  (∑ₖ |f(x[k]) - y[k]|²) + λ ∬ ∑ᵢⱼ (∂ᵢ∂ⱼf)².
-        /// </summary>
+			var yAsVec = Vector<float>.Build.DenseOfArray(y);
+			var N = Mat.DenseOfRowArrays(x.Select(xx => new[] { 1, xx.x, xx.y }));
+			// Compute (M + lambda * Id)^-1 only once
+			var Minv = (Mat.Dense(x.Length, x.Length, (i, j) => GreenFunction2D(Vector2.Distance(x[i], x[j]))) + lambda * Mat.DenseIdentity(x.Length)).Inverse();
+			var temp = N.Transpose() * Minv; // Avoid computing this twice
+			var b = (temp * N).Inverse() * temp * yAsVec;
+			var w = Minv * (yAsVec - N * b);
 
-        public static Func<Vector2, float> SolveSmoothed(Vector2[] x, float[] y, float lambda) {
-            Debug.Assert(x.Length == y.Length);
-            Debug.Assert(lambda >= 0);
-            var Mat = Matrix<float>.Build;
+			return point => x.Select(xx => Vector2.Distance(xx, point)).ScalarProduct(w) + b[0] + b[1] * point.x + b[2] * point.y;
+		}
 
-            var yAsVec = Vector<float>.Build.DenseOfArray(y);
-            var N = Mat.DenseOfRowArrays(x.Select(xx => new[] { 1, xx.x, xx.y }));
-            // Compute (M + lambda * Id)^-1 only once
-            var Minv = (Mat.Dense(x.Length, x.Length, (i, j) => GreenFunction2D(Vector2.Distance(x[i], x[j]))) + lambda * Mat.DenseIdentity(x.Length)).Inverse();
-            var temp = N.Transpose() * Minv; // Avoid computing this twice
-            var b = (temp * N).Inverse() * temp * yAsVec;
-            var w = Minv * (yAsVec - N * b);
+		/// <summary>
+		// Returns f:R^2 -> R satisfying f(s) = t for each pair (s, t) in x.Zip(y).
+		// Among all such functions, f minimizes the energy ∬ ∑ᵢⱼ (∂ᵢ∂ⱼf)².
+		/// </summary>
+		public static Func<Vector2, float> Solve(Vector2[] x, float[] y) => SolveSmoothed(x, y, 0f);
+		public static Func<Vector3, float> SolveSmoothed(Vector3[] x, float[] y, float lambda) {
+			Debug.Assert(x.Length == y.Length);
+			Debug.Assert(lambda >= 0);
+			// Compared with the 2D case, the 3D Green function is the distance itself, thence inlined
+			var Mat = Matrix<double>.Build;
 
-            return point => x.Select(xx => Vector2.Distance(xx, point)).ScalarProduct(w) + b[0] + b[1] * point.x + b[2] * point.y;
-        }
+			var yAsVec = Vector<double>.Build.DenseOfArray(Array.ConvertAll(y, x => (double)x));
+			var N = Mat.DenseOfRowArrays(x.Select(xx => new[] { 1d, xx.x, xx.y, xx.z }));
+			Debug.Log($"Matrix N is {N.ToMatrixString()}");
+			var M = Mat.Dense(x.Length, x.Length, (i, j) => Vector3.Distance(x[i], x[j])) + lambda * Mat.DenseIdentity(x.Length);
+			var detM = M.Determinant();
+			Debug.Log($"Determinant of M is {detM}");
+			var Mnormalized = M / Math.Pow(detM, 1d / x.Length);
+			var Minv = M.Inverse();
+			Debug.Log($"Determinant of Minv is {Minv.Determinant()}");
+			var temp = N.Transpose() * Minv; // Avoid computing this twice
+			var b = (N.Transpose() * (Minv * N)).Solve(temp * yAsVec);
+			//			var b = (N.Transpose() * (Minv * N)).Inverse() * temp * yAsVec;
+			var bAsFloat = b.Select(x => (float)x).ToArray();
+			var w = (Minv * (yAsVec - N * b));
+			var wAsFloat = w.Select(x => (float)x);
+			Debug.Log($"b is {String.Join(",", b)}");
+			return point => x.Select(xx => Vector3.Distance(xx, point)).ScalarProduct(wAsFloat) + bAsFloat[0] + bAsFloat[1] * point.x + bAsFloat[2] * point.y + bAsFloat[3] * point.z;
+		}
+		public static Func<Vector3, float> Solve(Vector3[] x, float[] y) => SolveSmoothed(x, y, 0f);
 
-        public static Func<Vector3, float> Solve(Vector3[] x, float[] y) {
-            Debug.Assert(x.Length == y.Length);
-            // Compared with the 2D case, the 3D Green function is the distance itself, thence inlined
-            var Mat = Matrix<float>.Build;
+		private static float ScalarProduct(this IEnumerable<float> first, IEnumerable<float> second) =>
+			first.Zip(second, (a, b) => a * b).Sum();
 
-            var yAsVec = Vector<float>.Build.DenseOfArray(y);
-            var N = Mat.DenseOfRowArrays(x.Select(xx => new[] { 1, xx.x, xx.y, xx.z }));
-            var Minv = Mat.Dense(x.Length, x.Length, (i, j) => Vector3.Distance(x[i], x[j])).Inverse();
-            var temp = N.Transpose() * Minv; // Avoid computing this twice
-            var b = (temp * N).Inverse() * temp * yAsVec;
-            var w = Minv * (yAsVec - N * b);
-            return point => x.Select(xx => Vector3.Distance(xx, point)).ScalarProduct(w) + b[0] + b[1] * point.x + b[2] * point.y + b[3] * point.z;
-        }
+		// See e.g. Rohit Saboo's PhD thesis, eqs (3.2) - (3.3)
+		// Warning: no diffeomorphism guaranty
+		// Returns f:R^3 -> R^3 satisfying f(s) = t for each pair (s, t) in x.Zip(y).
+		// Each coordinate component fₖ, 0 ≤ k ≤ 2, minimizes the energy ∭ ∑ᵢⱼ (∂ᵢ∂ⱼfₖ)².
 
-        public static Func<Vector3, float> SolveSmoothed(Vector3[] x, float[] y, float lambda) {
-            Debug.Assert(x.Length == y.Length);
-            Debug.Assert(lambda >= 0);
 
-            var Mat = Matrix<float>.Build;
+		public static Func<Vector3, Vector3> SabooSmoothedDisplacementField(Vector3[] x, Vector3[] y, float lambda, bool rescale = false) {
+			Debug.Assert(x.Length == y.Length);
+			Debug.Assert(lambda >= 0);
+			Vector3 minima, maxima, diff;
+			if (rescale) {
+				var bounds = GeometryUtility.CalculateBounds(x.Concat(y).ToArray(), Matrix4x4.identity);
+				Debug.Log($"Bounds are {bounds.min} to {bounds.max}");
+				minima = bounds.min;
+				maxima = bounds.max;
+				diff = maxima - minima;
+				var scale = new Vector3(1 / diff.x, 1 / diff.y, 1 / diff.z);
+				x = x.Select(xx => xx - minima).Select(xx => new Vector3(xx.x / diff.x, xx.y / diff.y, xx.z / diff.z)).ToArray();
+				y = y.Select(xx => xx - minima).Select(xx => new Vector3(xx.x / diff.x, xx.y / diff.y, xx.z / diff.z)).ToArray();
+				var newBounds = GeometryUtility.CalculateBounds(x.Concat(y).ToArray(), Matrix4x4.identity);
+				Debug.Log($"New bounds are {newBounds.min} {newBounds.max}");
+				var componentsRescaled = Enumerable.Range(0, 3).Select(i => SolveSmoothed(x, Array.ConvertAll(y, yy => yy[i]), lambda)).ToArray();
+				return point => new(
+					diff.x * componentsRescaled[0](point) + minima.x,
+					diff.y * componentsRescaled[1](point) + minima.y,
+					diff.z * componentsRescaled[2](point) + minima.z);
+			}
+			var components = Enumerable.Range(0, 3).Select(i => SolveSmoothed(x, Array.ConvertAll(y, yy => yy[i]), lambda)).ToArray();
+			// Todo handle rescale here
+			return point => new(components[0](point), components[1](point), components[2](point));
+		}
 
-            var yAsVec = Vector<float>.Build.DenseOfArray(y);
-            var N = Mat.DenseOfRowArrays(x.Select(xx => new[] { 1, xx.x, xx.y, xx.z }));
-            var Minv = (Mat.Dense(x.Length, x.Length, (i, j) => Vector3.Distance(x[i], x[j])) + lambda * Mat.DenseIdentity(x.Length)).Inverse();
-            var temp = N.Transpose() * Minv; // Avoid computing this twice
-            var b = (temp * N).Inverse() * temp * yAsVec;
-            var w = Minv * (yAsVec - N * b);
-            return point => x.Select(xx => Vector3.Distance(xx, point)).ScalarProduct(w) + b[0] + b[1] * point.x + b[2] * point.y + b[3] * point.z;
-        }
-
-        private static float ScalarProduct(this IEnumerable<float> first, IEnumerable<float> second) =>
-            first.Zip(second, (a, b) => a * b).Sum();
-
-        // See e.g. Rohit Saboo's PhD thesis, eqs (3.2) - (3.3)
-        // Warning: no diffeomorphism guaranty
-        // Returns f:R^3 -> R^3 satisfying f(s) = t for each pair (s, t) in x.Zip(y).
-        // Each coordinate component fₖ, 0 ≤ k ≤ 2, minimizes the energy ∭ ∑ᵢⱼ (∂ᵢ∂ⱼfₖ)².
-        public static Func<Vector3, Vector3> SabooDisplacementField(Vector3[] x, Vector3[] y) {
-            Debug.Assert(x.Length == y.Length);
-            var components = Enumerable.Range(0, 3).Select(i => Solve(x, Array.ConvertAll(y, yy => yy[i]))).ToArray();
-            return point => new(components[0](point), components[1](point), components[2](point));
-        }
-
-        public static Func<Vector3, Vector3> SabooSmoothedDisplacementField(Vector3[] x, Vector3[] y, float lambda) {
-            Debug.Assert(x.Length == y.Length);
-            Debug.Assert(lambda >= 0);
-            var components = Enumerable.Range(0, 3).Select(i => SolveSmoothed(x, Array.ConvertAll(y, yy => yy[i]), lambda)).ToArray();
-
-            return point => new(components[0](point), components[1](point), components[2](point));
-        }
-    }
+		public static Func<Vector3, Vector3> SabooDisplacementField(Vector3[] x, Vector3[] y) => SabooSmoothedDisplacementField(x, y, 0f);
+	}
 }
