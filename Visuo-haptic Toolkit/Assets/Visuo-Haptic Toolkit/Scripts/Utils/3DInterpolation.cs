@@ -33,7 +33,7 @@ public class Interpolation : MonoBehaviour {
 				originalGrid[i * n + j].position = new(i * l, 0f, j * l);
 				originalGrid[i * n + j].localScale = new(0.1f, 0.1f, 0.1f);
 
-				targetGrid[i * n + j] = GameObject.CreatePrimitive(PrimitiveType.Sphere).transform;
+				targetGrid[i * n + j] = GameObject.CreatePrimitive(PrimitiveType.Cube).transform;
 				targetGrid[i * n + j].name = $"target Point {i} {j}";
 				targetGrid[i * n + j].parent = target;
 				targetGrid[i * n + j].position = originalGrid[i * n + j].position - 0.2f * Vector3.down + 0.5f * UnityEngine.Random.insideUnitSphere;
@@ -58,6 +58,19 @@ public class Interpolation : MonoBehaviour {
 		var tmp = Array.ConvertAll(interpolatedGrid, g => disp(g.position));
 		Debug.Log(tmp.Length);
 		DrawMeshes(tmp);
+
+		var uv = originalMesh.uv;
+		var colors = new Color[uv.Length];
+		Debug.Log(uv.Length);
+
+		for (var i = 0; i < uv.Length; i++) {
+			colors[i] = Color.Lerp(Color.red, Color.white, uv[i].sqrMagnitude);
+		}
+
+		originalMesh.colors = colors;
+		targetMesh.colors = colors;
+		interpolatedMesh.colors = colors;
+		modifiedMesh.colors = colors;
 	}
 
 	private void DrawMeshes(Vector3[] m) {
@@ -77,19 +90,27 @@ public class Interpolation : MonoBehaviour {
 			}
 			originalMesh.vertices = Array.ConvertAll(originalGrid, p => p.position);
 			originalMesh.triangles = triangles;
+			originalMesh.uv = Array.ConvertAll(originalGrid, p => new Vector2(p.position.x, p.position.z) / ((n - 1) * l));
+			originalMesh.normals = Array.ConvertAll(originalGrid, _ => Vector3.up);
 		});
 
 		targetMesh = targetMeshFilter.mesh;
 		targetMesh.vertices = Array.ConvertAll(targetGrid, p => p.position);
 		targetMesh.triangles = originalMesh.triangles;
+		targetMesh.uv = Array.ConvertAll(targetGrid, p => new Vector2(p.position.x, p.position.z) / ((n - 1) * l));
+		targetMesh.normals = Array.ConvertAll(targetGrid, _ => Vector3.up);
 
 		interpolatedMesh = interpolatedMeshFilter.mesh;
 		interpolatedMesh.vertices = Array.ConvertAll(interpolatedGrid, p => p.position);
 		interpolatedMesh.triangles = originalMesh.triangles;
+		interpolatedMesh.uv = Array.ConvertAll(interpolatedGrid, p => new Vector2(p.position.x, p.position.z) / ((n - 1) * l));
+		interpolatedMesh.normals = Array.ConvertAll(interpolatedGrid, _ => Vector3.up);
 
 		modifiedMesh = modifiedMeshFilter.mesh;
 		modifiedMesh.vertices = m;
-		modifiedMesh.triangles = originalMesh.triangles;
+		modifiedMesh.triangles = modifiedMesh.triangles;
+		modifiedMesh.uv = Array.ConvertAll(m, p => new Vector2(p.x, p.z) / ((n - 1) * l));
+		modifiedMesh.normals = Array.ConvertAll(m, _ => Vector3.up);
 	}
 
 	// private void OnDrawGizmos() {
