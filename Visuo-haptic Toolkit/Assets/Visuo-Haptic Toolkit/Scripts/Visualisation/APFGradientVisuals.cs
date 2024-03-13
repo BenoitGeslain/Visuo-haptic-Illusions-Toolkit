@@ -1,3 +1,4 @@
+using Meta.WitAi;
 using Oculus.Interaction.Input;
 using System;
 using System.Collections;
@@ -30,7 +31,8 @@ public class GradientVisuals : MonoBehaviour
     // public vectors
     [Header("Vector Field")]
     [InspectorName("Enable Vectors")] public bool vectorsEnabled;
-    public bool traitObjet;
+    [InspectorName("Sprite Flèche")] public Sprite vfFleche;
+    [InspectorName("Sprite Warning")] public Sprite vfWarning;
 
     // private general
     private System.Random rand = new System.Random();
@@ -47,11 +49,9 @@ public class GradientVisuals : MonoBehaviour
 
     // private vector
     private GameObject vfPhysicalUser2d;
-    private GameObject[] vfListeGradients;
+    private List<GameObject> vfVectors;
     private GameObject vfPtitGradient;
     private int vfTotalpas;
-    private Sprite vfFleche;
-    private Sprite vfWarning;
 
 
 
@@ -61,19 +61,14 @@ public class GradientVisuals : MonoBehaviour
 
     void Start()
     {
-        InvokeRepeating("CheckOnBools", 3f, 1f);
+        InvokeRepeating(nameof(CheckOnBools), 3f, 1f);
+        hmDensityTable = new float[4096];
+        vfVectors = new();
 
         // vf todo
         vfPhysicalUser2d = GameObject.Find("2duser");
         vfFleche = Resources.Load<Sprite>("gradient/fleche");
         vfWarning = Resources.Load<Sprite>("gradient/warning");
-}
-
-    void Update()
-    {
-        // vf todo
-        if (traitObjet) RaycasttoObstaclesDraw();
-        if (vectorsEnabled) GradientsDraw();
     }
 
     private void Log(string msg)
@@ -103,7 +98,6 @@ public class GradientVisuals : MonoBehaviour
         if (obstaclesCollider.Any())
         {
             repulsiveFunction = MathTools.RepulsivePotential3D(obstaclesCollider);
-            hmDensityTable = new float[4096];
 
             Collider[] allColliders = FindObjectsOfType<Collider>().ToArray();
 
@@ -155,12 +149,51 @@ public class GradientVisuals : MonoBehaviour
                 hmQuad.transform.localScale = new Vector2(width, depth);
             }
 
+
             // vectors
+
+            int r = 12; // todo
+            int i = 0;
+
             if (initVectors)
             {
-                // TODO
-            }
+                for (int z = 0; z < r; z++)
+                {
+                    for (int x = 0; x < r; x++)
+                    {
+                        GameObject vectorObj = new($"vector_{i}");
 
+                        Vector3 position = new(minX + (x * (width/r)) + ((width / r) / 2), 0, minZ + (z * (depth / r)) + (depth / r));
+                        Vector2 gradient = MathTools.Gradient3(repulsiveFunction, position);
+
+                        vectorObj.transform.parent = this.transform;
+                        vectorObj.transform.position = new Vector3(position.x, transform.position.y + 0.001f, position.z);
+                        vectorObj.AddComponent<SpriteRenderer>();
+
+                        if (!float.IsNaN(gradient.x) && !float.IsNaN(gradient.y))
+                        {
+                            float angleRadian = Mathf.Atan2(gradient.y, gradient.x);
+                            float angleEnDegres = angleRadian * Mathf.Rad2Deg;
+                            Quaternion rotation = Quaternion.Euler(-90, 0, angleEnDegres);
+
+                            vectorObj.transform.rotation = rotation;
+                            vectorObj.GetComponent<SpriteRenderer>().sprite = vfFleche;
+                        }
+
+                        else
+                        {
+                            vectorObj.GetComponent<SpriteRenderer>().sprite = vfWarning;
+                        }
+
+                        vfVectors.Add(vectorObj);
+                        i++;
+                    }
+                }
+
+                UpdateVectors();
+                InvokeRepeating("UpdateVectors", 3f, 1f);
+
+            }
         }
         else
         {
@@ -174,6 +207,8 @@ public class GradientVisuals : MonoBehaviour
 
     public void UpdateHeatmap()
     {
+        if (!heatmapEnabled) { return; }
+
         stepX = width / heatmapMeshFineness;
         stepZ = depth / heatmapMeshFineness;
 
@@ -185,8 +220,7 @@ public class GradientVisuals : MonoBehaviour
                 Vector3 position = new Vector3(minX + (x * stepX) + (stepX / 2), 0, minZ + (z * stepZ) + (stepZ / 2));
                 Vector2 gradient = MathTools.Gradient3(repulsiveFunction, position);
 
-                float magnitude = gradient.magnitude;;
-                //float hmValue = Mathf.Clamp(magnitude, 0, clampValue);
+                float magnitude = gradient.magnitude;
                 float hmValue = magnitude;
 
                 hmDensityTable[x + (z * heatmapMeshFineness)] = hmValue;
@@ -204,7 +238,7 @@ public class GradientVisuals : MonoBehaviour
 
     public void CloseHeatmap()
     {
-        CancelInvoke("UpdateHeatmap");
+        CancelInvoke(nameof(UpdateHeatmap));
         GameObject.Destroy(hmQuad);
         hmQuad = null;
         hmRend = null;
@@ -212,111 +246,39 @@ public class GradientVisuals : MonoBehaviour
 
 
     // Vectors
-    // TODO
 
-    void RaycasttoObstaclesDraw()
+    public void UpdateVectors()
     {
-        foreach (Collider obscol in obstaclesCollider)
+        if (!vectorsEnabled) { return; }
+
+        foreach (GameObject obj in vfVectors)
         {
-            Vector3 Closestpt = obscol.ClosestPoint(vfPhysicalUser2d.transform.position);
-            UnityEngine.Debug.DrawLine(vfPhysicalUser2d.transform.position, Closestpt, Color.red, .01f);
-        }
+            Vector2 gradient = MathTools.Gradient3(repulsiveFunction, obj.transform.position);
 
-    }
-
-    void GradientsDraw()
-    {
-
-
-        if (vfListeGradients == null)
-        {
-            vfPtitGradient = Resources.Load<GameObject>("gradient/flechego");
-
-            Vector2 map_size = GameObject.Find("Map").GetComponent<MeshCollider>().bounds.size;
-            Vector2 map_center = GameObject.Find("Map").GetComponent<MeshCollider>().bounds.center;
-            int pas = 1;
-
-            vfTotalpas = (int)System.Math.Floor(map_size.x / pas) * (int)System.Math.Floor(map_size.y / pas);
-            vfListeGradients = new GameObject[vfTotalpas];
-
-
-
-            int i = 0;
-
-            for (int x = (int)(map_center.x - map_size.x / 2) + pas; x < map_center.x + map_size.x / 2; x += pas)
+            if (!float.IsNaN(gradient.x) && !float.IsNaN(gradient.y))
             {
-                for (int y = (int)(map_center.y - map_size.y / 2) + pas; y < map_center.y + map_size.y / 2; y += pas)
-                {
+                float angleRadian = Mathf.Atan2(gradient.y, gradient.x);
+                float angleEnDegres = angleRadian * Mathf.Rad2Deg;
+                Quaternion rotation = Quaternion.Euler(-90, 0, angleEnDegres);
 
-                    Vector2 Gradobject = ApfRedirection.ComputeGradient(new Vector2(x, y));
-
-
-                    vfListeGradients[i] = Instantiate(vfPtitGradient);
-                    vfListeGradients[i].transform.position = new Vector3(x, y, 2);
-
-                    float angleRadian = Mathf.Atan2(Gradobject.y, Gradobject.x);
-                    float angleEnDegres = angleRadian * Mathf.Rad2Deg;
-
-                    if (!float.IsNaN(Gradobject.x) && !float.IsNaN(Gradobject.y))
-                    {
-
-                        Quaternion nouvelleRotation = Quaternion.Euler(0, 0, angleEnDegres);
-
-                        vfListeGradients[i].transform.rotation = nouvelleRotation;
-                        vfListeGradients[i].GetComponent<Renderer>().material.color = new Color(1f * Gradobject.magnitude, 1f * Gradobject.magnitude, 1f);
-
-                    }
-
-                    else
-                    {
-                        vfListeGradients[i].GetComponent<SpriteRenderer>().sprite = vfWarning;
-
-                    }
-                    i++;
-                }
+                obj.transform.rotation = rotation;
+                obj.GetComponent<SpriteRenderer>().sprite = vfFleche;
             }
-        }
 
-        else if (vfTotalpas > 0 && vfListeGradients.Length == vfTotalpas)
-        {
-            foreach (GameObject gradientgameobj in vfListeGradients)
+            else
             {
-                if (gradientgameobj != null)
-                {
-
-                    Vector2 Gradobject = ApfRedirection.ComputeGradient(gradientgameobj.transform.position);
-
-                    float angleRadian = Mathf.Atan2(Gradobject.y, Gradobject.x);
-                    float angleEnDegres = angleRadian * Mathf.Rad2Deg;
-
-                    if (!float.IsNaN(Gradobject.x) && !float.IsNaN(Gradobject.y))
-                    {
-
-                        Quaternion nouvelleRotation = Quaternion.Euler(0, 0, angleEnDegres);
-
-                        gradientgameobj.transform.rotation = nouvelleRotation;
-                        gradientgameobj.GetComponent<Renderer>().material.color = new Color(1f * Gradobject.magnitude, 1f * Gradobject.magnitude, 1f);
-                        gradientgameobj.GetComponent<SpriteRenderer>().sprite = vfFleche;
-                    }
-
-                    else
-                    {
-                        gradientgameobj.GetComponent<SpriteRenderer>().sprite = vfWarning;
-
-                    }
-
-                }
-
-
+                obj.transform.rotation = Quaternion.Euler(-90, 0, 0);
+                obj.GetComponent<SpriteRenderer>().sprite = vfWarning;
             }
-        }
 
+        }
 
     }
 
     private void CloseVectorField()
     {
-        // TODO
+        CancelInvoke(nameof(UpdateHeatmap));
+        vfVectors.Clear();
     }
 
 

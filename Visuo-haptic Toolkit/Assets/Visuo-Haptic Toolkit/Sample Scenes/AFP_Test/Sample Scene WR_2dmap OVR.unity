@@ -2284,10 +2284,11 @@ MonoBehaviour:
   refreshRate: 0
   heatmapEnabled: 1
   heatmapQuadPrefab: {fileID: 3973517385662518282, guid: 437537830c8a19d42a6c39be05919293, type: 3}
-  heatmapMeshFineness: 37
-  clampValue: 0
-  vectorsEnabled: 0
-  traitObjet: 0
+  heatmapMeshFineness: 16
+  clampValue: 5
+  vectorsEnabled: 1
+  vfFleche: {fileID: 21300000, guid: 2cbbd35a3c5fa1f46adb1266b37311b4, type: 3}
+  vfWarning: {fileID: 21300000, guid: c286fef020a28f64e99c39d1fa761d9d, type: 3}
 --- !u!4 &1634858490
 Transform:
   m_ObjectHideFlags: 0
