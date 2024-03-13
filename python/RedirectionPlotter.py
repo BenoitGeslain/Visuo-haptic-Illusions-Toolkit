@@ -51,16 +51,16 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as serversocket:
 
                 ax1.set_ylim((0, 180))
                 ax1.set_title(_('Redirection amounts over time'), y=1.35)
-                ax1.set_ylabel(_('Redirection Applied to User (degrees)'))
+                ax1.set_ylabel(_('Redirection Applied to\nUser (degrees)'))
                 labels=(_('Over time rotation'), _('Rotational'), _('Curvature'))
                 ax1.stackplot(
-                    ys, otrsSum, rsSum, csSum, *zip(*maxSums),
-                    labels=list(labels) + [l + '_max' for l in labels],
-                    colors="rgbymc")
-                # ax1.plot(ys[-60:], hybrid[-60:], color='b', label='Hybrid', linewidth=0.5)
+                    ys, otrsSum, rsSum, csSum,
+                    labels=list(labels),
+                    # ys, *zip(*maxSums),
+                    # labels=list(labels) + [l + '_max' for l in labels],
+                    colors="rgb")
 
-                # ax2.set_xticks(list(map(int, ys[::10])))
-                # ax2.set_xlim((ys[-1] - 30, ys[-1]))
+                ax2.set_ylim((-0.1, 7.5))
                 ax2.set_xlabel(_('Time from start (seconds)'), loc='right')
                 ax2.set_ylabel(_('Redirection per Second (degrees/s)'))
                 for series, color, label in zip([otrs, rs, cs], "rgb", labels):

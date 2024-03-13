@@ -35,6 +35,12 @@ namespace VHToolkit.Logging {
 			this.maxSums[maxComponentIndex] += m;
 			this.time = time;
 		}
+
+		public void Reset() {
+			this.overTime = 0f;
+			this.rotational = 0f;
+			this.curvature = 0f;
+		}
 	}
 	public class Socket : MonoBehaviour {
 		private Scene scene;
@@ -93,6 +99,7 @@ namespace VHToolkit.Logging {
 			if (client != null && client.Connected) {
 				Thread thread = new(() => SendMessage(client, redirectionData));
 				thread.Start();
+				redirectionData.Reset();
 				// redirectionData.overTime = 0f;
 				// redirectionData.rotational = 0f;
 				// redirectionData.curvature = 0f;
