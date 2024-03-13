@@ -974,7 +974,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 200869264966477082, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2164931620210237325, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
       propertyPath: world
@@ -1074,7 +1074,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7088029602675669135, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
       propertyPath: scene.aggregateFunction
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7088029602675669135, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
       propertyPath: scene.strategyDirection.x
@@ -1212,8 +1212,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb5310432868de244b86ddcc9c3aa8c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  filename: C:\Users\ms-vr\projects\unity\toolkit\python\RedirectionPlotter.py
-  pythonPath: C:\Users\ms-vr\anaconda3\envs\plot\python.exe
+  filename: C:\Users\WinHome\projects\Visuo-haptic-Illusions-Toolkit\python\RedirectionPlotter.py
+  pythonPath: C:\Users\WinHome\anaconda3\envs\toolkit\python.exe
 --- !u!1 &398215666
 GameObject:
   m_ObjectHideFlags: 0
@@ -2311,8 +2311,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb5310432868de244b86ddcc9c3aa8c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  filename: C:\Users\ms-vr\projects\unity\toolkit\python\RedirectionPlotter.py
-  pythonPath: C:\Users\ms-vr\anaconda3\envs\plot\python.exe
+  filename: C:\Users\WinHome\projects\Visuo-haptic-Illusions-Toolkit\python\RedirectionPlotter.py
+  pythonPath: C:\Users\WinHome\anaconda3\envs\toolkit\python.exe
 --- !u!114 &844723485
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4250,7 +4250,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 200869264966477082, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2164931620210237325, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
       propertyPath: world
@@ -5457,7 +5457,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 539269559129834611, guid: 0949af27169be084f91744164e13647f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 637648220104366435, guid: 0949af27169be084f91744164e13647f, type: 3}
       propertyPath: m_Layer
@@ -5769,7 +5769,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3259380860131162718, guid: 15f4127072c8c6a428c52f8186744fed, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4075807695914515337, guid: 15f4127072c8c6a428c52f8186744fed, type: 3}
       propertyPath: m_IsActive

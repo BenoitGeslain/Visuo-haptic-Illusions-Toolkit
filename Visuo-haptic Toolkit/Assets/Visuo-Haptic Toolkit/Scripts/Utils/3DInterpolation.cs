@@ -12,13 +12,14 @@ public class Interpolation : MonoBehaviour {
 
 	[SerializeField] private Transform original, target, interpolated, modified;
 
-	private Transform[] originalGrid, targetGrid, interpolatedGrid;
+	private Transform[] originalGrid, targetGrid, interpolatedGrid, modifiedGrid;
 	private MeshFilter originalMeshFilter, targetMeshFilter, interpolatedMeshFilter, modifiedMeshFilter;
 	private Mesh originalMesh, targetMesh, interpolatedMesh, modifiedMesh;
 	private void Start() {
 		originalGrid = new Transform[n * n];
 		targetGrid = new Transform[n * n];
 		interpolatedGrid = new Transform[n * n];
+		modifiedGrid = new Transform[n * n];
 
 		originalMeshFilter = original.GetComponent<MeshFilter>();
 		targetMeshFilter = target.GetComponent<MeshFilter>();
@@ -44,6 +45,12 @@ public class Interpolation : MonoBehaviour {
 				interpolatedGrid[i * n + j].parent = interpolated;
 				interpolatedGrid[i * n + j].position = new(i * l, 2f, j * l);
 				interpolatedGrid[i * n + j].localScale = new(0.1f, 0.1f, 0.1f);
+
+				modifiedGrid[i * n + j] = GameObject.CreatePrimitive(PrimitiveType.Cube).transform;
+				modifiedGrid[i * n + j].name = $"Modified Point {i} {j}";
+				modifiedGrid[i * n + j].parent = modified;
+				modifiedGrid[i * n + j].position = new(0f, 0f, 0f);
+				modifiedGrid[i * n + j].localScale = new(0.1f, 0.1f, 0.1f);
 			}
 		}
 	}
@@ -57,6 +64,7 @@ public class Interpolation : MonoBehaviour {
 			);
 		var tmp = Array.ConvertAll(interpolatedGrid, g => disp(g.position));
 		Debug.Log(tmp.Length);
+		Array.ForEach(tmp, t => Debug.Log(t));
 		DrawMeshes(tmp);
 
 		var uv = originalMesh.uv;
@@ -111,6 +119,9 @@ public class Interpolation : MonoBehaviour {
 		modifiedMesh.triangles = modifiedMesh.triangles;
 		modifiedMesh.uv = Array.ConvertAll(m, p => new Vector2(p.x, p.z) / ((n - 1) * l));
 		modifiedMesh.normals = Array.ConvertAll(m, _ => Vector3.up);
+		for (int i = 0; i < m.Length; i++) {
+			modifiedGrid[i].position = m[i];
+		}
 	}
 
 	// private void OnDrawGizmos() {
