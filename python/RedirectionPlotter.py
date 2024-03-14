@@ -37,6 +37,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as serversocket:
     with serversocket.accept()[0] as clientsocket:
         with clientsocket.makefile() as file:
             for line in file:
+                print(line)
                 if not plt.get_fignums():
                     break
                 d = json.loads(line)
@@ -60,7 +61,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as serversocket:
                     # labels=list(labels) + [l + '_max' for l in labels],
                     colors="rgb")
 
-                ax2.set_ylim((-0.1, 7.5))
+                # ax2.set_ylim((-0.1, 7.5))
                 ax2.set_xlabel(_('Time from start (seconds)'), loc='right')
                 ax2.set_ylabel(_('Redirection per Second (degrees/s)'))
                 for series, color, label in zip([otrs, rs, cs], "rgb", labels):

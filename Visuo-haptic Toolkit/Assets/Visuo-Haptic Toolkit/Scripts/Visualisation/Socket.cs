@@ -97,7 +97,8 @@ namespace VHToolkit.Logging {
 		}
 		private void StartSendingMessages() {
 			if (client != null && client.Connected) {
-				Thread thread = new(() => SendMessage(client, redirectionData));
+				string json = JsonUtility.ToJson(redirectionData);
+				Thread thread = new(() => SendMessage(client, json));
 				thread.Start();
 				redirectionData.Reset();
 				// redirectionData.overTime = 0f;
@@ -106,8 +107,8 @@ namespace VHToolkit.Logging {
 			}
 		}
 
-		private void SendMessage(TcpClient client, WorldRedirectionData redirectionData) {
-			string json = JsonUtility.ToJson(redirectionData);
+		private void SendMessage(TcpClient client, string json) {
+
 			// Translate the passed message into ASCII and store it as a Byte array.
 			Byte[] messageBytes = System.Text.Encoding.ASCII.GetBytes(json + '\n');
 
