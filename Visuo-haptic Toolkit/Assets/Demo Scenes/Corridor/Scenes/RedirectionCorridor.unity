@@ -256,7 +256,7 @@ GameObject:
   - component: {fileID: 176750518}
   - component: {fileID: 176750520}
   m_Layer: 10
-  m_Name: Reference Picasso
+  m_Name: Reference Portrait of Dora Maar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2162,7 +2162,7 @@ GameObject:
   - component: {fileID: 858473993}
   - component: {fileID: 858473992}
   m_Layer: 10
-  m_Name: Picasso
+  m_Name: Portrait of Dora Maar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3054,7 +3054,7 @@ GameObject:
   - component: {fileID: 1472388565}
   - component: {fileID: 1472388564}
   m_Layer: 10
-  m_Name: Picasso Modified
+  m_Name: Portrait of Dora Maar Modified
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3296,7 +3296,7 @@ GameObject:
   - component: {fileID: 1552751758}
   - component: {fileID: 1552751757}
   m_Layer: 10
-  m_Name: Der Turm der blauen Pferde Modified TODO
+  m_Name: Der Turm der blauen Pferde Modified
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
