@@ -14,10 +14,7 @@ namespace VHToolkit.Logging {
 		private readonly Transform obj;
 		public string Position => obj != null ? obj.position.ToString() : "NULL";
 		public string Orientation => obj != null ? obj.rotation.normalized.ToString() : "NULL";
-		public TransformData(Transform obj)
-        {
-			// Debug.Log(this.obj);
-			// Debug.Log(this.obj.name);
+		public TransformData(Transform obj) {
 			this.obj = obj;
         }
     }

@@ -150,8 +150,6 @@ namespace VHToolkit.Redirection.WorldRedirection {
 				scene.enableHybridRotational ? Razzaque2001Rotational.GetRedirection(scene) : 0,
 				scene.enableHybridCurvature ? Razzaque2001Curvature.GetRedirection(scene) : 0
 			);
-			Debug.Log($"{scene.enableHybridOverTime}, {scene.enableHybridRotational}, {scene.enableHybridCurvature}");
-			Debug.Log($"{Razzaque2001OverTimeRotation.GetRedirection(scene)}, {Razzaque2001Rotational.GetRedirection(scene)}, {Razzaque2001Curvature.GetRedirection(scene)}");
 
 			if (scene.applyDampening) {
 				angle = ApplyDampening(scene, angle);
@@ -162,7 +160,6 @@ namespace VHToolkit.Redirection.WorldRedirection {
 
 			scene.previousRedirection = angle;
 			scene.RotateVirtualHeadY(angle);
-			Debug.Log($"I am redirecting in the amount of {angle}");
 
 			CopyHeadAndLimbTransform(scene);
 		}
