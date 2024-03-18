@@ -20,7 +20,7 @@ namespace VHToolkit.Visualisation {
 		[SerializeField] private int orbitResolution;
 
 		// Calling OnEnable instead of Start to support recompilation during play
-		private void OnEnable() {
+		private void Start() {
 			WRMainScript = GetComponent<WorldRedirection>();
 			targets = new List<Transform>();
 		}

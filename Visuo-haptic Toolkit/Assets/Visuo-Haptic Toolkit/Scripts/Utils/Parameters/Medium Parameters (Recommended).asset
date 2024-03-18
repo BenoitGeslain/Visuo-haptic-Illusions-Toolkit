@@ -28,17 +28,17 @@ MonoBehaviour:
   GoGoActivationDistance: 0.167
   ResetRedirectionCoeff: 0.087
   RotationalError: 0.5
-  RotationalThreshold: 0
+  RotationalThreshold: 0.1
   WalkingThreshold: 0.2
   DampeningDistanceThreshold: 1.25
   DampeningRange: 1.57
   SmoothingFactor: 0.2
   SteerToOrbitRadius: 5
-  OverTimeRotation: 0.2
+  OverTimeRotation: 0.1
   GainsTranslational: {x: 1, y: 1, z: 1}
   GainsRotational:
-    same: 1.05
-    opposite: 0.975
+    same: 1.04
+    opposite: 0.98
   CurvatureRadius: 15
   HybridWeights: {x: 1, y: 1, z: 1}
   a: {x: 0, y: 0, z: 0}

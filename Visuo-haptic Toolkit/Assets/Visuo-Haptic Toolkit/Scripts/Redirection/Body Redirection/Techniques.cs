@@ -100,9 +100,9 @@ namespace VHToolkit.Redirection.BodyRedirection {
 	public class Cheng2017Sparse : BodyRedirectionTechnique {
 
 		public override void Redirect(Scene scene) {
-			List<float> alpha = scene.GetPhysicalHandOriginDistance().Zip(scene.GetPhysicalHandTargetDistance(), (s, p) => s / (s + p) * BumpFunction(s, scene.parameters.RedirectionBuffer)).ToList();
+			var alpha = scene.GetPhysicalHandOriginDistance().Zip(scene.GetPhysicalHandTargetDistance(), (s, p) => s / (s + p) * BumpFunction(s, scene.parameters.RedirectionBuffer));
 			var physicalToVirtual = scene.virtualTarget.position - scene.physicalTarget.position;
-			scene.LimbRedirection = alpha.ConvertAll(a => a * physicalToVirtual);
+			scene.LimbRedirection = alpha.Select(a => a * physicalToVirtual).ToList();
 		}
 	}
 
@@ -122,8 +122,10 @@ namespace VHToolkit.Redirection.BodyRedirection {
 			float D = Vector3.Distance(scene.physicalTarget.position, scene.origin.position);
 			float a2 = scene.parameters.RedirectionLateness / (D * D);
 			float[] coeffsByIncreasingPower = { 1f, -1f / D - a2 * D, a2 }; // {a0, a1, a2}
-			List<float> ratio = scene.GetPhysicalHandTargetDistance().Zip(scene.GetPhysicalHandOriginDistance(), (s, p) => BumpFunction(p, scene.parameters.RedirectionBuffer) * (float)coeffsByIncreasingPower.Select((a, i) => a * Math.Pow(s, i)).Sum()).ToList();
-			scene.LimbRedirection = ratio.ConvertAll(r => r * (scene.virtualTarget.position - scene.physicalTarget.position));
+            scene.LimbRedirection = scene.GetPhysicalHandTargetDistance()
+				.Zip(scene.GetPhysicalHandOriginDistance(), (s, p) => BumpFunction(p, scene.parameters.RedirectionBuffer) * coeffsByIncreasingPower.Select((a, i) => a * Mathf.Pow(s, i)).Sum())
+				.Select(r => r * (scene.virtualTarget.position - scene.physicalTarget.position))
+				.ToList();
 		}
 	}
 
@@ -137,10 +139,10 @@ namespace VHToolkit.Redirection.BodyRedirection {
 
 		public override void Redirect(Scene scene) {
 			// Offset the head position by 0.2m to approximate the chest position then compute the chest to hand vector
-			List<Vector3> chestToHand = scene.limbs.ConvertAll(limb => limb.physicalLimb.position + 0.2f * Vector3.up - scene.physicalHead.position);
-			scene.LimbRedirection = chestToHand.ConvertAll(d => d.magnitude > scene.parameters.GoGoActivationDistance
+			var chestToHand = scene.limbs.Select(limb => limb.physicalLimb.position + 0.2f * Vector3.up - scene.physicalHead.position);
+			scene.LimbRedirection = chestToHand.Select(d => d.magnitude > scene.parameters.GoGoActivationDistance
 				? scene.parameters.GoGoCoefficient * Mathf.Pow(d.magnitude - scene.parameters.GoGoActivationDistance, 2) * d.normalized
-				: Vector3.zero);
+				: Vector3.zero).ToList();
 		}
 	}
 

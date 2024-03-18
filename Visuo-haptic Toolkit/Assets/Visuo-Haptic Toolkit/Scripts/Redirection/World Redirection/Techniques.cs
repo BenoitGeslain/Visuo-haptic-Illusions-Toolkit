@@ -140,6 +140,12 @@ namespace VHToolkit.Redirection.WorldRedirection {
 		public static Razzaque2001Hybrid Sum() => new((a, b, c) => a + b + c);
 
 		/// <summary>
+		/// Static factory method for using Mean-aggregation.
+		/// </summary>
+		/// <param name="aggregate"></param>
+		public static Razzaque2001Hybrid Mean() => new((a, b, c) => (a + b + c)/3);
+
+		/// <summary>
 		/// Static factory method for using weighted-sum-aggregation.
 		/// </summary>
 		public static Razzaque2001Hybrid Weighted(float x, float y, float z) => new((a, b, c) => a * x + b * y + c * z);

@@ -27,7 +27,7 @@ namespace VHToolkit.Redirection.BodyRedirection {
 		readonly HashSet<string> noThresholdTechniques = new() { nameof(Poupyrev1996GoGo), nameof(Lecuyer2000Swamp), nameof(Samad2019Weight) };
 
 
-		private void OnEnable() {
+		private void Start() {
 
 			technique = serializedObject.FindProperty("_technique");
 			techniqueInstance = serializedObject.FindProperty("techniqueInstance");
@@ -94,28 +94,28 @@ namespace VHToolkit.Redirection.BodyRedirection {
 
 			// Hides redirectionLateness and controlpoint fields if the technique is not Geslain2022Polynom
 			if (techniqueName == nameof(Geslain2022Polynom)) {
-				EditorGUILayout.PropertyField(parametersObject.FindProperty("redirectionLateness"), new GUIContent("Redirection Lateness (a2)"));
-				EditorGUILayout.PropertyField(parametersObject.FindProperty("controlPoint"), new GUIContent("ControlPoint"));
+				MakePropertyField(parametersObject.FindProperty("redirectionLateness"), "Redirection Lateness (a2)");
+				MakePropertyField(parametersObject.FindProperty("controlPoint"), "ControlPoint");
 			} else if (techniqueName == nameof(Poupyrev1996GoGo)) {
-				EditorGUILayout.PropertyField(parametersObject.FindProperty("GoGoCoefficient"), new GUIContent("Coefficient"));
-				EditorGUILayout.PropertyField(parametersObject.FindProperty("GoGoActivationDistance"), new GUIContent("Activation Distance"));
+				MakePropertyField(parametersObject.FindProperty("GoGoCoefficient"), "Coefficient");
+				MakePropertyField(parametersObject.FindProperty("GoGoActivationDistance"), "Activation Distance");
 			}
 
 			if (bufferTechniques.Contains(techniqueName)) {
-				EditorGUILayout.PropertyField(parametersObject.FindProperty("RedirectionBuffer"), new GUIContent("Redirection Buffer"));
+				MakePropertyField(parametersObject.FindProperty("RedirectionBuffer"), "Redirection Buffer");
 			}
 
 			if (noThresholdTechniques.Contains(techniqueName)) {
 				if (techniqueName == nameof(Lecuyer2000Swamp)) {
-					EditorGUILayout.PropertyField(parametersObject.FindProperty("SwampSquareLength"), new GUIContent("Square Side Length"));
-					EditorGUILayout.PropertyField(parametersObject.FindProperty("SwampCDRatio"), new GUIContent("C/D Ratio"));
+					MakePropertyField(parametersObject.FindProperty("SwampSquareLength"), "Square Side Length");
+					MakePropertyField(parametersObject.FindProperty("SwampCDRatio"), "C/D Ratio");
 				}
 			} else {
 				EditorGUILayout.Space(5);
 				EditorGUILayout.LabelField("Threshold Parameters", EditorStyles.largeLabel);
-				EditorGUILayout.PropertyField(parametersObject.FindProperty("HorizontalAngles"), new GUIContent("Max Horizontal Angles"));
-				EditorGUILayout.PropertyField(parametersObject.FindProperty("VerticalAngles"), new GUIContent("Max Vertical Angles"));
-				EditorGUILayout.PropertyField(parametersObject.FindProperty(nameof(ParametersToolkit.DepthGain)), new GUIContent("Max Depth Gain"));
+				MakePropertyField(parametersObject.FindProperty(nameof(ParametersToolkit.HorizontalAngles)), "Max Horizontal Angles");
+				MakePropertyField(parametersObject.FindProperty(nameof(ParametersToolkit.VerticalAngles)), "Max Vertical Angles");
+				MakePropertyField(parametersObject.FindProperty(nameof(ParametersToolkit.DepthGain)), "Max Depth Gain");
 			}
 
 			serializedObject.ApplyModifiedProperties();

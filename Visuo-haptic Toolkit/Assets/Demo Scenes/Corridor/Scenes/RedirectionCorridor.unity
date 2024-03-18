@@ -973,7 +973,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 200869264966477082, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2164931620210237325, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
       propertyPath: world
@@ -1073,7 +1073,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7088029602675669135, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
       propertyPath: scene.aggregateFunction
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7088029602675669135, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
       propertyPath: scene.strategyDirection.x
@@ -1081,7 +1081,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7088029602675669135, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
       propertyPath: scene.enableHybridOverTime
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7088029602675669135, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
       propertyPath: scene.enableHybridCurvature
@@ -1171,6 +1171,8 @@ MonoBehaviour:
   - {fileID: 1432806454}
   - {fileID: 1678945701}
   redirectionAmount: 180
+  start: {fileID: 1340611833}
+  end: {fileID: 812680853}
 --- !u!114 &358983261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1206,7 +1208,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 358983253}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bb5310432868de244b86ddcc9c3aa8c1, type: 3}
   m_Name: 
@@ -1918,8 +1920,8 @@ Transform:
   m_LocalScale: {x: 1.4499996, y: 1, z: 0.20100006}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1340611833}
   - {fileID: 812680853}
+  - {fileID: 1340611833}
   m_Father: {fileID: 1670530968}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &646063777
@@ -2099,7 +2101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25307f3a3d4e82248a470e55b5302b54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UserHead: {fileID: 141383211}
+  UserHead: {fileID: 1915547540}
   redirectionApplied: 0
   paintingReferences:
   - {fileID: 176750517}
@@ -2107,6 +2109,8 @@ MonoBehaviour:
   - {fileID: 1432806454}
   - {fileID: 1678945701}
   redirectionAmount: 180
+  start: {fileID: 1340611833}
+  end: {fileID: 812680853}
 --- !u!114 &844723481
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4112,7 +4116,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 200869264966477082, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2164931620210237325, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
       propertyPath: world
@@ -4213,6 +4217,10 @@ PrefabInstance:
     - target: {fileID: 7088029602675669135, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
       propertyPath: scene.strategyDirection.x
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7088029602675669135, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
+      propertyPath: scene.enableHybridOverTime
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7088029602675669135, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
       propertyPath: scene.targets.Array.data[0]
@@ -5158,7 +5166,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 539269559129834611, guid: 0949af27169be084f91744164e13647f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7692102248907039940, guid: 0949af27169be084f91744164e13647f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5268,7 +5276,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3259380860131162718, guid: 15f4127072c8c6a428c52f8186744fed, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4075807695914515337, guid: 15f4127072c8c6a428c52f8186744fed, type: 3}
       propertyPath: m_IsActive

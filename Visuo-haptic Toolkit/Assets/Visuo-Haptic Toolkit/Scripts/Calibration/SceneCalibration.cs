@@ -24,7 +24,7 @@ namespace VHToolkit.Calibration {
 		[SerializeField] private Transform[] virtualTrackers;
 
 		/// Offset in the (left/right, up/down, forward/backward direction)
-		[SerializeField] private Vector3 forwardOffset;	
+		[SerializeField] private Vector3 forwardOffset;
 
 		private InputDevice hand;
 		[SerializeField] private InputDeviceCharacteristics characteristics = InputDeviceCharacteristics.Right;
@@ -35,7 +35,7 @@ namespace VHToolkit.Calibration {
 
 		private readonly string loggingPath = "LoggedData\\";
 
-		private void OnEnable() {
+		private void Start() {
 			state = CalibrationState.None;
 			points = new Vector3[virtualTrackers.Length];
 		}

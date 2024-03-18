@@ -45,6 +45,7 @@ namespace VHToolkit.Redirection {
 	public enum HybridAggregate {
 		Max,
 		Sum,
+		Mean,
 		WeightedSum
 	}
 
@@ -53,7 +54,7 @@ namespace VHToolkit.Redirection {
 
 		public ParametersToolkit parameters;
 
-		private void OnEnable() {
+		private void Start() {
             if (Instance == null || Instance == this) {
                 Instance = this;
                 // DontDestroyOnLoad(gameObject);

@@ -22,7 +22,7 @@ namespace VHToolkit.Redirection.WorldRedirection {
 		readonly HashSet<string> strategyTechniques = new() { "Razzaque2001OverTimeRotation", "Razzaque2001Rotational", "Razzaque2001Curvature", "Razzaque2001Hybrid" };
 		readonly HashSet<string> targetsStrategies = new() { "SteerToCenter", "SteerToMultipleTargets" };
 
-		private void OnEnable() {
+		private void Start() {
 			technique = serializedObject.FindProperty("_technique");
 			strategy = serializedObject.FindProperty("strategy");
 
@@ -89,24 +89,26 @@ namespace VHToolkit.Redirection.WorldRedirection {
 
 			EditorGUILayout.Space(2);
 			if (techniqueName == "Razzaque2001OverTimeRotation") {
+				MakePropertyField(parametersObject.FindProperty("RotationalError"), "Rotational Error");
 				MakePropertyField(parametersObject.FindProperty("OverTimeRotation"), "Over Time Rotation Rate");
 			}
 			if (techniqueName == "Razzaque2001Rotational") {
-				MakePropertyField(parametersObject.FindProperty("GainsRotational"), "Rotational Gains");
 				MakePropertyField(parametersObject.FindProperty("RotationalError"), "Rotational Error");
+				MakePropertyField(parametersObject.FindProperty("GainsRotational"), "Rotational Gains");
 				MakePropertyField(parametersObject.FindProperty("RotationalThreshold"), "Rotational Threshold");
 			}
 			if (techniqueName == "Razzaque2001Curvature") {
+				MakePropertyField(parametersObject.FindProperty("RotationalError"), "Rotational Error");
 				MakePropertyField(parametersObject.FindProperty("CurvatureRadius"), "Curvature Radius");
 				MakePropertyField(parametersObject.FindProperty("WalkingThreshold"), "Walking Threshold");
 			}
 			if (techniqueName == "Razzaque2001Hybrid") {
+				MakePropertyField(parametersObject.FindProperty("RotationalError"), "Rotational Error");
 				MakePropertyField(serializedObject.FindProperty("scene.enableHybridOverTime"), "Enable Over Time Rotation");
 				MakePropertyField(parametersObject.FindProperty("OverTimeRotation"), "Over Time Rotation Rate");
 				EditorGUILayout.Space(2);
 				MakePropertyField(serializedObject.FindProperty("scene.enableHybridRotational"), "Enable Rotational");
 				MakePropertyField(parametersObject.FindProperty("GainsRotational"), "Rotational Gains");
-				MakePropertyField(parametersObject.FindProperty("RotationalError"), "Rotational Error");
 				MakePropertyField(parametersObject.FindProperty("RotationalThreshold"), "Rotational Threshold");
 				EditorGUILayout.Space(2);
 				MakePropertyField(serializedObject.FindProperty("scene.enableHybridCurvature"), "Enable Curvature");
@@ -122,6 +124,9 @@ namespace VHToolkit.Redirection.WorldRedirection {
 						break;
 					case HybridAggregate.Sum:
 						script.techniqueInstance = Razzaque2001Hybrid.Sum();
+						break;
+					case HybridAggregate.Mean:
+						script.techniqueInstance = Razzaque2001Hybrid.Mean();
 						break;
 					case HybridAggregate.WeightedSum:
 						MakePropertyField(parametersObject.FindProperty("HybridWeights"), "Hybrid Weights");
