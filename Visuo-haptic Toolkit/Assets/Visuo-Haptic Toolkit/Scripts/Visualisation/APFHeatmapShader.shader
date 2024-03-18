@@ -38,12 +38,11 @@ Shader "Unlit/HeatmapShader"
             fixed4 frag (v2f i) : SV_Target
             {
                 float r,g,b; // red, green, blue
-                int x = (i.uv.x * _UnitsPerSide); // position en X sur le quad
-                int y = (i.uv.y * _UnitsPerSide); // position en Y sur le quad
-                float d = _DensityTable[x+(y*_UnitsPerSide)]; // valeur en position X, Y
+                int x = (i.uv.x * _UnitsPerSide); // x-position on quad
+                int y = (i.uv.y * _UnitsPerSide); // y-position on quad
+                float d = _DensityTable[x+(y*_UnitsPerSide)]; // value at position x, y
 
-                float ratio = 1/_MaxDen;
-                float val = d * ratio;
+                float val = d / _MaxDen;
 
                 if (val < 0.25)
                 {

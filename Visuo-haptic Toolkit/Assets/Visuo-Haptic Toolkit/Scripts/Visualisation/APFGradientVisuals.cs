@@ -1,285 +1,219 @@
-using Meta.WitAi;
-using Oculus.Interaction.Input;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Security.Cryptography;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using VHToolkit;
-using VHToolkit.Redirection;
 
-public class GradientVisuals : MonoBehaviour
-{
+public class GradientVisuals : MonoBehaviour {
 
-    // PROPERTIES //
+	// PROPERTIES //
 
-    // public general
-    public string obstacleTab;
-    public bool verbose;
-    public int refreshRate;
+	// public general
+	public string obstacleTab;
+	public bool verbose;
+	public int refreshRate;
 
-    // public heatmap
-    [Header("Heatmap")]
-    [InspectorName("Enable Heatmap")] public bool heatmapEnabled;
-    public GameObject heatmapQuadPrefab;
-    [Range(1,64)] [Tooltip("The higher the finer")] public int heatmapMeshFineness;
-    [Range(1,10)] public float clampValue = 1;
+	// public heatmap
+	[Header("Heatmap")]
+	[InspectorName("Enable Heatmap")] public bool heatmapEnabled;
+	public GameObject heatmapQuadPrefab;
+	[Range(1, 64)][Tooltip("The higher the finer")] public int heatmapMeshFineness;
+	[Range(1, 10)] public float clampValue = 1;
 
 
-    // public vectors
-    [Header("Vector Field")]
-    [InspectorName("Enable Vectors")] public bool vectorsEnabled;
-    [InspectorName("Sprite Flèche")] public Sprite vfFleche;
-    [InspectorName("Sprite Warning")] public Sprite vfWarning;
+	// public vectors
+	[Header("Vector Field")]
+	[InspectorName("Enable Vectors")] public bool vectorsEnabled;
+	[InspectorName("Arrow Sprite")] public Sprite vfArrow;
+	[InspectorName("Sprite Warning")] public Sprite vfWarning;
 
-    // private general
-    private System.Random rand = new System.Random();
-    private Func<Vector3, float> repulsiveFunction;
-    private bool heatmapStateSave;
-    private bool vectorsStateSave;
-    private float minX, maxX, minZ, maxZ, stepX, stepZ, width, depth;
-    private List<Collider> obstaclesCollider;
+	// private general
+	private Func<Vector3, float> repulsiveFunction;
+	private bool heatmapPreviouslyEnabled;
+	private bool vectorsPreviouslyEnabled;
+	private float stepX, stepZ, width, depth;
+	private Vector3 min, max;
+	private List<Collider> obstaclesCollider;
 
-    // private heatmap
-    private float[] hmDensityTable;
-    private Renderer hmRend;
-    private GameObject hmQuad;
-
-    // private vector
-    private GameObject vfPhysicalUser2d;
-    private List<GameObject> vfVectors;
-    private GameObject vfPtitGradient;
-    private int vfTotalpas;
+	// private heatmap
+	private float[] hmDensityTable;
+	private Renderer hmRenderer;
+	private GameObject hmQuad;
 
+	// private vector
+	private GameObject vfPhysicalUser2d;
+	private List<GameObject> vfVectors;
 
 
-    // FUNCS & SUBS //
 
-    // General
+	// FUNCS & SUBS //
 
-    void Start()
-    {
-        InvokeRepeating(nameof(CheckOnBools), 3f, 1f);
-        hmDensityTable = new float[4096];
-        vfVectors = new();
+	// General
 
-        // vf todo
-        vfPhysicalUser2d = GameObject.Find("2duser");
-        vfFleche = Resources.Load<Sprite>("gradient/fleche");
-        vfWarning = Resources.Load<Sprite>("gradient/warning");
-    }
+	void Start() {
+		InvokeRepeating(nameof(CheckOnBools), 3f, 1f);
+		hmDensityTable = new float[4096];
+		vfVectors = new();
 
-    private void Log(string msg)
-    {
-        if (verbose) UnityEngine.Debug.Log(msg);
-    }
-
-    public void CheckOnBools()
-    {
-        bool hmChanged = heatmapEnabled != heatmapStateSave;
-        bool vfChanged = vectorsEnabled != vectorsStateSave;
+		// vf todo
+		vfPhysicalUser2d = GameObject.Find("2duser");
+		vfArrow = Resources.Load<Sprite>("gradient/fleche");
+		vfWarning = Resources.Load<Sprite>("gradient/warning");
+	}
 
-        if ((hmChanged && heatmapEnabled) || (vfChanged && vectorsEnabled)) InitVisualsTransform(hmChanged && heatmapEnabled, vfChanged && vectorsEnabled);
-        if (hmChanged && !heatmapEnabled) CloseHeatmap();
-        if (vfChanged && !vectorsEnabled) CloseVectorField();
-
-        heatmapStateSave = heatmapEnabled;
-        vectorsStateSave = vectorsEnabled;
-    }
-
-    private void InitVisualsTransform(bool initHeatmap = false, bool initVectors = false)
-    {
-        if (!initHeatmap && !initVectors) return;
-
-        obstaclesCollider = new List<Collider>(GameObject.FindGameObjectsWithTag(obstacleTab).Select(o => o.GetComponent<Collider>()));
-
-        if (obstaclesCollider.Any())
-        {
-            repulsiveFunction = MathTools.RepulsivePotential3D(obstaclesCollider);
-
-            Collider[] allColliders = FindObjectsOfType<Collider>().ToArray();
-
-            maxX = allColliders[0].bounds.max.x;
-            minX = allColliders[0].bounds.min.x;
-            maxZ = allColliders[0].bounds.max.z;
-            minZ = allColliders[0].bounds.min.z;
-
-            foreach (Collider col in allColliders.Skip(1))
-            {
-
-                float iMaxX = col.bounds.max.x;
-                float iMinX = col.bounds.min.x;
-                float iMaxZ = col.bounds.max.z;
-                float iMinZ = col.bounds.min.z;
-
-                if (iMaxX > maxX) maxX = iMaxX;
-                if (iMinX < minX) minX = iMinX;
-                if (iMaxZ > maxZ) maxZ = iMaxZ;
-                if (iMinZ < minZ) minZ = iMinZ;
-
-            }
+	private void Log(string msg) {
+		if (verbose) Debug.Log(msg);
+	}
 
-            width = maxX - minX;
-            depth = maxZ - minZ;
+	public void CheckOnBools() {
+		if ((!heatmapPreviouslyEnabled && heatmapEnabled) || (!vectorsPreviouslyEnabled && vectorsEnabled)) InitVisualsTransform(!heatmapPreviouslyEnabled && heatmapEnabled, !vectorsPreviouslyEnabled && vectorsEnabled);
+		if (heatmapPreviouslyEnabled && !heatmapEnabled) CloseHeatmap();
+		if (vectorsPreviouslyEnabled && !vectorsEnabled) CloseVectorField();
 
-            stepX = width / heatmapMeshFineness;
-            stepZ = depth / heatmapMeshFineness;
-
-            Log($"APF GRADIENT VISUALS INIT : X[{minX}:{maxX}] Z[{minZ}:{maxZ}]");
-            Log($"APF GRADIENT VISUALS INIT : width:{width} height:{depth}");
+		heatmapPreviouslyEnabled = heatmapEnabled;
+		vectorsPreviouslyEnabled = vectorsEnabled;
+	}
 
-            // heatmap
-            if (initHeatmap)
-            {
-                hmQuad = Instantiate(heatmapQuadPrefab, this.transform);
-                hmQuad.transform.position = new Vector3((minX + maxX) / 2, 0f, (minZ + maxZ) / 2);
-                hmQuad.transform.localScale = new Vector2(width, depth);
-                hmQuad.layer = LayerMask.NameToLayer("Visuals");
+	private void InitVisualsTransform(bool initHeatmap = false, bool initVectors = false) {
+		if (!initHeatmap && !initVectors) return;
 
-                hmRend = hmQuad.GetComponent<Renderer>();
+		obstaclesCollider = new List<Collider>(GameObject.FindGameObjectsWithTag(obstacleTab).Select(o => o.GetComponent<Collider>()));
 
-                UpdateHeatmap();
-                InvokeRepeating("UpdateHeatmap", 3f, 1f);
-            } 
-            else if (hmQuad != null)
-            {
-                hmQuad.transform.position = new Vector3((minX + maxX) / 2, hmQuad.transform.position.y, (minZ + maxZ) / 2);
-                hmQuad.transform.localScale = new Vector2(width, depth);
-            }
+		if (obstaclesCollider.Any()) {
+			static Func<Vector3, Vector3, Vector3> Pointwise(Func<float, float, float> f) =>
+				(a, b) => new(f(a.x, b.x), f(a.y, b.y), f(a.z, b.z));
 
+			repulsiveFunction = MathTools.RepulsivePotential3D(obstaclesCollider);
 
-            // vectors
+			var allColliderBounds = FindObjectsOfType<Collider>().Select(o => o.bounds.max).ToArray();
+			max = allColliderBounds.Aggregate(Pointwise(Mathf.Max));
+			min = allColliderBounds.Aggregate(Pointwise(Mathf.Min));
+			min.y = max.y = 0f;
 
-            int r = 12; // todo
-            int i = 0;
+			width = max.x - min.x;
+			depth = max.z - min.z;
 
-            if (initVectors)
-            {
-                for (int z = 0; z < r; z++)
-                {
-                    for (int x = 0; x < r; x++)
-                    {
-                        GameObject vectorObj = new($"vector_{i}");
+			stepX = width / heatmapMeshFineness;
+			stepZ = depth / heatmapMeshFineness;
 
-                        Vector3 position = new(minX + (x * (width/r)) + ((width / r) / 2), 0, minZ + (z * (depth / r)) + (depth / r));
-                        Vector2 gradient = MathTools.Gradient3(repulsiveFunction, position);
+			Log($"APF GRADIENT VISUALS INIT : X[{min.x}:{max.x}] Z[{min.z}:{max.z}]");
+			Log($"APF GRADIENT VISUALS INIT : width:{width} height:{depth}");
 
-                        vectorObj.transform.parent = this.transform;
-                        vectorObj.transform.position = new Vector3(position.x, transform.position.y + 0.001f, position.z);
-                        vectorObj.AddComponent<SpriteRenderer>();
-
-                        if (!float.IsNaN(gradient.x) && !float.IsNaN(gradient.y))
-                        {
-                            float angleRadian = Mathf.Atan2(gradient.y, gradient.x);
-                            float angleEnDegres = angleRadian * Mathf.Rad2Deg;
-                            Quaternion rotation = Quaternion.Euler(-90, 0, angleEnDegres);
+			// heatmap
+			if (initHeatmap) {
+				hmQuad = Instantiate(heatmapQuadPrefab, this.transform);
+				hmQuad.transform.position = 0.5f * (min + max);
+				hmQuad.transform.localScale = new Vector2(width, depth);
+				hmQuad.layer = LayerMask.NameToLayer("Visuals");
 
-                            vectorObj.transform.rotation = rotation;
-                            vectorObj.GetComponent<SpriteRenderer>().sprite = vfFleche;
-                        }
+				hmRenderer = hmQuad.GetComponent<Renderer>();
 
-                        else
-                        {
-                            vectorObj.GetComponent<SpriteRenderer>().sprite = vfWarning;
-                        }
+				UpdateHeatmap();
+				InvokeRepeating(nameof(UpdateHeatmap), 3f, 1f);
+			}
+			else if (hmQuad != null) {
+				hmQuad.transform.position = 0.5f * (min + max) + Vector3.Scale(hmQuad.transform.position, Vector3.up);
+				hmQuad.transform.localScale = new Vector2(width, depth);
+			}
 
-                        vfVectors.Add(vectorObj);
-                        i++;
-                    }
-                }
 
-                UpdateVectors();
-                InvokeRepeating("UpdateVectors", 3f, 1f);
+			// vectors
 
-            }
-        }
-        else
-        {
-            heatmapEnabled = heatmapStateSave = false;
-            Log("No colliders detected, can generate Heatmap.");
-        }
-    }
+			int r = 12; // todo
+			int i = 0;
 
+			if (initVectors) {
+				for (int z = 0; z < r; z++) {
+					for (int x = 0; x < r; x++) {
+						GameObject vectorObj = new($"vector_{i}");
 
-    // Heatmap
+						Vector3 position = new(min.x + (x * (width / r)) + (width / r / 2), 0, min.z + (z * (depth / r)) + (depth / r));
+						Vector2 gradient = MathTools.Gradient3(repulsiveFunction, position);
 
-    public void UpdateHeatmap()
-    {
-        if (!heatmapEnabled) { return; }
+						vectorObj.transform.parent = this.transform;
+						vectorObj.transform.position = new Vector3(position.x, transform.position.y + 0.001f, position.z);
+						vectorObj.AddComponent<SpriteRenderer>();
 
-        stepX = width / heatmapMeshFineness;
-        stepZ = depth / heatmapMeshFineness;
+						if (!float.IsNaN(gradient.x) && !float.IsNaN(gradient.y)) {
+							float angleInDegrees = Mathf.Atan2(gradient.y, gradient.x) * Mathf.Rad2Deg;
 
-        for (int z = 0; z < heatmapMeshFineness; z++)
-        {
-            for (int x = 0; x < heatmapMeshFineness; x++)
-            {
+							vectorObj.transform.rotation = Quaternion.Euler(-90, 0, angleInDegrees);
+							vectorObj.GetComponent<SpriteRenderer>().sprite = vfArrow;
+						}
+						else {
+							vectorObj.GetComponent<SpriteRenderer>().sprite = vfWarning;
+						}
+						vfVectors.Add(vectorObj);
+						i++;
+					}
+				}
 
-                Vector3 position = new Vector3(minX + (x * stepX) + (stepX / 2), 0, minZ + (z * stepZ) + (stepZ / 2));
-                Vector2 gradient = MathTools.Gradient3(repulsiveFunction, position);
+				UpdateVectors();
+				InvokeRepeating(nameof(UpdateVectors), 3f, 1f);
 
-                float magnitude = gradient.magnitude;
-                float hmValue = magnitude;
+			}
+		}
+		else {
+			heatmapEnabled = heatmapPreviouslyEnabled = false;
+			Log("No colliders detected, can generate Heatmap.");
+		}
+	}
 
-                hmDensityTable[x + (z * heatmapMeshFineness)] = hmValue;
-                Log($"{stepX * x:0.0} - {stepZ * z:0.0} : {hmValue}");
-            }
 
-        }
+	// Heatmap
 
-        float maxDen = clampValue;
+	public void UpdateHeatmap() {
+		if (!heatmapEnabled) { return; }
 
-        hmRend.material.SetFloat("_UnitsPerSide", heatmapMeshFineness);
-        hmRend.material.SetFloat("_MaxDen", maxDen);
-        hmRend.material.SetFloatArray("_DensityTable", hmDensityTable);
-    }
+		stepX = width / heatmapMeshFineness;
+		stepZ = depth / heatmapMeshFineness;
 
-    public void CloseHeatmap()
-    {
-        CancelInvoke(nameof(UpdateHeatmap));
-        GameObject.Destroy(hmQuad);
-        hmQuad = null;
-        hmRend = null;
-    }
+		for (int z = 0; z < heatmapMeshFineness; z++) {
+			for (int x = 0; x < heatmapMeshFineness; x++) {
 
+				Vector3 position = new Vector3(min.x + (x * stepX) + (stepX / 2), 0, min.z + (z * stepZ) + (stepZ / 2));
+				Vector2 gradient = MathTools.Gradient3(repulsiveFunction, position);
 
-    // Vectors
+				float hmValue = gradient.magnitude;
 
-    public void UpdateVectors()
-    {
-        if (!vectorsEnabled) { return; }
+				hmDensityTable[x + (z * heatmapMeshFineness)] = hmValue;
+				Log($"{stepX * x:0.0} - {stepZ * z:0.0} : {hmValue}");
+			}
+		}
 
-        foreach (GameObject obj in vfVectors)
-        {
-            Vector2 gradient = MathTools.Gradient3(repulsiveFunction, obj.transform.position);
+		float maxDen = clampValue;
 
-            if (!float.IsNaN(gradient.x) && !float.IsNaN(gradient.y))
-            {
-                float angleRadian = Mathf.Atan2(gradient.y, gradient.x);
-                float angleEnDegres = angleRadian * Mathf.Rad2Deg;
-                Quaternion rotation = Quaternion.Euler(-90, 0, angleEnDegres);
+		hmRenderer.material.SetFloat("_UnitsPerSide", heatmapMeshFineness);
+		hmRenderer.material.SetFloat("_MaxDen", maxDen);
+		hmRenderer.material.SetFloatArray("_DensityTable", hmDensityTable);
+	}
 
-                obj.transform.rotation = rotation;
-                obj.GetComponent<SpriteRenderer>().sprite = vfFleche;
-            }
+	public void CloseHeatmap() {
+		CancelInvoke(nameof(UpdateHeatmap));
+		GameObject.Destroy(hmQuad);
+		hmQuad = null;
+		hmRenderer = null;
+	}
 
-            else
-            {
-                obj.transform.rotation = Quaternion.Euler(-90, 0, 0);
-                obj.GetComponent<SpriteRenderer>().sprite = vfWarning;
-            }
 
-        }
+	// Vectors
 
-    }
+	public void UpdateVectors() {
+		if (!vectorsEnabled) { return; }
 
-    private void CloseVectorField()
-    {
-        CancelInvoke(nameof(UpdateHeatmap));
-        vfVectors.Clear();
-    }
+		foreach (GameObject obj in vfVectors) {
+			Vector2 gradient = MathTools.Gradient3(repulsiveFunction, obj.transform.position);
 
+			var (angleInDegrees, sprite) = (float.IsNaN(gradient.x) || float.IsNaN(gradient.y)) ?
+				 (0f, vfWarning) : (Mathf.Atan2(gradient.y, gradient.x) * Mathf.Rad2Deg, vfArrow);
+			obj.transform.rotation = Quaternion.Euler(-90f, 0f, angleInDegrees);
+			obj.GetComponent<SpriteRenderer>().sprite = sprite;
+		}
+	}
 
+	private void CloseVectorField() {
+		CancelInvoke(nameof(UpdateHeatmap));
+		vfVectors.Clear();
+	}
 }
