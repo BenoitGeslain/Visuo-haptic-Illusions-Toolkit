@@ -17,12 +17,13 @@ namespace VHToolkit.Redirection.WorldRedirection {
 		radius,
 		applyDampening, applySmoothing,
 		redirect, direction,
+		enableOverTime, enableRotational, enableCurvature,
 		parameters;
 		SerializedObject parametersObject;
 		readonly HashSet<string> strategyTechniques = new() { "Razzaque2001OverTimeRotation", "Razzaque2001Rotational", "Razzaque2001Curvature", "Razzaque2001Hybrid" };
 		readonly HashSet<string> targetsStrategies = new() { "SteerToCenter", "SteerToMultipleTargets" };
 
-		private void Start() {
+		private void OnEnable() {
 			technique = serializedObject.FindProperty("_technique");
 			strategy = serializedObject.FindProperty("strategy");
 
@@ -39,6 +40,9 @@ namespace VHToolkit.Redirection.WorldRedirection {
 			applySmoothing = serializedObject.FindProperty("scene.applySmoothing");
 			redirect = serializedObject.FindProperty("redirect");
 			direction = serializedObject.FindProperty("scene.strategyDirection");
+			enableOverTime = serializedObject.FindProperty("scene.enableHybridOverTime");
+			enableRotational = serializedObject.FindProperty("scene.enableRotational");
+			enableCurvature = serializedObject.FindProperty("scene.enableCurvature");
 
 			parameters = serializedObject.FindProperty("scene.parameters");
 		}
@@ -104,16 +108,21 @@ namespace VHToolkit.Redirection.WorldRedirection {
 			}
 			if (techniqueName == "Razzaque2001Hybrid") {
 				MakePropertyField(parametersObject.FindProperty("RotationalError"), "Rotational Error");
-				MakePropertyField(serializedObject.FindProperty("scene.enableHybridOverTime"), "Enable Over Time Rotation");
-				MakePropertyField(parametersObject.FindProperty("OverTimeRotation"), "Over Time Rotation Rate");
+				MakePropertyField(enableOverTime, "Enable Over Time Rotation");
+				if (enableOverTime.boolValue)
+					MakePropertyField(parametersObject.FindProperty("OverTimeRotation"), "Over Time Rotation Rate");
 				EditorGUILayout.Space(2);
 				MakePropertyField(serializedObject.FindProperty("scene.enableHybridRotational"), "Enable Rotational");
-				MakePropertyField(parametersObject.FindProperty("GainsRotational"), "Rotational Gains");
-				MakePropertyField(parametersObject.FindProperty("RotationalThreshold"), "Rotational Threshold");
+				if (enableRotational.boolValue) {
+					MakePropertyField(parametersObject.FindProperty("GainsRotational"), "Rotational Gains");
+					MakePropertyField(parametersObject.FindProperty("RotationalThreshold"), "Rotational Threshold");
+				}
 				EditorGUILayout.Space(2);
 				MakePropertyField(serializedObject.FindProperty("scene.enableHybridCurvature"), "Enable Curvature");
-				MakePropertyField(parametersObject.FindProperty("CurvatureRadius"), "Curvature Radius");
-				MakePropertyField(parametersObject.FindProperty("WalkingThreshold"), "Walking Threshold");
+				if (enableCurvature.boolValue) {
+					MakePropertyField(parametersObject.FindProperty("CurvatureRadius"), "Curvature Radius");
+					MakePropertyField(parametersObject.FindProperty("WalkingThreshold"), "Walking Threshold");
+				}
 				EditorGUILayout.Space(2);
 				MakePropertyField(serializedObject.FindProperty("scene.aggregateFunction"), "Aggregate Function");
 
