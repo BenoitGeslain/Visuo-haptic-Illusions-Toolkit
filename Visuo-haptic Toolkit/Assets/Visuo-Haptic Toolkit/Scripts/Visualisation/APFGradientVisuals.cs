@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
+
 using UnityEngine;
+
 using VHToolkit;
 
 public class GradientVisuals : MonoBehaviour {
@@ -86,9 +87,9 @@ public class GradientVisuals : MonoBehaviour {
 
 			repulsiveFunction = MathTools.RepulsivePotential3D(obstaclesCollider);
 
-			var allColliderBounds = FindObjectsOfType<Collider>().Select(o => o.bounds.max).ToArray();
-			max = allColliderBounds.Aggregate(Pointwise(Mathf.Max));
-			min = allColliderBounds.Aggregate(Pointwise(Mathf.Min));
+			var allColliderBounds = FindObjectsOfType<Collider>().Select(o => o.bounds).ToArray();
+			max = allColliderBounds.Select(b => b.max).Aggregate(Pointwise(Mathf.Max));
+			min = allColliderBounds.Select(b => b.min).Aggregate(Pointwise(Mathf.Min));
 			min.y = max.y = 0f;
 
 			width = max.x - min.x;

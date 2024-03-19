@@ -42,8 +42,7 @@ namespace VHToolkit {
 		SteerToOrbit,
 		SteerToMultipleTargets,
 		SteerInDirection,
-		APFRedirection,
-		APFRedirection2
+		APFRedirection
 	}
 
 	public class Toolkit : MonoBehaviour {

@@ -49,7 +49,8 @@ namespace VHToolkit.Visualisation {
 				for (int x = (int)(map_center.x - map_size.x / 2) + steps; x < map_center.x + map_size.x / 2; x += steps) {
 					for (int y = (int)(map_center.y - map_size.y / 2) + steps; y < map_center.y + map_size.y / 2; y += steps) {
 
-						Vector2 Gradobject = ApfRedirection.ComputeGradient(new Vector2(x, y));
+						Vector2 Gradobject = Vector3.zero;
+                        // Vector2 Gradobject = ApfRedirection.ComputeGradient(new Vector2(x, y));
 
 
 						var grad = Instantiate(PtitGradient);
@@ -74,7 +75,8 @@ namespace VHToolkit.Visualisation {
 				foreach (GameObject gradientgameobj in gradients) {
 					if (gradientgameobj != null) {
 
-						Vector2 gradObject = ApfRedirection.ComputeGradient(gradientgameobj.transform.position);
+						Vector2 gradObject = Vector3.zero;
+                        // Vector2 gradObject = ApfRedirection.ComputeGradient(gradientgameobj.transform.position);
 
 						if (!float.IsNaN(gradObject.x) && !float.IsNaN(gradObject.y)) {
 							float angleInDegrees = Mathf.Atan2(gradObject.y, gradObject.x) * Mathf.Rad2Deg;
