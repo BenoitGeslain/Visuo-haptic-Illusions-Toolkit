@@ -34,7 +34,7 @@ namespace VHToolkit.Redirection {
 		SerializedProperty curvatureRadius;
 		SerializedProperty hybridWeights;
 
-		private void Start() {
+		private void OnEnable() {
 			// Body Warping
 			horizontalAngles = serializedObject.FindProperty("HorizontalAngles");
 			verticalAngles = serializedObject.FindProperty("VerticalAngles");

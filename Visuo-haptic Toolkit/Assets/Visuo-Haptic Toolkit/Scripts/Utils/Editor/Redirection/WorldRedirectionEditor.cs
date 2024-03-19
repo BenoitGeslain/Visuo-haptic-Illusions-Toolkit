@@ -41,8 +41,8 @@ namespace VHToolkit.Redirection.WorldRedirection {
 			redirect = serializedObject.FindProperty("redirect");
 			direction = serializedObject.FindProperty("scene.strategyDirection");
 			enableOverTime = serializedObject.FindProperty("scene.enableHybridOverTime");
-			enableRotational = serializedObject.FindProperty("scene.enableRotational");
-			enableCurvature = serializedObject.FindProperty("scene.enableCurvature");
+			enableRotational = serializedObject.FindProperty("scene.enableHybridRotational");
+			enableCurvature = serializedObject.FindProperty("scene.enableHybridCurvature");
 
 			parameters = serializedObject.FindProperty("scene.parameters");
 		}

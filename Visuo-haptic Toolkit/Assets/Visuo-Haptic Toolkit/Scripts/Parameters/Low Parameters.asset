@@ -18,27 +18,29 @@ MonoBehaviour:
   VerticalAngles:
     up: 4.48
     down: -4.4
-  Gain:
-    faster: 1.07
-    slower: 0.88
+  DepthGain:
+    forward: 0
+    backward: 0
   RedirectionBuffer: 0.1
-  MaxRedirectionThreshold: 0.5
+  RedirectionLateness: 0
+  ControlPoint: {x: 0, y: 0}
   GoGoCoefficient: 1
   GoGoActivationDistance: 0.167
   ResetRedirectionCoeff: 0.087
   RotationalError: 0.5
-  RotationThreshold: 0
+  RotationalThreshold: 0
   WalkingThreshold: 0.2
   DampeningDistanceThreshold: 1.25
   DampeningRange: 1.57
   SmoothingFactor: 0.2
-  steerToOrbitRadius: 5
-  OverTimeRotation: 0.2
+  SteerToOrbitRadius: 5
+  OverTimeRotation: 0.05
   GainsTranslational: {x: 1, y: 1, z: 1}
   GainsRotational:
-    same: 1.03
-    opposite: 0.985
+    same: 1.01
+    opposite: 0.995
   CurvatureRadius: 15
+  HybridWeights: {x: 1, y: 1, z: 1}
   a: {x: 0, y: 0, z: 0}
   SwampSquareLength: 0.25
   SwampCDRatio: 0.75
