@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['lecuyer2000swamp_383',['Lecuyer2000Swamp',['../namespaceVHToolkit_1_1Redirection.html#af8073b3c987118e1413b41c5be00892ba6e2670a2251c1e1e3dd5a77bfff178d4',1,'VHToolkit::Redirection']]]
+  ['kohli2010redirectedtouching_395',['Kohli2010RedirectedTouching',['../namespaceVHToolkit_1_1Redirection.html#a13a2bf571b272b40430ed9777c788e39a64c337a90246bb47666156cfe1d0857a',1,'VHToolkit::Redirection']]]
 ];
