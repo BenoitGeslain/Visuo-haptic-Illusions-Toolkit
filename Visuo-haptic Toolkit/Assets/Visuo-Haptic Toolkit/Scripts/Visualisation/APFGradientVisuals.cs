@@ -9,6 +9,7 @@ using System.Security.Cryptography;
 using UnityEngine;
 using VHToolkit;
 using VHToolkit.Redirection;
+using static OVRPlugin;
 
 public class GradientVisuals : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class GradientVisuals : MonoBehaviour
     // public general
     public string obstacleTag;
     public bool verbose;
-    [Range(0.5f, 5f)]public float refreshRate;
+    [Range(0.5f, 5f)] public float refreshRate;
 
     // public heatmap
     [Header("Heatmap")]
@@ -31,24 +32,25 @@ public class GradientVisuals : MonoBehaviour
     [Header("Vector Field")]
     [InspectorName("Enable Vectors")] public bool vectorsEnabled;
     [Range(2, 15)] public int vectorsMeshFineness;
-    public Sprite arrowSprite;
-    public Sprite warningSprite;
+    [InspectorName("Arrow Sprite")] public Sprite vfArrow;
+    [InspectorName("Sprite Warning")] public Sprite vfWarning;
 
     // private general
-    private Func<Vector3, float> repulsiveFunc;
-    private float minX, maxX, minZ, maxZ, width, depth;
-    private List<GameObject> obstacles;
+    private Func<Vector3, float> repulsiveFunction;
+    private float  width, depth;
+    private Vector3 min, max;
+    private List<Collider> obstaclesCollider;
 
     // private heatmap
     private bool hmEnabledCurrentState;
-    private float[] hmDensityTable = new float[4096];
-    private Renderer hmRend;
+    private float[] hmDensityTable;
+    private Renderer hmRenderer;
     private GameObject hmQuad;
     private float hmStepX, hmStepZ;
 
     // private vector
     private bool vfEnabledCurrentState;
-    private List<GameObject> vfVectors = new();
+    private List<GameObject> vfVectors;
 
 
 
@@ -58,6 +60,8 @@ public class GradientVisuals : MonoBehaviour
 
     void Start()
     {
+        hmDensityTable = new float[4096];
+        vfVectors = new();
         UpdateRepulsiveFunc();
         InvokeRepeating(nameof(Checks), 3f, 3f);
     }
@@ -121,29 +125,30 @@ public class GradientVisuals : MonoBehaviour
         CancelInvoke(nameof(UpdateVectorsField));
 
         // get gameobjects with obstacle tag
-        obstacles = new(GameObject.FindGameObjectsWithTag(obstacleTag).Where(o => o.GetComponent<Collider>() != null));
+        obstaclesCollider = new(GameObject.FindGameObjectsWithTag(obstacleTag).Where(o => o.GetComponent<Collider>() != null).Select(o => o.GetComponent<Collider>()));
 
-        if (obstacles.Any())
+        if (obstaclesCollider.Any())
         {
-            repulsiveFunc = MathTools.RepulsivePotential3D(new List<Collider>(obstacles.Select(o => o.GetComponent<Collider>())));
+            static Func<Vector3, Vector3, Vector3> Pointwise(Func<float, float, float> f) =>
+                (a, b) => new(f(a.x, b.x), f(a.y, b.y), f(a.z, b.z));
 
-            // get all colliders in scene
-            List<Collider> allColliders = new(FindObjectsOfType<Collider>());
+            repulsiveFunction = MathTools.RepulsivePotential3D(obstaclesCollider);
 
-            maxX = allColliders.Max(o => o.bounds.max.x);
-            minX = allColliders.Min(o => o.bounds.min.x);
-            maxZ = allColliders.Max(o => o.bounds.max.z);
-            minZ = allColliders.Min(o => o.bounds.min.z);
-            width = maxX - minX;
-            depth = maxZ - minZ;
+            var allColliderBounds = FindObjectsOfType<Collider>().Select(o => o.bounds.max).ToArray();
+            max = allColliderBounds.Aggregate(Pointwise(Mathf.Max));
+            min = allColliderBounds.Aggregate(Pointwise(Mathf.Min));
+            min.y = max.y = 0f;
 
-            Log($"Visuals init : X[{minX}:{maxX}] Z[{minZ}:{maxZ}]");
+            width = max.x - min.x;
+            depth = max.z - min.z;
+
+            Log($"Visuals init : X[{min.x}:{max.x}] Z[{min.z}:{max.z}]");
             Log($"Visuals init : width:{width} height:{depth}");
 
         }
         else
         {
-            repulsiveFunc = null;
+            repulsiveFunction = null;
             Log("No colliders detected, can't generate visuals.");
         }
     }
@@ -154,14 +159,14 @@ public class GradientVisuals : MonoBehaviour
     /// <returns>True if any change found</returns>
     private bool CheckForSceneUpdate()
     {
-        if (GameObject.FindGameObjectsWithTag(obstacleTag).Where(o => o.GetComponent<Collider>() != null).Count() != obstacles.Count) return true;
+        if (GameObject.FindGameObjectsWithTag(obstacleTag).Where(o => o.GetComponent<Collider>() != null).Count() != obstaclesCollider.Count) return true;
 
         foreach (var objCol in FindObjectsOfType<Collider>())
         {
-            if (objCol.bounds.max.x > maxX) return true;
-            if (objCol.bounds.min.x < minX) return true;
-            if (objCol.bounds.max.z > maxZ) return true;
-            if (objCol.bounds.min.z < minZ) return true;
+            if (objCol.bounds.max.x > max.x) return true;
+            if (objCol.bounds.min.x < min.x) return true;
+            if (objCol.bounds.max.z > max.z) return true;
+            if (objCol.bounds.min.z < min.z) return true;
         }
 
         return false;
@@ -179,7 +184,7 @@ public class GradientVisuals : MonoBehaviour
     /// <returns>True if init ended sucessfully</returns>
     private bool InitHeatmap()
     {
-        if (repulsiveFunc == null)
+        if (repulsiveFunction == null)
         {
             Console.Write("APF visuals : cannot init heatmap, no repulsive function (is there any obstacle with collider ?).");
             CloseHeatmap();
@@ -195,11 +200,11 @@ public class GradientVisuals : MonoBehaviour
         hmStepZ = depth / heatmapMeshFineness;
 
         hmQuad = Instantiate(heatmapQuadPrefab, this.transform);
-        hmQuad.transform.position = new Vector3((minX + maxX) / 2, 0f, (minZ + maxZ) / 2);
+        hmQuad.transform.position = 0.5f * (min+max);
         hmQuad.transform.localScale = new Vector2(width, depth);
         hmQuad.layer = LayerMask.NameToLayer("Visuals");
 
-        hmRend = hmQuad.GetComponent<Renderer>();
+        hmRenderer = hmQuad.GetComponent<Renderer>();
 
         UpdateHeatmap();
         InvokeRepeating(nameof(UpdateHeatmap), 1f, refreshRate);
@@ -222,11 +227,10 @@ public class GradientVisuals : MonoBehaviour
             for (int x = 0; x < heatmapMeshFineness; x++)
             {
 
-                Vector3 position = new Vector3(minX + (x * hmStepX) + (hmStepX / 2), 0, minZ + (z * hmStepZ) + (hmStepZ / 2));
-                Vector2 gradient = MathTools.Gradient3(repulsiveFunc, position);
+                Vector3 position = new Vector3(min.x + (x * hmStepX) + (hmStepX / 2), 0, min.z + (z * hmStepZ) + (hmStepZ / 2));
+                Vector2 gradient = MathTools.Gradient3(repulsiveFunction, position);
 
-                float magnitude = gradient.magnitude;
-                float hmValue = magnitude;
+                float hmValue = gradient.magnitude;
 
                 hmDensityTable[x + (z * heatmapMeshFineness)] = hmValue;
                 Log($"{hmStepX * x:0.0} - {hmStepZ * z:0.0} : {hmValue}");
@@ -234,9 +238,9 @@ public class GradientVisuals : MonoBehaviour
 
         }
 
-        hmRend.material.SetFloat("_UnitsPerSide", heatmapMeshFineness);
-        hmRend.material.SetFloat("_MaxDen", heatmapClampValue);
-        hmRend.material.SetFloatArray("_DensityTable", hmDensityTable);
+        hmRenderer.material.SetFloat("_UnitsPerSide", heatmapMeshFineness);
+        hmRenderer.material.SetFloat("_MaxDen", heatmapClampValue);
+        hmRenderer.material.SetFloatArray("_DensityTable", hmDensityTable);
     }
 
     /// <summary>
@@ -247,7 +251,7 @@ public class GradientVisuals : MonoBehaviour
         CancelInvoke(nameof(UpdateHeatmap));
         GameObject.Destroy(hmQuad);
         hmQuad = null;
-        hmRend = null;
+        hmRenderer = null;
     }
 
     #endregion
@@ -262,7 +266,7 @@ public class GradientVisuals : MonoBehaviour
     /// <returns>True if init ended sucessfully</returns>
     private bool InitVectorsField()
     {
-        if (repulsiveFunc == null)
+        if (repulsiveFunction == null)
         {
             Console.Write("APF visuals : cannot init vectors field, no repulsive function (is there any obstacle with collider ?).");
             CloseVectorsField();
@@ -281,8 +285,8 @@ public class GradientVisuals : MonoBehaviour
             {
                 GameObject vectorObj = new($"vector_{i}");
 
-                Vector3 position = new(minX + (x * (width / vectorsMeshFineness)) + ((width / vectorsMeshFineness) / 2), 0, minZ + (z * (depth / vectorsMeshFineness)) + (depth / vectorsMeshFineness));
-                Vector2 gradient = MathTools.Gradient3(repulsiveFunc, position);
+                Vector3 position = new(min.x + (x * (width / vectorsMeshFineness)) + ((width / vectorsMeshFineness) / 2), 0, min.z + (z * (depth / vectorsMeshFineness)) + (depth / vectorsMeshFineness));
+                Vector2 gradient = MathTools.Gradient3(repulsiveFunction, position);
 
                 vectorObj.transform.parent = this.transform;
                 vectorObj.transform.position = new Vector3(position.x, transform.position.y + 0.001f, position.z);
@@ -295,12 +299,12 @@ public class GradientVisuals : MonoBehaviour
                     Quaternion rotation = Quaternion.Euler(-90, 0, angleEnDegres);
 
                     vectorObj.transform.rotation = rotation;
-                    vectorObj.GetComponent<SpriteRenderer>().sprite = arrowSprite;
+                    vectorObj.GetComponent<SpriteRenderer>().sprite = vfArrow;
                 }
 
                 else
                 {
-                    vectorObj.GetComponent<SpriteRenderer>().sprite = warningSprite;
+                    vectorObj.GetComponent<SpriteRenderer>().sprite = vfWarning;
                 }
 
                 vfVectors.Add(vectorObj);
@@ -322,25 +326,15 @@ public class GradientVisuals : MonoBehaviour
     {
         if (!vectorsEnabled) { return; }
 
-        foreach (GameObject vectorObj in vfVectors)
+        foreach (GameObject obj in vfVectors)
         {
-            Vector2 gradient = MathTools.Gradient3(repulsiveFunc, vectorObj.transform.position);
+            Vector2 gradient = MathTools.Gradient3(repulsiveFunction, obj.transform.position);
 
-            if (!float.IsNaN(gradient.x) && !float.IsNaN(gradient.y))
-            {
-                float angleRadian = Mathf.Atan2(gradient.y, gradient.x);
-                float angleEnDegres = angleRadian * Mathf.Rad2Deg * 2; // TODO
-                Quaternion rotation = Quaternion.Euler(-90, 0, angleEnDegres);
+            var (angleInDegrees, sprite) = (float.IsNaN(gradient.x) || float.IsNaN(gradient.y)) ?
+                 (0f, vfWarning) : (Mathf.Atan2(gradient.y, gradient.x) * Mathf.Rad2Deg, vfArrow);
 
-                vectorObj.transform.rotation = rotation;
-                vectorObj.GetComponent<SpriteRenderer>().sprite = arrowSprite;
-            }
-
-            else
-            {
-                vectorObj.transform.rotation = Quaternion.Euler(-90, 0, 0);
-                vectorObj.GetComponent<SpriteRenderer>().sprite = warningSprite;
-            }
+            obj.transform.rotation = Quaternion.Euler(-90f, 0f, angleInDegrees);
+            obj.GetComponent<SpriteRenderer>().sprite = sprite;
 
         }
 
@@ -353,10 +347,10 @@ public class GradientVisuals : MonoBehaviour
     {
         CancelInvoke(nameof(UpdateVectorsField));
 
-        for (int i = vfVectors.Count - 1; i >= 0; i--)
-        {
-            GameObject.Destroy(vfVectors[i]);
-        }
+        //for (int i = vfVectors.Count - 1; i >= 0; i--)
+        //{
+        //    GameObject.Destroy(vfVectors[i]);
+        //}
 
         vfVectors.Clear();
     }

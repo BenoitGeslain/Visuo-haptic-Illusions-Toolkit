@@ -2279,13 +2279,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e80b3563113a695488b712d8b37d5eda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  obstacleTab: Obstacle
+  obstacleTag: Obstacle
   verbose: 0
-  refreshRate: 0
+  refreshRate: 0.5
   heatmapEnabled: 0
   heatmapQuadPrefab: {fileID: 3973517385662518282, guid: 437537830c8a19d42a6c39be05919293, type: 3}
   heatmapMeshFineness: 32
-  clampValue: 5
+  heatmapClampValue: 1
   vectorsEnabled: 0
   vectorsMeshFineness: 12
   arrowSprite: {fileID: 21300000, guid: 2cbbd35a3c5fa1f46adb1266b37311b4, type: 3}
