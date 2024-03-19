@@ -15,10 +15,12 @@ public class Interpolation : MonoBehaviour {
 	[SerializeField] private Transform vHand, pHand;
 
 	private Transform[] originalGrid, targetGrid, interpolatedGrid, modifiedGrid;
+	private Vector3[] fixedGrid;
 	private MeshFilter originalMeshFilter, targetMeshFilter, interpolatedMeshFilter, modifiedMeshFilter;
 	private Mesh originalMesh, targetMesh, interpolatedMesh, modifiedMesh;
 	private void Start() {
 		originalGrid = new Transform[n * n];
+		fixedGrid = new Vector3[n * n];
 		targetGrid = new Transform[n * n];
 		interpolatedGrid = new Transform[n * n];
 		modifiedGrid = new Transform[n * n];
@@ -36,6 +38,8 @@ public class Interpolation : MonoBehaviour {
 				originalGrid[index].parent = original;
 				originalGrid[index].position = new(i * l, 0f, j * l);
 				originalGrid[index].localScale = new(0.1f, 0.1f, 0.1f);
+
+				fixedGrid[index] = new(i * l, 10f, j * l);
 
 				targetGrid[index] = GameObject.CreatePrimitive(PrimitiveType.Cube).transform;
 				targetGrid[index].name = $"target Point {i} {j}";
@@ -67,9 +71,9 @@ public class Interpolation : MonoBehaviour {
         // 	false
         // 	);
         Vector3 disp(Vector3 x) => InverseWeightedDistance.Interpolate(
-            Array.ConvertAll(originalGrid, g => g.position),
-            Array.ConvertAll(targetGrid, g => g.position),
-            1,
+            Array.ConvertAll(originalGrid, g => g.position).Concat(fixedGrid).ToArray(),
+            Array.ConvertAll(targetGrid, g => g.position).Concat(fixedGrid).ToArray(),
+            2,
             x
         );
 
@@ -84,8 +88,8 @@ public class Interpolation : MonoBehaviour {
 		// modifiedMesh.colors = colors;
 
 		vHand.position = InverseWeightedDistance.Interpolate(
-			Array.ConvertAll(originalGrid, g => g.position),
-			Array.ConvertAll(targetGrid, g => g.position),
+			Array.ConvertAll(originalGrid, g => g.position).Concat(fixedGrid).ToArray(),
+			Array.ConvertAll(targetGrid, g => g.position).Concat(fixedGrid).ToArray(),
 			2,
 			pHand.position
 		);
