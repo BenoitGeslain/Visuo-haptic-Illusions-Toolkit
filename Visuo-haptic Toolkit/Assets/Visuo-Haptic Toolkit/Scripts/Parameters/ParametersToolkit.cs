@@ -65,7 +65,10 @@ namespace VHToolkit.Redirection {
 
 		[Header("3D Interpolation")]
 		[Tooltip("")]
-		public Vector3 a;
+		public float smoothingParameter;
+		[Tooltip("")]
+		public bool rescale;
+
 
 
 

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace VHToolkit.Redirection.WorldRedirection {
 	/// <summary>
-	/// Custom editor for the body redirection scene. Allows to show the Geslain2022Polynom parameters only if it is selected.
+	/// Custom editor for the WorldRedirection Monobehaviour.
 	/// </summary>
 	[CustomEditor(typeof(WorldRedirection))]
 	public class WorldRedirectionEditor : Editor {

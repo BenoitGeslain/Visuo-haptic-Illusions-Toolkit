@@ -72,6 +72,10 @@ namespace VHToolkit.Redirection {
 		[Ignore] public bool enableHybridOverTime = true;
 		[Ignore] public bool enableHybridRotational = true;
 		[Ignore] public bool enableHybridCurvature = true;
+		[Ignore] public Vector3[] reference;
+		[Ignore] public Vector3[] interpolated;
+
+
 
 		/// <summary>
 		/// The position of the virtual limb is given by <c>physicalHand.position + Redirection</c>.

@@ -1,6 +1,7 @@
 using UnityEngine;
 
-namespace VHToolkit.Redirection {
+namespace VHToolkit.Redirection
+{
 	/// <summary>
 	/// Available body redirection techniques.
 	/// </summary>
@@ -19,11 +20,18 @@ namespace VHToolkit.Redirection {
 		Lecuyer2000Swamp,
 		Samad2019Weight
 	}
+	/// <summary>
+	/// Available 3D Interpolation redirection techniques.
+	/// </summary>
+	public enum ThreeDTechnique {
+		None,
+		Kohli2010RedirectedTouching
+	}
 
-    /// <summary>
-    /// Available world redirection techniques.
-    /// </summary>
-    public enum WRTechnique {
+	/// <summary>
+	/// Available world redirection techniques.
+	/// </summary>
+	public enum WRTechnique {
 		None,
 		Reset,
 		Razzaque2001OverTimeRotation,

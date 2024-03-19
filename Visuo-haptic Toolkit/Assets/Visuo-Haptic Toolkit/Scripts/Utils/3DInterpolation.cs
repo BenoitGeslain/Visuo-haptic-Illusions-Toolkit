@@ -64,20 +64,18 @@ public class Interpolation : MonoBehaviour {
 
 	private void Update() {
 
-        // var disp = ThinPlateSpline.SabooSmoothedDisplacementField(
-        // 	Array.ConvertAll(originalGrid, g => g.position),
-        // 	Array.ConvertAll(targetGrid, g => g.position),
-        // 	0,
-        // 	false
-        // 	);
-        Vector3 disp(Vector3 x) => InverseWeightedDistance.Interpolate(
-            Array.ConvertAll(originalGrid, g => g.position).Concat(fixedGrid).ToArray(),
-            Array.ConvertAll(targetGrid, g => g.position).Concat(fixedGrid).ToArray(),
-            2,
-            x
-        );
 
-        var tmp = Array.ConvertAll(interpolatedGrid, g => disp(g.position));
+		var originalPositions = Array.ConvertAll(originalGrid, g => g.position).Concat(fixedGrid).ToArray();
+		var finalPositions = Array.ConvertAll(targetGrid, g => g.position).Concat(fixedGrid).ToArray();
+
+		var disp = ThinPlateSpline.SabooSmoothedDisplacementField(
+			originalPositions,
+			finalPositions,
+			0,
+			false
+		);
+
+		var tmp = Array.ConvertAll(interpolatedGrid, g => disp(g.position));
 		DrawMeshes(tmp);
 
         var colors = Array.ConvertAll(originalMesh.uv, vec => Color.Lerp(Color.red, Color.white, vec.sqrMagnitude));
@@ -87,12 +85,7 @@ public class Interpolation : MonoBehaviour {
 		// interpolatedMesh.colors = colors;
 		// modifiedMesh.colors = colors;
 
-		vHand.position = InverseWeightedDistance.Interpolate(
-			Array.ConvertAll(originalGrid, g => g.position).Concat(fixedGrid).ToArray(),
-			Array.ConvertAll(targetGrid, g => g.position).Concat(fixedGrid).ToArray(),
-			2,
-			pHand.position
-		);
+		vHand.position = disp(pHand.position);
 	}
 
 	private void DrawMeshes(Vector3[] m) {

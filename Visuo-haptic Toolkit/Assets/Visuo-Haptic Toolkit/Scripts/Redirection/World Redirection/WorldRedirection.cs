@@ -67,9 +67,8 @@ namespace VHToolkit.Redirection.WorldRedirection {
 		/// <summary>
 		/// Update function called once per frame. This function
 		/// calls updateTechnique() to instantiate the technique class,
-		/// calls Redirect(...) from the BodyRedirection class to apply the redirection,
-		/// applies rotations to the physical hand and
-		/// initializes the previous head positions.
+		/// calls Redirect(...) from the WorldRedirection class to apply the redirection,
+		/// applies redirection to the physical head.
 		/// </summary>
 		private void LateUpdate() {
 			if (previousTechnique != Technique || techniqueInstance == null) {
