@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography;
 using UnityEngine;
+
 using VHToolkit;
 using VHToolkit.Redirection;
 using static OVRPlugin;
@@ -126,6 +127,11 @@ public class GradientVisuals : MonoBehaviour
 
         // get gameobjects with obstacle tag
         obstaclesCollider = new(GameObject.FindGameObjectsWithTag(obstacleTag).Where(o => o.GetComponent<Collider>() != null).Select(o => o.GetComponent<Collider>()));
+
+		//var allColliderBounds = FindObjectsOfType<Collider>().Select(o => o.bounds).ToArray();
+		//max = allColliderBounds.Select(b => b.max).Aggregate(Pointwise(Mathf.Max));
+		//min = allColliderBounds.Select(b => b.min).Aggregate(Pointwise(Mathf.Min));
+		//min.y = max.y = 0f;
 
         if (obstaclesCollider.Any())
         {

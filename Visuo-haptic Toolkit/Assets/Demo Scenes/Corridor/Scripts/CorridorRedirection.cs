@@ -23,7 +23,7 @@ public class CorridorRedirection : MonoBehaviour {
 	[SerializeField] private Transform UserHead;
 
 	public CorridorStates state = CorridorStates.None;
-	[ReadOnly][SerializeField] private float redirectionApplied;
+	[SerializeField] private float redirectionApplied;
 	[SerializeField] private List<Transform> paintingReferences;
 	[Range(0, 45)]
 	[SerializeField] private List<float> redirectionAmount;
