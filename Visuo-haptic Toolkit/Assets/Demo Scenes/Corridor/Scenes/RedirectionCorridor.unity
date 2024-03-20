@@ -2108,9 +2108,9 @@ MonoBehaviour:
   - {fileID: 904384536}
   - {fileID: 1432806454}
   - {fileID: 1678945701}
-  redirectionAmount: 180
-  start: {fileID: 0}
-  end: {fileID: 0}
+  redirectionAmount: 360
+  start: {fileID: 2099766480}
+  end: {fileID: 1861591714}
 --- !u!114 &844723481
 MonoBehaviour:
   m_ObjectHideFlags: 0
