@@ -120,5 +120,6 @@ namespace VHToolkit.Logging {
 			}
 
 			public void Dispose() => _observers.Remove(_observer);
+		}
 	}
 }
