@@ -12,46 +12,45 @@ public class CubesRedirection : MonoBehaviour {
 	}
 
 	[SerializeField] private CubesState state;
-	[SerializeField] private int currentCube = 0;
+	[SerializeField] private int activeCubeIndex = 0;
 
 	[SerializeField] private Transform realCube;
 	[SerializeField] private List<Transform> VirtualCubes;
 
 	[SerializeField] private Material magic, regular;
 
-	private BodyRedirection script;
+	[SerializeField] private BodyRedirection script;
 
 	private void Start() {
-		script = this.GetComponent<BodyRedirection>();
+		// script = this.GetComponent<BodyRedirection>();
 		VirtualCubes.ForEach(cube => cube.GetComponentInChildren<ParticleSystem>().Stop());
-		VirtualCubes[currentCube].GetComponent<MeshRenderer>().material = magic;
+		VirtualCubes[activeCubeIndex].GetComponent<MeshRenderer>().material = magic;
+		VirtualCubes[activeCubeIndex].GetComponent<TargetCollider>().enableTrigger = true;
 	}
 
-	private void Update() {
-		switch (state) {
-			case CubesState.ReachOrigin:
-				if (script.scene.GetPhysicalHandOriginDistance().Any(d => d <= 0.1f)) {
-					script.scene.virtualTarget = VirtualCubes[currentCube];
-					state = CubesState.ReachCube;
-				}
-				break;
-			case CubesState.ReachCube:
-				if (script.scene.GetPhysicalHandTargetDistance().Any(d => d <= 0.1f)) {
-					NextCube();
-					state = CubesState.ReachOrigin;
-				}
-				break;
+	public void TouchedOrigin() {
+		if (state == CubesState.ReachOrigin) {
+			script.scene.virtualTarget = VirtualCubes[activeCubeIndex];
+			state = CubesState.ReachCube;
+		}
+	}
+
+	public void TouchedTarget() {
+		if (state == CubesState.ReachCube) {
+			NextCube();
+			state = CubesState.ReachOrigin;
 		}
 	}
 
 	private void NextCube() {
-		VirtualCubes[currentCube].GetComponent<MeshRenderer>().material = regular;
-		VirtualCubes[currentCube].GetComponentInChildren<ParticleSystem>().Stop();
+		VirtualCubes[activeCubeIndex].GetComponent<MeshRenderer>().material = regular;
+		VirtualCubes[activeCubeIndex].GetComponentInChildren<ParticleSystem>().Stop();
+		VirtualCubes[activeCubeIndex].GetComponent<TargetCollider>().enableTrigger = false;
 
-		currentCube = (currentCube + 1) % VirtualCubes.Count;
+		activeCubeIndex = (activeCubeIndex + 1) % VirtualCubes.Count;
 
-		VirtualCubes[currentCube].GetComponent<MeshRenderer>().material = magic;
-		VirtualCubes[currentCube].GetComponentInChildren<ParticleSystem>().Play();
-
+		VirtualCubes[activeCubeIndex].GetComponent<MeshRenderer>().material = magic;
+		VirtualCubes[activeCubeIndex].GetComponentInChildren<ParticleSystem>().Play();
+		VirtualCubes[activeCubeIndex].GetComponent<TargetCollider>().enableTrigger = true;
 	}
 }
