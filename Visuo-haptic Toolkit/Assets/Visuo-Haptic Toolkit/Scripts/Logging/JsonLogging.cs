@@ -16,8 +16,8 @@ namespace VHToolkit.Logging {
 		public string Orientation => obj != null ? obj.rotation.normalized.ToString() : "NULL";
 		public TransformData(Transform obj) {
 			this.obj = obj;
-        }
-    }
+		}
+	}
 
 	public record PhysicalLimbData {
 		private readonly Limb limb;
@@ -60,7 +60,7 @@ namespace VHToolkit.Logging {
 	/// <summary>
 	/// Logs structured data in the JSON Lines format.
 	/// </summary>
-	public class JsonLogging : MonoBehaviour {
+	public class JsonLogging : MonoBehaviour, IObservable<JsonRedirectionData> {
 
 		public string logDirectoryPath = "LoggedData\\";
 		[SerializeField] private string optionalFilenamePrefix;
@@ -68,20 +68,29 @@ namespace VHToolkit.Logging {
 		private readonly int bufferSize = 10; // number of records kept before writing to disk
 
 		private Queue<JsonRedirectionData> records = new();
+		private List<string> observers;
+		private HashSet<IObserver<JsonRedirectionData>> _obs = new();
 
 		private Interaction script;
 
 		private void Start() {
 			CreateNewFile();
+			records = new();
 			script = GetComponent<Interaction>();
 		}
 
 		private void Update() {
-			void writeRecords<Data>(Queue<Data> records) {
+			void writeRecords(Queue<JsonRedirectionData> records) {
 				if (records.Count > bufferSize) {
-					using var writer = new StreamWriter(fileName, append: true);
 					foreach (var record in records) {
-						writer.WriteLine(JsonConvert.SerializeObject(record));
+						foreach (var observer in _obs) {
+							observer.OnNext(record);
+						}
+						var message = JsonConvert.SerializeObject(record);
+						foreach (var fileName in observers) {
+							using var writer = new StreamWriter(fileName, append: true);
+							writer.WriteLine(message);
+						}
 					}
 					records.Clear();
 				}
@@ -94,7 +103,27 @@ namespace VHToolkit.Logging {
 		public void CreateNewFile() {
 			Directory.CreateDirectory(logDirectoryPath);
 			fileName = $"{logDirectoryPath}{optionalFilenamePrefix}{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.jsonl";
-			records = new Queue<JsonRedirectionData>();
+			observers = new() { fileName };
+		}
+
+		IDisposable IObservable<JsonRedirectionData>.Subscribe(IObserver<JsonRedirectionData> observer) {
+			_obs.Add(observer);
+			return new Unsubscriber(_obs, observer);
+		}
+
+		private class Unsubscriber : IDisposable {
+			private HashSet<IObserver<JsonRedirectionData>> _observers;
+			private IObserver<JsonRedirectionData> _observer;
+
+			public Unsubscriber(HashSet<IObserver<JsonRedirectionData>> observers, IObserver<JsonRedirectionData> observer) {
+				this._observers = observers;
+				this._observer = observer;
+			}
+
+			public void Dispose() {
+				if (_observer != null && _observers.Contains(_observer))
+					_observers.Remove(_observer);
+			}
 		}
 	}
 }
