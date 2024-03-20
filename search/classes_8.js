@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['mjttrajectorygenerator_222',['MJTTrajectoryGenerator',['../classVHToolkit_1_1Simulation_1_1MJTTrajectoryGenerator.html',1,'VHToolkit::Simulation']]]
+  ['lecuyer2000swamp_224',['Lecuyer2000Swamp',['../classVHToolkit_1_1Redirection_1_1PseudoHaptics_1_1Lecuyer2000Swamp.html',1,'VHToolkit::Redirection::PseudoHaptics']]],
+  ['limb_225',['Limb',['../structVHToolkit_1_1Redirection_1_1Limb.html',1,'VHToolkit::Redirection']]],
+  ['logging_226',['Logging',['../classVHToolkit_1_1Logging_1_1Logging.html',1,'VHToolkit::Logging']]]
 ];

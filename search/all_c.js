@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['nobodyredirection_76',['NoBodyRedirection',['../classVHToolkit_1_1Redirection_1_1BodyRedirection_1_1NoBodyRedirection.html',1,'VHToolkit::Redirection::BodyRedirection']]],
-  ['nointerpolation_77',['NoInterpolation',['../classVHToolkit_1_1Redirection_1_1Interpolation3D_1_1NoInterpolation.html',1,'VHToolkit::Redirection::Interpolation3D']]],
-  ['none_78',['None',['../namespaceVHToolkit_1_1Redirection.html#af8073b3c987118e1413b41c5be00892ba6adf97f83acf6453d4a6a4b1070f3754',1,'VHToolkit.Redirection.None()'],['../namespaceVHToolkit_1_1Redirection.html#a13a2bf571b272b40430ed9777c788e39a6adf97f83acf6453d4a6a4b1070f3754',1,'VHToolkit.Redirection.None()'],['../namespaceVHToolkit_1_1Redirection.html#a0d56c189dc559dc0687f7c32fad22530a6adf97f83acf6453d4a6a4b1070f3754',1,'VHToolkit.Redirection.None()']]],
-  ['nosteering_79',['NoSteering',['../namespaceVHToolkit_1_1Redirection.html#aeebb6431e6f113539dc912ca85e23402acd0fb3346927065384c7ce0b68ecc6a0',1,'VHToolkit.Redirection.NoSteering()'],['../classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1NoSteering.html',1,'VHToolkit.Redirection.WorldRedirection.NoSteering']]],
-  ['noworldredirection_80',['NoWorldRedirection',['../classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1NoWorldRedirection.html',1,'VHToolkit::Redirection::WorldRedirection']]]
+  ['max_73',['Max',['../classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1Razzaque2001Hybrid.html#a41c424a61427a08fa0e8478838554a3d',1,'VHToolkit.Redirection.WorldRedirection.Razzaque2001Hybrid.Max()'],['../namespaceVHToolkit_1_1Redirection.html#aaf3934a62f351dca46599bed84d4bbe2a6a061313d22e51e0f25b7cd4dc065233',1,'VHToolkit.Redirection.Max()']]],
+  ['maxsums_74',['maxSums',['../structVHToolkit_1_1Logging_1_1WorldRedirectionData.html#a892350eb7649d412678236015b2c717f',1,'VHToolkit::Logging::WorldRedirectionData']]],
+  ['mean_75',['Mean',['../classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1Razzaque2001Hybrid.html#abf4787624492687d87bb9c337d4cc80b',1,'VHToolkit.Redirection.WorldRedirection.Razzaque2001Hybrid.Mean()'],['../namespaceVHToolkit_1_1Redirection.html#aaf3934a62f351dca46599bed84d4bbe2a3d6c9ac08ada31c184094bbc67afe00d',1,'VHToolkit.Redirection.Mean()']]],
+  ['mjttrajectorygenerator_76',['MJTTrajectoryGenerator',['../classVHToolkit_1_1Simulation_1_1MJTTrajectoryGenerator.html',1,'VHToolkit::Simulation']]],
+  ['movementinprogress_77',['movementInProgress',['../classVHToolkit_1_1Simulation_1_1MJTTrajectoryGenerator.html#ad58f548aa0b61ec6f884e385cbf0e04b',1,'VHToolkit::Simulation::MJTTrajectoryGenerator']]]
 ];
