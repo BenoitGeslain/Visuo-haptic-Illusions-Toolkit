@@ -37,10 +37,11 @@ MonoBehaviour:
   OverTimeRotation: 0.1
   GainsTranslational: {x: 1, y: 1, z: 1}
   GainsRotational:
-    same: 1.03
-    opposite: 0.995
+    same: 1.04
+    opposite: 0.998
   CurvatureRadius: 15
   HybridWeights: {x: 1, y: 1, z: 1}
-  a: {x: 0, y: 0, z: 0}
+  smoothingParameter: 0
+  rescale: 0
   SwampSquareLength: 0.25
   SwampCDRatio: 0.75
