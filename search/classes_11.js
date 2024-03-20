@@ -1,9 +1,12 @@
 var searchData=
 [
-  ['worldredirection_264',['WorldRedirection',['../classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1WorldRedirection.html',1,'VHToolkit::Redirection::WorldRedirection']]],
-  ['worldredirectiondata_265',['WorldRedirectionData',['../structVHToolkit_1_1Logging_1_1WorldRedirectionData.html',1,'VHToolkit::Logging']]],
-  ['worldredirectioneditor_266',['WorldRedirectionEditor',['../classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1WorldRedirectionEditor.html',1,'VHToolkit::Redirection::WorldRedirection']]],
-  ['worldredirectionstrategy_267',['WorldRedirectionStrategy',['../classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1WorldRedirectionStrategy.html',1,'VHToolkit::Redirection::WorldRedirection']]],
-  ['worldredirectiontechnique_268',['WorldRedirectionTechnique',['../classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1WorldRedirectionTechnique.html',1,'VHToolkit::Redirection::WorldRedirection']]],
-  ['wrvisuals_269',['WRVisuals',['../classVHToolkit_1_1Visualisation_1_1WRVisuals.html',1,'VHToolkit::Visualisation']]]
+  ['vector2gain_262',['Vector2Gain',['../classVHToolkit_1_1Redirection_1_1Vector2Gain.html',1,'VHToolkit::Redirection']]],
+  ['vector2gainpropertydrawer_263',['Vector2GainPropertyDrawer',['../classVector2GainPropertyDrawer.html',1,'']]],
+  ['vector2horizontal_264',['Vector2Horizontal',['../classVHToolkit_1_1Redirection_1_1Vector2Horizontal.html',1,'VHToolkit::Redirection']]],
+  ['vector2horizontalpropertydrawer_265',['Vector2HorizontalPropertyDrawer',['../classVector2HorizontalPropertyDrawer.html',1,'']]],
+  ['vector2rotation_266',['Vector2Rotation',['../classVHToolkit_1_1Redirection_1_1Vector2Rotation.html',1,'VHToolkit::Redirection']]],
+  ['vector2rotationpropertydrawer_267',['Vector2RotationPropertyDrawer',['../classVector2RotationPropertyDrawer.html',1,'']]],
+  ['vector2vertical_268',['Vector2Vertical',['../classVHToolkit_1_1Redirection_1_1Vector2Vertical.html',1,'VHToolkit::Redirection']]],
+  ['vector2verticalpropertydrawer_269',['Vector2VerticalPropertyDrawer',['../classVector2VerticalPropertyDrawer.html',1,'']]],
+  ['vectorspropertydrawer_270',['VectorsPropertyDrawer',['../classVectorsPropertyDrawer.html',1,'']]]
 ];

@@ -1,7 +1,4 @@
 var searchData=
 [
-  ['gainsrotational_338',['GainsRotational',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a070e19c49bd46fdbf679838a63c0d835',1,'VHToolkit::Redirection::ParametersToolkit']]],
-  ['gainstranslational_339',['GainsTranslational',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#ae896d09a13ce2ceac12246a27d08f0a5',1,'VHToolkit::Redirection::ParametersToolkit']]],
-  ['gogoactivationdistance_340',['GoGoActivationDistance',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#ad2dba65335476ca517eea9082289e9cd',1,'VHToolkit::Redirection::ParametersToolkit']]],
-  ['gogocoefficient_341',['GoGoCoefficient',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a407f646762ccc4b60cf5ec74563dfc02',1,'VHToolkit::Redirection::ParametersToolkit']]]
+  ['forward_347',['forward',['../classVHToolkit_1_1Redirection_1_1Vector2Gain.html#a3fc928d0cd756aa17b1f678c4aa3fd70',1,'VHToolkit.Redirection.Vector2Gain.forward()'],['../structVHToolkit_1_1MathTools_1_1PositionAndRotation2D.html#afe44746f26bf7c1b7423cfab084e10f6',1,'VHToolkit.MathTools.PositionAndRotation2D.forward()']]]
 ];

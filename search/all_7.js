@@ -1,9 +1,8 @@
 var searchData=
 [
-  ['instance_55',['Instance',['../classVHToolkit_1_1Redirection_1_1Toolkit.html#aec90ce25eb00a4758cb76e0bae952f39',1,'VHToolkit::Redirection::Toolkit']]],
-  ['interaction_56',['Interaction',['../classVHToolkit_1_1Redirection_1_1Interaction.html',1,'VHToolkit::Redirection']]],
-  ['interactionclassmap_57',['InteractionClassMap',['../classVHToolkit_1_1Logging_1_1RedirectionDataMap_1_1InteractionClassMap.html#a7d8b6c0ce46c2b9ae8847f210e9cc247',1,'VHToolkit.Logging.RedirectionDataMap.InteractionClassMap.InteractionClassMap()'],['../classVHToolkit_1_1Logging_1_1RedirectionDataMap_1_1InteractionClassMap.html',1,'VHToolkit.Logging.RedirectionDataMap.InteractionClassMap']]],
-  ['interpolation_58',['Interpolation',['../classInterpolation.html',1,'']]],
-  ['interpolationtechnique_59',['InterpolationTechnique',['../classVHToolkit_1_1Redirection_1_1Interpolation3D_1_1InterpolationTechnique.html',1,'VHToolkit::Redirection::Interpolation3D']]],
-  ['isredirecting_60',['IsRedirecting',['../classVHToolkit_1_1Redirection_1_1BodyRedirection_1_1BodyRedirection.html#a96bd6454a761c45bfa6b1df668a02554',1,'VHToolkit.Redirection.BodyRedirection.BodyRedirection.IsRedirecting()'],['../classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1WorldRedirection.html#a0ddcd855afb66e94af33fed4b806e860',1,'VHToolkit.Redirection.WorldRedirection.WorldRedirection.IsRedirecting()']]]
+  ['han2018interpolatedreach_51',['Han2018InterpolatedReach',['../namespaceVHToolkit_1_1Redirection.html#af8073b3c987118e1413b41c5be00892baab278652904b8edb8be9a7bd262c71c9',1,'VHToolkit.Redirection.Han2018InterpolatedReach()'],['../classVHToolkit_1_1Redirection_1_1BodyRedirection_1_1Han2018InterpolatedReach.html',1,'VHToolkit.Redirection.BodyRedirection.Han2018InterpolatedReach']]],
+  ['han2018translationalshift_52',['Han2018TranslationalShift',['../namespaceVHToolkit_1_1Redirection.html#af8073b3c987118e1413b41c5be00892bab5b05ec6c6effa0128c0089e39c3c394',1,'VHToolkit.Redirection.Han2018TranslationalShift()'],['../classVHToolkit_1_1Redirection_1_1BodyRedirection_1_1Han2018TranslationalShift.html',1,'VHToolkit.Redirection.BodyRedirection.Han2018TranslationalShift']]],
+  ['horizontalangles_53',['HorizontalAngles',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#aefce33e96a1666c786b42e28954238d3',1,'VHToolkit::Redirection::ParametersToolkit']]],
+  ['hybridaggregate_54',['HybridAggregate',['../namespaceVHToolkit_1_1Redirection.html#aaf3934a62f351dca46599bed84d4bbe2',1,'VHToolkit::Redirection']]],
+  ['hybridweights_55',['HybridWeights',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a6261a96317575fc7c3009433960a0bf7',1,'VHToolkit::Redirection::ParametersToolkit']]]
 ];
