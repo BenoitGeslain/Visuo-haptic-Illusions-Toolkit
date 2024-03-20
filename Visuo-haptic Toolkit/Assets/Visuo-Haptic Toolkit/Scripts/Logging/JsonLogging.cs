@@ -95,7 +95,6 @@ namespace VHToolkit.Logging {
 					records.Clear();
 				}
 			}
-
 			records.Enqueue(new JsonRedirectionData(script));
 			writeRecords(records);
 		}
@@ -111,7 +110,7 @@ namespace VHToolkit.Logging {
 			return new Unsubscriber(_obs, observer);
 		}
 
-		private class Unsubscriber : IDisposable {
+		private sealed class Unsubscriber : IDisposable {
 			private HashSet<IObserver<JsonRedirectionData>> _observers;
 			private IObserver<JsonRedirectionData> _observer;
 
@@ -120,10 +119,7 @@ namespace VHToolkit.Logging {
 				this._observer = observer;
 			}
 
-			public void Dispose() {
-				if (_observer != null && _observers.Contains(_observer))
-					_observers.Remove(_observer);
-			}
+			public void Dispose() => _observers.Remove(_observer);
 		}
 	}
 }

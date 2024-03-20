@@ -73,10 +73,9 @@ namespace VHToolkit.Calibration {
 						}
 						break;
 					case CalibrationState.Computation:
-						virtualTrackers[0].position = points[0];	// Align the first point with the tracker
-						// Align the second and third points by rotating the world
-						for (int i=1; i <= 2; i++)
-						{
+						virtualTrackers[0].position = points[0];    // Align the first point with the tracker
+																	// Align the second and third points by rotating the world
+						for (int i = 1; i <= 2; i++) {
 							var v = virtualTrackers[i].position - virtualTrackers[0].position;
 							var p = points[i] - points[0];
 							virtualTrackers[0].Rotate(axis: Vector3.Cross(v, p), angle: Vector3.Angle(v, p));
@@ -87,12 +86,14 @@ namespace VHToolkit.Calibration {
 						Debug.Log("Calibration done and saved to file.");
 						break;
 				}
-			} else if (virtualTrackers.Length == 1) {
+			}
+			else if (virtualTrackers.Length == 1) {
 				if (state == CalibrationState.FirstPoint && ((hand.TryGetFeatureValue(CommonUsages.triggerButton, out buttonPress) && buttonPress) || Input.GetKeyUp(KeyCode.Space))) {
 					virtualTrackers[0].SetPositionAndRotation(physicalTracker.position, physicalTracker.rotation);
 					state++;
 				}
-			} else {
+			}
+			else {
 				Debug.LogWarning($"Incorrect number of virtualTrackers. There should be 1 or 3, there are {virtualTrackers.Length}.");
 			}
 
@@ -108,13 +109,12 @@ namespace VHToolkit.Calibration {
 		/// Logs the transform of the root world to save calibration. The previous calibration can fail if the headset is self tracking and went in sleep mode as this usually resets the tracking origin.
 		/// </summary>
 		public void SaveCalibration() {
-			using (var writer = new StreamWriter($"{loggingPath}LastCalibration.txt")) {
-				writer.WriteLine(virtualTrackers[0].position);
-				writer.WriteLine(virtualTrackers[0].rotation);
-			}
-			using (var writer = new StreamWriter($"{loggingPath}calibration_{DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss")}.txt")) {
-				writer.WriteLine(virtualTrackers[0].position);
-				writer.WriteLine(virtualTrackers[0].rotation);
+			string[] filenames = { $"{loggingPath}LastCalibration.txt", $"{loggingPath}calibration_{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.txt" };
+			virtualTrackers[0].GetPositionAndRotation(out var position, out var rotation);
+			foreach (var filename in filenames) {
+				using var writer = new StreamWriter(filename);
+				writer.WriteLine(position);
+				writer.WriteLine(rotation);
 			}
 		}
 

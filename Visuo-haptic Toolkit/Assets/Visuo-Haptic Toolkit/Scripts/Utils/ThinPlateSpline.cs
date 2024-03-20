@@ -48,20 +48,16 @@ namespace VHToolkit {
 			var N = Mat.DenseOfRowArrays(x.Select(xx => new[] { 1d, xx.x, xx.y, xx.z }));
 			Debug.Log($"Matrix N is {N.ToMatrixString()}");
 			var M = Mat.Dense(x.Length, x.Length, (i, j) => Vector3.Distance(x[i], x[j])) + lambda * Mat.DenseIdentity(x.Length);
-			var detM = M.Determinant();
-			Debug.Log($"Determinant of M is {detM}");
-			var Mnormalized = M / Math.Pow(detM, 1d / x.Length);
 			var Minv = M.Inverse();
-			Debug.Log($"Determinant of Minv is {Minv.Determinant()}");
 			var temp = N.Transpose() * Minv; // Avoid computing this twice
 			var b = (N.Transpose() * (Minv * N)).Solve(temp * yAsVec);
 			//			var b = (N.Transpose() * (Minv * N)).Inverse() * temp * yAsVec;
 			var bAsFloat = b.Select(x => (float)x).ToArray();
-			var w = (Minv * (yAsVec - N * b));
+			var w = Minv * (yAsVec - N * b);
 			var wAsFloat = w.Select(x => (float)x);
-			Debug.Log($"b is {String.Join(",", b)}");
 			return point => x.Select(xx => Vector3.Distance(xx, point)).ScalarProduct(wAsFloat) + bAsFloat[0] + bAsFloat[1] * point.x + bAsFloat[2] * point.y + bAsFloat[3] * point.z;
 		}
+
 		public static Func<Vector3, float> Solve(Vector3[] x, float[] y) => SolveSmoothed(x, y, 0f);
 
 		private static float ScalarProduct(this IEnumerable<float> first, IEnumerable<float> second) =>
@@ -71,8 +67,6 @@ namespace VHToolkit {
 		// Warning: no diffeomorphism guaranty
 		// Returns f:R^3 -> R^3 satisfying f(s) = t for each pair (s, t) in x.Zip(y).
 		// Each coordinate component fₖ, 0 ≤ k ≤ 2, minimizes the energy ∭ ∑ᵢⱼ (∂ᵢ∂ⱼfₖ)².
-
-
 		public static Func<Vector3, Vector3> SabooSmoothedDisplacementField(Vector3[] x, Vector3[] y, float lambda, bool rescale = false) {
 			Debug.Assert(x.Length == y.Length);
 			Debug.Assert(lambda >= 0);
@@ -84,8 +78,8 @@ namespace VHToolkit {
 				maxima = bounds.max;
 				diff = maxima - minima;
 				var scale = new Vector3(1 / diff.x, 1 / diff.y, 1 / diff.z);
-				x = x.Select(xx => xx - minima).Select(xx => new Vector3(xx.x / diff.x, xx.y / diff.y, xx.z / diff.z)).ToArray();
-				y = y.Select(xx => xx - minima).Select(xx => new Vector3(xx.x / diff.x, xx.y / diff.y, xx.z / diff.z)).ToArray();
+				x = x.Select(xx => xx - minima).Select(xx => Vector3.Scale(xx, scale)).ToArray();
+				y = y.Select(xx => xx - minima).Select(xx => Vector3.Scale(xx, scale)).ToArray();
 				var newBounds = GeometryUtility.CalculateBounds(x.Concat(y).ToArray(), Matrix4x4.identity);
 				Debug.Log($"New bounds are {newBounds.min} {newBounds.max}");
 				var componentsRescaled = Enumerable.Range(0, 3).Select(i => SolveSmoothed(x, Array.ConvertAll(y, yy => yy[i]), lambda)).ToArray();
