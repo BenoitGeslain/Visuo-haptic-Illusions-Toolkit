@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['kohli2010redirectedtouching_223',['Kohli2010RedirectedTouching',['../classVHToolkit_1_1Redirection_1_1Interpolation3D_1_1Kohli2010RedirectedTouching.html',1,'VHToolkit::Redirection::Interpolation3D']]]
+  ['lecuyer2000swamp_219',['Lecuyer2000Swamp',['../classVHToolkit_1_1Redirection_1_1PseudoHaptics_1_1Lecuyer2000Swamp.html',1,'VHToolkit::Redirection::PseudoHaptics']]],
+  ['limb_220',['Limb',['../structVHToolkit_1_1Redirection_1_1Limb.html',1,'VHToolkit::Redirection']]],
+  ['logging_221',['Logging',['../classVHToolkit_1_1Logging_1_1Logging.html',1,'VHToolkit::Logging']]]
 ];
