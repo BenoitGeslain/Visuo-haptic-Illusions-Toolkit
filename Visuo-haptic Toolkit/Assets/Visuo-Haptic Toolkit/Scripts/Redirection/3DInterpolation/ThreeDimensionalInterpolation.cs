@@ -42,10 +42,7 @@ namespace VHToolkit.Redirection.Interpolation3D {
 				previousTechnique = Technique;
 			}
 
-			if (!redirect)
-				new NoInterpolation().Redirect(scene);
-			else if (techniqueInstance is not null)
-				techniqueInstance.Redirect(scene);
+			(redirect ? techniqueInstance : new NoInterpolation())?.Redirect(scene);
 		}
 	}
 }
