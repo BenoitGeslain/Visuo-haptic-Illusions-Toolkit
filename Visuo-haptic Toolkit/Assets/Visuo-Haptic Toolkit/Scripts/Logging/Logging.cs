@@ -80,58 +80,63 @@ namespace VHToolkit.Logging {
 	/// This class handles the CSV logging behavior at execution time.
 	/// </summary>
 	[AddComponentMenu("CSV Logging (Script)")]
-	public class Logging : MonoBehaviour {
-
-		public string logDirectoryPath = "LoggedData\\";
-		[SerializeField] private string optionalFilenamePrefix;
+	public class Logging : Logger<RedirectionData> {
 		private string fileName;
-		private readonly int bufferSize = 10; // number of records kept before writing to disk
-
-		private List<RedirectionData> records = new();
 		private readonly CsvConfiguration config = new(CultureInfo.InvariantCulture) { HasHeaderRecord = false, MemberTypes = MemberTypes.Fields };
 
-		private Interaction script;
 
 		private void Start() {
-			CreateNewFile();
+			CreateNewFile(logDirectoryPath, optionalFilenamePrefix ?? "");
 			script = GetComponent<Interaction>();
 		}
 
 		private void Update() {
-			void writeRecords<Data, DataMap>(List<Data> records) where DataMap : ClassMap<Data> {
-				if (records.Count > bufferSize) {
-					using var writer = new StreamWriter(fileName, append: true);
-					using var csv = new CsvWriter(writer, config);
-					csv.Context.RegisterClassMap<DataMap>();
-					csv.WriteRecords<Data>(records);
-					records.Clear();
-				}
-			}
-
 			for (int i = 0; i < script.scene.limbs.Count; i++) {
 				for (int j = 0; j < script.scene.limbs[i].virtualLimb.Count; j++) {
-					records.Add(new RedirectionData(script, i, j));
+					records.Enqueue(new RedirectionData(script, i, j));
 				}
 			}
-
-			writeRecords<RedirectionData, RedirectionDataMap>(records);
+			WriteRecords(records);
 		}
 
-		public void CreateNewFile() {
+		public void CreateNewFile(string logDirectoryPath = null, string optionalFilenamePrefix = null) {
+			logDirectoryPath ??= this.logDirectoryPath;
+			optionalFilenamePrefix ??= this.optionalFilenamePrefix;
 			Debug.Log("Create log file.");
 			Directory.CreateDirectory(logDirectoryPath);
 			fileName = $"{logDirectoryPath}{optionalFilenamePrefix}{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.csv";
 
-			void writeHeaders<Data, DataMap>(out List<Data> records) where DataMap : ClassMap<Data> {
-				using StreamWriter writer = new(fileName);
-				using CsvWriter csv = new(writer, CultureInfo.InvariantCulture);
-				records = new List<Data>();
-				csv.Context.RegisterClassMap<DataMap>();
-				csv.WriteHeader<Data>();
-				csv.NextRecord();
+			var observer = new FileObserver(fileName, config);
+			observer.Subscribe(this);
+			observers.Add(observer);
+		}
+		private sealed class FileObserver : IObserver<RedirectionData> {
+			private StreamWriter writer;
+			private CsvWriter csvWriter;
+			private IDisposable unsubscriber;
+			public void OnCompleted() {
+				unsubscriber.Dispose();
+				csvWriter.Dispose();
+				writer.Dispose();
 			}
 
-			writeHeaders<RedirectionData, RedirectionDataMap>(out records);
+			public void Subscribe(IObservable<RedirectionData> observable) => unsubscriber = observable?.Subscribe(this);
+
+			public void OnError(Exception error) => Debug.LogError(error);
+
+			public void OnNext(RedirectionData value) {
+				csvWriter.Context.RegisterClassMap<RedirectionDataMap>();
+				csvWriter.WriteRecord(value);
+				csvWriter.NextRecord();
+			}
+
+			public FileObserver(string filename, CsvConfiguration config) {
+				writer = new StreamWriter(filename, append: true);
+				csvWriter = new(writer, configuration: config);
+				csvWriter.Context.RegisterClassMap<RedirectionDataMap>();
+				csvWriter.WriteHeader<RedirectionData>();
+				csvWriter.NextRecord();
+			}
 		}
 	}
 }
