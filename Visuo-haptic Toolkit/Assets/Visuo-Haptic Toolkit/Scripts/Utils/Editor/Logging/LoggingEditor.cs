@@ -8,8 +8,7 @@ namespace VHToolkit.Logging {
 			base.OnInspectorGUI();
 
 			if (GUILayout.Button("Create new log file")) {
-				Logging script = (Logging)target;
-				script.CreateNewFile();
+				((Logging)target).CreateNewFile();
 			}
 		}
 	}

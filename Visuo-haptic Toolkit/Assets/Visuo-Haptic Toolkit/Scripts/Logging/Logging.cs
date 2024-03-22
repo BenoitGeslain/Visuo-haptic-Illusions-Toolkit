@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Globalization;
-using System.Text.Json;
 
 using CsvHelper;
 using CsvHelper.Configuration;
@@ -12,7 +11,6 @@ using UnityEngine;
 using VHToolkit.Redirection;
 using VHToolkit.Redirection.BodyRedirection;
 using VHToolkit.Redirection.WorldRedirection;
-using UnityEditor;
 
 namespace VHToolkit.Logging {
 	/// <summary>
