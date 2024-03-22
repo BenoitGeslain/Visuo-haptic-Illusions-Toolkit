@@ -72,17 +72,24 @@ namespace VHToolkit.Logging {
 
 		public void LaunchVisualizer() {
 
-			Debug.Log($"Launch visualizer with Python {pythonPath}");
-			if (filename is null || pythonPath is null || !filename.EndsWith(".py") || !pythonPath.EndsWith(".exe")) return;
-			// TODO not great for non-windows
-			System.Diagnostics.Process p = new() {
-				StartInfo = new System.Diagnostics.ProcessStartInfo(pythonPath, filename) {
-					RedirectStandardOutput = true,
-					UseShellExecute = false,
-					CreateNoWindow = true
-				}
-			};
-			p.Start();
+			if (filename is null || !filename.EndsWith(".py") || !File.Exists(filename)) {
+				Debug.LogWarning($"Invalid Python script {filename}.");
+			}
+			else if (pythonPath is null || !pythonPath.EndsWith(".exe") || !File.Exists(pythonPath)) {
+				Debug.LogWarning($"Invalid Python executable path {filename}.");
+			}
+			else {
+				Debug.Log($"Launch visualizer with Python {pythonPath}");
+				// TODO not great for non-windows
+				System.Diagnostics.Process p = new() {
+					StartInfo = new System.Diagnostics.ProcessStartInfo(pythonPath, filename) {
+						RedirectStandardOutput = true,
+						UseShellExecute = false,
+						CreateNoWindow = true
+					}
+				};
+				p.Start();
+			}
 		}
 
 		private void GetClient() {
@@ -113,7 +120,7 @@ namespace VHToolkit.Logging {
 			Byte[] messageBytes = System.Text.Encoding.ASCII.GetBytes(json + '\n');
 
 			// Get a client stream for reading and writing.
-			NetworkStream stream = client.GetStream();
+			using NetworkStream stream = client.GetStream();
 
 			try {
 				// Send the message to the connected TcpServer.
