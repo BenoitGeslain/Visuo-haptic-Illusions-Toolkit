@@ -8,13 +8,12 @@ using VHToolkit.Redirection;
 using VHToolkit.Redirection.BodyRedirection;
 using VHToolkit.Redirection.WorldRedirection;
 using Newtonsoft.Json;
-using Oculus.Haptics;
 
 namespace VHToolkit.Logging {
 	public record TransformData {
 		private readonly Transform obj;
-		public string Position => obj != null ? obj.position.ToString() : "NULL";
-		public string Orientation => obj != null ? obj.rotation.normalized.ToString() : "NULL";
+		public string Position => obj ? obj.position.ToString() : "NULL";
+		public string Orientation => obj ? obj.rotation.normalized.ToString() : "NULL";
 		public TransformData(Transform obj) => this.obj = obj;
 	}
 
@@ -45,11 +44,11 @@ namespace VHToolkit.Logging {
 		public bool Redirecting => script.redirect;
 
 		public List<PhysicalLimbData> Limbs => script.scene.limbs.ConvertAll(l => new PhysicalLimbData(l));
-		public TransformData PhysicalHead => (script.scene.physicalHead == null) ? null : new(script.scene.physicalHead);
+		public TransformData PhysicalHead => script.scene.physicalHead ? new(script.scene.physicalHead) : null;
 		public List<TransformData> Targets => script.scene.targets.ConvertAll(t => new TransformData(t));
-		public TransformData PhysicalTarget => (script.scene.physicalTarget == null) ? null : new(script.scene.physicalTarget);
-		public TransformData VirtualTarget => (script.scene.virtualTarget == null) ? null : new(script.scene.virtualTarget);
-		public string StrategyDirection => (script.scene.forwardTarget == null) ? null : script.scene.forwardTarget.ToString();
+		public TransformData PhysicalTarget => script.scene.physicalTarget ? new(script.scene.physicalTarget) : null;
+		public TransformData VirtualTarget => script.scene.virtualTarget ? new(script.scene.virtualTarget) : null;
+		public string StrategyDirection => script.scene.forwardTarget != null ? script.scene.forwardTarget.ToString() : null;
 
 		public JsonRedirectionData(Interaction script) => this.script = script;
 	}
@@ -117,7 +116,7 @@ namespace VHToolkit.Logging {
 
 
 		private sealed class FileObserver : IObserver<JsonRedirectionData> {
-			private StreamWriter writer;
+			private readonly StreamWriter writer;
 			private IDisposable unsubscriber;
 			public void OnCompleted() {
 				unsubscriber.Dispose();

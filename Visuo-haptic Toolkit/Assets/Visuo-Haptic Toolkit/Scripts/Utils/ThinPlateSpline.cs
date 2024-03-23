@@ -78,18 +78,15 @@ namespace VHToolkit {
 				maxima = bounds.max;
 				diff = maxima - minima;
 				var scale = new Vector3(1 / diff.x, 1 / diff.y, 1 / diff.z);
-				x = x.Select(xx => xx - minima).Select(xx => Vector3.Scale(xx, scale)).ToArray();
-				y = y.Select(xx => xx - minima).Select(xx => Vector3.Scale(xx, scale)).ToArray();
-				var newBounds = GeometryUtility.CalculateBounds(x.Concat(y).ToArray(), Matrix4x4.identity);
-				Debug.Log($"New bounds are {newBounds.min} {newBounds.max}");
+				x = Array.ConvertAll(x, xx => Vector3.Scale(xx - minima, scale));
+				y = Array.ConvertAll(y, xx => Vector3.Scale(xx - minima, scale));
 				var componentsRescaled = Enumerable.Range(0, 3).Select(i => SolveSmoothed(x, Array.ConvertAll(y, yy => yy[i]), lambda)).ToArray();
-				return point => new(
-					diff.x * componentsRescaled[0](point) + minima.x,
-					diff.y * componentsRescaled[1](point) + minima.y,
-					diff.z * componentsRescaled[2](point) + minima.z);
+				return point => minima + Vector3.Scale(diff, new(
+					componentsRescaled[0](point),
+					componentsRescaled[1](point),
+					componentsRescaled[2](point)));
 			}
 			var components = Enumerable.Range(0, 3).Select(i => SolveSmoothed(x, Array.ConvertAll(y, yy => yy[i]), lambda)).ToArray();
-			// Todo handle rescale here
 			return point => new(components[0](point), components[1](point), components[2](point));
 		}
 
