@@ -15,7 +15,7 @@ namespace VHToolkit.Visualisation {
 		/// OnEnable is called once at the start of the game similarily to Start().
 		/// Calling OnEnable instead of Start to support recompilation during play (Hot reload)
 		/// </summary>
-		private void OnEnable() {
+		private void Start() {
 			this.enabled &= Debug.isDebugBuild;
 			BRMainScript = GetComponent<BodyRedirection>();
 			scene = BRMainScript.scene;

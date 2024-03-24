@@ -2,12 +2,8 @@ using System.Linq;
 using UnityEngine;
 
 namespace VHToolkit.Redirection.WorldRedirection {
-	public class WorldRedirectionStrategy {
-
-		public virtual Vector3 SteerTo(Scene scene) {
-			Debug.LogError("Calling Redirect() virtual method. It should be overriden");
-			return Vector3.zero;
-		}
+	public abstract class WorldRedirectionStrategy {
+		public abstract Vector3 SteerTo(Scene scene);
 	}
 
 	public class NoSteering : WorldRedirectionStrategy {

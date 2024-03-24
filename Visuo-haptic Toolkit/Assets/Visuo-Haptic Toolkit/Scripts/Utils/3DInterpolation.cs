@@ -15,10 +15,12 @@ public class Interpolation : MonoBehaviour {
 	[SerializeField] private Transform vHand, pHand;
 
 	private Transform[] originalGrid, targetGrid, interpolatedGrid, modifiedGrid;
+	private Vector3[] fixedGrid;
 	private MeshFilter originalMeshFilter, targetMeshFilter, interpolatedMeshFilter, modifiedMeshFilter;
 	private Mesh originalMesh, targetMesh, interpolatedMesh, modifiedMesh;
 	private void Start() {
 		originalGrid = new Transform[n * n];
+		fixedGrid = new Vector3[n * n];
 		targetGrid = new Transform[n * n];
 		interpolatedGrid = new Transform[n * n];
 		modifiedGrid = new Transform[n * n];
@@ -30,69 +32,60 @@ public class Interpolation : MonoBehaviour {
 
 		for (var i = 0; i < n; i++) {
 			for (var j = 0; j < n; j++) {
-				originalGrid[i * n + j] = GameObject.CreatePrimitive(PrimitiveType.Sphere).transform;
-				originalGrid[i * n + j].name = $"Original Point {i} {j}";
-				originalGrid[i * n + j].parent = original;
-				originalGrid[i * n + j].position = new(i * l, 0f, j * l);
-				originalGrid[i * n + j].localScale = new(0.1f, 0.1f, 0.1f);
+				var index = i * n + j;
+				originalGrid[index] = GameObject.CreatePrimitive(PrimitiveType.Sphere).transform;
+				originalGrid[index].name = $"Original Point {i} {j}";
+				originalGrid[index].parent = original;
+				originalGrid[index].position = new(i * l, 0f, j * l);
+				originalGrid[index].localScale = new(0.1f, 0.1f, 0.1f);
 
-				targetGrid[i * n + j] = GameObject.CreatePrimitive(PrimitiveType.Cube).transform;
-				targetGrid[i * n + j].name = $"target Point {i} {j}";
-				targetGrid[i * n + j].parent = target;
-				targetGrid[i * n + j].position = originalGrid[i * n + j].position - 0.1f * j * Vector3.down;
-				targetGrid[i * n + j].localScale = new(0.1f, 0.1f, 0.1f);
+				fixedGrid[index] = new(i * l, 10f, j * l);
 
-				interpolatedGrid[i * n + j] = GameObject.CreatePrimitive(PrimitiveType.Sphere).transform;
-				interpolatedGrid[i * n + j].name = $"Interpolated Point {i} {j}";
-				interpolatedGrid[i * n + j].parent = interpolated;
-				interpolatedGrid[i * n + j].position = new(i * l, 0f, j * l);
-				interpolatedGrid[i * n + j].localScale = new(0.1f, 0.1f, 0.1f);
+				targetGrid[index] = GameObject.CreatePrimitive(PrimitiveType.Cube).transform;
+				targetGrid[index].name = $"target Point {i} {j}";
+				targetGrid[index].parent = target;
+				targetGrid[index].position = originalGrid[index].position - 0.1f * j * Vector3.down;
+				targetGrid[index].localScale = new(0.1f, 0.1f, 0.1f);
 
-				modifiedGrid[i * n + j] = GameObject.CreatePrimitive(PrimitiveType.Cube).transform;
-				modifiedGrid[i * n + j].name = $"Modified Point {i} {j}";
-				modifiedGrid[i * n + j].parent = modified;
-				modifiedGrid[i * n + j].position = new(0f, 0f, 0f);
-				modifiedGrid[i * n + j].localScale = new(0.1f, 0.1f, 0.1f);
+				interpolatedGrid[index] = GameObject.CreatePrimitive(PrimitiveType.Sphere).transform;
+				interpolatedGrid[index].name = $"Interpolated Point {i} {j}";
+				interpolatedGrid[index].parent = interpolated;
+				interpolatedGrid[index].position = new(i * l, 0f, j * l);
+				interpolatedGrid[index].localScale = new(0.1f, 0.1f, 0.1f);
+
+				modifiedGrid[index] = GameObject.CreatePrimitive(PrimitiveType.Cube).transform;
+				modifiedGrid[index].name = $"Modified Point {i} {j}";
+				modifiedGrid[index].parent = modified;
+				modifiedGrid[index].position = new(0f, 0f, 0f);
+				modifiedGrid[index].localScale = new(0.1f, 0.1f, 0.1f);
 			}
 		}
 	}
 
 	private void Update() {
 
-		// var disp = ThinPlateSpline.SabooSmoothedDisplacementField(
-		// 	Array.ConvertAll(originalGrid, g => g.position),
-		// 	Array.ConvertAll(targetGrid, g => g.position),
-		// 	0,
-		// 	false
-		// 	);
-		Func<Vector3, Vector3> disp = x => InverseWeightedDistance.Interpolate(
-			Array.ConvertAll(originalGrid, g => g.position),
-			Array.ConvertAll(targetGrid, g => g.position),
-			1,
-			x
+
+		var originalPositions = Array.ConvertAll(originalGrid, g => g.position).Concat(fixedGrid).ToArray();
+		var finalPositions = Array.ConvertAll(targetGrid, g => g.position).Concat(fixedGrid).ToArray();
+
+		var disp = ThinPlateSpline.SabooSmoothedDisplacementField(
+			originalPositions,
+			finalPositions,
+			0,
+			false
 		);
 
 		var tmp = Array.ConvertAll(interpolatedGrid, g => disp(g.position));
 		DrawMeshes(tmp);
 
-		var uv = originalMesh.uv;
-		var colors = new Color[uv.Length];
-
-		for (var i = 0; i < uv.Length; i++) {
-			colors[i] = Color.Lerp(Color.red, Color.white, uv[i].sqrMagnitude);
-		}
+        var colors = Array.ConvertAll(originalMesh.uv, vec => Color.Lerp(Color.red, Color.white, vec.sqrMagnitude));
 
 		originalMesh.colors = colors;
 		targetMesh.colors = colors;
 		// interpolatedMesh.colors = colors;
 		// modifiedMesh.colors = colors;
 
-		vHand.position = InverseWeightedDistance.Interpolate(
-			Array.ConvertAll(originalGrid, g => g.position),
-			Array.ConvertAll(targetGrid, g => g.position),
-			2,
-			pHand.position
-		);
+		vHand.position = disp(pHand.position);
 	}
 
 	private void DrawMeshes(Vector3[] m) {
@@ -100,7 +93,7 @@ public class Interpolation : MonoBehaviour {
 			originalMesh = originalMeshFilter.mesh;
 
 			int[] triangles = new int[(n - 1) * (n - 1) * 6];
-			for (int ti = 0, x = 0, y = 0; ti + 6 <= (n - 1) * (n - 1) * 6; x++, ti += 6) {
+			for (int ti = 0, x = 0, y = 0; ti + 6 <= triangles.Length; x++, ti += 6) {
 				if (x == n - 1) {
 					y++; x = 0;
 				}
@@ -108,7 +101,6 @@ public class Interpolation : MonoBehaviour {
 				triangles[ti + 4] = triangles[ti + 1] = x + y * n + 1;
 				triangles[ti + 3] = triangles[ti + 2] = x + y * n + n;
 				triangles[ti + 5] = x + y * n + n + 1;
-
 			}
 			originalMesh.vertices = Array.ConvertAll(originalGrid, p => p.position);
 			originalMesh.triangles = triangles;

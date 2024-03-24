@@ -14,7 +14,7 @@ namespace VHToolkit.Redirection {
 	/// </summary>
 	[Serializable]
 	public struct Limb {
-        public Transform physicalLimb;
+		public Transform physicalLimb;
 		public List<Transform> virtualLimb;
 
 		public Limb(Transform physicalLimb, List<Transform> virtualLimb) {
@@ -40,19 +40,19 @@ namespace VHToolkit.Redirection {
 	/// <param name="applySmoothing">Whether to apply smoothing in the Razzaque et al.'s Redirected walking hybrid technique.</param>
 	[Serializable]
 	public record Scene() {
-        // [Ignore] public Transform physicalHand;
-        // [Ignore] public Transform virtualHand;
-        [SerializeField] public List<Limb> limbs;
+		// [Ignore] public Transform physicalHand;
+		// [Ignore] public Transform virtualHand;
+		[SerializeField] public List<Limb> limbs;
 
-        [Ignore] public List<Transform> virtualLimbs => limbs.SelectMany(limb => limb.virtualLimb).ToList();
+		[Ignore] public List<Transform> virtualLimbs => limbs.SelectMany(limb => limb.virtualLimb).ToList();
 
-        [Ignore] public Transform physicalHead;
+		[Ignore] public Transform physicalHead;
 		[Ignore] public Transform virtualHead;
 
-        [Ignore] public Transform physicalTarget;
+		[Ignore] public Transform physicalTarget;
 
-        [Ignore] public Transform virtualTarget;
-        [Ignore] public Transform origin;
+		[Ignore] public Transform virtualTarget;
+		[Ignore] public Transform origin;
 		[Ignore] public List<Transform> targets;
 		[Ignore] public bool applyDampening = false;
 		[Ignore] public bool applySmoothing = false;
@@ -72,13 +72,18 @@ namespace VHToolkit.Redirection {
 		[Ignore] public bool enableHybridOverTime = true;
 		[Ignore] public bool enableHybridRotational = true;
 		[Ignore] public bool enableHybridCurvature = true;
+		[Ignore] public Vector3[] reference;
+		[Ignore] public Vector3[] interpolated;
+
+
 
 		/// <summary>
 		/// The position of the virtual limb is given by <c>physicalHand.position + Redirection</c>.
 		/// </summary>
-		[Ignore] public List<Vector3> LimbRedirection {
-            get => limbs.ConvertAll(limb => limb.virtualLimb[0].position - limb.physicalLimb.position);
-            set {
+		[Ignore]
+		public List<Vector3> LimbRedirection {
+			get => limbs.ConvertAll(limb => limb.virtualLimb[0].position - limb.physicalLimb.position);
+			set {
 				foreach ((var limb, var v) in limbs.Zip(value)) {
 					// Debug.Log(limb.virtualLimb.First().position);
 					limb.virtualLimb.ForEach(vLimb => vLimb.position = limb.physicalLimb.position + v);
@@ -87,8 +92,8 @@ namespace VHToolkit.Redirection {
 			}
 		}
 
-        /// <returns>The distance between the user's real and virtual hands.</returns>
-        public List<List<float>> GetHandRedirectionDistance() => limbs.ConvertAll(limb => limb.virtualLimb.ConvertAll(vlimb => Vector3.Distance(limb.physicalLimb.position, vlimb.position)));
+		/// <returns>The distance between the user's real and virtual hands.</returns>
+		public List<List<float>> GetHandRedirectionDistance() => limbs.ConvertAll(limb => limb.virtualLimb.ConvertAll(vlimb => Vector3.Distance(limb.physicalLimb.position, vlimb.position)));
 
 		/// <returns>The distance between the user's real hand and the physical target.</returns>
 		public List<float> GetPhysicalHandTargetDistance() => limbs.ConvertAll(limb => Vector3.Distance(limb.physicalLimb.position, physicalTarget.position));
@@ -103,26 +108,26 @@ namespace VHToolkit.Redirection {
 		public Vector3 GetHeadToHeadVector() => physicalHead.position - virtualHead.position;
 
 		private Quaternion _redirection = Quaternion.identity;
-        /// <returns>The quaternion rotation between the user's physical and virtual head.</returns>
-        public Quaternion HeadToHeadRedirection {
+		/// <returns>The quaternion rotation between the user's physical and virtual head.</returns>
+		public Quaternion HeadToHeadRedirection {
 			get => _redirection;
 			set { virtualHead.rotation = value * physicalHead.rotation; _redirection = value; }
 		}
 
-        /// <returns>The distance between the user's physical head and the target.</returns>
-        public float GetHeadToTargetDistance() => Vector3.Distance(physicalHead.position, selectedTarget.position);
+		/// <returns>The distance between the user's physical head and the target.</returns>
+		public float GetHeadToTargetDistance() => Vector3.Distance(physicalHead.position, selectedTarget.position);
 
 		/// <returns>The signed angle (as per trigonometry standards) between the user's physical head and the forward target in degrees.</returns>
-        public float GetHeadAngleToTarget() => Vector3.SignedAngle(Vector3.ProjectOnPlane(physicalHead.forward, Vector3.up), forwardTarget, Vector3.up);
+		public float GetHeadAngleToTarget() => Vector3.SignedAngle(Vector3.ProjectOnPlane(physicalHead.forward, Vector3.up), forwardTarget, Vector3.up);
 
-        /// <returns>The physical head's rotation with respect to the last frame's rotation, as a quaternion.</returns>
-        public Quaternion GetHeadInstantRotation() => physicalHead.rotation * Quaternion.Inverse(previousHeadRotation);
+		/// <returns>The physical head's rotation with respect to the last frame's rotation, as a quaternion.</returns>
+		public Quaternion GetHeadInstantRotation() => physicalHead.rotation * Quaternion.Inverse(previousHeadRotation);
 
-        /// <returns>The instant angular velocity around the up axis (Y) of the physical head using the last frame's position.</returns>
-        public float GetHeadInstantRotationY() {
+		/// <returns>The instant angular velocity around the up axis (Y) of the physical head using the last frame's position.</returns>
+		public float GetHeadInstantRotationY() {
 			// float instantRotation = (Quaternion.Inverse(physicalHead.rotation) * GetHeadInstantRotation() * physicalHead.rotation ).eulerAngles.y;
 			float instantRotation = GetHeadInstantRotation().eulerAngles.y;
-			return (instantRotation > 180f)? instantRotation - 360f : instantRotation;
+			return (instantRotation > 180f) ? instantRotation - 360f : instantRotation;
 		}
 
 		/// <returns>The instant linear velocity of the physical head using the last frame's position</returns>
@@ -131,38 +136,34 @@ namespace VHToolkit.Redirection {
 		/// <returns>The instant linear velocity of the physical head using the last frame's position projected on the physical head forward vector.</returns>
 		public Vector3 GetHeadInstantTranslationForward() => Vector3.Project(GetHeadInstantTranslation(), physicalHead.forward);
 
-        /// <returns>The instant linear velocity of the physical hand using the last frame's position</returns>
-        public List<Vector3> GetLimbInstantTranslation() => limbs.Zip(previousLimbPositions, (limb, pLimb) => limb.physicalLimb.position - pLimb).ToList();
+		/// <returns>The instant linear velocity of the physical hand using the last frame's position</returns>
+		public List<Vector3> GetLimbInstantTranslation() => limbs.Zip(previousLimbPositions, (limb, pLimb) => limb.physicalLimb.position - pLimb).ToList();
 
 
-        /// <summary>
-        /// Applies unaltered physical head rotations to the virtual head GameObject
-        /// </summary>
-        public void CopyHeadRotations() => virtualHead.rotation = HeadToHeadRedirection * physicalHead.rotation;
+		/// <summary>
+		/// Applies unaltered physical head rotations to the virtual head GameObject
+		/// </summary>
+		public void CopyHeadRotations() => virtualHead.rotation = HeadToHeadRedirection * physicalHead.rotation;
 
-        /// <summary>
-        /// Applies unaltered physical head translations to the virtual head GameObject
-        /// </summary>
-        public void CopyHeadTranslations() => virtualHead.Translate(HeadToHeadRedirection * GetHeadInstantTranslation(), relativeTo: Space.World);
+		/// <summary>
+		/// Applies unaltered physical head translations to the virtual head GameObject
+		/// </summary>
+		public void CopyHeadTranslations() => virtualHead.Translate(HeadToHeadRedirection * GetHeadInstantTranslation(), relativeTo: Space.World);
 
-        /// <summary>
-        /// Applies unaltered physical hand rotations to the virtual hand GameObjects
-        /// </summary>
-        public void CopyLimbTranslationAndRotation() {
-			limbs.ForEach(limb => {
-				Vector3 offset = physicalHead.InverseTransformPoint(limb.physicalLimb.position);
-				foreach (var vlimb in limb.virtualLimb) {
-					vlimb.SetPositionAndRotation(virtualHead.TransformPoint(offset), HeadToHeadRedirection * limb.physicalLimb.rotation);
-                }
-			});
-		}
+		/// <summary>
+		/// Applies unaltered physical hand rotations to the virtual hand GameObjects
+		/// </summary>
+		public void CopyLimbTranslationAndRotation() => limbs.ForEach(limb => {
+			Vector3 offset = physicalHead.InverseTransformPoint(limb.physicalLimb.position);
+			foreach (var vlimb in limb.virtualLimb) {
+				vlimb.SetPositionAndRotation(virtualHead.TransformPoint(offset), HeadToHeadRedirection * limb.physicalLimb.rotation);
+			}
+		});
 
 
-        /// <summary>
-        /// Rotate the virtual head by the given angle (in degrees) around the world's y axis
-        /// </summary>
-        public void RotateVirtualHeadY(float angle) {
-            HeadToHeadRedirection = Quaternion.Euler(0f, angle, 0f) * HeadToHeadRedirection;
-		}
+		/// <summary>
+		/// Rotate the virtual head by the given angle (in degrees) around the world's y axis
+		/// </summary>
+		public void RotateVirtualHeadY(float angle) => HeadToHeadRedirection = Quaternion.Euler(0f, angle, 0f) * HeadToHeadRedirection;
 	}
 }

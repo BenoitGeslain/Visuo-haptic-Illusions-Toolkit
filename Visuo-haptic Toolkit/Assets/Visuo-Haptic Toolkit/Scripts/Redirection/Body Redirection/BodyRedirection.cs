@@ -57,7 +57,7 @@ namespace VHToolkit.Redirection.BodyRedirection {
 		/// Start function called once when the game is starting. This fucntion calls updatetechnique() to instantiate the technique class and
 		/// initializes the previous head positions.
 		/// </summary>
-		private void OnEnable() {
+		private void Start() {
 			UpdateTechnique();
 			previoustechnique = _technique;
 			// Store the previous hand and head position and rotation to compute instant linear or angular velocity

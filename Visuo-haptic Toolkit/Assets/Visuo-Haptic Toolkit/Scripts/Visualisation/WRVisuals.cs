@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using Unity.Collections;
 using UnityEngine;
 
 using VHToolkit.Redirection;
@@ -20,7 +19,7 @@ namespace VHToolkit.Visualisation {
 		[SerializeField] private int orbitResolution;
 
 		// Calling OnEnable instead of Start to support recompilation during play
-		private void OnEnable() {
+		private void Start() {
 			WRMainScript = GetComponent<WorldRedirection>();
 			targets = new List<Transform>();
 		}
@@ -67,17 +66,15 @@ namespace VHToolkit.Visualisation {
 				return;
 			}
 			Vector3 previousRadius = new(0f, 0f, scene.parameters.SteerToOrbitRadius);
-			Vector3 currentRadius;
 			Quaternion stepRotation = Quaternion.Euler(0f, 360f / orbitResolution, 0f);
 
 			for (int angle = 0; angle < orbitResolution; angle++) {
-				currentRadius = stepRotation * previousRadius;
+				Vector3 currentRadius = stepRotation * previousRadius;
 
 				Vector3 start = firstTarget.position + previousRadius;
 				Vector3 end = firstTarget.position + currentRadius;
 
-				start.y = scene.physicalHead.position.y;
-				end.y = scene.physicalHead.position.y;
+				start.y = end.y = scene.physicalHead.position.y;
 
 				Debug.DrawLine(start, end);
 				previousRadius = currentRadius;

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace VHToolkit.Redirection {
 	[CreateAssetMenu(fileName = "Data", menuName = "VR Illusions Toolkit/Interaction Techniques Parameters", order = 1)]
-	public class ParametersToolkit: ScriptableObject {
+	public class ParametersToolkit : ScriptableObject {
 
 		// Body Warping
 		[Tooltip("The thresholds for the left and right direction. These values are used to show whether the targets or the hands are further apart than these values.\n\nThe recommended values are [-4.38°, 3.81°] from the measures made by Zenner et al., 2019 using the 75% detection rate. They are also called Just Noticeable Difference or Intervals of Non-detection.\n\nThis wiki page gives more details and a link to the paper referenced: Anonymized. Values are in degrees.")]
@@ -24,7 +24,7 @@ namespace VHToolkit.Redirection {
 		public float GoGoCoefficient = 1f;
 		[Tooltip("The activation distance  for which the PoupyrevGoGo1996 technique starts to remap the virtual hand's movement")]
 		public float GoGoActivationDistance = 0.167f;
-		[Tooltip("Coefficient that controls the amount of redirection to remove according to the real hand translation when selecting the ResetRedirection technique. Value is in XXXX.")]	// TODO check this
+		[Tooltip("Coefficient that controls the amount of redirection to remove according to the real hand translation when selecting the ResetRedirection technique. Value is in XXXX.")]  // TODO check this
 		public float ResetRedirectionCoeff = 0.087f;
 
 
@@ -41,7 +41,7 @@ namespace VHToolkit.Redirection {
 		public float DampeningDistanceThreshold = 1.25f;
 		[Tooltip("The dampening range. Value is in °.")]
 		public float DampeningRange = 1.57f;
-		[Range(0,1)]
+		[Range(0, 1)]
 		[Tooltip("The soothing factor preventing abrupt changes. Value has no unit. [Hogson and Bachmann, 2013]")]
 		public float SmoothingFactor = 0.2f;
 
@@ -64,8 +64,12 @@ namespace VHToolkit.Redirection {
 
 
 		[Header("3D Interpolation")]
-		[Tooltip("")]
-		public Vector3 a;
+		[Tooltip("Parameter that penalizes second-order derivatives, thence also bumps.")]
+		[Range(0, float.MaxValue)]
+		public float smoothingParameter;
+		[Tooltip("Whether to apply rescaling before using thin-plate interpolation.")]
+		public bool rescale;
+
 
 
 
