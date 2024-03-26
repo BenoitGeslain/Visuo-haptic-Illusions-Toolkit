@@ -7,5 +7,6 @@ var searchData=
   ['bodyredirectiontechniquepropertydrawer_12',['BodyRedirectionTechniquePropertyDrawer',['../classVHToolkit_1_1Redirection_1_1BodyRedirection_1_1BodyRedirectionTechniquePropertyDrawer.html',1,'VHToolkit::Redirection::BodyRedirection']]],
   ['brtechnique_13',['BRTechnique',['../namespaceVHToolkit_1_1Redirection.html#af8073b3c987118e1413b41c5be00892b',1,'VHToolkit::Redirection']]],
   ['brvisuals_14',['BRVisuals',['../classVHToolkit_1_1Visualisation_1_1BRVisuals.html',1,'VHToolkit::Visualisation']]],
-  ['bumpfunction_15',['BumpFunction',['../classVHToolkit_1_1Redirection_1_1BodyRedirection_1_1BodyRedirectionTechnique.html#a7886c777bac751617ec68a4375a0854a',1,'VHToolkit::Redirection::BodyRedirection::BodyRedirectionTechnique']]]
+  ['buffersize_15',['bufferSize',['../classVHToolkit_1_1Logging_1_1Logger.html#a85cc845dc79a9e5a37bde5c5e8041ef8',1,'VHToolkit::Logging::Logger']]],
+  ['bumpfunction_16',['BumpFunction',['../classVHToolkit_1_1Redirection_1_1BodyRedirection_1_1BodyRedirectionTechnique.html#a7886c777bac751617ec68a4375a0854a',1,'VHToolkit::Redirection::BodyRedirection::BodyRedirectionTechnique']]]
 ];
