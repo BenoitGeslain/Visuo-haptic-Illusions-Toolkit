@@ -141,8 +141,6 @@ namespace VHToolkit.Visualisation {
 			Debug.Assert(targets.Count == count);
 		}
 
-		private void SteerInDirection(Scene scene) {
-			Debug.DrawRay(scene.physicalHead.position, scene.physicalHead.rotation * scene.strategyDirection);
-		}
+		private void SteerInDirection(Scene scene) => Debug.DrawRay(scene.physicalHead.position, scene.physicalHead.rotation * scene.strategyDirection);
 	}
 }

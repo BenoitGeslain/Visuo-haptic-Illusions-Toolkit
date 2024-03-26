@@ -79,7 +79,7 @@ namespace VHToolkit.Logging {
 				Debug.LogWarning($"Invalid Python executable path {filename}.");
 			}
 			else {
-				Debug.Log($"Launch visualizer with Python {pythonPath}");
+				Debug.Log($"Launch visualizer with Python {pythonPath}.");
 				// TODO not great for non-windows
 				System.Diagnostics.Process p = new() {
 					StartInfo = new System.Diagnostics.ProcessStartInfo(pythonPath, filename) {
@@ -117,17 +117,16 @@ namespace VHToolkit.Logging {
 		private void SendMessage(TcpClient client, string json) {
 
 			// Translate the passed message into ASCII and store it as a Byte array.
-			Byte[] messageBytes = System.Text.Encoding.ASCII.GetBytes(json + '\n');
-
-			// Get a client stream for reading and writing.
-			using NetworkStream stream = client.GetStream();
+			byte[] messageBytes = System.Text.Encoding.ASCII.GetBytes(json + '\n');
 
 			try {
+				// Get a client stream for reading and writing.
+				NetworkStream stream = client.GetStream();
 				// Send the message to the connected TcpServer.
 				stream.Write(messageBytes, 0, messageBytes.Length);
 				stream.Flush();
 			}
-			catch (SocketException) { Debug.LogWarning("Socket closed."); }
+			catch (IOException) { Debug.LogWarning("Socket closed."); }
 		}
 
 		private void Update() {
