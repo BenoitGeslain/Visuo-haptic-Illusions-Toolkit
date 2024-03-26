@@ -120,7 +120,7 @@ namespace VHToolkit.Logging {
 			byte[] messageBytes = System.Text.Encoding.ASCII.GetBytes(json + '\n');
 
 			// Get a client stream for reading and writing.
-			using NetworkStream stream = client.GetStream();
+			NetworkStream stream = client.GetStream();
 
 			try {
 				// Send the message to the connected TcpServer.
