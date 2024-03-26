@@ -119,15 +119,14 @@ namespace VHToolkit.Logging {
 			// Translate the passed message into ASCII and store it as a Byte array.
 			byte[] messageBytes = System.Text.Encoding.ASCII.GetBytes(json + '\n');
 
-			// Get a client stream for reading and writing.
-			NetworkStream stream = client.GetStream();
-
 			try {
+				// Get a client stream for reading and writing.
+				NetworkStream stream = client.GetStream();
 				// Send the message to the connected TcpServer.
 				stream.Write(messageBytes, 0, messageBytes.Length);
 				stream.Flush();
 			}
-			catch (SocketException) { Debug.LogWarning("Socket closed."); }
+			catch (IOException) { Debug.LogWarning("Socket closed."); }
 		}
 
 		private void Update() {
