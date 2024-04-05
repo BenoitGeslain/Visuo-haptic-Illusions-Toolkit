@@ -17,14 +17,14 @@ EditorBuildSettings:
     path: Assets/Visuo-Haptic Toolkit/Sample Scenes/Body Redirection/Body Redirection
       Meta XR.unity
     guid: 81a027c82dd10a34a818bb544929334e
-  - enabled: 0
+  - enabled: 1
     path: Assets/Demo Scenes/Corridor/Scenes/RedirectionCorridor.unity
     guid: 9ee13add4993cae41b8452bdd2c8a832
-  - enabled: 1
+  - enabled: 0
     path: Assets/Demo Scenes/Azmandian 3 Cubes/Static Floating Cubes.unity
     guid: 885a34dea4cdceb4fb2045466d51655a
   m_configObjects:
-    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: bef35fcb086b81645a51417234b42549, type: 2}
+    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 7871a6cd7edfb6e4e90388d9be0cd361, type: 2}
     Unity.XR.OpenVR.Settings: {fileID: 11400000, guid: b6bf661543b159f4f93e0c7221185c37, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 59bb4fa2062df8549bae6e1c8690288b, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: f15c911359537b241b84e33fd34fbf49, type: 2}
