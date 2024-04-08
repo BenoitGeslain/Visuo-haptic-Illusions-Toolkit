@@ -1,10 +1,11 @@
 using UnityEngine;
 
 using VHToolkit.Redirection;
+using VHToolkit.Redirection.BodyRedirection;
 
-class NewBRTechnique: BodyRedirectionTechnique {
+class #SCRIPTNAME# : BodyRedirectionTechnique {
 
-	public override void Redirect(Transform physicalTarget, Transform virtualTarget, Transform origin, Transform physicalHand, Transform virtualHand) {
-		Debug.Log("Method not implemented yet.");
+	public override void Redirect(Scene scene) {
+		Debug.LogWarning("Method not implemented yet.");
 	}
 }

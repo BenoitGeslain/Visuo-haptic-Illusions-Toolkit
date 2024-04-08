@@ -6,6 +6,7 @@ namespace VHToolkit.Redirection {
 	public enum BRTechnique {
 		None,
 		Reset,
+		[InspectorName("")] SEPARATOR1,
 		// Hand Redirection techniques
 		Han2018TranslationalShift,
 		Han2018InterpolatedReach,
@@ -14,6 +15,7 @@ namespace VHToolkit.Redirection {
 		Cheng2017Sparse,
 		Geslain2022Polynom,
 		Poupyrev1996GoGo,
+		[InspectorName(" ")] SEPARATOR2,
 		// Pseudo-haptic techiques
 		Lecuyer2000Swamp,
 		Samad2019Weight
@@ -32,6 +34,7 @@ namespace VHToolkit.Redirection {
 	public enum WRTechnique {
 		None,
 		Reset,
+		[InspectorName("")] SEPARATOR1,
 		Razzaque2001OverTimeRotation,
 		Razzaque2001Rotational,
 		Razzaque2001Curvature,
@@ -42,14 +45,18 @@ namespace VHToolkit.Redirection {
 
 	public enum WRStrategy {
 		NoSteering,
+		[InspectorName("")] SEPARATOR1,
 		SteerToCenter,
 		SteerToOrbit,
 		SteerToMultipleTargets,
-		SteerInDirection
+		SteerInDirection,
+		[InspectorName(" ")] SEPARATOR2,
+		PushPullReactive
 	}
 
 	public enum HybridAggregate {
 		Max,
+		[InspectorName("")] SEPARATOR1,
 		Sum,
 		Mean,
 		WeightedSum
