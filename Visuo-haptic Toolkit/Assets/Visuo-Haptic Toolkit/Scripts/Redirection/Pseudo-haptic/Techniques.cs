@@ -16,8 +16,8 @@ namespace VHToolkit.Redirection.PseudoHaptics {
 			foreach (var (limb, t) in scene.limbs.Zip(scene.GetLimbInstantTranslation())) {
 				foreach (Transform vlimb in limb.virtualLimb) {
 					var distanceToOrigin = (vlimb.position - scene.origin.position).ProjectToHorizontalPlane();
-					bool insideSwamp = MathF.Max(MathF.Abs(distanceToOrigin.x), MathF.Abs(distanceToOrigin.y)) * 2 < Toolkit.Instance.parameters.SwampSquareLength;
-					vlimb.Translate(insideSwamp ? t * Toolkit.Instance.parameters.SwampCDRatio : t, relativeTo: Space.World);
+					bool insideSwamp = MathF.Max(MathF.Abs(distanceToOrigin.x), MathF.Abs(distanceToOrigin.y)) * 2 < scene.parameters.SwampSquareLength;
+					vlimb.Translate(insideSwamp ? t * scene.parameters.SwampCDRatio : t, relativeTo: Space.World);
 				}
 			}
 		}

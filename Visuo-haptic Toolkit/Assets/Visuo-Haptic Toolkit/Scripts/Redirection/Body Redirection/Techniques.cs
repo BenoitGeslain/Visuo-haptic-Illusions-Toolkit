@@ -154,7 +154,7 @@ namespace VHToolkit.Redirection.BodyRedirection {
 
 		public override void Redirect(Scene scene) {
 			foreach (var (limb, t) in scene.limbs.Zip(scene.GetLimbInstantTranslation())) {
-				limb.virtualLimb.ForEach(vlimb => vlimb.Translate(t + t.magnitude * Toolkit.Instance.parameters.ResetRedirectionCoeff * (limb.physicalLimb.position - vlimb.position).normalized, relativeTo: Space.World));
+				limb.virtualLimb.ForEach(vlimb => vlimb.Translate(t + t.magnitude * scene.parameters.ResetRedirectionCoeff * (limb.physicalLimb.position - vlimb.position).normalized, relativeTo: Space.World));
 			};
 		}
 	}

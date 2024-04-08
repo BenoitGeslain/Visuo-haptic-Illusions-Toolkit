@@ -37,16 +37,16 @@ namespace VHToolkit.Visualisation {
 			if (BRMainScript.Technique == BRTechnique.Lecuyer2000Swamp) {
 				foreach(var vlimb in scene.virtualLimbs) {
 					Vector3 distanceToOrigin = vlimb.position - scene.origin.position;
-					Color c = (MathF.Max(MathF.Abs(distanceToOrigin[0]), MathF.Abs(distanceToOrigin[2])) < Toolkit.Instance.parameters.SwampSquareLength/2) ?
+					Color c = (MathF.Max(MathF.Abs(distanceToOrigin[0]), MathF.Abs(distanceToOrigin[2])) < scene.parameters.SwampSquareLength/2) ?
 							Color.green : Color.yellow;
-					Debug.DrawRay(scene.origin.position + new Vector3(Toolkit.Instance.parameters.SwampSquareLength/2, 0f, Toolkit.Instance.parameters.SwampSquareLength/2),
-								Vector3.back * Toolkit.Instance.parameters.SwampSquareLength, c);
-					Debug.DrawRay(scene.origin.position + new Vector3(Toolkit.Instance.parameters.SwampSquareLength/2, 0f, Toolkit.Instance.parameters.SwampSquareLength/2),
-								Vector3.left * Toolkit.Instance.parameters.SwampSquareLength, c);
-					Debug.DrawRay(scene.origin.position - new Vector3(Toolkit.Instance.parameters.SwampSquareLength/2, 0f, Toolkit.Instance.parameters.SwampSquareLength/2),
-								Vector3.forward * Toolkit.Instance.parameters.SwampSquareLength, c);
-					Debug.DrawRay(scene.origin.position - new Vector3(Toolkit.Instance.parameters.SwampSquareLength/2, 0f, Toolkit.Instance.parameters.SwampSquareLength/2),
-								Vector3.right * Toolkit.Instance.parameters.SwampSquareLength, c);
+					Debug.DrawRay(scene.origin.position + new Vector3(scene.parameters.SwampSquareLength/2, 0f, scene.parameters.SwampSquareLength/2),
+								Vector3.back * scene.parameters.SwampSquareLength, c);
+					Debug.DrawRay(scene.origin.position + new Vector3(scene.parameters.SwampSquareLength/2, 0f, scene.parameters.SwampSquareLength/2),
+								Vector3.left * scene.parameters.SwampSquareLength, c);
+					Debug.DrawRay(scene.origin.position - new Vector3(scene.parameters.SwampSquareLength/2, 0f, scene.parameters.SwampSquareLength/2),
+								Vector3.forward * scene.parameters.SwampSquareLength, c);
+					Debug.DrawRay(scene.origin.position - new Vector3(scene.parameters.SwampSquareLength/2, 0f, scene.parameters.SwampSquareLength/2),
+								Vector3.right * scene.parameters.SwampSquareLength, c);
 				}
 			}
 		}
@@ -63,12 +63,12 @@ namespace VHToolkit.Visualisation {
 
 			// Compares the euler angles against the thresholds and applies the correct color
 			//TODO faux tel quel, il faut regarder si c'est à gauche ou à droite par rapport à l'axe origine-target
-			var allAnglesBelowThreshold = 360 - d.x < Toolkit.Instance.parameters.HorizontalAngles.left &&
-										  d.x < Toolkit.Instance.parameters.HorizontalAngles.right &&
-										  360 - d.y < Toolkit.Instance.parameters.VerticalAngles.up &&
-										  d.y < Toolkit.Instance.parameters.VerticalAngles.down &&
-										  360 - d.z < Toolkit.Instance.parameters.DepthGain.forward &&
-										  d.z < Toolkit.Instance.parameters.DepthGain.backward;
+			var allAnglesBelowThreshold = 360 - d.x < scene.parameters.HorizontalAngles.left &&
+										  d.x < scene.parameters.HorizontalAngles.right &&
+										  360 - d.y < scene.parameters.VerticalAngles.up &&
+										  d.y < scene.parameters.VerticalAngles.down &&
+										  360 - d.z < scene.parameters.DepthGain.forward &&
+										  d.z < scene.parameters.DepthGain.backward;
 
 			Debug.DrawLine(obj1, obj2, allAnglesBelowThreshold ? Color.yellow : Color.white);
 		}
