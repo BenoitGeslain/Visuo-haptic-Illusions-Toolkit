@@ -21,12 +21,10 @@ You will find
 - [Azmandian et al., 2016](https://doi.org/10.1145/2858036.2858226), Body Warping
 - [Azmandian et al., 2016](https://doi.org/10.1145/2858036.2858226), Hybrid Warping
 - [Han et al., 2019](http://ieeexplore.ieee.org/document/8260974/), Translational Shift
-- [Han et al., 2019](http://ieeexplore.ieee.org/document/8260974/), Interpolated Reach *
+- [Han et al., 2019](http://ieeexplore.ieee.org/document/8260974/), Interpolated Reach
 - [Cheng et al., 2017](http://doi.acm.org/10.1145/3025453.3025753), Sparse Haptics
 - [Geslain et al., 2022](https://doi.org/10.1145/3531073.3531100), 2<sup>nd</sup> order polynomials
 - [Poupyrev et al., 1996](https://dl.acm.org/doi/10.1145/237091.237102), The Go-Go
-
-\* Sign mistake in equation (3.3). Technique redirects in opposite direction. + B is incorrect.
 
 ### World Redirection
 - [Razzaque et al., 2001](http://dx.doi.org/10.2312/egs.20011036), Over Time Rotation
