@@ -10,7 +10,7 @@ namespace VHToolkit.Redirection.WorldRedirection {
 	[CustomEditor(typeof(WorldRedirection))]
 	public class WorldRedirectionEditor : Editor {
 		SerializedProperty technique, strategy,
-		physicalHand, physicalHead, virtualHead,
+		limbs, physicalHead, virtualHead,
 		physicalTarget, virtualTarget,
 		origin,
 		targetsScene,
@@ -28,7 +28,7 @@ namespace VHToolkit.Redirection.WorldRedirection {
 			strategy = serializedObject.FindProperty("strategy");
 
 			// Scene
-			physicalHand = serializedObject.FindProperty("scene.limbs");
+			limbs = serializedObject.FindProperty("scene.limbs");
 
 			physicalHead = serializedObject.FindProperty("scene.physicalHead");
 			virtualHead = serializedObject.FindProperty("scene.virtualHead");
@@ -63,7 +63,7 @@ namespace VHToolkit.Redirection.WorldRedirection {
 
 			string techniqueName = technique.enumNames[technique.enumValueIndex];
 
-			MakePropertyField(physicalHand, "Physical Limbs", "A list of tracked user limbs.");
+			MakePropertyField(limbs, "User Limbs", "A list of tracked user limbs.");
 			MakePropertyField(physicalHead, "Physical Head", "Transform tracking the user's real head");
 			MakePropertyField(virtualHead, "Virtual Head", "Transform tracking the user's virtual head");
 

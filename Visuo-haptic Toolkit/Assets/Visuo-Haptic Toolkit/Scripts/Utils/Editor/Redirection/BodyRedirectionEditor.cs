@@ -13,7 +13,7 @@ namespace VHToolkit.Redirection.BodyRedirection {
 		SerializedProperty technique;
 		SerializedProperty techniqueInstance;
 
-		SerializedProperty physicalLimbs;
+		SerializedProperty limbs;
 		SerializedProperty physicalHead;
 		SerializedProperty virtualHead;
 		SerializedProperty physicalTarget;
@@ -27,12 +27,12 @@ namespace VHToolkit.Redirection.BodyRedirection {
 		readonly HashSet<string> noThresholdTechniques = new() { nameof(Poupyrev1996GoGo), nameof(Lecuyer2000Swamp), nameof(Samad2019Weight) };
 
 
-		private void Start() {
+		private void OnEnable() {
 
 			technique = serializedObject.FindProperty("_technique");
 			techniqueInstance = serializedObject.FindProperty("techniqueInstance");
 
-			physicalLimbs = serializedObject.FindProperty("scene.limbs");
+			limbs = serializedObject.FindProperty("scene.limbs");
 			physicalHead = serializedObject.FindProperty("scene.physicalHead");
 			virtualHead = serializedObject.FindProperty("scene.virtualHead");
 			physicalTarget = serializedObject.FindProperty("scene.physicalTarget");
@@ -41,7 +41,6 @@ namespace VHToolkit.Redirection.BodyRedirection {
 			redirect = serializedObject.FindProperty("redirect");
 
 			parameters = serializedObject.FindProperty("scene.parameters");
-			parametersObject = new SerializedObject(parameters.objectReferenceValue);
 		}
 
 		private void MakePropertyField(SerializedProperty property, string text, string tooltip = null) {
@@ -59,7 +58,7 @@ namespace VHToolkit.Redirection.BodyRedirection {
 			EditorGUILayout.LabelField("User Parameters", EditorStyles.largeLabel);
 
 			// Scene
-			MakePropertyField(physicalLimbs, "Physical Limbs", "The Transform of the user's limbs tracked by the VR SDK");
+			MakePropertyField(limbs, "User Limbs", "A list of tracked user limbs.");
 
 			string techniqueName = technique.enumNames[technique.enumValueIndex];
 

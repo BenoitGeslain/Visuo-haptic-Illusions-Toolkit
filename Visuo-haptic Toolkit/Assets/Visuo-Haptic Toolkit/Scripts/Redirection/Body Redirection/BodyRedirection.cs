@@ -66,7 +66,6 @@ namespace VHToolkit.Redirection.BodyRedirection {
 			if (scene.physicalHead) {
 				scene.physicalHead.GetPositionAndRotation(out scene.previousHeadPosition, out scene.previousHeadRotation);
 			}
-
 		}
 
 		/// <summary>

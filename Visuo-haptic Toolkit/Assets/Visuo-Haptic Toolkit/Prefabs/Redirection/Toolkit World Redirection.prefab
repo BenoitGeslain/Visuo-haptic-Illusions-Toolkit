@@ -1,0 +1,108 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &200869264966477082
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3345062529341880481}
+  - component: {fileID: 7088029602675669135}
+  - component: {fileID: 3150399032746346357}
+  - component: {fileID: 7284946694485075413}
+  m_Layer: 0
+  m_Name: Toolkit World Redirection
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3345062529341880481
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 200869264966477082}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7088029602675669135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 200869264966477082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: def0fd96408763940a4daaa55934a833, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scene:
+    limbs:
+    - physicalLimb: {fileID: 0}
+      virtualLimb:
+      - {fileID: 0}
+    physicalHead: {fileID: 0}
+    virtualHead: {fileID: 0}
+    physicalTarget: {fileID: 0}
+    virtualTarget: {fileID: 0}
+    origin: {fileID: 0}
+    targets:
+    - {fileID: 0}
+    applyDampening: 0
+    applySmoothing: 0
+    selectedTarget: {fileID: 0}
+    forwardTarget: {x: 0, y: 0, z: 0}
+    previousLimbPositions: []
+    previousLimbRotations: []
+    previousHeadPosition: {x: 0, y: 0, z: 0}
+    previousHeadRotation: {x: 0, y: 0, z: 0, w: 0}
+    previousRedirection: 0
+    strategyDirection: {x: 1, y: 0, z: 0}
+    parameters: {fileID: 11400000, guid: c39097e50bc3898498d2edf378be3a21, type: 2}
+    aggregateFunction: 0
+    enableHybridOverTime: 0
+    enableHybridRotational: 1
+    enableHybridCurvature: 1
+    reference: []
+    interpolated: []
+  redirect: 0
+  _technique: 0
+  strategy: 4
+--- !u!114 &3150399032746346357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 200869264966477082}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51d618b1b4dddf44a8b914838ac6e9b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  logDirectoryPath: LoggedData\
+  optionalFilenamePrefix: 
+--- !u!114 &7284946694485075413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 200869264966477082}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb5310432868de244b86ddcc9c3aa8c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filename: 
+  pythonPath: 
