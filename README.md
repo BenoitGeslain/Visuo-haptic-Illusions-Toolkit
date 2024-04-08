@@ -64,14 +64,16 @@ You will find
 
 Bug reports and feature requests are very welcome at the [GitHub Issues page](https://github.com/BenoitGeslain/Visuo-haptic-Illusions-Toolkit/issues).
 
-## Contributors
-Main contributors:
-- Benoît Geslain (benoitgeslain@gmail.com, https://github.com/BenoitGeslain)
-- Bruno Jartoux (bruno.jartoux@sii.fr, https://github.com/bjrtx)
-
 ## Contributing
 
 All contributions are welcome. Please find more details on the [wiki](https://github.com/BenoitGeslain/Visuo-haptic-Illusions-Toolkit/wiki/Contributing).
+
+Main contributors:
+- Benoît Geslain (benoitgeslain@gmail.com, https://github.com/BenoitGeslain)
+- Bruno Jartoux (bruno.jartoux@sii.fr, https://github.com/bjrtx)
+Other Contributors:
+- Maxence Theriot (https://github.com/Ldeeprenard)
+- Théo Machon (https://github.com/TMachon)
 
 ## Copyright and Licensing
 Copyright (c) 2023-2024 SII Société pour l’Informatique Industrielle
