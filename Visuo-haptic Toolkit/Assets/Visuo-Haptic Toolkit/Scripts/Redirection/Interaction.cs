@@ -6,7 +6,7 @@ namespace VHToolkit.Redirection {
 	public enum BRTechnique {
 		None,
 		Reset,
-		[InspectorName("")] SEPARATOR1,
+		[InspectorName("")] SEPARATOR1, // Adds a visual separator in the drop-down inspector
 		// Hand Redirection techniques
 		Han2018TranslationalShift,
 		Han2018InterpolatedReach,
