@@ -9,26 +9,35 @@ using CsvHelper.Configuration;
 using UnityEngine;
 
 using VHToolkit.Redirection;
+using VHToolkit.Redirection.BodyRedirection;
+using VHToolkit.Redirection.WorldRedirection;
 
 namespace VHToolkit.Logging
 {
-	/// <summary>
-	/// Class specifying loggable data for a redirection scene.
-	/// </summary>
+    /// <summary>
+    /// Class specifying loggable data for a redirection scene.
+    /// </summary>
     public record RedirectionData {
-        public DateTime timeStamp = DateTime.Now;
-        public string Technique => script switch {
-            WorldRedirection => (script as WorldRedirection).technique.ToString(),
-            BodyRedirection => (script as BodyRedirection).GetTechnique().ToString(),
-            _ => ""
-        };
+		public DateTime timeStamp = DateTime.Now;
+		public string Technique => script switch {
+			WorldRedirection => (script as WorldRedirection).Technique.ToString(),
+			BodyRedirection => (script as BodyRedirection).Technique.ToString(),
+			_ => ""
+		};
 
-        public Interaction script;
+		public Interaction script;
+		public int physicalLimbIndex, virtualLimbIndex;
 
-        public RedirectionData(Interaction script) {
-            this.script = script;
-        }
-    }
+		public Transform physicalLimb, virtualLimb;
+
+		public RedirectionData(Interaction script, int physicalLimbIndex, int virtualLimbIndex) {
+			this.script = script;
+			this.physicalLimbIndex = physicalLimbIndex;
+			this.virtualLimbIndex = virtualLimbIndex;
+			this.physicalLimb = script.scene.limbs[physicalLimbIndex].physicalLimb;
+			this.virtualLimb = script.scene.limbs[physicalLimbIndex].virtualLimb[virtualLimbIndex];
+		}
+	}
 
 	/// <summary>
 	/// Helper class for redirection logging.
@@ -40,83 +49,95 @@ namespace VHToolkit.Logging
 		public sealed class SceneClassMap : ClassMap<Scene> {
 			public SceneClassMap() {
 				// Warning! Non-logged attributes in Scene MUST be ignored ([Ignore])
-				AutoMap(new CsvConfiguration(CultureInfo.InvariantCulture) {MemberTypes = MemberTypes.Fields | MemberTypes.Properties | MemberTypes.None});
-				// Map(m => m.limbs.Select(limb => limb.PhysicalLimb.position).ToList()).Name("PhysicalLimbPosition");
-				// Map(m => m.limbs.Select(limb => limb.PhysicalLimb.rotation).ToList()).Name("PhysicalLimbOrientation");
-				// Map(m => m.limbs.Select(limb => limb.PhysicalLimb.rotation.eulerAngles).ToList()).Name("PhysicalLimbOrientationEuler");
-				// Map(m => m.limbs.SelectMany(limb => limb.VirtualLimb.Select(vlimb => vlimb.position)).ToList()).Name("VirtualLimbPosition");
-				// Map(m => m.limbs.SelectMany(limb => limb.VirtualLimb.Select(vlimb => vlimb.rotation)).ToList()).Name("VirtualLimbOrientation");
-				// Map(m => m.limbs.SelectMany(limb => limb.VirtualLimb.Select(vlimb => vlimb.rotation.eulerAngles)).ToList()).Name("VirtualLimbOrientationEuler");
-				Map(m => m.physicalTarget.position).Name("PhysicalTargetPosition");
-				Map(m => m.physicalTarget.rotation).Name("PhysicalTargetOrientation");
-				Map(m => m.physicalTarget.rotation.eulerAngles).Name("PhysicalTargetOrientationEuler");
-				Map(m => m.virtualTarget.position).Name("VirtualTargetPosition");
-				Map(m => m.virtualTarget.rotation).Name("VirtualTargetOrientation");
-				Map(m => m.virtualTarget.rotation.eulerAngles).Name("VirtualTargetOrientationEuler");
-				Map(m => m.origin.position).Name("OriginPosition");
+				// AutoMap(new CsvConfiguration(CultureInfo.InvariantCulture) {MemberTypes = MemberTypes.Fields | MemberTypes.Properties | MemberTypes.None});
+
+				/* 	Map(m => m.physicalTarget.position).Name("PhysicalTargetPosition");
+					Map(m => m.physicalTarget.rotation).Name("PhysicalTargetOrientation");
+					Map(m => m.physicalTarget.rotation.eulerAngles).Name("PhysicalTargetOrientationEuler");
+					Map(m => m.virtualTarget.position).Name("VirtualTargetPosition");
+					Map(m => m.virtualTarget.rotation).Name("VirtualTargetOrientation");
+					Map(m => m.origin.position).Name("OriginPosition"); */
 			}
 		}
 		/// <summary>
 		/// Helper class for logging <c>Interaction</c> objects.
 		/// </summary>
 		public sealed class InteractionClassMap : ClassMap<Interaction> {
-            public InteractionClassMap() => References<SceneClassMap>(m => m.scene);
-        }
+			public InteractionClassMap() => References<SceneClassMap>(m => m.scene);
+		}
 		public RedirectionDataMap() {
 			Map(m => m.timeStamp).TypeConverterOption.Format("yyyy/MM/dd-HH:mm:ss.fff").Index(0).Name("TimeStamp");
-			Map(m => m.Technique).Index(1);
+			Map(m => m.Technique).Index(1).Name("Technique");
+			Map(m => m.physicalLimbIndex).Index(2).Name("Physical index");
+			Map(m => m.virtualLimbIndex).Index(3).Name("Virtual index");
+			Map(m => m.physicalLimb.position).Name("Physical limb position");
+			Map(m => m.physicalLimb.rotation).Name("Physical limb orientation");
+			Map(m => m.virtualLimb.position).Name("Virtual limb position");
+			Map(m => m.virtualLimb.rotation).Name("Virtual limb orientation");
 			References<InteractionClassMap>(m => m.script);
 		}
 	}
-
 	/// <summary>
-	/// This class handles the logging behavior at execution time.
+	/// This class handles the CSV logging behavior at execution time.
 	/// </summary>
-	public class Logging : MonoBehaviour {
-
-		public string pathToFile = "LoggedData\\";
-		[SerializeField] private string fileNamePrefix;
+	[AddComponentMenu("CSV Logging (Script)")]
+	public class Logging : Logger<RedirectionData> {
 		private string fileName;
-		private int bufferSize = 10; // number of records kept before writing to disk
+		private readonly CsvConfiguration config = new(CultureInfo.InvariantCulture) { HasHeaderRecord = false, MemberTypes = MemberTypes.Fields };
 
-		private List<RedirectionData> records = new();
-        private readonly CsvConfiguration config = new(CultureInfo.InvariantCulture) { HasHeaderRecord = false, MemberTypes = MemberTypes.Fields };
 
-		private Interaction script;
-
-        private void Start() {
-			CreateNewFile();
+		private void Start() {
+			CreateNewFile(logDirectoryPath, optionalFilenamePrefix ?? "");
 			script = GetComponent<Interaction>();
 		}
 
-        private void Update() {
-            void writeRecords<Data, DataMap>(List<Data> records) where DataMap : ClassMap<Data> {
-                if (records.Count > bufferSize) {
-					using var writer = new StreamWriter(fileName, append: true);
-					using var csv = new CsvWriter(writer, config);
-					csv.Context.RegisterClassMap<DataMap>();
-					csv.WriteRecords<Data>(records);
-					records.Clear();
+		private void Update() {
+			for (int i = 0; i < script.scene.limbs.Count; i++) {
+				for (int j = 0; j < script.scene.limbs[i].virtualLimb.Count; j++) {
+					records.Enqueue(new RedirectionData(script, i, j));
 				}
-            }
-
-			records.Add(new RedirectionData(script));
-			writeRecords<RedirectionData, RedirectionDataMap>(records);
+			}
+			WriteRecords(records);
 		}
 
-		public void CreateNewFile() {
-			fileName = $"{pathToFile}{fileNamePrefix}{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.csv";
+		public void CreateNewFile(string logDirectoryPath = null, string optionalFilenamePrefix = null) {
+			logDirectoryPath ??= this.logDirectoryPath;
+			optionalFilenamePrefix ??= this.optionalFilenamePrefix;
+			Debug.Log("Create log file.");
+			Directory.CreateDirectory(logDirectoryPath);
+			fileName = $"{logDirectoryPath}{optionalFilenamePrefix}{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.csv";
 
-			void writeHeaders<Data, DataMap>(out List<Data> records) where DataMap : ClassMap<Data> {
-                using StreamWriter writer = new(fileName);
-                using CsvWriter csv = new(writer, CultureInfo.InvariantCulture);
-				records = new List<Data>();
-                csv.Context.RegisterClassMap<DataMap>();
-				csv.WriteHeader<Data>();
-				csv.NextRecord();
-            }
-
-			writeHeaders<RedirectionData, RedirectionDataMap>(out records);
+			var observer = new FileObserver(fileName, config);
+			observer.Subscribe(this);
+			observers.Add(observer);
 		}
-    }
+		private sealed class FileObserver : IObserver<RedirectionData> {
+			private StreamWriter writer;
+			private CsvWriter csvWriter;
+			private IDisposable unsubscriber;
+			public void OnCompleted() {
+				unsubscriber.Dispose();
+				csvWriter.Dispose();
+				writer.Dispose();
+			}
+
+			public void Subscribe(IObservable<RedirectionData> observable) => unsubscriber = observable?.Subscribe(this);
+
+			public void OnError(Exception error) => Debug.LogError(error);
+
+			public void OnNext(RedirectionData value) {
+				csvWriter.Context.RegisterClassMap<RedirectionDataMap>();
+				csvWriter.WriteRecord(value);
+				csvWriter.NextRecord();
+			}
+
+			public FileObserver(string filename, CsvConfiguration config) {
+				writer = new StreamWriter(filename, append: true);
+				csvWriter = new(writer, configuration: config);
+				csvWriter.Context.RegisterClassMap<RedirectionDataMap>();
+				csvWriter.WriteHeader<RedirectionData>();
+				csvWriter.NextRecord();
+			}
+		}
+	}
 }

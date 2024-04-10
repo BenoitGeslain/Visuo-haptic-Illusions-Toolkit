@@ -1,0 +1,11 @@
+using UnityEngine;
+
+using VHToolkit.Redirection;
+using VHToolkit.Redirection.WorldRedirection;
+
+class #SCRIPTNAME# : WorldRedirectionTechnique {
+
+	public override void Redirect(Scene scene) {
+		Debug.LogWarning("Method not implemented yet.");
+	}
+}

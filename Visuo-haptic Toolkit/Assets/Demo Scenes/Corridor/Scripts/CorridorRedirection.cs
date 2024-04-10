@@ -1,63 +1,29 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 using UnityEngine;
 
-using VHToolkit;
-using VHToolkit.Redirection;
+using VHToolkit.Redirection.WorldRedirection;
 
-public class CorridorRedirection : MonoBehaviour {
+namespace VHToolkit.Demo {
+	public class CorridorRedirection : MonoBehaviour {
 
-	public enum CorridorStates {
-		Calibration = -1,
-		None,
-		FirstPainting,
-		SecondPainting,
-		ThirdPainting,
-		FourthPainting
-	}
+		private WorldRedirection redirectionScript;
 
-	private WorldRedirection redirectionScript;
+		[SerializeField] private Transform UserHead;
 
-	[SerializeField] private Transform UserHead;
+		[SerializeField] private float redirectionApplied;
+		[SerializeField] private List<Transform> paintingReferences;
+		[Range(0, 360)]
+		[SerializeField] private float redirectionAmount;
+		[SerializeField] private Transform start, end;
+		private float NormalizedDistance => Mathf.InverseLerp(start.position.z, end.position.z, UserHead.position.z);
 
-	public CorridorStates state = CorridorStates.None;
-	[SerializeField] private float redirectionApplied;
-	[SerializeField] private List<Transform> paintingReferences;
-	[Range(0, 45)]
-	[SerializeField] private List<float> redirectionAmount;
-	private int nPaintings;
+		private void Start() => redirectionScript = GetComponent<WorldRedirection>();
 
-	private void Start() {
-		redirectionScript = Toolkit.Instance.gameObject.GetComponent<WorldRedirection>();
-
-		nPaintings = paintingReferences.Count;
-		if (paintingReferences.Count != redirectionAmount.Count)
-			Debug.LogWarning("Different numbers of painting references and redirection amounts.");
-	}
-
-	private void Update() {
-
-		if (state != CorridorStates.Calibration) {
-			int currentPainting = (int)state - 1;
-			int nextPainting = (int)state;
-
+		private void Update() {
 			redirectionApplied = redirectionScript.GetAngularRedirection().eulerAngles.y;
-			if (redirectionApplied > 180f)
-				redirectionApplied = 360f - redirectionApplied;
-
-			// Debug.Log((Math.Abs(redirectionApplied) - redirectionAmount.Take(currentPainting).Sum()) + ", " + redirectionAmount[currentPainting]);
-			// If the correct redirection has been applied, stop the redirection
-			if (currentPainting >= 0 && Math.Abs(redirectionApplied) - redirectionAmount.Take(currentPainting).Sum() > redirectionAmount[currentPainting]) {
-				Debug.Log($"stop {currentPainting}");
-				redirectionScript.StopRedirection();
-			}
+			redirectionScript.redirect = redirectionApplied < redirectionAmount * NormalizedDistance;
 		}
-	}
-
-	public void SetState(CorridorStates s) {
-		state = (CorridorStates)Math.Max((int)state, (int)s);
-		redirectionScript.StartRedirection();
 	}
 }

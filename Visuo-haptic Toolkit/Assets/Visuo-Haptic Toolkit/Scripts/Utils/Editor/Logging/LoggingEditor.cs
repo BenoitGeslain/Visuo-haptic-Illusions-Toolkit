@@ -3,13 +3,12 @@ using UnityEditor;
 
 namespace VHToolkit.Logging {
 	[CustomEditor(typeof(Logging)), CanEditMultipleObjects]
-	public class LoggingEditor : Editor {
+	public class CSVLoggingEditor : Editor {
 		public override void OnInspectorGUI() {
 			base.OnInspectorGUI();
 
-			if (GUILayout.Button("Create new logging file")) {
-				Logging script = (Logging)target;
-				script.CreateNewFile();
+			if (GUILayout.Button("Create new log file")) {
+				((Logging)target).CreateNewFile();
 			}
 		}
 	}

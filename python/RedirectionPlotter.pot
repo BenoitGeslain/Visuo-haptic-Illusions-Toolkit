@@ -1,0 +1,55 @@
+# Translations template for PROJECT.
+# Copyright (C) 2024 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2024-03-02 19:34+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.14.0\n"
+
+#: RedirectionPlotter.py:51
+msgid "Redirection amounts over time"
+msgstr ""
+
+#: RedirectionPlotter.py:52
+msgid "Redirection Applied to User (degrees)"
+msgstr ""
+
+#: RedirectionPlotter.py:53
+msgid "Over time rotation"
+msgstr ""
+
+#: RedirectionPlotter.py:53 RedirectionPlotter.py:60
+msgid "Rotational"
+msgstr ""
+
+#: RedirectionPlotter.py:53 RedirectionPlotter.py:60
+msgid "Curvature"
+msgstr ""
+
+#: RedirectionPlotter.py:58
+msgid "Time from start (seconds)"
+msgstr ""
+
+#: RedirectionPlotter.py:59
+msgid "Redirection per Second (degrees/s)"
+msgstr ""
+
+#: RedirectionPlotter.py:60
+msgid "Over Time Rotation"
+msgstr ""
+
+#: RedirectionPlotter.py:65
+msgid "Redirection source"
+msgstr ""
+
