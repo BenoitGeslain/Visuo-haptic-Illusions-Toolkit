@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.U2D.IK;
 
 namespace VHToolkit {
 	public static class MathTools {

@@ -94,7 +94,8 @@ SteamVR/
 SteamVR.meta
 SteamVR_Resources/
 SteamVR_Resources.meta
-LoggedData/
+*.jsonl
+*.csv
 LoggedData.meta
 TextMesh Pro/
 TextMesh Pro.meta
