@@ -35,7 +35,6 @@ namespace VHToolkit {
 			) / (2 * eps);
 		}
 
-		public static Vector2 ProjectToHorizontalPlane(this Vector3 v) => new(v.x, v.z);
 
 		public static Func<Vector2, float> RepulsivePotential2D(List<Collider2D> obstacles) =>
 			(x) => obstacles.Sum(o => 1 / Vector2.Distance(x, o.ClosestPoint(x)));
@@ -61,5 +60,18 @@ namespace VHToolkit {
 
 		// The potential is given as || x - goal || / 2.
 		public static Vector2 GradientOfAttractivePotential(Vector2 goal, Vector2 x) => (x - goal).normalized / 2;
+		public readonly struct PositionAndRotation2D {
+			public readonly Vector2 position;
+			public readonly Vector2 forward;
+
+			public PositionAndRotation2D(Vector2 position = new(), Vector2 forward = new()) {
+				this.position = position;
+				this.forward = forward;
+			}
+		}
+
+		// TODO careful, this isn't the same choice as Vector2.Vector2 / Vector2.Vector3. (Those project to a vertical plane.)
+		static public Vector2 ProjectToHorizontalPlane(this Vector3 v) => new(v.x, v.z);
+		static public Vector3 LiftFromHorizontalPlane(this Vector2 v) => new(v.x, 0, v.y);
 	}
 }
