@@ -12,8 +12,8 @@ namespace VHToolkit.Redirection.WorldRedirection {
 	public class WorldRedirection : Interaction {
 
 		[SerializeField] private WRTechnique _technique;
-		public WRTechnique Technique {get => _technique; set => _technique = value;}
-        private WRTechnique previousTechnique;
+		public WRTechnique Technique { get => _technique; set => _technique = value; }
+		private WRTechnique previousTechnique;
 		public WorldRedirectionTechnique techniqueInstance;
 		public WRStrategy strategy;
 		public WorldRedirectionStrategy strategyInstance;
@@ -43,8 +43,8 @@ namespace VHToolkit.Redirection.WorldRedirection {
 				WRStrategy.SteerToOrbit => new SteerToOrbit(),
 				WRStrategy.SteerToMultipleTargets => new SteerToMultipleTargets(),
 				WRStrategy.SteerInDirection => new SteerInDirection(),
-                WRStrategy.APFRedirection => new ApfRedirection(),
-                _ => null
+				// WRStrategy.APFRedirection => new ApfRedirection(), // Still to implement TODO
+				_ => null
 			};
 
 			if (strategyInstance is null)
@@ -95,7 +95,7 @@ namespace VHToolkit.Redirection.WorldRedirection {
 
 		public Quaternion GetAngularRedirection() => scene.HeadToHeadRedirection;
 
-		public float GetTranslationalRedirection() => scene.GetHeadToHeadDistance();	// TODO : maybe should be a vector 3 between heads instead of magn
+		public float GetTranslationalRedirection() => scene.GetHeadToHeadDistance();    // TODO : maybe should be a vector 3 between heads instead of magn
 
 		public void SetTargets(List<Transform> targets) => scene.targets = targets;
 
@@ -117,5 +117,5 @@ namespace VHToolkit.Redirection.WorldRedirection {
 		/// - false otherwise.</returns>
 		public bool IsRedirecting() => scene.GetHeadToHeadDistance() < Vector3.kEpsilon &&
 				   Quaternion.Dot(scene.physicalHead.rotation, scene.virtualHead.rotation) > 1 - Vector3.kEpsilon;
-    }
+	}
 }

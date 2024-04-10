@@ -1,8 +1,6 @@
 using System.Linq;
 using UnityEngine;
-using System.Collections.Generic;
-using System;
-using System.Linq;
+
 
 namespace VHToolkit.Redirection.WorldRedirection {
 	public abstract class WorldRedirectionStrategy {
