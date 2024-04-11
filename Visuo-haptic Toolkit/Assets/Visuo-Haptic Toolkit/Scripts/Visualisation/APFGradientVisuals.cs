@@ -19,7 +19,6 @@ public class GradientVisuals : MonoBehaviour
 
     // public general
     public string obstacleTag;
-    public bool verbose;
     [Range(0.5f, 5f)] public float refreshRate;
 
     // public heatmap
@@ -71,10 +70,6 @@ public class GradientVisuals : MonoBehaviour
     /// Prints message in console if "verbose" is checked.
     /// </summary>
     /// <param name="msg">Log message</param>
-    private void Log(string msg)
-    {
-        if (verbose) UnityEngine.Debug.Log(msg);
-    }
 
     /// <summary>
     /// Checks a number of things : scene updates, bool changes. If changes are to be made, does them.
@@ -148,14 +143,14 @@ public class GradientVisuals : MonoBehaviour
             width = max.x - min.x;
             depth = max.z - min.z;
 
-            Log($"Visuals init : X[{min.x}:{max.x}] Z[{min.z}:{max.z}]");
-            Log($"Visuals init : width:{width} height:{depth}");
+            // Debug.Log($"Visuals init : X[{min.x}:{max.x}] Z[{min.z}:{max.z}]");
+            // Debug.Log($"Visuals init : width:{width} height:{depth}");
 
         }
         else
         {
             repulsiveFunction = null;
-            Log("No colliders detected, can't generate visuals.");
+            // Debug.Log("No colliders detected, can't generate visuals.");
         }
     }
 
@@ -239,7 +234,7 @@ public class GradientVisuals : MonoBehaviour
                 float hmValue = gradient.magnitude;
 
                 hmDensityTable[x + (z * heatmapMeshFineness)] = hmValue;
-                Log($"{hmStepX * x:0.0} - {hmStepZ * z:0.0} : {hmValue}");
+                // Debug.Log($"{hmStepX * x:0.0} - {hmStepZ * z:0.0} : {hmValue}");
             }
 
         }
