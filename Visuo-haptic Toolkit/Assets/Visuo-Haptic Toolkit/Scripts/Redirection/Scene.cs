@@ -72,9 +72,8 @@ namespace VHToolkit.Redirection {
 		[Ignore] public bool enableHybridOverTime = true;
 		[Ignore] public bool enableHybridRotational = true;
 		[Ignore] public bool enableHybridCurvature = true;
-		[Ignore] public Vector3[] reference;
-		[Ignore] public Vector3[] interpolated;
-
+		[Ignore] public Transform referenceParent;
+		[Ignore] public Transform interpolatedParent;
 
 
 		/// <summary>

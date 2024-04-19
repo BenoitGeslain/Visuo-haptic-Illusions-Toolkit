@@ -3,6 +3,7 @@ using System.Linq;
 using UnityEngine;
 
 using VHToolkit.Redirection.PseudoHaptics;
+using VHToolkit.Redirection.Interpolation3D;
 
 namespace VHToolkit.Redirection.BodyRedirection {
 	/// <summary>
@@ -44,6 +45,7 @@ namespace VHToolkit.Redirection.BodyRedirection {
 				BRTechnique.Cheng2017Sparse => new Cheng2017Sparse(),
 				BRTechnique.Geslain2022Polynom => new Geslain2022Polynom(),
 				BRTechnique.Poupyrev1996GoGo => new Poupyrev1996GoGo(),
+				BRTechnique.Kohli2010RedirectedTouching => new Kohli2010RedirectedTouching(),
 				BRTechnique.Lecuyer2000Swamp => new Lecuyer2000Swamp(),
 				BRTechnique.Samad2019Weight => new Samad2019Weight(),
 				_ => null
