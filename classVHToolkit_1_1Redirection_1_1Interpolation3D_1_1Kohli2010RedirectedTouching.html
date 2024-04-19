@@ -81,7 +81,7 @@ Inheritance diagram for VHToolkit.Redirection.Interpolation3D.Kohli2010Redirecte
  <div class="center">
   <img src="classVHToolkit_1_1Redirection_1_1Interpolation3D_1_1Kohli2010RedirectedTouching.png" usemap="#VHToolkit.Redirection.Interpolation3D.Kohli2010RedirectedTouching_map" alt=""/>
   <map id="VHToolkit.Redirection.Interpolation3D.Kohli2010RedirectedTouching_map" name="VHToolkit.Redirection.Interpolation3D.Kohli2010RedirectedTouching_map">
-<area href="classVHToolkit_1_1Redirection_1_1Interpolation3D_1_1InterpolationTechnique.html" title="This is the abstract base class for 3D interpolation techniques." alt="VHToolkit.Redirection.Interpolation3D.InterpolationTechnique" shape="rect" coords="0,56,396,80"/>
+<area href="classVHToolkit_1_1Redirection_1_1BodyRedirection_1_1BodyRedirectionTechnique.html" title="This class is the most conceptual class of body interaction techniques defining the important functio..." alt="VHToolkit.Redirection.BodyRedirection.BodyRedirectionTechnique" shape="rect" coords="0,56,396,80"/>
 <area href="classVHToolkit_1_1Redirection_1_1RedirectionTechnique.html" alt="VHToolkit.Redirection.RedirectionTechnique" shape="rect" coords="0,0,396,24"/>
   </map>
 </div></div>
@@ -94,6 +94,13 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aec999e56714a8b9e3a4480e4e0fde611"><td class="memItemLeft" align="right" valign="top">override void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVHToolkit_1_1Redirection_1_1Interpolation3D_1_1Kohli2010RedirectedTouching.html#aec999e56714a8b9e3a4480e4e0fde611">Redirect</a> (<a class="el" href="namespaceVHToolkit_1_1Redirection.html#aa3ec964b2baf3fc23c0b779c89dafea1">Scene</a> scene)</td></tr>
 <tr class="memdesc:aec999e56714a8b9e3a4480e4e0fde611"><td class="mdescLeft">&#160;</td><td class="mdescRight">This abstract method redirects the Scene transforms according to the other parameters and the equations defined in the corresponding techniques. It needs to be overriden by a child class, and it is called on Update() in *Redirection classes.  <a href="classVHToolkit_1_1Redirection_1_1Interpolation3D_1_1Kohli2010RedirectedTouching.html#aec999e56714a8b9e3a4480e4e0fde611">More...</a><br /></td></tr>
 <tr class="separator:aec999e56714a8b9e3a4480e4e0fde611"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pro_static_methods_classVHToolkit_1_1Redirection_1_1BodyRedirection_1_1BodyRedirectionTechnique"><td colspan="2" onclick="javascript:toggleInherit('pro_static_methods_classVHToolkit_1_1Redirection_1_1BodyRedirection_1_1BodyRedirectionTechnique')"><img src="closed.png" alt="-"/>&#160;Static Protected Member Functions inherited from <a class="el" href="classVHToolkit_1_1Redirection_1_1BodyRedirection_1_1BodyRedirectionTechnique.html">VHToolkit.Redirection.BodyRedirection.BodyRedirectionTechnique</a></td></tr>
+<tr class="memitem:a7886c777bac751617ec68a4375a0854a inherit pro_static_methods_classVHToolkit_1_1Redirection_1_1BodyRedirection_1_1BodyRedirectionTechnique"><td class="memItemLeft" align="right" valign="top">static float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVHToolkit_1_1Redirection_1_1BodyRedirection_1_1BodyRedirectionTechnique.html#a7886c777bac751617ec68a4375a0854a">BumpFunction</a> (float distance, float bufferDistance)</td></tr>
+<tr class="memdesc:a7886c777bac751617ec68a4375a0854a inherit pro_static_methods_classVHToolkit_1_1Redirection_1_1BodyRedirection_1_1BodyRedirectionTechnique"><td class="mdescLeft">&#160;</td><td class="mdescRight">Standard bump function used for mollifying the redirection distribution, as is thouroughly common in various fields of applied mathematics and numerical sciences.  <a href="classVHToolkit_1_1Redirection_1_1BodyRedirection_1_1BodyRedirectionTechnique.html#a7886c777bac751617ec68a4375a0854a">More...</a><br /></td></tr>
+<tr class="separator:a7886c777bac751617ec68a4375a0854a inherit pro_static_methods_classVHToolkit_1_1Redirection_1_1BodyRedirection_1_1BodyRedirectionTechnique"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This class implements the "Redirected Touching" effect (Kohli 2010), in which space is locally remapped so as to agree with the deformation of an input mesh. </p>
