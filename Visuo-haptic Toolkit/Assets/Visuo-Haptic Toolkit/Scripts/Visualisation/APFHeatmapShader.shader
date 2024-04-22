@@ -55,12 +55,12 @@ Shader "Unlit/HeatmapShader"
                     float tmp = val - 0.25; // [0;0.25]
                     r = 0;
                     g = tmp * 3;
-                    b = 0.75 - tmp*3;
+                    b = 0.75 - tmp * 3;
                 }
                 else if (val < 0.75)
                 {
                     float tmp = val - 0.5; // [0;0.25]
-                    r = tmp*4;
+                    r = tmp * 4;
                     g = 0.75;
                     b = 0;
                 }
@@ -68,7 +68,7 @@ Shader "Unlit/HeatmapShader"
                 {
                     float tmp = val - 0.75; // [0;0.25]
                     r = 1;
-                    g = 0.75 - tmp*3;
+                    g = 0.75 - tmp * 3;
                     b = 0;
                 }
 
