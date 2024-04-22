@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['geslain2022polynom_221',['Geslain2022Polynom',['../classVHToolkit_1_1Redirection_1_1BodyRedirection_1_1Geslain2022Polynom.html',1,'VHToolkit::Redirection::BodyRedirection']]]
+  ['geslain2022polynom_236',['Geslain2022Polynom',['../classVHToolkit_1_1Redirection_1_1BodyRedirection_1_1Geslain2022Polynom.html',1,'VHToolkit::Redirection::BodyRedirection']]],
+  ['gradientvisuals_237',['GradientVisuals',['../classGradientVisuals.html',1,'']]]
 ];
