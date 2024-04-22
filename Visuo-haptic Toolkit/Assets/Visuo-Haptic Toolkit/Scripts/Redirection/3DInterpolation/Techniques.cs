@@ -1,15 +1,14 @@
+using System;
 using UnityEngine;
 
+using VHToolkit.Redirection.BodyRedirection;
+
 namespace VHToolkit.Redirection.Interpolation3D {
-	/// <summary>
-	/// This is the abstract base class for 3D interpolation techniques.
-	/// </summary>
-	public abstract class InterpolationTechnique : RedirectionTechnique { }
 
 	/// <summary>
 	/// This class implements the "Redirected Touching" effect (Kohli 2010), in which space is locally remapped so as to agree with the deformation of an input mesh.
 	/// </summary>
-	public class Kohli2010RedirectedTouching : InterpolationTechnique {
+	public class Kohli2010RedirectedTouching : BodyRedirectionTechnique {
 
 		System.Func<Vector3, Vector3> displace = null;
 
@@ -18,12 +17,13 @@ namespace VHToolkit.Redirection.Interpolation3D {
 		/// </summary>
 		public void ComputeDisplacement(Scene scene) {
 			displace = ThinPlateSpline.SabooSmoothedDisplacementField(
-				scene.reference,
-				scene.interpolated,
+				Array.ConvertAll(scene.referenceParent.GetComponentsInChildren<Transform>(), t => t.position),
+				Array.ConvertAll(scene.interpolatedParent.GetComponentsInChildren<Transform>(), t => t.position),
 				scene.parameters.smoothingParameter,
 				scene.parameters.rescale
 			);
 		}
+
 		public override void Redirect(Scene scene) {
 			if (displace is null) {
 				ComputeDisplacement(scene);
@@ -33,12 +33,6 @@ namespace VHToolkit.Redirection.Interpolation3D {
 				var newPosition = displace(limb.physicalLimb.position);
 				limb.virtualLimb.ForEach(vLimb => vLimb.position = newPosition);
 			}
-		}
-	}
-
-	public class NoInterpolation : InterpolationTechnique {
-		public override void Redirect(Scene scene) {
-			scene.limbs.ForEach(limb => limb.virtualLimb.ForEach(vLimb => vLimb.position = limb.physicalLimb.position));
 		}
 	}
 }

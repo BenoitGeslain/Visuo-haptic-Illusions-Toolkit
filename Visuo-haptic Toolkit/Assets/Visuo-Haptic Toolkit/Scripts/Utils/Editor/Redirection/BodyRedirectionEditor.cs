@@ -1,8 +1,10 @@
+using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEditor;
 
-using System.Collections.Generic;
 using VHToolkit.Redirection.PseudoHaptics;
+using VHToolkit.Redirection.Interpolation3D;
 
 namespace VHToolkit.Redirection.BodyRedirection {
 	/// <summary>
@@ -19,6 +21,8 @@ namespace VHToolkit.Redirection.BodyRedirection {
 		SerializedProperty physicalTarget;
 		SerializedProperty virtualTarget;
 		SerializedProperty origin;
+		SerializedProperty referenceSurface;
+		SerializedProperty interpolatedSurface;
 		SerializedProperty redirect;
 		SerializedProperty parameters;
 		SerializedObject parametersObject;
@@ -38,8 +42,10 @@ namespace VHToolkit.Redirection.BodyRedirection {
 			physicalTarget = serializedObject.FindProperty("scene.physicalTarget");
 			virtualTarget = serializedObject.FindProperty("scene.virtualTarget");
 			origin = serializedObject.FindProperty("scene.origin");
-			redirect = serializedObject.FindProperty("redirect");
+			referenceSurface = serializedObject.FindProperty("scene.referenceParent");
+			interpolatedSurface = serializedObject.FindProperty("scene.interpolatedParent");
 
+			redirect = serializedObject.FindProperty("redirect");
 			parameters = serializedObject.FindProperty("scene.parameters");
 		}
 
@@ -69,7 +75,6 @@ namespace VHToolkit.Redirection.BodyRedirection {
 				MakePropertyField(physicalHead, "Physical Head", "");
 			}
 
-
 			EditorGUILayout.Space(5);
 			EditorGUILayout.LabelField("Technique Parameters", EditorStyles.largeLabel);
 
@@ -87,10 +92,20 @@ namespace VHToolkit.Redirection.BodyRedirection {
 			parametersObject = new SerializedObject(parameters.objectReferenceValue);
 			parametersObject.Update();
 
-			MakePropertyField(physicalTarget, "Physical Target", "");
-			MakePropertyField(virtualTarget, "Virtual Target", "");
-			MakePropertyField(origin, "Origin", "");
+			if (techniqueName == nameof(Kohli2010RedirectedTouching)) {
+				MakePropertyField(referenceSurface, "Reference Surface", "Points on the physical surface that the physical hand of the user explores.");
+				MakePropertyField(interpolatedSurface, "Interpolated Surface", "Points on the virtual surface that the virtual hand of the user will explore when touching the physical surface.");
+			} else {
+				MakePropertyField(physicalTarget, "Physical Target", "");
+				MakePropertyField(virtualTarget, "Virtual Target", "");
+				MakePropertyField(origin, "Origin", "");
+			}
 
+
+			if (techniqueName == nameof(Kohli2010RedirectedTouching)) {
+				MakePropertyField(parametersObject.FindProperty("smoothingParameter"), "Smoothing", "");
+				MakePropertyField(parametersObject.FindProperty("rescale"), "Rescale", "");
+			}
 			// Hides redirectionLateness and controlpoint fields if the technique is not Geslain2022Polynom
 			if (techniqueName == nameof(Geslain2022Polynom)) {
 				MakePropertyField(parametersObject.FindProperty("redirectionLateness"), "Redirection Lateness (a2)");

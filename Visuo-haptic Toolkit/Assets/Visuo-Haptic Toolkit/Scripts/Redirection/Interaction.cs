@@ -16,16 +16,11 @@ namespace VHToolkit.Redirection {
 		Geslain2022Polynom,
 		Poupyrev1996GoGo,
 		[InspectorName(" ")] SEPARATOR2,
+		Kohli2010RedirectedTouching,
+		[InspectorName("  ")] SEPARATOR3,
 		// Pseudo-haptic techiques
 		Lecuyer2000Swamp,
 		Samad2019Weight
-	}
-	/// <summary>
-	/// Available 3D Interpolation redirection techniques.
-	/// </summary>
-	public enum ThreeDTechnique {
-		None,
-		Kohli2010RedirectedTouching
 	}
 
 	/// <summary>
