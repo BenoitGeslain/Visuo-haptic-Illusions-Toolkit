@@ -1,16 +1,11 @@
-using Meta.WitAi;
-using Oculus.Interaction.Input;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Security.Cryptography;
+
 using UnityEngine;
 
 using VHToolkit;
-using VHToolkit.Redirection;
-using static OVRPlugin;
+using VHToolkit.Redirection.WorldRedirection;
 
 public class GradientVisuals : MonoBehaviour
 {
@@ -52,6 +47,8 @@ public class GradientVisuals : MonoBehaviour
     private bool vfEnabledCurrentState;
     private List<GameObject> vfVectors;
 
+
+    [SerializeField] private WorldRedirection script;
 
 
     // FUNCS & SUBS //
@@ -98,12 +95,12 @@ public class GradientVisuals : MonoBehaviour
 
         if (vfToggled)
         {
-            if (vectorsEnabled) { vectorsEnabled = InitVectorsField(); }
-            else { CloseVectorsField(); }
+            if (vectorsEnabled) { vectorsEnabled = InitVectorField(); }
+            else { CloseVectorField(); }
         }
         else if (updateVisuals && vfEnabledCurrentState)
         {
-            vectorsEnabled = InitVectorsField();
+            vectorsEnabled = InitVectorField();
         }
 
         // save state
@@ -114,20 +111,15 @@ public class GradientVisuals : MonoBehaviour
     /// <summary>
     /// Updates the repulsive function used to calculate gradient.
     /// </summary>
-    private void UpdateRepulsiveFunc()
-    {
+    private void UpdateRepulsiveFunc() {
         // cancel invokes while repulsive function update is ongoing
         CancelInvoke(nameof(UpdateHeatmap));
-        CancelInvoke(nameof(UpdateVectorsField));
+        CancelInvoke(nameof(UpdateVectorField));
 
         // get gameobjects with obstacle tag
-        obstaclesCollider = new(GameObject.FindGameObjectsWithTag(obstacleTag).Where(o => o.GetComponent<Collider>() != null).Select(o => o.GetComponent<Collider>()));
+        obstaclesCollider = ((APFP2R)script.strategyInstance).colliders;
 
-		//var allColliderBounds = FindObjectsOfType<Collider>().Select(o => o.bounds).ToArray();
-		//max = allColliderBounds.Select(b => b.max).Aggregate(Pointwise(Mathf.Max));
-		//min = allColliderBounds.Select(b => b.min).Aggregate(Pointwise(Mathf.Min));
-		//min.y = max.y = 0f;
-
+        // Compute the bounding box and repulsive function for all colliders
         if (obstaclesCollider.Any())
         {
             static Func<Vector3, Vector3, Vector3> Pointwise(Func<float, float, float> f) =>
@@ -135,42 +127,26 @@ public class GradientVisuals : MonoBehaviour
 
             repulsiveFunction = MathTools.RepulsivePotential3D(obstaclesCollider);
 
-            var allColliderBounds = FindObjectsOfType<Collider>().Select(o => o.bounds.max).ToArray();
-            max = allColliderBounds.Aggregate(Pointwise(Mathf.Max));
-            min = allColliderBounds.Aggregate(Pointwise(Mathf.Min));
+            // var allColliderBounds = FindObjectsOfType<Collider>().Select(o => o.bounds.max).ToArray();
+            max = FindObjectsOfType<Collider>().Select(o => o.bounds.max).ToArray().Aggregate(Pointwise(Mathf.Max));
+            min = FindObjectsOfType<Collider>().Select(o => o.bounds.min).ToArray().Aggregate(Pointwise(Mathf.Min));
             min.y = max.y = 0f;
 
             width = max.x - min.x;
             depth = max.z - min.z;
-
-            // Debug.Log($"Visuals init : X[{min.x}:{max.x}] Z[{min.z}:{max.z}]");
-            // Debug.Log($"Visuals init : width:{width} height:{depth}");
-
-        }
-        else
-        {
-            repulsiveFunction = null;
-            // Debug.Log("No colliders detected, can't generate visuals.");
+        } else {
+            repulsiveFunction = (x) => 0;
         }
     }
 
+    // TODO : change to SceneUpdate and call it manually when scene is changed
     /// <summary>
     /// Checks for changes with gameobjects tagged as obstacles, and also for changes is scene area size.
     /// </summary>
     /// <returns>True if any change found</returns>
     private bool CheckForSceneUpdate()
     {
-        if (GameObject.FindGameObjectsWithTag(obstacleTag).Where(o => o.GetComponent<Collider>() != null).Count() != obstaclesCollider.Count) return true;
-
-        foreach (var objCol in FindObjectsOfType<Collider>())
-        {
-            if (objCol.bounds.max.x > max.x) return true;
-            if (objCol.bounds.min.x < min.x) return true;
-            if (objCol.bounds.max.z > max.z) return true;
-            if (objCol.bounds.min.z < min.z) return true;
-        }
-
-        return false;
+        return true;
     }
 
     #endregion
@@ -179,18 +155,13 @@ public class GradientVisuals : MonoBehaviour
 
     #region "heatmap"
 
+    //TODO : always returns true, should be void?
     /// <summary>
     /// Init heatmap quad with shahder, and invokes update func.
     /// </summary>
     /// <returns>True if init ended sucessfully</returns>
     private bool InitHeatmap()
     {
-        if (repulsiveFunction == null)
-        {
-            Console.Write("APF visuals : cannot init heatmap, no repulsive function (is there any obstacle with collider ?).");
-            CloseHeatmap();
-            return false;
-        }
 
         if (hmEnabledCurrentState)
         {
@@ -229,9 +200,8 @@ public class GradientVisuals : MonoBehaviour
             {
 
                 Vector3 position = new Vector3(min.x + (x * hmStepX) + (hmStepX / 2), 0, min.z + (z * hmStepZ) + (hmStepZ / 2));
-                Vector2 gradient = MathTools.Gradient3(repulsiveFunction, position);
 
-                float hmValue = gradient.magnitude;
+                float hmValue = ((Vector2)MathTools.Gradient3(repulsiveFunction, position)).magnitude;
 
                 hmDensityTable[x + (z * heatmapMeshFineness)] = hmValue;
                 // Debug.Log($"{hmStepX * x:0.0} - {hmStepZ * z:0.0} : {hmValue}");
@@ -265,18 +235,18 @@ public class GradientVisuals : MonoBehaviour
     /// Init vectors field, and invokes update func.
     /// </summary>
     /// <returns>True if init ended sucessfully</returns>
-    private bool InitVectorsField()
+    private bool InitVectorField()
     {
         if (repulsiveFunction == null)
         {
-            Console.Write("APF visuals : cannot init vectors field, no repulsive function (is there any obstacle with collider ?).");
-            CloseVectorsField();
+            Debug.Log("APF visuals : cannot init vectors field, no repulsive function (is there any obstacle with collider ?).");
+            CloseVectorField();
             return false;
         }
 
         if (vfEnabledCurrentState)
         {
-            CloseVectorsField();
+            CloseVectorField();
         }
 
         int i = 0;
@@ -295,11 +265,9 @@ public class GradientVisuals : MonoBehaviour
 
                 if (!float.IsNaN(gradient.x) && !float.IsNaN(gradient.y))
                 {
-                    float angleRadian = Mathf.Atan2(gradient.y, gradient.x);
-                    float angleEnDegres = angleRadian * Mathf.Rad2Deg;
-                    Quaternion rotation = Quaternion.Euler(-90, 0, angleEnDegres);
+                    float angleInDegrees = Mathf.Atan2(gradient.y, gradient.x) * Mathf.Rad2Deg;
 
-                    vectorObj.transform.rotation = rotation;
+                    vectorObj.transform.rotation = Quaternion.Euler(-90, 0, angleInDegrees);
                     vectorObj.GetComponent<SpriteRenderer>().sprite = vfArrow;
                 }
 
@@ -314,8 +282,8 @@ public class GradientVisuals : MonoBehaviour
 
         }
 
-        UpdateVectorsField();
-        InvokeRepeating(nameof(UpdateVectorsField), 1f, refreshRate);
+        UpdateVectorField();
+        InvokeRepeating(nameof(UpdateVectorField), 1f, refreshRate);
 
         return true;
     }
@@ -323,7 +291,7 @@ public class GradientVisuals : MonoBehaviour
     /// <summary>
     /// Vectors field update method.
     /// </summary>
-    private void UpdateVectorsField()
+    private void UpdateVectorField()
     {
         if (!vectorsEnabled) { return; }
 
@@ -344,9 +312,9 @@ public class GradientVisuals : MonoBehaviour
     /// <summary>
     /// Handles the ending of the vector field.
     /// </summary>
-    private void CloseVectorsField()
+    private void CloseVectorField()
     {
-        CancelInvoke(nameof(UpdateVectorsField));
+        CancelInvoke(nameof(UpdateVectorField));
 
         //for (int i = vfVectors.Count - 1; i >= 0; i--)
         //{

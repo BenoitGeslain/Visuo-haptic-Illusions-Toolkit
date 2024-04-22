@@ -34,6 +34,7 @@ namespace VHToolkit.Redirection.WorldRedirection {
 				_ => null
 			};
 
+
 			if (techniqueInstance is null)
 				Debug.LogError("Error Unknown Redirection technique.");
 
@@ -55,7 +56,7 @@ namespace VHToolkit.Redirection.WorldRedirection {
 		/// Start function called once when the game is starting. This function calls updateTechnique() to instantiate the technique class and
 		/// initializes the previous head positions.
 		/// </summary>
-		private void Start() {
+		private void OnEnable() {
 			UpdateTechnique();
 			previousTechnique = Technique;
 
