@@ -1,5 +1,9 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
+
 using UnityEngine;
+
 
 namespace VHToolkit.Redirection.WorldRedirection {
 	public abstract class WorldRedirectionStrategy {
@@ -57,5 +61,21 @@ namespace VHToolkit.Redirection.WorldRedirection {
 		/// <param name="scene"></param>
 		/// <returns></returns>
 		public override Vector3 SteerTo(Scene scene) => scene.physicalHead.rotation * scene.strategyDirection;
+	}
+
+	public class APFP2R : WorldRedirectionStrategy {
+
+		public List<Collider> colliders;
+
+		public APFP2R() : base() {
+			colliders = GameObject.FindGameObjectsWithTag("Obstacle").Select(o => o.GetComponent<Collider>()).ToList();
+		}
+
+		public override Vector3 SteerTo(Scene scene) => ComputeGradient(scene);
+
+		private Vector2 ComputeGradient(Scene scene) => Vector3.ProjectOnPlane(MathTools.Gradient3(
+											MathTools.RepulsivePotential3D(colliders),
+											MathTools.ProjectToHorizontalPlane(scene.physicalHead.position)
+										), Vector3.up);
 	}
 }

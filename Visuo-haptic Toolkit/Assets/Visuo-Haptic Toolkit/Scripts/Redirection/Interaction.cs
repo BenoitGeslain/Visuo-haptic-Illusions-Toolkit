@@ -7,7 +7,7 @@ namespace VHToolkit.Redirection {
 		None,
 		Reset,
 		[InspectorName("")] SEPARATOR1, // Adds a visual separator in the drop-down inspector
-		// Hand Redirection techniques
+										// Hand Redirection techniques
 		Han2018TranslationalShift,
 		Han2018InterpolatedReach,
 		Azmandian2016Body,
@@ -46,7 +46,8 @@ namespace VHToolkit.Redirection {
 		SteerToMultipleTargets,
 		SteerInDirection,
 		[InspectorName(" ")] SEPARATOR2,
-		PushPullReactive
+		PushPullReactive,
+		APFRedirection,
 	}
 
 	public enum HybridAggregate {

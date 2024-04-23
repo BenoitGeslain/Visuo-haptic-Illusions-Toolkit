@@ -164,5 +164,16 @@ namespace VHToolkit.Redirection {
 		/// Rotate the virtual head by the given angle (in degrees) around the world's y axis
 		/// </summary>
 		public void RotateVirtualHeadY(float angle) => HeadToHeadRedirection = Quaternion.Euler(0f, angle, 0f) * HeadToHeadRedirection;
+
+		public List<Collider2D> GetAllObstaclesCollider() {
+			GameObject[] Obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
+			List<Collider2D> ObstaclesColliders = new();
+
+			for (int i = 0; i < Obstacles.Length; i++) {
+				ObstaclesColliders.Add(Obstacles[i].GetComponent<Collider2D>());
+			}
+
+			return ObstaclesColliders;
+		}
 	}
 }

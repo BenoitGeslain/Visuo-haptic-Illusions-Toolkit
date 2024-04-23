@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 
 using UnityEngine;
@@ -143,7 +145,7 @@ namespace VHToolkit.Redirection.WorldRedirection {
 		/// Static factory method for using Mean-aggregation.
 		/// </summary>
 		/// <param name="aggregate"></param>
-		public static Razzaque2001Hybrid Mean() => new((a, b, c) => (a + b + c)/3);
+		public static Razzaque2001Hybrid Mean() => new((a, b, c) => (a + b + c) / 3);
 
 		/// <summary>
 		/// Static factory method for using weighted-sum-aggregation.
@@ -240,4 +242,5 @@ namespace VHToolkit.Redirection.WorldRedirection {
 	public class NoWorldRedirection : WorldRedirectionTechnique {
 		public override void Redirect(Scene scene) => CopyHeadAndLimbTransform(scene);
 	}
+
 }
