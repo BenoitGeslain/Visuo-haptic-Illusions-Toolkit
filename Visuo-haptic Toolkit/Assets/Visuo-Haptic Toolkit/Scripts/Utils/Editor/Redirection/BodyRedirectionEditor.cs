@@ -103,8 +103,8 @@ namespace VHToolkit.Redirection.BodyRedirection {
 
 
 			if (techniqueName == nameof(Kohli2010RedirectedTouching)) {
-				MakePropertyField(parametersObject.FindProperty("smoothingParameter"), "Smoothing", "");
-				MakePropertyField(parametersObject.FindProperty("rescale"), "Rescale", "");
+				MakePropertyField(parametersObject.FindProperty("SmoothingParameter"), "Smoothing", "");
+				MakePropertyField(parametersObject.FindProperty("Rescale"), "Rescale", "");
 			} else if (techniqueName == nameof(Geslain2022Polynom)) {
 				MakePropertyField(parametersObject.FindProperty("redirectionLateness"), "Redirection Lateness (a2)");
 				MakePropertyField(parametersObject.FindProperty("controlPoint"), "ControlPoint");

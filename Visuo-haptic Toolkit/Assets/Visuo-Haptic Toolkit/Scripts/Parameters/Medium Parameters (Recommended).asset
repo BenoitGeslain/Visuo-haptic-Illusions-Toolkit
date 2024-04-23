@@ -24,9 +24,9 @@ MonoBehaviour:
   RedirectionBuffer: 0.1
   RedirectionLateness: 0
   ControlPoint: {x: 0, y: 0}
+  ResetRedirectionCoeff: 0.087
   GoGoCoefficient: 1
   GoGoActivationDistance: 0.167
-  ResetRedirectionCoeff: 0.087
   RotationalError: 0.5
   RotationalThreshold: 0.1
   WalkingThreshold: 0.2
@@ -41,7 +41,7 @@ MonoBehaviour:
     opposite: 0.998
   CurvatureRadius: 15
   HybridWeights: {x: 1, y: 1, z: 1}
-  smoothingParameter: 0
-  rescale: 0
+  SmoothingParameter: 0
+  Rescale: 0
   SwampSquareLength: 0.25
   SwampCDRatio: 0.75
