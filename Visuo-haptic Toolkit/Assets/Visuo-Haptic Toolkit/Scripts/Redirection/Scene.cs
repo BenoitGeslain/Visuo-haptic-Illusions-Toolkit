@@ -84,9 +84,7 @@ namespace VHToolkit.Redirection {
 			get => limbs.ConvertAll(limb => limb.virtualLimb[0].position - limb.physicalLimb.position);
 			set {
 				foreach ((var limb, var v) in limbs.Zip(value)) {
-					// Debug.Log(limb.virtualLimb.First().position);
 					limb.virtualLimb.ForEach(vLimb => vLimb.position = limb.physicalLimb.position + v);
-					// Debug.Log(limb.virtualLimb.First().position);
 				}
 			}
 		}
@@ -166,14 +164,7 @@ namespace VHToolkit.Redirection {
 		public void RotateVirtualHeadY(float angle) => HeadToHeadRedirection = Quaternion.Euler(0f, angle, 0f) * HeadToHeadRedirection;
 
 		public List<Collider2D> GetAllObstaclesCollider() {
-			GameObject[] Obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
-			List<Collider2D> ObstaclesColliders = new();
-
-			for (int i = 0; i < Obstacles.Length; i++) {
-				ObstaclesColliders.Add(Obstacles[i].GetComponent<Collider2D>());
-			}
-
-			return ObstaclesColliders;
+			return GameObject.FindGameObjectsWithTag("Obstacle").Select(v => v.GetComponent<Collider2D>()).ToList();
 		}
 	}
 }

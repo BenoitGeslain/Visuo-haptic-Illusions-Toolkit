@@ -22,7 +22,7 @@ public class GradientVisuals : MonoBehaviour {
 	// public vectors
 	[Header("Vector Field")]
 	[InspectorName("Enable Vectors")] public bool vectorsEnabled;
-	[Range(2, 15)] public int vectorsMeshFineness;
+	[Range(2, 15)] public int vectorMeshFineness;
 	[InspectorName("Arrow Sprite")] public Sprite vfArrow;
 	[InspectorName("Warning Sprite")] public Sprite vfWarning;
 
@@ -110,9 +110,9 @@ public class GradientVisuals : MonoBehaviour {
 
 			repulsiveFunction = MathTools.RepulsivePotential3D(obstaclesCollider);
 
-			// var allColliderBounds = FindObjectsOfType<Collider>().Select(o => o.bounds.max).ToArray();
-			max = FindObjectsOfType<Collider>().Select(o => o.bounds.max).ToArray().Aggregate(Pointwise(Mathf.Max));
-			min = FindObjectsOfType<Collider>().Select(o => o.bounds.min).ToArray().Aggregate(Pointwise(Mathf.Min));
+			var colliders = FindObjectsOfType<Collider>();
+			max = Array.ConvertAll(colliders, o => o.bounds.max).Aggregate(Pointwise(Mathf.Max));
+			min = Array.ConvertAll(colliders, o => o.bounds.min).Aggregate(Pointwise(Mathf.Min));
 			min.y = max.y = 0f;
 
 			width = max.x - min.x;
@@ -172,7 +172,6 @@ public class GradientVisuals : MonoBehaviour {
 
 		for (int z = 0; z < heatmapMeshFineness; z++) {
 			for (int x = 0; x < heatmapMeshFineness; x++) {
-
 				Vector3 position = new(min.x + (x + 1 / 2) * hmStepX, 0, min.z + (z + 1 / 2) * hmStepZ);
 				hmDensityTable[x + (z * heatmapMeshFineness)] = ((Vector2)MathTools.Gradient3(repulsiveFunction, position)).magnitude;
 			}
@@ -213,16 +212,15 @@ public class GradientVisuals : MonoBehaviour {
 		}
 
 		int i = 0;
-		for (int z = 0; z < vectorsMeshFineness; z++) {
-			for (int x = 0; x < vectorsMeshFineness; x++) {
-				GameObject vectorObj = new($"vector_{i++}");
+		for (int z = 0; z < vectorMeshFineness; z++) {
+			for (int x = 0; x < vectorMeshFineness; x++) {
+				GameObject vectorObj = new($"vector_{i++}", typeof(SpriteRenderer));
 
-				Vector3 position = new(min.x + (x + 1 / 2) * (width / vectorsMeshFineness), 0, min.z + ((z + 1 / 2) * (depth / vectorsMeshFineness)));
+				Vector3 position = new(min.x + (x + 1 / 2) * (width / vectorMeshFineness), 0, min.z + ((z + 1 / 2) * (depth / vectorMeshFineness)));
 				Vector2 gradient = MathTools.Gradient3(repulsiveFunction, position);
 
 				vectorObj.transform.parent = this.transform;
 				vectorObj.transform.position = new(position.x, transform.position.y + 0.001f, position.z);
-				vectorObj.AddComponent<SpriteRenderer>();
 
 				if (!float.IsNaN(gradient.x) && !float.IsNaN(gradient.y)) {
 					float angleInDegrees = Mathf.Atan2(gradient.y, gradient.x) * Mathf.Rad2Deg;
@@ -235,7 +233,6 @@ public class GradientVisuals : MonoBehaviour {
 
 				vfVectors.Add(vectorObj);
 			}
-
 		}
 
 		UpdateVectorField();

@@ -67,9 +67,7 @@ namespace VHToolkit.Redirection.WorldRedirection {
 
 		public List<Collider> colliders;
 
-		public APFP2R() : base() {
-			colliders = GameObject.FindGameObjectsWithTag("Obstacle").Select(o => o.GetComponent<Collider>()).ToList();
-		}
+		public APFP2R() : base() => colliders = GameObject.FindGameObjectsWithTag("Obstacle").Select(o => o.GetComponent<Collider>()).ToList();
 
 		public override Vector3 SteerTo(Scene scene) => ComputeGradient(scene);
 
