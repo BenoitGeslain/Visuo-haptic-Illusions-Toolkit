@@ -18,7 +18,7 @@ var searchData=
   ['setlimbs_156',['SetLimbs',['../classVHToolkit_1_1Redirection_1_1Interaction.html#a61a9e2c7f178f3ce76f1505fff465b32',1,'VHToolkit::Redirection::Interaction']]],
   ['settargets_157',['SetTargets',['../classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1WorldRedirection.html#addc1e43a797082703488db17fc4bb6a5',1,'VHToolkit::Redirection::WorldRedirection::WorldRedirection']]],
   ['smoothingfactor_158',['SmoothingFactor',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a85b4519688808b925e4056b32827df9a',1,'VHToolkit::Redirection::ParametersToolkit']]],
-  ['smoothingparameter_159',['smoothingParameter',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#ae043ba58417a29af6fe0b805ca838ce3',1,'VHToolkit::Redirection::ParametersToolkit']]],
+  ['smoothingparameter_159',['SmoothingParameter',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a91148989809da8f84bc1b594584ae34e',1,'VHToolkit::Redirection::ParametersToolkit']]],
   ['socket_160',['Socket',['../classVHToolkit_1_1Logging_1_1Socket.html',1,'VHToolkit::Logging']]],
   ['socketeditor_161',['SocketEditor',['../classVHToolkit_1_1Logging_1_1SocketEditor.html',1,'VHToolkit::Logging']]],
   ['steerindirection_162',['SteerInDirection',['../namespaceVHToolkit_1_1Redirection.html#aeebb6431e6f113539dc912ca85e23402aaf2cfc4fea8a83f7acd6baf273be4077',1,'VHToolkit.Redirection.SteerInDirection()'],['../classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1SteerInDirection.html',1,'VHToolkit.Redirection.WorldRedirection.SteerInDirection']]],
