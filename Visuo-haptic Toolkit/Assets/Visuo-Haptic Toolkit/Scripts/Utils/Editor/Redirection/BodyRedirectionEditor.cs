@@ -93,8 +93,8 @@ namespace VHToolkit.Redirection.BodyRedirection {
 			parametersObject.Update();
 
 			if (techniqueName == nameof(Kohli2010RedirectedTouching)) {
-				MakePropertyField(referenceSurface, "Reference Surface", "Points on the physical surface that the physical hand of the user explores.");
-				MakePropertyField(interpolatedSurface, "Interpolated Surface", "Points on the virtual surface that the virtual hand of the user will explore when touching the physical surface.");
+				MakePropertyField(referenceSurface, "Reference Surface", "Points on the physical surface that the physical hand of the user explores. This Transform should be the parent of the points. The order of points is matched with the order of interpolated surface.");
+				MakePropertyField(interpolatedSurface, "Interpolated Surface", "Points on the virtual surface that the virtual hand of the user will explore when touching the physical surface.This Transform should be the parent of the points. The order of points is matched with the order of reference surface.");
 			} else {
 				MakePropertyField(physicalTarget, "Physical Target", "");
 				MakePropertyField(virtualTarget, "Virtual Target", "");
@@ -105,9 +105,7 @@ namespace VHToolkit.Redirection.BodyRedirection {
 			if (techniqueName == nameof(Kohli2010RedirectedTouching)) {
 				MakePropertyField(parametersObject.FindProperty("smoothingParameter"), "Smoothing", "");
 				MakePropertyField(parametersObject.FindProperty("rescale"), "Rescale", "");
-			}
-			// Hides redirectionLateness and controlpoint fields if the technique is not Geslain2022Polynom
-			if (techniqueName == nameof(Geslain2022Polynom)) {
+			} else if (techniqueName == nameof(Geslain2022Polynom)) {
 				MakePropertyField(parametersObject.FindProperty("redirectionLateness"), "Redirection Lateness (a2)");
 				MakePropertyField(parametersObject.FindProperty("controlPoint"), "ControlPoint");
 			} else if (techniqueName == nameof(Poupyrev1996GoGo)) {

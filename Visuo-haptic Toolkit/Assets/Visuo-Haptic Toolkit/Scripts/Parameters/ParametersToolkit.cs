@@ -5,7 +5,10 @@ namespace VHToolkit.Redirection {
 	[CreateAssetMenu(fileName = "Data", menuName = "VR Illusions Toolkit/Interaction Techniques Parameters", order = 1)]
 	public class ParametersToolkit : ScriptableObject {
 
+		//
 		// Body Warping
+		//
+
 		[Tooltip("The thresholds for the left and right direction. These values are used to show whether the targets or the hands are further apart than these values.\n\nThe recommended values are [-4.38°, 3.81°] from the measures made by Zenner et al., 2019 using the 75% detection rate. They are also called Just Noticeable Difference or Intervals of Non-detection.\n\nThis wiki page gives more details and a link to the paper referenced: Anonymized. Values are in degrees.")]
 		public Vector2Horizontal HorizontalAngles;
 
@@ -20,13 +23,16 @@ namespace VHToolkit.Redirection {
 		public float RedirectionLateness;
 		[Tooltip("Alternative method to set the second order coefficient for Geslain2022Polynom [Geslain et al., 2022]. This point will not be part of the trajectory but is the second control point of the Bézier Curve. The first on is the origin and the third is the target.")]
 		public Vector2 ControlPoint;
+		[Tooltip("Coefficient that controls the amount of redirection to remove according to the real hand translation when selecting the ResetRedirection technique. Value is in XXXX.")]  // TODO check this
+		public float ResetRedirectionCoeff = 0.087f;
 		[Tooltip("This coefficient is applied to the PoupyrevGoGo1996 \"redirection\"")]
 		public float GoGoCoefficient = 1f;
 		[Tooltip("The activation distance  for which the PoupyrevGoGo1996 technique starts to remap the virtual hand's movement")]
 		public float GoGoActivationDistance = 0.167f;
-		[Tooltip("Coefficient that controls the amount of redirection to remove according to the real hand translation when selecting the ResetRedirection technique. Value is in XXXX.")]  // TODO check this
-		public float ResetRedirectionCoeff = 0.087f;
 
+		//
+		// World Warping
+		//
 
 		// Common params
 		[Tooltip("The error in rotation where users are considered to be in the correct direction. Value is in °.")]
@@ -62,18 +68,21 @@ namespace VHToolkit.Redirection {
 		public Vector3 HybridWeights = new(1f, 1f, 1f);
 
 
+		//
+		// 3D Interpolation
+		//
 
-		[Header("3D Interpolation")]
 		[Tooltip("Parameter that penalizes second-order derivatives, thence also bumps.")]
 		[Range(0, float.MaxValue)]
-		public float smoothingParameter;
+		public float SmoothingParameter;
 		[Tooltip("Whether to apply rescaling before using thin-plate interpolation.")]
-		public bool rescale;
+		public bool Rescale;
 
 
+		//
+		// Pseudo-Haptic
+		//
 
-
-		[Header("Pseudo-Haptic")]
 		[Tooltip("The size of the area around the origin where the Swamp illusion defined by [Lécuyer et al., 2000] is applied. Value is in m.")]
 		public float SwampSquareLength = 0.25f;
 		[Tooltip("The C/D ratio inside the swamp area. Value is in m. [Lécuyer et al., 2000]")]

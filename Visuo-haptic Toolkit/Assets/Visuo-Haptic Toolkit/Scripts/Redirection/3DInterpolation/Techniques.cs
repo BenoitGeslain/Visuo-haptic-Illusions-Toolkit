@@ -1,4 +1,5 @@
 using System;
+
 using UnityEngine;
 
 using VHToolkit.Redirection.BodyRedirection;
@@ -10,7 +11,7 @@ namespace VHToolkit.Redirection.Interpolation3D {
 	/// </summary>
 	public class Kohli2010RedirectedTouching : BodyRedirectionTechnique {
 
-		System.Func<Vector3, Vector3> displace = null;
+		Func<Vector3, Vector3> displace = null;
 
 		/// <summary>
 		/// Compute the displacement vector field, which should be done only on init and whenever its parameters change for efficiency reasons.
@@ -19,8 +20,8 @@ namespace VHToolkit.Redirection.Interpolation3D {
 			displace = ThinPlateSpline.SabooSmoothedDisplacementField(
 				Array.ConvertAll(scene.referenceParent.GetComponentsInChildren<Transform>(), t => t.position),
 				Array.ConvertAll(scene.interpolatedParent.GetComponentsInChildren<Transform>(), t => t.position),
-				scene.parameters.smoothingParameter,
-				scene.parameters.rescale
+				scene.parameters.SmoothingParameter,
+				scene.parameters.Rescale
 			);
 		}
 
