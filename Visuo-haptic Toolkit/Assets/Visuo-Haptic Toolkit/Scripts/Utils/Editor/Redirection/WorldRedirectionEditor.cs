@@ -67,7 +67,7 @@ namespace VHToolkit.Redirection.WorldRedirection {
 			MakePropertyField(physicalHead, "Physical Head", "Transform tracking the user's real head");
 			MakePropertyField(virtualHead, "Virtual Head", "Transform tracking the user's virtual head");
 
-			if (techniqueName == "Azmandian2016World") {
+			if (techniqueName == nameof(Azmandian2016World)) {
 				MakePropertyField(physicalTarget, "Physical Target");
 				MakePropertyField(virtualTarget, "Virtual Target");
 				MakePropertyField(origin, "Origin");
@@ -92,21 +92,18 @@ namespace VHToolkit.Redirection.WorldRedirection {
 			parametersObject.Update();
 
 			EditorGUILayout.Space(2);
-			if (techniqueName == "Razzaque2001OverTimeRotation") {
+			if (techniqueName == nameof(Razzaque2001OverTimeRotation)) {
 				MakePropertyField(parametersObject.FindProperty("RotationalError"), "Rotational Error");
 				MakePropertyField(parametersObject.FindProperty("OverTimeRotation"), "Over Time Rotation Rate");
-			}
-			if (techniqueName == "Razzaque2001Rotational") {
+			} else if (techniqueName == nameof(Razzaque2001Rotational)) {
 				MakePropertyField(parametersObject.FindProperty("RotationalError"), "Rotational Error");
 				MakePropertyField(parametersObject.FindProperty("GainsRotational"), "Rotational Gains");
 				MakePropertyField(parametersObject.FindProperty("RotationalThreshold"), "Rotational Threshold");
-			}
-			if (techniqueName == "Razzaque2001Curvature") {
+			} else if (techniqueName == nameof(Razzaque2001Curvature)) {
 				MakePropertyField(parametersObject.FindProperty("RotationalError"), "Rotational Error");
 				MakePropertyField(parametersObject.FindProperty("CurvatureRadius"), "Curvature Radius");
 				MakePropertyField(parametersObject.FindProperty("WalkingThreshold"), "Walking Threshold");
-			}
-			if (techniqueName == "Razzaque2001Hybrid") {
+			} else if (techniqueName == nameof(Razzaque2001Hybrid)) {
 				MakePropertyField(parametersObject.FindProperty("RotationalError"), "Rotational Error");
 				MakePropertyField(enableOverTime, "Enable Over Time Rotation");
 				if (enableOverTime.boolValue)
@@ -146,11 +143,9 @@ namespace VHToolkit.Redirection.WorldRedirection {
 						script.techniqueInstance = Razzaque2001Hybrid.Max();
 						break;
 				}
-			}
-			// if (techniqueName == "Azmandian2016World") {
-			// 	MakePropertyField(parametersObject.FindProperty("GainsRotational"), "Gains Rotational");
-			// }
-			if (techniqueName == "Steinicke2008Translational") {
+			} else if (techniqueName == nameof(Azmandian2016World)) {
+				MakePropertyField(parametersObject.FindProperty("GainsRotational"), "Gains Rotational");
+			} else if (techniqueName == nameof(Steinicke2008Translational)) {
 				MakePropertyField(parametersObject.FindProperty("GainsTranslational"), "Translational Gains");
 			}
 
@@ -168,17 +163,17 @@ namespace VHToolkit.Redirection.WorldRedirection {
 					MakePropertyField(parametersObject.FindProperty("DampeningRange"), "Dampening Range");
 					MakePropertyField(applySmoothing, "Apply Smoothing");
 					MakePropertyField(parametersObject.FindProperty("SmoothingFactor"), "Smoothing Factor");
-				} else if (strategy.enumNames[strategy.enumValueIndex] == "SteerToOrbit") {
+				} else if (strategy.enumNames[strategy.enumValueIndex] == nameof(SteerToOrbit)) {
 					MakePropertyField(targetsScene, "Targets");
 
 					var steerToOrbitRadius = parametersObject.FindProperty("SteerToOrbitRadius");
 					EditorGUILayout.BeginHorizontal();
-					EditorGUILayout.PropertyField(steerToOrbitRadius, new GUIContent("Steer To Orbit Radius"));
-					EditorGUILayout.LabelField("   Rotation Rate: " + (360f / (2 * Mathf.PI * steerToOrbitRadius.floatValue)).ToString("N2") + " °/m/s");
+						EditorGUILayout.PropertyField(steerToOrbitRadius, new GUIContent("Steer To Orbit Radius"));
+						EditorGUILayout.Space(20);
+						EditorGUILayout.LabelField("Rotation Rate: " + (360f / (2 * Mathf.PI * steerToOrbitRadius.floatValue)).ToString("N2") + " °/m/s");
 					GUILayout.EndHorizontal();
 
-				}
-				else if (strategy.enumNames[strategy.enumValueIndex] == "SteerInDirection") {
+				} else if (strategy.enumNames[strategy.enumValueIndex] == nameof(SteerInDirection)) {
 					MakePropertyField(direction, "Direction");
 				}
 			}

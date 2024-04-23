@@ -52,7 +52,7 @@ namespace VHToolkit.Redirection.WorldRedirection {
 		}
 	}
 
-	class SteerInDirection : WorldRedirectionStrategy {
+	public class SteerInDirection : WorldRedirectionStrategy {
 		/// <summary>
 		/// Steers the user in the specified direction relative to the physicalHead orientation.
 		/// This function uses the parameter strategyDirection as its input.

@@ -33,6 +33,10 @@ namespace VHToolkit.Redirection {
 		SerializedProperty gainsRotational;
 		SerializedProperty curvatureRadius;
 		SerializedProperty hybridWeights;
+		SerializedProperty smoothingParameter;
+		SerializedProperty rescale;
+		SerializedProperty swampSquareLength;
+		SerializedProperty swampCDRatio;
 
 		private void OnEnable() {
 			// Body Warping
@@ -63,6 +67,14 @@ namespace VHToolkit.Redirection {
 			gainsRotational = serializedObject.FindProperty ("GainsRotational");
 			curvatureRadius = serializedObject.FindProperty("CurvatureRadius");
 			hybridWeights = serializedObject.FindProperty("HybridWeights");
+
+			// 3DInterpolation
+			smoothingParameter = serializedObject.FindProperty("SmoothingParameter");
+			rescale = serializedObject.FindProperty("Rescale");
+
+			// Pseudo-haptic
+			swampSquareLength = serializedObject.FindProperty("SwampSquareLength");
+			swampCDRatio = serializedObject.FindProperty("SwampCDRatio");
 		}
 
 		public override void OnInspectorGUI() {
@@ -72,22 +84,24 @@ namespace VHToolkit.Redirection {
 
 			serializedObject.Update();
 
-			EditorGUILayout.Space(5);
-			EditorGUILayout.LabelField("Body/Hand Warping", EditorStyles.largeLabel);
-
 			// Body Warping
+			EditorGUILayout.Space(10);
+			EditorGUILayout.LabelField("Body/Hand Redirection", EditorStyles.largeLabel);
+
 			EditorGUILayout.PropertyField(horizontalAngles, new GUIContent ("Max Horizontal Angles"));
 			EditorGUILayout.PropertyField(verticalAngles, new GUIContent ("Max Vertical Angles"));
 			EditorGUILayout.PropertyField(depthGain, new GUIContent("Max Depth Gain"));
 			EditorGUILayout.PropertyField(redirectionBuffer, new GUIContent ("No Redirection Buffer"));
+			EditorGUILayout.PropertyField(redirectionLateness, new GUIContent ("Redirection Lateness"));
+			EditorGUILayout.PropertyField(controlPoint, new GUIContent("Control Point"));
 			EditorGUILayout.PropertyField(resetRedirectionCoeff, new GUIContent ("Reset Redirection Coefficient"));
 			EditorGUILayout.PropertyField(goGoActivationDistance, new GUIContent ("GoGo Activation Distance"));
 			EditorGUILayout.PropertyField(goGoCoefficient, new GUIContent ("GoGo Coefficient"));
 
-			EditorGUILayout.Space(5);
+			// World Warping
+			EditorGUILayout.Space(10);
 			EditorGUILayout.LabelField("World Redirection / Redirected Walking", EditorStyles.largeLabel);
 
-			// World Warping
 			EditorGUILayout.PropertyField(rotationalError, new GUIContent ("Rotational Error"));
 			EditorGUILayout.PropertyField(rotationalThreshold, new GUIContent ("Rotational Threshold"));
 			EditorGUILayout.PropertyField(walkingThreshold, new GUIContent ("Walking Threshold"));
@@ -104,10 +118,23 @@ namespace VHToolkit.Redirection {
 
 			EditorGUILayout.BeginHorizontal();
 			EditorGUILayout.PropertyField(curvatureRadius, new GUIContent ("Curvature Radius"));
+			EditorGUILayout.Space(20);
 			EditorGUILayout.LabelField("   Rotation Rate: " + (360f / (2 * Mathf.PI * curvatureRadius.floatValue)).ToString("N2") + " °/m/s");
 			GUILayout.EndHorizontal();
 
 			EditorGUILayout.PropertyField(hybridWeights, new GUIContent("Hybrid Sum Weights"));
+
+			// 3DInterpolation
+			EditorGUILayout.Space(10);
+			EditorGUILayout.LabelField("3D Interpolation", EditorStyles.largeLabel);
+			EditorGUILayout.PropertyField(smoothingParameter, new GUIContent("Smoothing Parameter"));
+			EditorGUILayout.PropertyField(rescale, new GUIContent("Rescale"));
+
+			// Pseudo-haptic
+			EditorGUILayout.Space(10);
+			EditorGUILayout.LabelField("Pseudo-haptic", EditorStyles.largeLabel);
+			EditorGUILayout.PropertyField(swampSquareLength, new GUIContent("Swamp Square Length"));
+			EditorGUILayout.PropertyField(swampCDRatio, new GUIContent("Swamp CD Ratio"));
 
 			serializedObject.ApplyModifiedProperties();
 		}
