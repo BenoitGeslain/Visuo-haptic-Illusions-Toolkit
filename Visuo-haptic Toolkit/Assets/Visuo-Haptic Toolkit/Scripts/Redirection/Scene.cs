@@ -39,9 +39,7 @@ namespace VHToolkit.Redirection {
 	/// <param name="applyDampening">Whether to apply dampening in the Razzaque et al.'s Redirected walking hybrid technique.</param>
 	/// <param name="applySmoothing">Whether to apply smoothing in the Razzaque et al.'s Redirected walking hybrid technique.</param>
 	[Serializable]
-	public record Scene() {
-		// [Ignore] public Transform physicalHand;
-		// [Ignore] public Transform virtualHand;
+	public record Scene {
 		[SerializeField] public List<Limb> limbs;
 
 		[Ignore] public List<Transform> virtualLimbs => limbs.SelectMany(limb => limb.virtualLimb).ToList();
@@ -163,8 +161,6 @@ namespace VHToolkit.Redirection {
 		/// </summary>
 		public void RotateVirtualHeadY(float angle) => HeadToHeadRedirection = Quaternion.Euler(0f, angle, 0f) * HeadToHeadRedirection;
 
-		public List<Collider2D> GetAllObstaclesCollider() {
-			return GameObject.FindGameObjectsWithTag("Obstacle").Select(v => v.GetComponent<Collider2D>()).ToList();
-		}
+		public List<Collider2D> GetAllObstaclesCollider() => GameObject.FindGameObjectsWithTag("Obstacle").Select(v => v.GetComponent<Collider2D>()).ToList();
 	}
 }
