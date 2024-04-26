@@ -68,8 +68,7 @@ $(function() {
   <div class="summary">
 <a href="#namespaces">Namespaces</a> &#124;
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
 <div class="title">VHToolkit.Redirection Namespace Reference</div>  </div>
 </div><!--header-->
@@ -179,12 +178,6 @@ Enumerations</h2></td></tr>
 <br />
  }</td></tr>
 <tr class="separator:aaf3934a62f351dca46599bed84d4bbe2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:aa3ec964b2baf3fc23c0b779c89dafea1"><td class="memItemLeft" align="right" valign="top">record&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceVHToolkit_1_1Redirection.html#aa3ec964b2baf3fc23c0b779c89dafea1">Scene</a> ()</td></tr>
-<tr class="memdesc:aa3ec964b2baf3fc23c0b779c89dafea1"><td class="mdescLeft">&#160;</td><td class="mdescRight">This class records the position of various objects of interest.  <a href="namespaceVHToolkit_1_1Redirection.html#aa3ec964b2baf3fc23c0b779c89dafea1">More...</a><br /></td></tr>
-<tr class="separator:aa3ec964b2baf3fc23c0b779c89dafea1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
 <a id="af8073b3c987118e1413b41c5be00892b"></a>
@@ -320,65 +313,6 @@ Functions</h2></td></tr>
 <tr><td class="fieldname"><a id="a0d56c189dc559dc0687f7c32fad22530a8173b692989818c5fc29b7b61b2ff9f4"></a>Azmandian2016World&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a0d56c189dc559dc0687f7c32fad22530aa5674bd07fc56d10fc5edf2d37ee66e4"></a>Steinicke2008Translational&#160;</td><td class="fielddoc"></td></tr>
 </table>
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="aa3ec964b2baf3fc23c0b779c89dafea1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa3ec964b2baf3fc23c0b779c89dafea1">&#9670;&nbsp;</a></span>Scene()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">record VHToolkit.Redirection.Scene </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>This class records the position of various objects of interest. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">physicalHand</td><td>The Transform representing the user's physical hand, i.e. the transform that is receiving the tracked hand data.</td></tr>
-    <tr><td class="paramname">virtualHand</td><td>The Transform representing the user's virtual hand, i.e. the user's avatar.</td></tr>
-    <tr><td class="paramname">physicalHead</td><td>The Transform representing the user's physical head, i.e. the transform that is receiving the tracked head data..</td></tr>
-    <tr><td class="paramname">virtualHead</td><td>The Transform representing the user's virtual head.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">physicalTarget</td><td>The physical target the hand should reach when the virtual hand reaches the virtual target.</td></tr>
-    <tr><td class="paramname">virtualTarget</td><td>The virtual target the user is reaching for.</td></tr>
-    <tr><td class="paramname">origin</td><td>The point of origin where no redirection is applied.</td></tr>
-    <tr><td class="paramname">targets</td><td>The target(s) used for the steering strategies. For SteerToOrbit, the first element is considered to be the center of the orbit.</td></tr>
-    <tr><td class="paramname">radius</td><td>The radius of the orbit in the SteerToOrbit strategy.</td></tr>
-    <tr><td class="paramname">applyDampening</td><td>Whether to apply dampening in the Razzaque et al.'s Redirected walking hybrid technique.</td></tr>
-    <tr><td class="paramname">applySmoothing</td><td>Whether to apply smoothing in the Razzaque et al.'s Redirected walking hybrid technique.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>The position of the virtual limb is given by <code>physicalHand.position + <a class="el" href="namespaceVHToolkit_1_1Redirection.html">Redirection</a></code>. </p>
-<dl class="section return"><dt>Returns</dt><dd>The distance between the user's real and virtual hands.</dd></dl>
-<dl class="section return"><dt>Returns</dt><dd>The distance between the user's real hand and the physical target.</dd></dl>
-<dl class="section return"><dt>Returns</dt><dd>The distance between the user's physical hand and the origin.</dd></dl>
-<dl class="section return"><dt>Returns</dt><dd>The distance between the user's physical and virtual head.</dd></dl>
-<dl class="section return"><dt>Returns</dt><dd>The Vector3 between the user's physical and virtual head.</dd></dl>
-<dl class="section return"><dt>Returns</dt><dd>The quaternion rotation between the user's physical and virtual head.</dd></dl>
-<dl class="section return"><dt>Returns</dt><dd>The distance between the user's physical head and the target.</dd></dl>
-<dl class="section return"><dt>Returns</dt><dd>The signed angle (as per trigonometry standards) between the user's physical head and the forward target in degrees.</dd></dl>
-<dl class="section return"><dt>Returns</dt><dd>The physical head's rotation with respect to the last frame's rotation, as a quaternion.</dd></dl>
-<dl class="section return"><dt>Returns</dt><dd>The instant angular velocity around the up axis (Y) of the physical head using the last frame's position.</dd></dl>
-<dl class="section return"><dt>Returns</dt><dd>The instant linear velocity of the physical head using the last frame's position</dd></dl>
-<dl class="section return"><dt>Returns</dt><dd>The instant linear velocity of the physical head using the last frame's position projected on the physical head forward vector.</dd></dl>
-<dl class="section return"><dt>Returns</dt><dd>The instant linear velocity of the physical hand using the last frame's position</dd></dl>
-<p>Applies unaltered physical head rotations to the virtual head GameObject </p>
-<p>Applies unaltered physical head translations to the virtual head GameObject </p>
-<p>Applies unaltered physical hand rotations to the virtual hand GameObjects </p>
-<p>Rotate the virtual head by the given angle (in degrees) around the world's y axis </p>
 
 </div>
 </div>
