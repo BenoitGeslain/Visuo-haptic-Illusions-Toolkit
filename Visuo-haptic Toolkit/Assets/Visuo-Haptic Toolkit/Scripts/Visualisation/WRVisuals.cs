@@ -24,7 +24,7 @@ namespace VHToolkit.Visualisation {
 			targets = new List<Transform>();
 		}
 
-		private void Update() {
+		private void LateUpdate() {
 			Scene scene = WRMainScript.scene;
 
 			switch (WRMainScript.strategy) {
@@ -45,6 +45,10 @@ namespace VHToolkit.Visualisation {
 					break;
 				case WRStrategy.SteerInDirection:
 					SteerInDirection(scene);
+					break;
+				case WRStrategy.APF_PushPull:
+					Debug.DrawRay(scene.physicalHead.position, scene.forwardTarget*10);
+					// Debug.Log(scene.forwardTarget);
 					break;
 				default:
 					targets.Clear();
