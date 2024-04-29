@@ -6,6 +6,17 @@ using static VHToolkit.MathTools;
 
 // Adapted from UnityEngine.U2D.IK
 public static class CCD2D {
+	/// <summary>
+	/// Solve the 2D inverse kinematics problem for a 2D kinematic chain consisting of rigid links connected by revolute joints.
+	/// The algorithm used is cyclic coordinate descent (CCD).
+	/// </summary>
+	/// <param name="targetPosition">The target position for the "end" of the kinematic chain.</param>
+	/// <param name="forward">A nonzero vector orthogonal to the 2D plane in which the problem is embedded.</param>
+	/// <param name="maxSteps">A limit number of iterations.</param>
+	/// <param name="tolerance">Numerical tolerance for the position errors.</param>
+	/// <param name="velocity">A parameter that controls convergence speed.</param>
+	/// <param name="positions">An array containing the positions of the joints, bookended by those of the chain extremities ("start effector", "end effector"). Its values evolve over iteration steps.</param>
+	/// <returns><c>true</c> if the solver converges.</returns>
 	public static bool Solve(Vector3 targetPosition, Vector3 forward, int maxSteps, float tolerance, float velocity, ref Vector3[] positions) {
 		int step = 0;
 		float sqrTolerance = tolerance * tolerance;
@@ -18,9 +29,9 @@ public static class CCD2D {
 
 	private static void DoIteration(Vector3 targetPosition, Vector3 forward, float velocity, ref Vector3[] positions) {
 		for (int num = positions.Length - 2; num >= 0; num--) {
-			float b = Vector3.SignedAngle(positions[^1] - positions[num], targetPosition - positions[num], forward);
-			b = Mathf.Lerp(0f, b, velocity);
-			Quaternion rotation = Quaternion.AngleAxis(b, forward);
+			float bearingToTarget = Vector3.SignedAngle(positions[^1] - positions[num], targetPosition - positions[num], forward);
+			float rotationalCorrection = Mathf.Lerp(0f, bearingToTarget, velocity);
+			var rotation = Quaternion.AngleAxis(rotationalCorrection, forward);
 			for (int num2 = positions.Length - 2; num2 > num; num2--) {
 				positions[num2] = positions[num] + rotation * (positions[num2] - positions[num]);
 			}
@@ -30,6 +41,16 @@ public static class CCD2D {
 
 // Adapted from UnityEngine.U2D.IK
 public static class MyFABRIK2D {
+	/// <summary>
+	/// Solve the 2D inverse kinematics problem for a 2D kinematic chain consisting of rigid links connected by revolute joints.
+	/// The algorithm used is FABRIK.
+	/// </summary>
+	/// <param name="targetPosition">The target position for the "end" of the kinematic chain.</param>
+	/// <param name="maxSteps">A limit number of iterations.</param>
+	/// <param name="tolerance">Numerical tolerance for the position errors.</param>
+	/// <param name="lengths">Rigid link lengths.</param>
+	/// <param name="positions">An array containing the positions of the joints, bookended by those of the chain extremities. Its values evolve over iteration steps.</param>
+	/// <returns><c>true</c> if the solver converges.</returns>
 	public static bool SolveWithFloatingOrigin(Vector2 targetPosition, int maxSteps, float tolerance, float[] lengths, ref Vector2[] positions) {
 		int step = 0;
 		float sqrTolerance = tolerance * tolerance;
@@ -42,7 +63,10 @@ public static class MyFABRIK2D {
 	}
 
 	public static bool SolveWithFixedOrigin(Vector2 originPosition, Vector2 targetPosition, int maxSteps, float tolerance, float[] lengths, ref Vector2[] positions) {
-		Debug.Assert(lengths.Sum() >= Vector2.Distance(originPosition, targetPosition));
+		Debug.Assert(
+			lengths.Sum() >= Vector2.Distance(originPosition, targetPosition),
+			"Link lengths insufficient to cover desired distance."
+		);
 		int step = 0;
 		float sqrTolerance = tolerance * tolerance;
 		bool hasConverged;
@@ -85,14 +109,16 @@ public static class MyFABRIK2D {
 		return positions.ToList();
 	}
 
-	// Compute the forward kinematics chain from link-to-link length and angle information.
+	// Compute the forward kinematics chain from link lengths and joint angles.
 	static public IList<PositionAndRotation2D> ForwardKinematics(PositionAndRotation2D origin, IList<float> lengths, IList<float> angles) {
-		Debug.Assert(lengths.Count == angles.Count);
+		Debug.Assert(lengths.Count == angles.Count,
+			"The number of revolute joints must be the number of links minus one."
+		);
 		List<PositionAndRotation2D> result = new() { origin };
 		var position = origin.position;
 		var direction = origin.forward.LiftFromHorizontalPlane();
 		foreach (var (length, angle) in lengths.Zip(angles)) {
-			Debug.Assert(length > 0);
+			Debug.Assert(length > 0, "Link lengths must be positive.");
 			Debug.Assert(Mathf.Abs(angle) <= 180f);
 			position += length * result.Last().forward;
 			direction = Quaternion.AngleAxis(angle, Vector3.up) * direction;
