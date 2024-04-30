@@ -101,7 +101,7 @@ namespace VHToolkit.Calibration {
 		}
 
 		/// <summary>
-		/// This function sets the state of the calibration so that the user can start calibration on the next frame
+		/// Function <c>Calibrate</c> sets the state of the calibration so that the user can start calibration on the next frame.
 		/// </summary>
 		public void Calibrate() => state = CalibrationState.FirstPoint;
 

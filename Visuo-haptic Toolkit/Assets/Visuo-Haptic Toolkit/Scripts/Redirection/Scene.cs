@@ -10,7 +10,7 @@ using UnityEngine;
 namespace VHToolkit.Redirection {
 
 	/// <summary>
-	/// A Limb pairs one <c>physicalLimb</c> Transform with a list of virtual limb Transforms.
+	/// A <c>Limb</c> pairs one <c>physicalLimb</c> Transform with a list of virtual limb Transforms.
 	/// </summary>
 	[Serializable]
 	public struct Limb {

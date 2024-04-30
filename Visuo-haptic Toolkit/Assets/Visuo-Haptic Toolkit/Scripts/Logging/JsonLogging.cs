@@ -40,17 +40,26 @@ namespace VHToolkit.Logging {
 		public readonly DateTime TimeStamp = DateTime.Now;
 		private readonly Interaction script;
 
+		/// <value>
+		/// Property <c>Strategy</c> is a string corresponding to the name of the current World Redirection
+		/// target selection strategy, if any, or the empty string.
+		/// </value>
 		public string Strategy => script switch {
 			WorldRedirection => (script as WorldRedirection).strategy.ToString(),
-			BodyRedirection => "",
-			_ => ""
+			BodyRedirection => String.Empty,
+			_ => String.Empty
 		};
 
+		/// <value>
+		/// Property <c>Technique</c> is a string corresponding to the name of the current 'edirection
+		/// technique, if any, or the empty string.
+		/// </value>
 		public string Technique => script switch {
 			WorldRedirection => (script as WorldRedirection).Technique.ToString(),
 			BodyRedirection => (script as BodyRedirection).Technique.ToString(),
 			_ => ""
 		};
+
 		public bool Redirecting => script.redirect;
 
 		public List<PhysicalLimbData> Limbs => script.scene.limbs.ConvertAll(l => new PhysicalLimbData(l));
@@ -68,8 +77,8 @@ namespace VHToolkit.Logging {
 		[SerializeField] protected string optionalFilenamePrefix;
 		protected readonly int bufferSize = 10; // number of records kept before writing to disk
 
-		protected Queue<T> records = new();
-		protected HashSet<IObserver<T>> observers = new();
+		protected readonly Queue<T> records = new();
+		protected readonly HashSet<IObserver<T>> observers = new();
 		protected Interaction script;
 
 		protected void WriteRecords(Queue<T> records) {
@@ -115,7 +124,11 @@ namespace VHToolkit.Logging {
 			records.Enqueue(new JsonRedirectionData(script));
 			WriteRecords(records);
 		}
-
+		/// <summary>
+		/// Create a new log file.
+		/// </summary>
+		/// <param name="logDirectoryPath">The path to the directory where the file should be placed.</param>
+		/// <param name="optionalFilenamePrefix">An optional prefix string to appear in the filename before its timestamp.</param>
 		public void CreateNewFile(string logDirectoryPath, string optionalFilenamePrefix = "") {
 			Directory.CreateDirectory(logDirectoryPath);
 			var fileName = $"{logDirectoryPath}{optionalFilenamePrefix}{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.jsonl";
@@ -124,7 +137,10 @@ namespace VHToolkit.Logging {
 			observers.Add(observer);
 		}
 
-
+		/// <summary>
+		/// The class <c>FileObserver</c> implements the Observer pattern for <c>JsonRedirectionData</c> instances,
+		/// serializing the information which it receives and writing it to a file.
+		/// </summary>
 		private sealed class FileObserver : IObserver<JsonRedirectionData> {
 			private readonly StreamWriter writer;
 			private IDisposable unsubscriber;

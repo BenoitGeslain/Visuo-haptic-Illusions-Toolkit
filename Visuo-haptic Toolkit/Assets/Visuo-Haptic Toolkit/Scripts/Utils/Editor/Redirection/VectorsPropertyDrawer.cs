@@ -6,12 +6,10 @@ using VHToolkit.Redirection;
 public class VectorsPropertyDrawer : PropertyDrawer {
 	protected float labelWidth = 60;
 
-	protected float GetWidth(float availableWidth) {
-		return availableWidth / 2f - 5f;
-	}
+	protected float GetWidth(float availableWidth) => availableWidth / 2f - 5f;
 }
 
-	[CustomPropertyDrawer(typeof(Vector2Horizontal))]
+[CustomPropertyDrawer(typeof(Vector2Horizontal))]
 public class Vector2HorizontalPropertyDrawer : VectorsPropertyDrawer {
 	public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
 		EditorGUI.BeginProperty(position, label, property);
@@ -35,8 +33,7 @@ public class Vector2HorizontalPropertyDrawer : VectorsPropertyDrawer {
 }
 
 [CustomPropertyDrawer(typeof(Vector2Vertical))]
-public class Vector2VerticalPropertyDrawer : VectorsPropertyDrawer
-{
+public class Vector2VerticalPropertyDrawer : VectorsPropertyDrawer {
 	public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
 		EditorGUI.BeginProperty(position, label, property);
 		position = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
@@ -59,10 +56,8 @@ public class Vector2VerticalPropertyDrawer : VectorsPropertyDrawer
 }
 
 [CustomPropertyDrawer(typeof(Vector2Gain))]
-public class Vector2GainPropertyDrawer : VectorsPropertyDrawer
-{
-	public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
-	{
+public class Vector2GainPropertyDrawer : VectorsPropertyDrawer {
+	public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
 		EditorGUI.BeginProperty(position, label, property);
 		position = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
 
@@ -84,10 +79,8 @@ public class Vector2GainPropertyDrawer : VectorsPropertyDrawer
 }
 
 [CustomPropertyDrawer(typeof(Vector2Rotation))]
-public class Vector2RotationPropertyDrawer : VectorsPropertyDrawer
-{
-	public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
-	{
+public class Vector2RotationPropertyDrawer : VectorsPropertyDrawer {
+	public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
 		EditorGUI.BeginProperty(position, label, property);
 		position = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
 

@@ -35,16 +35,11 @@ namespace VHToolkit {
 			) / (2 * eps);
 		}
 
-
-		public static Func<Vector2, float> RepulsivePotential2D(List<Collider2D> obstacles) =>
-			(x) => obstacles.Sum(o => 1 / Vector2.Distance(x, o.ClosestPoint(x)));
-
-        public static Func<Vector3, float> RepulsivePotential3D(List<Collider> obstacles) =>
+		public static Func<Vector3, float> RepulsivePotential3D(List<Collider> obstacles) =>
 			(x) => obstacles.Sum(o => 1 / Vector3.Distance(x, o.ClosestPoint(x)));
 
 
-        // maxence
-        public static Vector2 Gradient2v2(Vector2 x, List<Collider2D> obstaclescolliders) {
+		public static Vector2 Gradient2v2(Vector2 x, List<Collider2D> obstaclescolliders) {
 			float RepulsivePotential(Vector2 x) => obstaclescolliders.Sum(o => 1 / Vector2.Distance(x, o.ClosestPoint(x)));
 			var eps = Vector2.kEpsilon;
 			return new Vector2(
