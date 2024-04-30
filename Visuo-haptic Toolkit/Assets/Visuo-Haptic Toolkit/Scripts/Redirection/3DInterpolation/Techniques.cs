@@ -40,9 +40,10 @@ namespace VHToolkit.Redirection.Interpolation3D {
 				float transitionLayerWidth = 0.5F;
 				float smoothTransition(float x) => 1 - g((x - sqrRadius) / (transitionLayerWidth * sqrRadius));
 				var old_displace = displace;
-				displace = (pos) => old_displace(pos) * smoothTransition((pos - bounds.center).sqrMagnitude);
+				displace = (pos) => pos + (old_displace(pos) - pos) * smoothTransition((pos - bounds.center).sqrMagnitude);
 			}
 		}
+
 
 		public override void Redirect(Scene scene) {
 			if (displace is null) {
