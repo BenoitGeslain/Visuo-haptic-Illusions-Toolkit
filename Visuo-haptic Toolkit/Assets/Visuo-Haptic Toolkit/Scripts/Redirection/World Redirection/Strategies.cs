@@ -71,9 +71,9 @@ namespace VHToolkit.Redirection.WorldRedirection {
 
 		public override Vector3 SteerTo(Scene scene) => ComputeGradient(scene);
 
-		private Vector2 ComputeGradient(Scene scene) => Vector3.ProjectOnPlane(MathTools.Gradient3(
-											MathTools.RepulsivePotential3D(colliders),
-											MathTools.ProjectToHorizontalPlane(scene.physicalHead.position)
-										), Vector3.up);
-	}
+        private Vector3 ComputeGradient(Scene scene) => Vector3.ProjectOnPlane(MathTools.Gradient3(
+                                            MathTools.RepulsivePotential3D(colliders),
+                                            scene.physicalHead.position
+                                        ), Vector3.up);
+    }
 }

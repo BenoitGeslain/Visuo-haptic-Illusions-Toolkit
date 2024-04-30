@@ -46,8 +46,7 @@ namespace VHToolkit.Redirection {
 		SteerToMultipleTargets,
 		SteerInDirection,
 		[InspectorName(" ")] SEPARATOR2,
-		PushPullReactive,
-		APFRedirection,
+		APF_PushPull
 	}
 
 	public enum HybridAggregate {

@@ -34,7 +34,6 @@ namespace VHToolkit.Redirection.WorldRedirection {
 				_ => null
 			};
 
-
 			if (techniqueInstance is null)
 				Debug.LogError("Error Unknown Redirection technique.");
 
@@ -44,7 +43,7 @@ namespace VHToolkit.Redirection.WorldRedirection {
 				WRStrategy.SteerToOrbit => new SteerToOrbit(),
 				WRStrategy.SteerToMultipleTargets => new SteerToMultipleTargets(),
 				WRStrategy.SteerInDirection => new SteerInDirection(),
-				WRStrategy.APFRedirection => new APFP2R(), // Still to implement TODO
+				WRStrategy.APF_PushPull => new APFP2R(), // Still to implement TODO
 				_ => null
 			};
 
