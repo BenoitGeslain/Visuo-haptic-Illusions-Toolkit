@@ -22,27 +22,26 @@ namespace VHToolkit.Redirection.Interpolation3D {
 		public void ComputeDisplacement(Scene scene) {
 			var x = Array.ConvertAll(scene.referenceParent.GetComponentsInChildren<Transform>(), t => t.position);
 			var y = Array.ConvertAll(scene.interpolatedParent.GetComponentsInChildren<Transform>(), t => t.position);
-			if (add_boundaries) {
-				var bounds = new Bounds(x[0], Vector3.zero);
-				foreach (var v in x.Concat(y)) {
-					bounds.Encapsulate(v);
-				}
-				bounds.extents *= 2f;
-				Vector3[] ends = { bounds.min, bounds.max };
-				var supplementary_fixed = new List<Vector3>(8);
-				foreach (var a in ends)
-					foreach (var b in ends)
-						foreach (var c in ends)
-							supplementary_fixed.Add(new Vector3(a.x, b.y, c.z));
-				x = x.Concat(supplementary_fixed).ToArray();
-				y = y.Concat(supplementary_fixed).ToArray();
-			}
 			displace = ThinPlateSpline.SabooSmoothedDisplacementField(
 				x,
 				y,
 				scene.parameters.SmoothingParameter,
 				scene.parameters.Rescale
 			);
+			if (add_boundaries) {
+				var bounds = new Bounds(x[0], Vector3.zero);
+				foreach (var v in x.Concat(y)) {
+					bounds.Encapsulate(v);
+				}
+				var sqrRadius = 3 * bounds.extents.sqrMagnitude;
+
+				static float f(float x) => x > 0 ? Mathf.Exp(-1 / x) : 0;
+				static float g(float x) => f(x) / (f(x) + f(1 - x));
+				float transitionLayerWidth = 0.5F;
+				float smoothTransition(float x) => 1 - g((x - sqrRadius) / (transitionLayerWidth * sqrRadius));
+				var old_displace = displace;
+				displace = (pos) => old_displace(pos) * smoothTransition((pos - bounds.center).sqrMagnitude);
+			}
 		}
 
 		public override void Redirect(Scene scene) {

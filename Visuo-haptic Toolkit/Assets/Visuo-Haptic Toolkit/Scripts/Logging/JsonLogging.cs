@@ -48,7 +48,7 @@ namespace VHToolkit.Logging {
 		public List<TransformData> Targets => script.scene.targets.ConvertAll(t => new TransformData(t));
 		public TransformData PhysicalTarget => script.scene.physicalTarget ? new(script.scene.physicalTarget) : null;
 		public TransformData VirtualTarget => script.scene.virtualTarget ? new(script.scene.virtualTarget) : null;
-		public string StrategyDirection => script.scene.forwardTarget != null ? script.scene.forwardTarget.ToString() : null;
+		public string StrategyDirection => script.scene.forwardTarget != null ? Convert.ToString(script.scene.forwardTarget.ToString()) : null;
 
 		public JsonRedirectionData(Interaction script) => this.script = script;
 	}
@@ -74,8 +74,8 @@ namespace VHToolkit.Logging {
 		}
 
 		private sealed class Unsubscriber : IDisposable {
-			private HashSet<IObserver<T>> _observers;
-			private IObserver<T> _observer;
+			private readonly HashSet<IObserver<T>> _observers;
+			private readonly IObserver<T> _observer;
 
 			public Unsubscriber(HashSet<IObserver<T>> observers, IObserver<T> observer) {
 				_observers = observers;

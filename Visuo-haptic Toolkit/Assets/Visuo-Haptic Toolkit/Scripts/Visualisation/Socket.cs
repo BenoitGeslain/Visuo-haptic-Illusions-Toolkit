@@ -19,8 +19,8 @@ namespace VHToolkit.Logging {
 		[SerializeField] float[] maxSums;
 
 		public void AddTo(float overTime, float rotational, float curvature, float time) {
-			if (this.maxSums is null || this.maxSums.Length != 3) {
-				this.maxSums = new float[3];
+			if (maxSums?.Length != 3) {
+				maxSums = new float[3];
 			}
 			this.overTime += Mathf.Abs(overTime);
 			this.rotational += Mathf.Abs(rotational);
@@ -108,9 +108,6 @@ namespace VHToolkit.Logging {
 				Thread thread = new(() => SendMessage(client, json));
 				thread.Start();
 				redirectionData.Reset();
-				// redirectionData.overTime = 0f;
-				// redirectionData.rotational = 0f;
-				// redirectionData.curvature = 0f;
 			}
 		}
 
