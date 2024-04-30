@@ -10,6 +10,11 @@ using VHToolkit.Redirection.WorldRedirection;
 using Newtonsoft.Json;
 
 namespace VHToolkit.Logging {
+
+	/// <summary>
+	/// Record type <c>TransformData</c> is a wrapper around Unity's <c>Transform</c>.
+	/// It allows for serializing the underlying <c>Transform</c>'s <c>position</c> and <c>rotation</c> properties.
+	/// </summary>
 	public record TransformData {
 		private readonly Transform obj;
 		public string Position => obj ? obj.position.ToString() : "NULL";
@@ -17,6 +22,11 @@ namespace VHToolkit.Logging {
 		public TransformData(Transform obj) => this.obj = obj;
 	}
 
+	/// <summary>
+	/// Record type <c>PhysicalLimbData</c> is a wrapper around <c>Limb</c>.
+	/// It allows for serializing the <c>position</c> and <c>rotation</c> properties of the underlying physical limb,
+	/// as well as those of all underlying virtual limbs.
+	/// </summary>
 	public record PhysicalLimbData {
 		private readonly Limb limb;
 		public string Position => limb.physicalLimb.position.ToString();
@@ -30,13 +40,13 @@ namespace VHToolkit.Logging {
 		public readonly DateTime TimeStamp = DateTime.Now;
 		private readonly Interaction script;
 
-		public string Technique => script switch {
+		public string Strategy => script switch {
 			WorldRedirection => (script as WorldRedirection).strategy.ToString(),
 			BodyRedirection => "",
 			_ => ""
 		};
 
-		public string Strategy => script switch {
+		public string Technique => script switch {
 			WorldRedirection => (script as WorldRedirection).Technique.ToString(),
 			BodyRedirection => (script as BodyRedirection).Technique.ToString(),
 			_ => ""
