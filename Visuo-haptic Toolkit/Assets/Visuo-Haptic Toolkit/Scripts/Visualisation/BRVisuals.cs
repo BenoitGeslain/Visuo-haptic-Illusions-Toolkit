@@ -28,24 +28,24 @@ namespace VHToolkit.Visualisation {
 
 			if (BRMainScript.IsRedirecting()) {
 				// draws threshold lines for the hands
-				foreach(Limb limb in scene.limbs) {
+				foreach (Limb limb in scene.limbs) {
 					DrawThresholdLines(limb.physicalLimb.position, limb.virtualLimb[0].position);
 				}
 			}
 
 			// draw Lécuyer's swamp if applicable
 			if (BRMainScript.Technique == BRTechnique.Lecuyer2000Swamp) {
-				foreach(var vlimb in scene.virtualLimbs) {
+				foreach (var vlimb in scene.VirtualLimbs) {
 					Vector3 distanceToOrigin = vlimb.position - scene.origin.position;
-					Color c = (MathF.Max(MathF.Abs(distanceToOrigin[0]), MathF.Abs(distanceToOrigin[2])) < scene.parameters.SwampSquareLength/2) ?
+					Color c = (MathF.Max(MathF.Abs(distanceToOrigin[0]), MathF.Abs(distanceToOrigin[2])) < scene.parameters.SwampSquareLength / 2) ?
 							Color.green : Color.yellow;
-					Debug.DrawRay(scene.origin.position + new Vector3(scene.parameters.SwampSquareLength/2, 0f, scene.parameters.SwampSquareLength/2),
+					Debug.DrawRay(scene.origin.position + new Vector3(scene.parameters.SwampSquareLength / 2, 0f, scene.parameters.SwampSquareLength / 2),
 								Vector3.back * scene.parameters.SwampSquareLength, c);
-					Debug.DrawRay(scene.origin.position + new Vector3(scene.parameters.SwampSquareLength/2, 0f, scene.parameters.SwampSquareLength/2),
+					Debug.DrawRay(scene.origin.position + new Vector3(scene.parameters.SwampSquareLength / 2, 0f, scene.parameters.SwampSquareLength / 2),
 								Vector3.left * scene.parameters.SwampSquareLength, c);
-					Debug.DrawRay(scene.origin.position - new Vector3(scene.parameters.SwampSquareLength/2, 0f, scene.parameters.SwampSquareLength/2),
+					Debug.DrawRay(scene.origin.position - new Vector3(scene.parameters.SwampSquareLength / 2, 0f, scene.parameters.SwampSquareLength / 2),
 								Vector3.forward * scene.parameters.SwampSquareLength, c);
-					Debug.DrawRay(scene.origin.position - new Vector3(scene.parameters.SwampSquareLength/2, 0f, scene.parameters.SwampSquareLength/2),
+					Debug.DrawRay(scene.origin.position - new Vector3(scene.parameters.SwampSquareLength / 2, 0f, scene.parameters.SwampSquareLength / 2),
 								Vector3.right * scene.parameters.SwampSquareLength, c);
 				}
 			}
