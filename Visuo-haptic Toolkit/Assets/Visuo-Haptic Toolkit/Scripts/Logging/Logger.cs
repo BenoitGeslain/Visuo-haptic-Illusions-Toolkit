@@ -6,7 +6,7 @@ using UnityEngine;
 using VHToolkit.Redirection;
 
 namespace VHToolkit.Logging {
-	public class Logger<T> : MonoBehaviour, IObservable<T> {
+	public partial class Logger<T> : MonoBehaviour, IObservable<T> {
 		public string logDirectoryPath = "LoggedData\\";
 		[SerializeField] protected string optionalFilenamePrefix;
 		protected readonly int bufferSize = 10; // number of records kept before writing to disk
@@ -26,21 +26,9 @@ namespace VHToolkit.Logging {
 			}
 		}
 
-		private sealed class Unsubscriber : IDisposable {
-			private readonly HashSet<IObserver<T>> _observers;
-			private readonly IObserver<T> _observer;
-
-			public Unsubscriber(HashSet<IObserver<T>> observers, IObserver<T> observer) {
-				_observers = observers;
-				_observer = observer;
-			}
-
-			public void Dispose() => _observers.Remove(_observer);
-		}
-
 		IDisposable IObservable<T>.Subscribe(IObserver<T> observer) {
 			observers.Add(observer);
-			return new Unsubscriber(observers, observer);
+			return new HashSetUnsubscriber<T>(observers, observer);
 		}
 	}
 }
