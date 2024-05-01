@@ -51,7 +51,7 @@ namespace VHToolkit.Logging {
 		};
 
 		/// <value>
-		/// Property <c>Technique</c> is a string corresponding to the name of the current 'edirection
+		/// Property <c>Technique</c> is a string corresponding to the name of the current redirection
 		/// technique, if any, or the empty string.
 		/// </value>
 		public string Technique => script switch {
@@ -70,44 +70,6 @@ namespace VHToolkit.Logging {
 		public string StrategyDirection => script.scene.forwardTarget != null ? Convert.ToString(script.scene.forwardTarget.ToString()) : null;
 
 		public JsonRedirectionData(Interaction script) => this.script = script;
-	}
-
-	public class Logger<T> : MonoBehaviour, IObservable<T> {
-		public string logDirectoryPath = "LoggedData\\";
-		[SerializeField] protected string optionalFilenamePrefix;
-		protected readonly int bufferSize = 10; // number of records kept before writing to disk
-
-		protected readonly Queue<T> records = new();
-		protected readonly HashSet<IObserver<T>> observers = new();
-		protected Interaction script;
-
-		protected void WriteRecords(Queue<T> records) {
-			if (records.Count > bufferSize) {
-				foreach (var record in records) {
-					foreach (var observer in observers) {
-						observer.OnNext(record);
-					}
-				}
-				records.Clear();
-			}
-		}
-
-		private sealed class Unsubscriber : IDisposable {
-			private readonly HashSet<IObserver<T>> _observers;
-			private readonly IObserver<T> _observer;
-
-			public Unsubscriber(HashSet<IObserver<T>> observers, IObserver<T> observer) {
-				_observers = observers;
-				_observer = observer;
-			}
-
-			public void Dispose() => _observers.Remove(_observer);
-		}
-
-		IDisposable IObservable<T>.Subscribe(IObserver<T> observer) {
-			observers.Add(observer);
-			return new Unsubscriber(observers, observer);
-		}
 	}
 
 	/// <summary>
@@ -132,30 +94,19 @@ namespace VHToolkit.Logging {
 		public void CreateNewFile(string logDirectoryPath, string optionalFilenamePrefix = "") {
 			Directory.CreateDirectory(logDirectoryPath);
 			var fileName = $"{logDirectoryPath}{optionalFilenamePrefix}{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.jsonl";
-			var observer = new FileObserver(fileName);
+			var observer = new JsonFileObserver(fileName);
 			observer.Subscribe(this);
 			observers.Add(observer);
 		}
 
 		/// <summary>
-		/// The class <c>FileObserver</c> implements the Observer pattern for <c>JsonRedirectionData</c> instances,
+		/// The class <c>JsonFileObserver</c> implements the Observer pattern for <c>JsonRedirectionData</c> instances,
 		/// serializing the information which it receives and writing it to a file.
 		/// </summary>
-		private sealed class FileObserver : IObserver<JsonRedirectionData> {
-			private readonly StreamWriter writer;
-			private IDisposable unsubscriber;
-			public void OnCompleted() {
-				unsubscriber.Dispose();
-				writer.Dispose();
-			}
+		private sealed class JsonFileObserver : AbstractFileObserver<JsonRedirectionData> {
+			public JsonFileObserver(string filename) : base(filename) { }
 
-			public void Subscribe(IObservable<JsonRedirectionData> observable) => unsubscriber = observable?.Subscribe(this);
-
-			public void OnError(Exception error) => Debug.LogError(error);
-
-			public void OnNext(JsonRedirectionData value) => writer.WriteLine(JsonConvert.SerializeObject(value));
-
-			public FileObserver(string filename) => writer = new StreamWriter(filename, append: true);
+			override public void OnNext(JsonRedirectionData value) => writer.WriteLine(JsonConvert.SerializeObject(value));
 		}
 	}
 }

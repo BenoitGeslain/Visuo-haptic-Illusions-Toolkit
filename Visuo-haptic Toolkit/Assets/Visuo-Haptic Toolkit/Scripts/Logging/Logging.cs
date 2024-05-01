@@ -12,12 +12,11 @@ using VHToolkit.Redirection;
 using VHToolkit.Redirection.BodyRedirection;
 using VHToolkit.Redirection.WorldRedirection;
 
-namespace VHToolkit.Logging
-{
-    /// <summary>
-    /// Class specifying loggable data for a redirection scene.
-    /// </summary>
-    public record RedirectionData {
+namespace VHToolkit.Logging {
+	/// <summary>
+	/// Class specifying loggable data for a redirection scene.
+	/// </summary>
+	public record RedirectionData {
 		public DateTime timeStamp = DateTime.Now;
 		public string Technique => script switch {
 			WorldRedirection => (script as WorldRedirection).Technique.ToString(),
@@ -111,28 +110,21 @@ namespace VHToolkit.Logging
 			observer.Subscribe(this);
 			observers.Add(observer);
 		}
-		private sealed class FileObserver : IObserver<RedirectionData> {
-			private StreamWriter writer;
-			private CsvWriter csvWriter;
-			private IDisposable unsubscriber;
-			public void OnCompleted() {
-				unsubscriber.Dispose();
+
+		private sealed class FileObserver : AbstractFileObserver<RedirectionData> {
+			private readonly CsvWriter csvWriter;
+			public new void OnCompleted() {
+				base.OnCompleted();
 				csvWriter.Dispose();
-				writer.Dispose();
 			}
 
-			public void Subscribe(IObservable<RedirectionData> observable) => unsubscriber = observable?.Subscribe(this);
-
-			public void OnError(Exception error) => Debug.LogError(error);
-
-			public void OnNext(RedirectionData value) {
+			public override void OnNext(RedirectionData value) {
 				csvWriter.Context.RegisterClassMap<RedirectionDataMap>();
 				csvWriter.WriteRecord(value);
 				csvWriter.NextRecord();
 			}
 
-			public FileObserver(string filename, CsvConfiguration config) {
-				writer = new StreamWriter(filename, append: true);
+			public FileObserver(string filename, CsvConfiguration config) : base(filename) {
 				csvWriter = new(writer, configuration: config);
 				csvWriter.Context.RegisterClassMap<RedirectionDataMap>();
 				csvWriter.WriteHeader<RedirectionData>();
