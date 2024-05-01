@@ -105,14 +105,15 @@ public class GradientVisuals : MonoBehaviour {
 
 		// Compute the bounding box and repulsive function for all colliders
 		if (obstaclesCollider.Any()) {
-			static Func<Vector3, Vector3, Vector3> Pointwise(Func<float, float, float> f) =>
-				(a, b) => new(f(a.x, b.x), f(a.y, b.y), f(a.z, b.z));
-
 			repulsiveFunction = MathTools.RepulsivePotential3D(obstaclesCollider);
 
 			var colliders = FindObjectsOfType<Collider>();
-			max = Array.ConvertAll(colliders, o => o.bounds.max).Aggregate(Pointwise(Mathf.Max));
-			min = Array.ConvertAll(colliders, o => o.bounds.min).Aggregate(Pointwise(Mathf.Min));
+			var bounds = new Bounds(colliders.First().transform.position, Vector3.zero);
+			foreach (var collider in colliders) {
+				bounds.Encapsulate(collider.bounds);
+			}
+			max = bounds.max;
+			min = bounds.min;
 			min.y = max.y = 0f;
 
 			width = max.x - min.x;

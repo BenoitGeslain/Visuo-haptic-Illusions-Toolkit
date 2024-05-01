@@ -1,7 +1,9 @@
 using UnityEngine;
 
 /// <summary>
-/// This class is used to copy the translations of the trackedObject in the horizontal plane while staying above the object.
+/// This <c>MonoBehaviour</c> is used to copy the movements of the <c>trackedObject</c> Transform
+/// in the horizontal plane (<c>x</c> and <c>z</c> coordinates) while leaving the vertical (<c>y</c>)
+/// coordinate unchanged.
 /// </summary>
 public class TopViewCamera : MonoBehaviour {
 	public Transform trackedObject;

@@ -4,7 +4,6 @@ namespace VHToolkit.Calibration {
 
 	public class QuickCalibration : MonoBehaviour {
 
-
 		[SerializeField] private Transform physicalHead;
 		[SerializeField] private Transform world;
 
