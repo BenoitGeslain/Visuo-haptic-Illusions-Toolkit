@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['max_331',['Max',['../classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1Razzaque2001Hybrid.html#a41c424a61427a08fa0e8478838554a3d',1,'VHToolkit::Redirection::WorldRedirection::Razzaque2001Hybrid']]],
-  ['mean_332',['Mean',['../classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1Razzaque2001Hybrid.html#abf4787624492687d87bb9c337d4cc80b',1,'VHToolkit::Redirection::WorldRedirection::Razzaque2001Hybrid']]]
+  ['interactionclassmap_347',['InteractionClassMap',['../classVHToolkit_1_1Logging_1_1RedirectionDataMap_1_1InteractionClassMap.html#a7d8b6c0ce46c2b9ae8847f210e9cc247',1,'VHToolkit::Logging::RedirectionDataMap::InteractionClassMap']]],
+  ['isredirecting_348',['IsRedirecting',['../classVHToolkit_1_1Redirection_1_1BodyRedirection_1_1BodyRedirection.html#a96bd6454a761c45bfa6b1df668a02554',1,'VHToolkit.Redirection.BodyRedirection.BodyRedirection.IsRedirecting()'],['../classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1WorldRedirection.html#a0ddcd855afb66e94af33fed4b806e860',1,'VHToolkit.Redirection.WorldRedirection.WorldRedirection.IsRedirecting()']]]
 ];

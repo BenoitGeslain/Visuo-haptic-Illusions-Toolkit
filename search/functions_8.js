@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['positionandrotation2d_335',['PositionAndRotation2D',['../structVHToolkit_1_1MathTools_1_1PositionAndRotation2D.html#a6412b20e390f0bfb1f39199c3da61f24',1,'VHToolkit::MathTools::PositionAndRotation2D']]]
+  ['max_352',['Max',['../classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1Razzaque2001Hybrid.html#a41c424a61427a08fa0e8478838554a3d',1,'VHToolkit::Redirection::WorldRedirection::Razzaque2001Hybrid']]],
+  ['mean_353',['Mean',['../classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1Razzaque2001Hybrid.html#abf4787624492687d87bb9c337d4cc80b',1,'VHToolkit::Redirection::WorldRedirection::Razzaque2001Hybrid']]]
 ];
