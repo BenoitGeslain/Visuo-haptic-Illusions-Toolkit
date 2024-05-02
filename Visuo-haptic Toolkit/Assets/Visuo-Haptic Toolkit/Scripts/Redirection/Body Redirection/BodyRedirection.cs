@@ -35,7 +35,7 @@ namespace VHToolkit.Redirection.BodyRedirection {
 		/// Updates the techniqueInstance according to the enumeration technique chosen.
 		/// </summary>
 		private void UpdateTechnique() {
-			techniqueInstance = _technique switch {
+			techniqueInstance = Technique switch {
 				BRTechnique.None => new NoBodyRedirection(),
 				BRTechnique.Reset => new ResetBodyRedirection(),
 				BRTechnique.Azmandian2016Body => new Azmandian2016Body(),

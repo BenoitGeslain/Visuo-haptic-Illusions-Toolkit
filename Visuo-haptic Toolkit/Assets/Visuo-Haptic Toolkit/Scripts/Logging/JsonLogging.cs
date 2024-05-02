@@ -45,7 +45,7 @@ namespace VHToolkit.Logging {
 		/// target selection strategy, if any, or the empty string.
 		/// </value>
 		public string Strategy => script switch {
-			WorldRedirection => (script as WorldRedirection).strategy.ToString(),
+			WorldRedirection wr => wr.strategy.ToString(),
 			BodyRedirection => String.Empty,
 			_ => String.Empty
 		};
@@ -55,9 +55,9 @@ namespace VHToolkit.Logging {
 		/// technique, if any, or the empty string.
 		/// </value>
 		public string Technique => script switch {
-			WorldRedirection => (script as WorldRedirection).Technique.ToString(),
-			BodyRedirection => (script as BodyRedirection).Technique.ToString(),
-			_ => ""
+			WorldRedirection wr => wr.Technique.ToString(),
+			BodyRedirection br => br.Technique.ToString(),
+			_ => String.Empty
 		};
 
 		public bool Redirecting => script.redirect;
