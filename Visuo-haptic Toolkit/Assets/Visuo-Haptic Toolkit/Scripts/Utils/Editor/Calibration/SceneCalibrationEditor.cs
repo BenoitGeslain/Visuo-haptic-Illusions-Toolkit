@@ -11,15 +11,15 @@ namespace VHToolkit.Calibration {
 			base.OnInspectorGUI();
 
 			if (GUILayout.Button("Calibrate")) {
-				((SceneCalibration)target).Calibrate();
+				(target as SceneCalibration).Calibrate();
 			}
 
 			EditorGUILayout.BeginHorizontal();
 			if (GUILayout.Button("Save Calibration")) {
-				((SceneCalibration)target).SaveCalibration();
+				(target as SceneCalibration).SaveCalibration();
 			}
 			if (GUILayout.Button("Load Last Calibration")) {
-				((SceneCalibration)target).LoadCalibration();
+				(target as SceneCalibration).LoadCalibration();
 			}
 			EditorGUILayout.EndHorizontal();
 		}

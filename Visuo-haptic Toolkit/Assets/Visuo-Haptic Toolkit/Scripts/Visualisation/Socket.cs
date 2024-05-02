@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
@@ -42,10 +43,12 @@ namespace VHToolkit.Logging {
 			this.curvature = 0f;
 		}
 	}
-	public class Socket : MonoBehaviour {
+	public class Socket : MonoBehaviour, IObservable<WorldRedirectionData> {
 		private Scene scene;
 		private WorldRedirection script;
 		private DateTime startTime;
+
+		private readonly HashSet<IObserver<WorldRedirectionData>> observers = new();
 
 		private TcpClient client;
 
@@ -131,6 +134,11 @@ namespace VHToolkit.Logging {
 								  (script.redirect && scene.enableHybridRotational) ? Razzaque2001Rotational.GetRedirection(scene) : 0f,
 								  (script.redirect && scene.enableHybridCurvature) ? Razzaque2001Curvature.GetRedirection(scene) : 0f,
 								  (float)(DateTime.Now - startTime).TotalSeconds);
+		}
+
+		IDisposable IObservable<WorldRedirectionData>.Subscribe(IObserver<WorldRedirectionData> observer) {
+			observers.Add(observer);
+			return new HashSetUnsubscriber<WorldRedirectionData>(observers, observer);
 		}
 	}
 }

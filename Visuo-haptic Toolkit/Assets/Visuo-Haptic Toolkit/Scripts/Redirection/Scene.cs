@@ -10,7 +10,7 @@ using UnityEngine;
 namespace VHToolkit.Redirection {
 
 	/// <summary>
-	/// A Limb pairs one <c>physicalLimb</c> Transform with a list of virtual limb Transforms.
+	/// A <c>Limb</c> pairs one <c>physicalLimb</c> Transform with a list of virtual limb Transforms.
 	/// </summary>
 	[Serializable]
 	public struct Limb {
@@ -42,7 +42,7 @@ namespace VHToolkit.Redirection {
 	public record Scene {
 		[SerializeField] public List<Limb> limbs;
 
-		[Ignore] public List<Transform> virtualLimbs => limbs.SelectMany(limb => limb.virtualLimb).ToList();
+		[Ignore] public List<Transform> VirtualLimbs => limbs.SelectMany(limb => limb.virtualLimb).ToList();
 
 		[Ignore] public Transform physicalHead;
 		[Ignore] public Transform virtualHead;
@@ -103,7 +103,7 @@ namespace VHToolkit.Redirection {
 		public Vector3 GetHeadToHeadVector() => physicalHead.position - virtualHead.position;
 
 		private Quaternion _redirection = Quaternion.identity;
-		/// <returns>The quaternion rotation between the user's physical and virtual head.</returns>
+		/// <value>The quaternion rotation between the user's physical and virtual head.</value>
 		public Quaternion HeadToHeadRedirection {
 			get => _redirection;
 			set { virtualHead.rotation = value * physicalHead.rotation; _redirection = value; }
@@ -161,6 +161,5 @@ namespace VHToolkit.Redirection {
 		/// </summary>
 		public void RotateVirtualHeadY(float angle) => HeadToHeadRedirection = Quaternion.Euler(0f, angle, 0f) * HeadToHeadRedirection;
 
-		public List<Collider2D> GetAllObstaclesCollider() => GameObject.FindGameObjectsWithTag("Obstacle").Select(v => v.GetComponent<Collider2D>()).ToList();
 	}
 }
