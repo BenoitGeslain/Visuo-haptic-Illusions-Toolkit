@@ -3,20 +3,26 @@ using System.Linq;
 using UnityEngine;
 
 namespace VHToolkit.Redirection {
+
+	[System.AttributeUsage(System.AttributeTargets.All, Inherited = false, AllowMultiple = true)]
+	public abstract class BRTAttribute : System.Attribute { }
+	public sealed class ShowHeadAttribute : BRTAttribute { }
+	public sealed class HasBufferAttribute : BRTAttribute { }
+	public sealed class HasThresholdAttribute : BRTAttribute { }
 	public enum BRTechnique {
 		None,
 		Reset,
 		[InspectorName("")] SEPARATOR1, // Adds a visual separator in the drop-down inspector
 										// Hand Redirection techniques
-		Han2018TranslationalShift,
-		Han2018InterpolatedReach,
-		Azmandian2016Body,
-		Azmandian2016Hybrid,
-		Cheng2017Sparse,
-		Geslain2022Polynom,
-		Poupyrev1996GoGo,
+		[HasThreshold] Han2018TranslationalShift,
+		[HasBuffer, HasThreshold] Han2018InterpolatedReach,
+		[HasBuffer, HasThreshold] Azmandian2016Body,
+		[ShowHead, HasThreshold] Azmandian2016Hybrid,
+		[HasBuffer, HasThreshold] Cheng2017Sparse,
+		[HasBuffer, HasThreshold] Geslain2022Polynom,
+		[ShowHead] Poupyrev1996GoGo,
 		[InspectorName(" ")] SEPARATOR2,
-		Kohli2010RedirectedTouching,
+		[HasThreshold] Kohli2010RedirectedTouching,
 		[InspectorName("  ")] SEPARATOR3,
 		// Pseudo-haptic techiques
 		Lecuyer2000Swamp,
