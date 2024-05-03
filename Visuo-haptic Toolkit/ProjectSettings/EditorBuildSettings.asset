@@ -23,7 +23,7 @@ EditorBuildSettings:
     path: Assets/Demo Scenes/Azmandian 3 Cubes/Static Floating Cubes.unity
     guid: 885a34dea4cdceb4fb2045466d51655a
   m_configObjects:
-    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: dddd8483c93d8dc4e9f76ebac819c68d, type: 2}
+    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 755c5043d51c4b8469858eb1afffe2e8, type: 2}
     Unity.XR.OpenVR.Settings: {fileID: 11400000, guid: b6bf661543b159f4f93e0c7221185c37, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 59bb4fa2062df8549bae6e1c8690288b, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: f15c911359537b241b84e33fd34fbf49, type: 2}

@@ -10,14 +10,14 @@ using VHToolkit.Redirection.WorldRedirection;
 public class GradientVisuals : MonoBehaviour {
 
 	// PROPERTIES //
-	[Range(0.5f, 5f)] public float refreshRate;
+	[Range(0.5f, 5f)] public float refreshRateInSeconds;
 
 	// public heatmap
 	[Header("Heatmap")]
 	[InspectorName("Enable Heatmap")] public bool heatmapEnabled;
 	public GameObject heatmapQuadPrefab;
 	[Range(1, 64)][Tooltip("The higher the finer")] public int heatmapMeshFineness;
-	[Range(1, 10)] public float heatmapClampValue = 1;
+	[Range(1, 10)] public float heatmapClampValue = 1f;
 
 	// public vectors
 	[Header("Vector Field")]
@@ -34,13 +34,13 @@ public class GradientVisuals : MonoBehaviour {
 
 	// private heatmap
 	private bool hmEnabledCurrentState;
-	private float[] hmDensityTable;
+	private readonly float[] hmDensityTable = new float[4096];
 	private Renderer hmRenderer;
 	private GameObject hmQuad;
 
 	// private vector
 	private bool vfEnabledCurrentState;
-	private List<GameObject> vfVectors;
+	private readonly List<GameObject> vfVectors = new();
 
 	[SerializeField] private WorldRedirection script;
 
@@ -50,8 +50,6 @@ public class GradientVisuals : MonoBehaviour {
 	#region "Main"
 
 	void Start() {
-		hmDensityTable = new float[4096];
-		vfVectors = new();
 		UpdateRepulsiveFunc();
 		InvokeRepeating(nameof(Checks), 3f, 3f);
 	}
@@ -146,9 +144,6 @@ public class GradientVisuals : MonoBehaviour {
 			CloseHeatmap();
 		}
 
-		var hmStepX = width / heatmapMeshFineness;
-		var hmStepZ = depth / heatmapMeshFineness;
-
 		hmQuad = Instantiate(heatmapQuadPrefab, this.transform);
 		hmQuad.transform.position = 0.5f * (min + max);
 		hmQuad.transform.localScale = new Vector2(width, depth);
@@ -157,7 +152,7 @@ public class GradientVisuals : MonoBehaviour {
 		hmRenderer = hmQuad.GetComponent<Renderer>();
 
 		UpdateHeatmap();
-		InvokeRepeating(nameof(UpdateHeatmap), 1f, refreshRate);
+		InvokeRepeating(nameof(UpdateHeatmap), 1f, refreshRateInSeconds);
 
 		return true;
 	}
@@ -167,13 +162,11 @@ public class GradientVisuals : MonoBehaviour {
 	/// </summary>
 	private void UpdateHeatmap() {
 		if (!heatmapEnabled) { return; }
-
-		var hmStepX = width / heatmapMeshFineness;
-		var hmStepZ = depth / heatmapMeshFineness;
+		var hmSteps = (max - min) / heatmapMeshFineness;
 
 		for (int z = 0; z < heatmapMeshFineness; z++) {
 			for (int x = 0; x < heatmapMeshFineness; x++) {
-				Vector3 position = new(min.x + (x + 1 / 2) * hmStepX, 0, min.z + (z + 1 / 2) * hmStepZ);
+				Vector3 position = min + Vector3.Scale(new(x + 1 / 2, 0f, z + 1 / 2), hmSteps);
 				hmDensityTable[x + (z * heatmapMeshFineness)] = ((Vector2)MathTools.Gradient3(repulsiveFunction, position)).magnitude;
 			}
 		}
@@ -207,37 +200,32 @@ public class GradientVisuals : MonoBehaviour {
 			CloseVectorField();
 			return false;
 		}
-
 		if (vfEnabledCurrentState) {
 			CloseVectorField();
 		}
-
-		int i = 0;
+		var vmSteps = (max - min) / vectorMeshFineness;
+		int index = 0;
 		for (int z = 0; z < vectorMeshFineness; z++) {
 			for (int x = 0; x < vectorMeshFineness; x++) {
-				GameObject vectorObj = new($"vector_{i++}", typeof(SpriteRenderer));
-
-				Vector3 position = new(min.x + (x + 1 / 2) * (width / vectorMeshFineness), 0, min.z + ((z + 1 / 2) * (depth / vectorMeshFineness)));
+				GameObject vectorObj = new($"vector_{index++}", typeof(SpriteRenderer));
+				Vector3 position = min + Vector3.Scale(new(x + 1 / 2, 0f, z + 1 / 2), vmSteps);
 				Vector2 gradient = MathTools.Gradient3(repulsiveFunction, position);
+				vectorObj.transform.SetParent(transform);
 
-				vectorObj.transform.parent = this.transform;
-				vectorObj.transform.position = new(position.x, transform.position.y + 0.001f, position.z);
-
-				if (!float.IsNaN(gradient.x) && !float.IsNaN(gradient.y)) {
-					float angleInDegrees = Mathf.Atan2(gradient.y, gradient.x) * Mathf.Rad2Deg;
-					vectorObj.transform.rotation = Quaternion.Euler(-90, 0, angleInDegrees);
-					vectorObj.GetComponent<SpriteRenderer>().sprite = vfArrow;
-				}
-				else {
-					vectorObj.GetComponent<SpriteRenderer>().sprite = vfWarning;
-				}
+				var (angleInDegrees, sprite) = (float.IsNaN(gradient.x) || float.IsNaN(gradient.y)) ?
+				 (0f, vfWarning) : (Mathf.Atan2(gradient.y, gradient.x) * Mathf.Rad2Deg, vfArrow);
+				vectorObj.transform.SetPositionAndRotation(
+					new(position.x, transform.position.y + 0.001f, position.z),
+					Quaternion.Euler(-90, 0, angleInDegrees)
+				);
+				vectorObj.GetComponent<SpriteRenderer>().sprite = sprite;
 
 				vfVectors.Add(vectorObj);
 			}
 		}
 
 		UpdateVectorField();
-		InvokeRepeating(nameof(UpdateVectorField), 1f, refreshRate);
+		InvokeRepeating(nameof(UpdateVectorField), 1f, refreshRateInSeconds);
 
 		return true;
 	}
