@@ -7,7 +7,7 @@ namespace VHToolkit {
 	/// Provide language features not present in this version of .Net.
 	/// </summary>
 	static class Future {
-		public static IEnumerable<(TFirst First, TSecond Second)> Zip<TFirst, TSecond>(
+		public static IEnumerable<(TFirst, TSecond)> Zip<TFirst, TSecond>(
 			this IEnumerable<TFirst> first,
 			IEnumerable<TSecond> second
 		) => first.Zip(second, resultSelector: (x, y) => (x, y));
