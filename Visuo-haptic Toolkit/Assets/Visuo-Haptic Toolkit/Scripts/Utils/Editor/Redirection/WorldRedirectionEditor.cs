@@ -22,8 +22,6 @@ namespace VHToolkit.Redirection.WorldRedirection {
 		enableOverTime, enableRotational, enableCurvature,
 		parameters;
 		SerializedObject parametersObject;
-		readonly HashSet<string> strategyTechniques = new() { "Razzaque2001OverTimeRotation", "Razzaque2001Rotational", "Razzaque2001Curvature", "Razzaque2001Hybrid" };
-		readonly HashSet<string> targetsStrategies = new() { "SteerToCenter", "SteerToMultipleTargets" };
 
 		private void OnEnable() {
 			technique = serializedObject.FindProperty("_technique");
@@ -186,7 +184,7 @@ namespace VHToolkit.Redirection.WorldRedirection {
 					EditorGUILayout.BeginHorizontal();
 					EditorGUILayout.PropertyField(steerToOrbitRadius, new GUIContent("Steer To Orbit Radius"));
 					EditorGUILayout.Space(20);
-					EditorGUILayout.LabelField("Rotation Rate: " + (360f / (2 * Mathf.PI * steerToOrbitRadius.floatValue)).ToString("N2") + " °/m/s");
+					EditorGUILayout.LabelField($"Rotation Rate: {(360f / (2 * Mathf.PI * steerToOrbitRadius.floatValue)).ToString("N2")} °/m/s");
 					GUILayout.EndHorizontal();
 
 				}
