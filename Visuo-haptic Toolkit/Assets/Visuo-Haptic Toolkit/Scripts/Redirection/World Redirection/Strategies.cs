@@ -7,6 +7,11 @@ using UnityEngine;
 
 namespace VHToolkit.Redirection.WorldRedirection {
 	public abstract class WorldRedirectionStrategy {
+		/// <summary>
+		/// Abstract method for producing a direction in which the user ought to be steered.
+		/// </summary>
+		/// <param name="scene"></param>
+		/// <returns></returns>
 		public abstract Vector3 SteerTo(Scene scene);
 	}
 
@@ -65,9 +70,10 @@ namespace VHToolkit.Redirection.WorldRedirection {
 
 	public class APFP2R : WorldRedirectionStrategy {
 
+		/// <value>A list of colliders, each of which will create a repulsive potential field.</value>
 		public List<Collider> colliders;
 
-        public APFP2R() : base() {
+        public APFP2R() {
             colliders = GameObject.FindGameObjectsWithTag("Obstacle").Select(o => o.GetComponent<Collider>()).ToList();
 			// colliders.ForEach(o => o.transform.position = MathTools.ProjectToHorizontalPlaneV3(o.transform.position));
 		}

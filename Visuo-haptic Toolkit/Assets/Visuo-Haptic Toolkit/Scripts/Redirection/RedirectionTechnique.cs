@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace VHToolkit.Redirection {
+﻿namespace VHToolkit.Redirection {
 	abstract public class RedirectionTechnique {
 		/// <summary>
 		/// This abstract method redirects the Scene transforms according to the other parameters and the equations

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
@@ -19,8 +20,8 @@ namespace VHToolkit.Logging {
 		[SerializeField] float[] maxSums;
 
 		public void AddTo(float overTime, float rotational, float curvature, float time) {
-			if (this.maxSums is null || this.maxSums.Length != 3) {
-				this.maxSums = new float[3];
+			if (maxSums?.Length != 3) {
+				maxSums = new float[3];
 			}
 			this.overTime += Mathf.Abs(overTime);
 			this.rotational += Mathf.Abs(rotational);
@@ -42,10 +43,12 @@ namespace VHToolkit.Logging {
 			this.curvature = 0f;
 		}
 	}
-	public class Socket : MonoBehaviour {
+	public class Socket : MonoBehaviour, IObservable<WorldRedirectionData> {
 		private Scene scene;
 		private WorldRedirection script;
 		private DateTime startTime;
+
+		private readonly HashSet<IObserver<WorldRedirectionData>> observers = new();
 
 		private TcpClient client;
 
@@ -108,9 +111,6 @@ namespace VHToolkit.Logging {
 				Thread thread = new(() => SendMessage(client, json));
 				thread.Start();
 				redirectionData.Reset();
-				// redirectionData.overTime = 0f;
-				// redirectionData.rotational = 0f;
-				// redirectionData.curvature = 0f;
 			}
 		}
 
@@ -134,6 +134,11 @@ namespace VHToolkit.Logging {
 								  (script.redirect && scene.enableHybridRotational) ? Razzaque2001Rotational.GetRedirection(scene) : 0f,
 								  (script.redirect && scene.enableHybridCurvature) ? Razzaque2001Curvature.GetRedirection(scene) : 0f,
 								  (float)(DateTime.Now - startTime).TotalSeconds);
+		}
+
+		IDisposable IObservable<WorldRedirectionData>.Subscribe(IObserver<WorldRedirectionData> observer) {
+			observers.Add(observer);
+			return new HashSetUnsubscriber<WorldRedirectionData>(observers, observer);
 		}
 	}
 }
