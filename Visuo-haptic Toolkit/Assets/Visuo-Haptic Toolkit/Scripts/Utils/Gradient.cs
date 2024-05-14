@@ -2,7 +2,6 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine.U2D.IK;
 
 namespace VHToolkit {
 	public static class MathTools {
@@ -73,5 +72,6 @@ namespace VHToolkit {
 		// TODO careful, this isn't the same choice as Vector2.Vector2 / Vector2.Vector3. (Those project to a vertical plane.)
 		static public Vector2 ProjectToHorizontalPlane(this Vector3 v) => new(v.x, v.z);
 		static public Vector3 LiftFromHorizontalPlane(this Vector2 v) => new(v.x, 0, v.y);
+		static public Vector3 ProjectToHorizontalPlaneV3(this Vector3 v) => new(v.x, 0, v.z);
 	}
 }

@@ -67,13 +67,16 @@ namespace VHToolkit.Redirection.WorldRedirection {
 
 		public List<Collider> colliders;
 
-		public APFP2R() : base() => colliders = GameObject.FindGameObjectsWithTag("Obstacle").Select(o => o.GetComponent<Collider>()).ToList();
+        public APFP2R() : base() {
+            colliders = GameObject.FindGameObjectsWithTag("Obstacle").Select(o => o.GetComponent<Collider>()).ToList();
+			// colliders.ForEach(o => o.transform.position = MathTools.ProjectToHorizontalPlaneV3(o.transform.position));
+		}
 
-		public override Vector3 SteerTo(Scene scene) => ComputeGradient(scene);
+        public override Vector3 SteerTo(Scene scene) => ComputeGradient(scene);
 
         private Vector3 ComputeGradient(Scene scene) => Vector3.ProjectOnPlane(MathTools.Gradient3(
                                             MathTools.RepulsivePotential3D(colliders),
-                                            scene.physicalHead.position
+											MathTools.ProjectToHorizontalPlaneV3(scene.physicalHead.position)
                                         ), Vector3.up);
     }
 }

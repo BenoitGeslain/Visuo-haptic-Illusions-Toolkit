@@ -27,6 +27,11 @@ namespace VHToolkit.Visualisation {
 		private void LateUpdate() {
 			Scene scene = WRMainScript.scene;
 
+			if (scene.forwardTarget != null) {
+				Debug.Log(scene.forwardTarget);
+				Debug.DrawRay(scene.physicalHead.position, scene.forwardTarget.normalized, Color.Lerp(new Color(1f, 0, 0f, 0.05f), Color.red, scene.forwardTarget.magnitude));
+			}
+
 			switch (WRMainScript.strategy) {
 				case WRStrategy.NoSteering:
 					FixTargetCounts(1);
@@ -47,8 +52,11 @@ namespace VHToolkit.Visualisation {
 					SteerInDirection(scene);
 					break;
 				case WRStrategy.APF_PushPull:
-					Debug.DrawRay(scene.physicalHead.position, scene.forwardTarget*10);
-					// Debug.Log(scene.forwardTarget);
+					(WRMainScript.strategyInstance as APFP2R).colliders.ForEach(o => Debug.DrawLine(scene.physicalHead.position, o.ClosestPoint(scene.physicalHead.position), Color.Lerp(Color.clear, Color.yellow, 1 / Vector3.Distance(scene.physicalHead.position, o.ClosestPoint(scene.physicalHead.position)))));
+					// (WRMainScript.strategyInstance as APFP2R).colliders.ForEach(o => {
+					// 	Debug.Log($"{o.gameObject.name} : {1 / Vector3.Distance(scene.physicalHead.position, o.ClosestPoint(scene.physicalHead.position))}");
+					// });
+					// Debug.Log(Vector3.Angle(Vector3.forward, scene.forwardTarget));
 					break;
 				default:
 					targets.Clear();
