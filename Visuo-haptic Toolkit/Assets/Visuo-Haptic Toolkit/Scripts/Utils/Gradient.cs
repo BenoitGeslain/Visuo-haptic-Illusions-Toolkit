@@ -37,6 +37,9 @@ namespace VHToolkit {
 		public static Func<Vector3, float> RepulsivePotential3D(List<Collider> obstacles) =>
 			(x) => obstacles.Sum(o => 1 / Vector3.Distance(x, o.ClosestPoint(x)));
 
+		public static Func<Vector3, float> RepulsivePotential3D(List<Vector3> obstacles) =>
+			(x) => obstacles.Sum(o => 1 / (x - o).sqrMagnitude);
+
 
 		public static Vector2 Gradient2v2(Vector2 x, List<Collider2D> obstaclescolliders) {
 			float RepulsivePotential(Vector2 x) => obstaclescolliders.Sum(o => 1 / Vector2.Distance(x, o.ClosestPoint(x)));
