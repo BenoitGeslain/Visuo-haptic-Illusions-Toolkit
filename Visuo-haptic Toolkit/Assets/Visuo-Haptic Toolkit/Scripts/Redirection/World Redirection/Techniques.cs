@@ -70,18 +70,6 @@ namespace VHToolkit.Redirection.WorldRedirection {
 			}
 			return 0f;
 		}
-
-		public static float GetRedirectionReset(Scene scene) {
-			float angleToTarget = scene.HeadToHeadRedirection.eulerAngles.y;
-			float instantRotation = scene.GetHeadInstantRotationY();
-
-			if (Mathf.Abs(angleToTarget) > scene.parameters.RotationalError && Mathf.Abs(instantRotation) > scene.parameters.RotationalThreshold) {
-				return instantRotation * ((Mathf.Sign(angleToTarget) != Mathf.Sign(instantRotation))
-					? scene.parameters.GainsRotational.opposite - 1
-					: scene.parameters.GainsRotational.same - 1);
-			}
-			return 0f;
-		}
 	}
 
 	/// <summary>

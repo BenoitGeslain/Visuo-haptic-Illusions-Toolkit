@@ -2,7 +2,6 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine.U2D.IK;
 
 namespace VHToolkit {
 	public static class MathTools {
@@ -38,6 +37,9 @@ namespace VHToolkit {
 		public static Func<Vector3, float> RepulsivePotential3D(List<Collider> obstacles) =>
 			(x) => obstacles.Sum(o => 1 / Vector3.Distance(x, o.ClosestPoint(x)));
 
+		public static Func<Vector3, float> RepulsivePotential3D(List<Vector3> obstacles) =>
+			(x) => obstacles.Sum(o => 1 / (x - o).sqrMagnitude);
+
 
 		public static Vector2 Gradient2v2(Vector2 x, List<Collider2D> obstaclescolliders) {
 			float RepulsivePotential(Vector2 x) => obstaclescolliders.Sum(o => 1 / Vector2.Distance(x, o.ClosestPoint(x)));
@@ -68,5 +70,6 @@ namespace VHToolkit {
 		// TODO careful, this isn't the same choice as Vector2.Vector2 / Vector2.Vector3. (Those project to a vertical plane.)
 		static public Vector2 ProjectToHorizontalPlane(this Vector3 v) => new(v.x, v.z);
 		static public Vector3 LiftFromHorizontalPlane(this Vector2 v) => new(v.x, 0, v.y);
+		static public Vector3 ProjectToHorizontalPlaneV3(this Vector3 v) => new(v.x, 0, v.z);
 	}
 }
