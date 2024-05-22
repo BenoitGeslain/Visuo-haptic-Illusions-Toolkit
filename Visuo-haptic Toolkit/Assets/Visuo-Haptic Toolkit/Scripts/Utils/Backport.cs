@@ -44,6 +44,9 @@ namespace VHToolkit {
 			}
 			return result;
 		}
+
+		public static IEnumerable<(T, T)> CyclicPairs<T>(this List<T> list) => list.Zip(list.Skip(1).Append(list.First()));
+
 	}
 
 }
