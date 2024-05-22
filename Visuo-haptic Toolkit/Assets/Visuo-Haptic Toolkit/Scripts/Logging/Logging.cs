@@ -19,9 +19,9 @@ namespace VHToolkit.Logging {
 	public record RedirectionData {
 		public DateTime timeStamp = DateTime.Now;
 		public string Technique => script switch {
-			WorldRedirection => (script as WorldRedirection).Technique.ToString(),
-			BodyRedirection => (script as BodyRedirection).Technique.ToString(),
-			_ => ""
+			WorldRedirection wr => wr.Technique.ToString(),
+			BodyRedirection br => br.Technique.ToString(),
+			_ => String.Empty
 		};
 
 		public Interaction script;
@@ -119,7 +119,6 @@ namespace VHToolkit.Logging {
 			}
 
 			public override void OnNext(RedirectionData value) {
-				csvWriter.Context.RegisterClassMap<RedirectionDataMap>();
 				csvWriter.WriteRecord(value);
 				csvWriter.NextRecord();
 			}
