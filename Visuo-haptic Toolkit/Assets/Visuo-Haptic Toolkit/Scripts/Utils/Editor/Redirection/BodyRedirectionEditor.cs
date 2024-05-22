@@ -29,7 +29,6 @@ namespace VHToolkit.Redirection.BodyRedirection {
 		SerializedProperty redirect;
 		SerializedProperty parameters;
 		SerializedObject parametersObject;
-		readonly HashSet<BRTechnique> actualNoThresholdTechniques = new() { BRTechnique.Poupyrev1996GoGo, BRTechnique.Lecuyer2000Swamp, BRTechnique.Samad2019Weight };
 		private SerializedProperty Find(string name) => serializedObject.FindProperty(name);
 
 		private void OnEnable() {
