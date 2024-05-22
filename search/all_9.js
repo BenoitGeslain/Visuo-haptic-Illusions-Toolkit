@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['jsonlogging_75',['JsonLogging',['../classVHToolkit_1_1Logging_1_1JsonLogging.html',1,'VHToolkit::Logging']]],
-  ['jsonredirectiondata_76',['JsonRedirectionData',['../namespaceVHToolkit_1_1Logging.html#aa6eae5a51a7d2052028225f6151e5b33',1,'VHToolkit::Logging']]]
+  ['jsonlogging_81',['JsonLogging',['../classVHToolkit_1_1Logging_1_1JsonLogging.html',1,'VHToolkit::Logging']]],
+  ['jsonredirectiondata_82',['JsonRedirectionData',['../namespaceVHToolkit_1_1Logging.html#aa6eae5a51a7d2052028225f6151e5b33',1,'VHToolkit::Logging']]]
 ];

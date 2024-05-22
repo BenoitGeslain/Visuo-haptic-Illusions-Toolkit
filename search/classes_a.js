@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['nobodyredirection_267',['NoBodyRedirection',['../classVHToolkit_1_1Redirection_1_1BodyRedirection_1_1NoBodyRedirection.html',1,'VHToolkit::Redirection::BodyRedirection']]],
-  ['nosteering_268',['NoSteering',['../classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1NoSteering.html',1,'VHToolkit::Redirection::WorldRedirection']]],
-  ['noworldredirection_269',['NoWorldRedirection',['../classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1NoWorldRedirection.html',1,'VHToolkit::Redirection::WorldRedirection']]]
+  ['mjttrajectorygenerator_280',['MJTTrajectoryGenerator',['../classVHToolkit_1_1Simulation_1_1MJTTrajectoryGenerator.html',1,'VHToolkit::Simulation']]]
 ];

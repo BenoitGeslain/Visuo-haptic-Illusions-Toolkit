@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['kohli2010redirectedtouching_259',['Kohli2010RedirectedTouching',['../classVHToolkit_1_1Redirection_1_1Interpolation3D_1_1Kohli2010RedirectedTouching.html',1,'VHToolkit::Redirection::Interpolation3D']]]
+  ['jsonlogging_272',['JsonLogging',['../classVHToolkit_1_1Logging_1_1JsonLogging.html',1,'VHToolkit::Logging']]]
 ];
