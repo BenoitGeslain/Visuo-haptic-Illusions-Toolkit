@@ -67,7 +67,6 @@ namespace VHToolkit.Redirection {
 		[Tooltip("The weights used for the Razzaque2001Hybrid technique using the WeightedSum function.")]
 		public Vector3 HybridWeights = new(1f, 1f, 1f);
 
-
 		//
 		// 3D Interpolation
 		//
@@ -77,7 +76,8 @@ namespace VHToolkit.Redirection {
 		public float SmoothingParameter;
 		[Tooltip("Whether to apply rescaling before using thin-plate interpolation.")]
 		public bool Rescale;
-
+		[Tooltip("TODO")]
+		public bool add_boundaries = true;
 
 		//
 		// Pseudo-Haptic

@@ -109,6 +109,7 @@ namespace VHToolkit.Redirection.BodyRedirection {
 			if (actualTechnique == BRTechnique.Kohli2010RedirectedTouching) {
 				MakePropertyField(parametersObject.FindProperty("SmoothingParameter"), "Smoothing", "");
 				MakePropertyField(parametersObject.FindProperty("Rescale"), "Rescale", "");
+				MakePropertyField(parametersObject.FindProperty("add_boundaries"), "Add Boundaries", "");
 			}
 			else if (actualTechnique == BRTechnique.Geslain2022Polynom) {
 				// TODO broken

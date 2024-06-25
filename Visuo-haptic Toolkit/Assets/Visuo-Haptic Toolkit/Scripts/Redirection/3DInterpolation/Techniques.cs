@@ -14,7 +14,6 @@ namespace VHToolkit.Redirection.Interpolation3D {
 	public class Kohli2010RedirectedTouching : BodyRedirectionTechnique {
 
 		Func<Vector3, Vector3> displace = null;
-		bool add_boundaries = true;
 
 		/// <summary>
 		/// Compute the displacement vector field, which should be done only on init and whenever its parameters change for efficiency reasons.
@@ -28,7 +27,8 @@ namespace VHToolkit.Redirection.Interpolation3D {
 				scene.parameters.SmoothingParameter,
 				scene.parameters.Rescale
 			);
-			if (add_boundaries) {
+			Debug.Log(scene.parameters.add_boundaries);
+			if (scene.parameters.add_boundaries) {
 				var bounds = new Bounds(x[0], Vector3.zero);
 				foreach (var v in x.Concat(y)) {
 					bounds.Encapsulate(v);
