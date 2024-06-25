@@ -51,11 +51,6 @@ namespace VHToolkit {
 			) / (2 * eps);
 		}
 
-
-
-
-
-
 		// The potential is given as || x - goal || / 2.
 		public static Vector2 GradientOfAttractivePotential(Vector2 goal, Vector2 x) => (x - goal).normalized / 2;
 		public readonly struct PositionAndRotation2D {

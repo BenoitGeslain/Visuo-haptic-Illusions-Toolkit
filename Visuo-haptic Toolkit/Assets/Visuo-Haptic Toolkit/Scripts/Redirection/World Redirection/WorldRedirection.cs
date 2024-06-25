@@ -43,7 +43,8 @@ namespace VHToolkit.Redirection.WorldRedirection {
 				WRStrategy.SteerToOrbit => new SteerToOrbit(),
 				WRStrategy.SteerToMultipleTargets => new SteerToMultipleTargets(),
 				WRStrategy.SteerInDirection => new SteerInDirection(),
-				WRStrategy.APF_PushPull => new APFP2R(),
+				WRStrategy.Thomas2019APF_PushPull => new Thomas2019APF_PushPull(),
+				WRStrategy.Messinger2019APF => new Messinger2019APF(),
 				_ => null
 			};
 

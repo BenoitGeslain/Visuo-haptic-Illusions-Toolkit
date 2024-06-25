@@ -99,7 +99,7 @@ public class GradientVisuals : MonoBehaviour {
 		CancelInvoke(nameof(UpdateVectorField));
 
 		// get gameobjects with obstacle tag
-		obstaclesCollider = ((APFP2R)script.strategyInstance).colliders;
+		obstaclesCollider = ((Thomas2019APF_PushPull)script.strategyInstance).colliders;
 
 		// Compute the bounding box and repulsive function for all colliders
 		if (obstaclesCollider.Any()) {

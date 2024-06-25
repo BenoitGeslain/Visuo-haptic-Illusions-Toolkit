@@ -1093,6 +1093,10 @@ PrefabInstance:
       propertyPath: physicalHead
       value: 
       objectReference: {fileID: 141383211}
+    - target: {fileID: 3150399032746346357, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3345062529341880481, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1147,7 +1151,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7088029602675669135, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
       propertyPath: strategy
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7088029602675669135, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
       propertyPath: m_Enabled
@@ -1233,9 +1237,21 @@ PrefabInstance:
       propertyPath: scene.limbs.Array.data[1].virtualLimb.Array.data[1]
       value: 
       objectReference: {fileID: 3300481182696120806}
+    - target: {fileID: 7284946694485075413, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
+      propertyPath: filename
+      value: C:\Users\Ben\projects\toolkit\python\RedirectionPlotter.py
+      objectReference: {fileID: 0}
+    - target: {fileID: 7284946694485075413, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7284946694485075413, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
+      propertyPath: pythonPath
+      value: C:\Users\Ben\anaconda3\envs\toolkit\python.exe
+      objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 3527750865740220717, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
-    - {fileID: 2164931620210237325, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
+    - {fileID: 0}
+    - {fileID: 0}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -1245,12 +1261,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 200869264966477082, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
       insertIndex: -1
       addedObject: {fileID: 358983268}
-    - targetCorrespondingSourceObject: {fileID: 200869264966477082, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 358983272}
-    - targetCorrespondingSourceObject: {fileID: 200869264966477082, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 358983261}
     - targetCorrespondingSourceObject: {fileID: 200869264966477082, guid: 7e46c8eb8c13fdb429130703b04c8216, type: 3}
       insertIndex: -1
       addedObject: {fileID: 358983277}
@@ -1282,20 +1292,6 @@ MonoBehaviour:
   redirectionAmount: 180
   start: {fileID: 2099766480}
   end: {fileID: 1861591714}
---- !u!114 &358983261
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 358983253}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51d618b1b4dddf44a8b914838ac6e9b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  logDirectoryPath: LoggedData\
-  optionalFilenamePrefix: 
 --- !u!114 &358983268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1310,20 +1306,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   physicalCorridor: {fileID: 1617016940}
   virtualCorridor: {fileID: 646063775}
---- !u!114 &358983272
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 358983253}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb5310432868de244b86ddcc9c3aa8c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  filename: C:\Users\Public\Documents\UnityWP\Toolkit Illusions\Visuo-haptic-Illusions-Toolkit\python\RedirectionPlotter.py
-  pythonPath: C:\Users\guest\anaconda3\envs\plt\python.exe
 --- !u!114 &358983277
 MonoBehaviour:
   m_ObjectHideFlags: 0
