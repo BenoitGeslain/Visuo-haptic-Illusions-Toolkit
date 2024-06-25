@@ -88,6 +88,6 @@ namespace VHToolkit.Redirection.WorldRedirection {
 
 	public class Messinger2019APF : WorldRedirectionStrategy {
 
-
+		public override Vector3 SteerTo(Scene scene) => Vector3.forward;
 	}
 }
