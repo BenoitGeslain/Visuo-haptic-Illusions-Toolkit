@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['weightedsum_510',['WeightedSum',['../namespaceVHToolkit_1_1Redirection.html#aaf3934a62f351dca46599bed84d4bbe2a541610c06a990ee5eaadbbb6de30548d',1,'VHToolkit::Redirection']]]
+  ['thomas2019apf_5fpushpull_517',['Thomas2019APF_PushPull',['../namespaceVHToolkit_1_1Redirection.html#aeebb6431e6f113539dc912ca85e23402a7027410c8134b2a41658bb7c178ea6dc',1,'VHToolkit::Redirection']]]
 ];
