@@ -10,8 +10,6 @@ public class PhysicalEnvironmentCalibration : MonoBehaviour {
 	[SerializeField] private Transform user;
 	[SerializeField] private List<Vector3> bounds;
 
-	List<Vector3> obs, obs2;
-
 	// Start is called before the first frame update
 	void Start() {
 
@@ -19,8 +17,7 @@ public class PhysicalEnvironmentCalibration : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update() {
-		Random.InitState(1);
-		obs = bounds.CyclicPairs().SelectMany(
+		var obs = bounds.CyclicPairs().SelectMany(
 				p => {
 					var dir = (p.Item1 - p.Item2).normalized;
 					var n = (int)(Vector3.Distance(p.Item1, p.Item2) / eps);
