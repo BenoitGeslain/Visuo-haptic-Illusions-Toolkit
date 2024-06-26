@@ -3,7 +3,6 @@ using System.Linq;
 using UnityEngine;
 
 using VHToolkit;
-using VHToolkit.Redirection;
 
 public class PhysicalEnvironmentCalibration : MonoBehaviour {
 
@@ -18,19 +17,16 @@ public class PhysicalEnvironmentCalibration : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        List<Vector3> obs = new();
+
 
         var dir = (bounds.First() - bounds.Last()).normalized;
         int n = (int)(Vector3.Distance(bounds.Last(), bounds.First()) / eps);
-        for (int j = 0; j < n; j++) {
-            obs.Add(bounds.Last() + (j + 0.5f) * eps * dir);
-        }
-        for (int i = 1; i < bounds.Count; i++) {
-            dir = (bounds[i] - bounds[i - 1]).normalized;
-            n = (int) (Vector3.Distance(bounds[i - 1], bounds[i]) / eps);
-            for (int j = 0; j < n; j++) {
-                obs.Add(bounds[i - 1] + (j + 0.5f) * eps * dir);
-            }
+        List<Vector3> obs = new();
+        foreach (var(a, b) in bounds.Zip(bounds.Skip(1).Append(bounds.First())))
+        {
+            dir = (b - a).normalized;
+            n = (int) (Vector3.Distance(a, b) / eps);
+            obs.AddRange(Enumerable.Range(0, n - 1).Select(j => a + (j + 0.5f) * eps * dir));
         }
         Debug.Log(obs.Count);
         obs.ForEach(o => Debug.Log(o));
@@ -39,10 +35,9 @@ public class PhysicalEnvironmentCalibration : MonoBehaviour {
     }
 
     private void OnDrawGizmos() {
-        for (int i = 1; i < bounds.Count; i++) {
-            Gizmos.DrawLine(bounds[i - 1], bounds[i]);
+        foreach (var (a, b) in bounds.Zip(bounds.Skip(1).Append(bounds.First()))) {
+            Gizmos.DrawLine(a, b);
         }
-        Gizmos.DrawLine(bounds.Last(), bounds.First());
     }
 
     private Vector3 ComputeGradient(Transform user, List<Vector3> dividedObstacles) => Vector3.ProjectOnPlane(MathTools.Gradient3(
