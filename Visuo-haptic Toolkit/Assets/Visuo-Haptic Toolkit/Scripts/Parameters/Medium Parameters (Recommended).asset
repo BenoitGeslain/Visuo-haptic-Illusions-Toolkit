@@ -34,6 +34,9 @@ MonoBehaviour:
   DampeningRange: 1.57
   SmoothingFactor: 0.2
   SteerToOrbitRadius: 5
+  obstaclesFallOffFactor: 2.656
+  usersFallOffFactor: 3.091
+  scaleMultipler: 2.5
   OverTimeRotation: 0.1
   GainsTranslational: {x: 1, y: 1, z: 1}
   GainsRotational:
@@ -43,5 +46,6 @@ MonoBehaviour:
   HybridWeights: {x: 1, y: 1, z: 1}
   SmoothingParameter: 0
   Rescale: 0
+  add_boundaries: 0
   SwampSquareLength: 0.25
   SwampCDRatio: 0.75

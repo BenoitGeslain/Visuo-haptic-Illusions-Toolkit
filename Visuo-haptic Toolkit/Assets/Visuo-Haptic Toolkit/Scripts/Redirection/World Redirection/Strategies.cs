@@ -68,21 +68,26 @@ namespace VHToolkit.Redirection.WorldRedirection {
 		public override Vector3 SteerTo(Scene scene) => scene.physicalHead.rotation * scene.strategyDirection;
 	}
 
-	public class APFP2R : WorldRedirectionStrategy {
+	public class Thomas2019APF_PushPull : WorldRedirectionStrategy {
 
 		/// <value>A list of colliders, each of which will create a repulsive potential field.</value>
 		public List<Collider> colliders;
 
-        public APFP2R() {
-            colliders = GameObject.FindGameObjectsWithTag("Obstacle").Select(o => o.GetComponent<Collider>()).ToList();
+		public Thomas2019APF_PushPull() {
+			colliders = GameObject.FindGameObjectsWithTag("Obstacle").Select(o => o.GetComponent<Collider>()).ToList();
 			// colliders.ForEach(o => o.transform.position = MathTools.ProjectToHorizontalPlaneV3(o.transform.position));
 		}
 
-        public override Vector3 SteerTo(Scene scene) => ComputeGradient(scene);
+		public override Vector3 SteerTo(Scene scene) => ComputeGradient(scene);
 
-        private Vector3 ComputeGradient(Scene scene) => Vector3.ProjectOnPlane(MathTools.Gradient3(
-                                            MathTools.RepulsivePotential3D(colliders),
+		private Vector3 ComputeGradient(Scene scene) => Vector3.ProjectOnPlane(MathTools.Gradient3(
+											MathTools.RepulsivePotential3D(colliders),
 											MathTools.ProjectToHorizontalPlaneV3(scene.physicalHead.position)
-                                        ), Vector3.up);
-    }
+										), Vector3.up);
+	}
+
+	public class Messinger2019APF : WorldRedirectionStrategy {
+
+		public override Vector3 SteerTo(Scene scene) => Vector3.forward;
+	}
 }

@@ -55,6 +55,14 @@ namespace VHToolkit.Redirection {
 		[Tooltip("The radius of the orbit around which the user is redirected with the SteerToOrbit techniques described in [TODO]")]
 		public float SteerToOrbitRadius = 5f;
 
+		// APF params
+		[Tooltip("")]
+		public float obstaclesFallOffFactor = 2.656f;
+		[Tooltip("")]
+		public float usersFallOffFactor = 3.091f;
+		[Tooltip("")]
+		public float scaleMultipler = 2.5f;
+
 		// Techniques params
 		[Tooltip("The maximum rotation that can be applied to the user's point of view in rotation along the vertical axis (Y). Value is in °/s.")]
 		public float OverTimeRotation = 0.2f;
@@ -67,7 +75,6 @@ namespace VHToolkit.Redirection {
 		[Tooltip("The weights used for the Razzaque2001Hybrid technique using the WeightedSum function.")]
 		public Vector3 HybridWeights = new(1f, 1f, 1f);
 
-
 		//
 		// 3D Interpolation
 		//
@@ -77,7 +84,8 @@ namespace VHToolkit.Redirection {
 		public float SmoothingParameter;
 		[Tooltip("Whether to apply rescaling before using thin-plate interpolation.")]
 		public bool Rescale;
-
+		[Tooltip("TODO")]
+		public bool add_boundaries = true;
 
 		//
 		// Pseudo-Haptic

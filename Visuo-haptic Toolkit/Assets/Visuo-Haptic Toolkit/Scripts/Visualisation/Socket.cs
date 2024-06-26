@@ -13,7 +13,7 @@ namespace VHToolkit.Logging {
 
 
 	[Serializable]
-	struct WorldRedirectionData {
+	public struct WorldRedirectionData {
 		[SerializeField] public float overTime, rotational, curvature;
 		[SerializeField] public float overTimeSum, rotationalSum, curvatureSum;
 		[SerializeField] float time;
@@ -43,10 +43,53 @@ namespace VHToolkit.Logging {
 			this.curvature = 0f;
 		}
 	}
+	public class VisualizerWrapper : IObserver<WorldRedirectionData> {
+		private string filename;
+		private string pythonPath;
+		private IDisposable unsubscriber;
+
+		public void Subscribe(IObservable<WorldRedirectionData> observable) => unsubscriber = observable?.Subscribe(this);
+
+		public VisualizerWrapper(string filename, string pythonPath) {
+			this.filename = filename;
+			this.pythonPath = pythonPath;
+			if (filename is null || !filename.EndsWith(".py") || !File.Exists(filename)) {
+				Debug.LogWarning($"Invalid Python script {filename}.");
+			}
+			else if (pythonPath is null || !pythonPath.EndsWith(".exe") || !File.Exists(pythonPath)) {
+				Debug.LogWarning($"Invalid Python executable path {filename}.");
+			}
+			else {
+				Debug.Log($"Launch visualizer with Python {pythonPath}.");
+				// TODO not great for non-windows
+				System.Diagnostics.Process p = new() {
+					StartInfo = new System.Diagnostics.ProcessStartInfo(pythonPath, filename) {
+						RedirectStandardOutput = true,
+						UseShellExecute = false,
+						CreateNoWindow = true
+					}
+				};
+				p.Start();
+			}
+		}
+
+		public void OnCompleted() {
+			throw new NotImplementedException();
+		}
+
+		public void OnError(Exception error) {
+			throw new NotImplementedException();
+		}
+
+		void IObserver<WorldRedirectionData>.OnNext(WorldRedirectionData value) {
+			throw new NotImplementedException();
+		}
+	}
 	public class Socket : MonoBehaviour, IObservable<WorldRedirectionData> {
 		private Scene scene;
 		private WorldRedirection script;
 		private DateTime startTime;
+
 
 		private readonly HashSet<IObserver<WorldRedirectionData>> observers = new();
 
@@ -74,25 +117,8 @@ namespace VHToolkit.Logging {
 		}
 
 		public void LaunchVisualizer() {
-
-			if (filename is null || !filename.EndsWith(".py") || !File.Exists(filename)) {
-				Debug.LogWarning($"Invalid Python script {filename}.");
-			}
-			else if (pythonPath is null || !pythonPath.EndsWith(".exe") || !File.Exists(pythonPath)) {
-				Debug.LogWarning($"Invalid Python executable path {filename}.");
-			}
-			else {
-				Debug.Log($"Launch visualizer with Python {pythonPath}.");
-				// TODO not great for non-windows
-				System.Diagnostics.Process p = new() {
-					StartInfo = new System.Diagnostics.ProcessStartInfo(pythonPath, filename) {
-						RedirectStandardOutput = true,
-						UseShellExecute = false,
-						CreateNoWindow = true
-					}
-				};
-				p.Start();
-			}
+			var wrapper = new VisualizerWrapper(filename, pythonPath);
+			wrapper.Subscribe(this);
 		}
 
 		private void GetClient() {
@@ -136,7 +162,7 @@ namespace VHToolkit.Logging {
 								  (float)(DateTime.Now - startTime).TotalSeconds);
 		}
 
-		IDisposable IObservable<WorldRedirectionData>.Subscribe(IObserver<WorldRedirectionData> observer) {
+		public IDisposable Subscribe(IObserver<WorldRedirectionData> observer) {
 			observers.Add(observer);
 			return new HashSetUnsubscriber<WorldRedirectionData>(observers, observer);
 		}

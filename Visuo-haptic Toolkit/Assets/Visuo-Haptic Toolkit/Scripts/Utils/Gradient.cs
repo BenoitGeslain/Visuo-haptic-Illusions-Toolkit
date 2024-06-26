@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MathNet.Numerics.Distributions;
 
 namespace VHToolkit {
 	public static class MathTools {
@@ -34,11 +35,11 @@ namespace VHToolkit {
 			) / (2 * eps);
 		}
 
-		public static Func<Vector3, float> RepulsivePotential3D(List<Collider> obstacles) =>
-			(x) => obstacles.Sum(o => 1 / Vector3.Distance(x, o.ClosestPoint(x)));
+		public static Func<Vector3, float> RepulsivePotential3D(List<Collider> obstacles, float exponent = 1f) =>
+			(x) => obstacles.Sum(o => 1 / Mathf.Pow(Vector3.Distance(x, o.ClosestPoint(x)), exponent));
 
-		public static Func<Vector3, float> RepulsivePotential3D(List<Vector3> obstacles) =>
-			(x) => obstacles.Sum(o => 1 / Vector3.Distance(x, o));
+		public static Func<Vector3, float> RepulsivePotential3D(List<Vector3> obstacles, float exponent = 1f) =>
+			(x) => obstacles.Sum(o => 1 / Mathf.Pow(Vector3.Distance(x, o), exponent));
 
 
 		public static Vector2 Gradient2v2(Vector2 x, List<Collider2D> obstaclescolliders) {
@@ -49,11 +50,6 @@ namespace VHToolkit {
 				RepulsivePotential(x + eps * Vector2.up) - RepulsivePotential(x + eps * Vector2.down)
 			) / (2 * eps);
 		}
-
-
-
-
-
 
 		// The potential is given as || x - goal || / 2.
 		public static Vector2 GradientOfAttractivePotential(Vector2 goal, Vector2 x) => (x - goal).normalized / 2;

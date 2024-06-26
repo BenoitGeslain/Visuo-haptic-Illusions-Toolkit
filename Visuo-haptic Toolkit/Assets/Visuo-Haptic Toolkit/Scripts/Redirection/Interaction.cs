@@ -3,20 +3,28 @@ using System.Linq;
 using UnityEngine;
 
 namespace VHToolkit.Redirection {
+
+	[System.AttributeUsage(System.AttributeTargets.All, Inherited = false, AllowMultiple = true)]
+	public abstract class EditorRedirectionAttribute : System.Attribute { }
+	public sealed class ShowHeadAttribute : EditorRedirectionAttribute { }
+	public sealed class HasBufferAttribute : EditorRedirectionAttribute { }
+	public sealed class HasThresholdAttribute : EditorRedirectionAttribute { }
+	public sealed class HasStrategyAttribute : EditorRedirectionAttribute { }
+	public sealed class HasTargetsAttribute : EditorRedirectionAttribute { }
 	public enum BRTechnique {
 		None,
 		Reset,
 		[InspectorName("")] SEPARATOR1, // Adds a visual separator in the drop-down inspector
 										// Hand Redirection techniques
-		Han2018TranslationalShift,
-		Han2018InterpolatedReach,
-		Azmandian2016Body,
-		Azmandian2016Hybrid,
-		Cheng2017Sparse,
-		Geslain2022Polynom,
-		Poupyrev1996GoGo,
+		[HasThreshold] Han2018TranslationalShift,
+		[HasBuffer, HasThreshold] Han2018InterpolatedReach,
+		[HasBuffer, HasThreshold] Azmandian2016Body,
+		[ShowHead, HasThreshold] Azmandian2016Hybrid,
+		[HasBuffer, HasThreshold] Cheng2017Sparse,
+		[HasBuffer, HasThreshold] Geslain2022Polynom,
+		[ShowHead] Poupyrev1996GoGo,
 		[InspectorName(" ")] SEPARATOR2,
-		Kohli2010RedirectedTouching,
+		[HasThreshold] Kohli2010RedirectedTouching,
 		[InspectorName("  ")] SEPARATOR3,
 		// Pseudo-haptic techiques
 		Lecuyer2000Swamp,
@@ -30,10 +38,10 @@ namespace VHToolkit.Redirection {
 		None,
 		Reset,
 		[InspectorName("")] SEPARATOR1,
-		Razzaque2001OverTimeRotation,
-		Razzaque2001Rotational,
-		Razzaque2001Curvature,
-		Razzaque2001Hybrid,
+		[HasStrategy] Razzaque2001OverTimeRotation,
+		[HasStrategy] Razzaque2001Rotational,
+		[HasStrategy] Razzaque2001Curvature,
+		[HasStrategy] Razzaque2001Hybrid,
 		Azmandian2016World,
 		Steinicke2008Translational
 	}
@@ -41,12 +49,13 @@ namespace VHToolkit.Redirection {
 	public enum WRStrategy {
 		NoSteering,
 		[InspectorName("")] SEPARATOR1,
-		SteerToCenter,
+		[HasTargets] SteerToCenter,
 		SteerToOrbit,
-		SteerToMultipleTargets,
+		[HasTargets] SteerToMultipleTargets,
 		SteerInDirection,
 		[InspectorName(" ")] SEPARATOR2,
-		APF_PushPull
+		Thomas2019APF_PushPull,
+		Messinger2019APF
 	}
 
 	public enum HybridAggregate {

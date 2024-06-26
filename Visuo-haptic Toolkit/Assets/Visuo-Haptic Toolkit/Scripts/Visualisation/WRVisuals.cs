@@ -51,8 +51,8 @@ namespace VHToolkit.Visualisation {
 				case WRStrategy.SteerInDirection:
 					SteerInDirection(scene);
 					break;
-				case WRStrategy.APF_PushPull:
-					(WRMainScript.strategyInstance as APFP2R).colliders.ForEach(o => Debug.DrawLine(scene.physicalHead.position, o.ClosestPoint(scene.physicalHead.position), Color.Lerp(Color.clear, Color.yellow, 1 / Vector3.Distance(scene.physicalHead.position, o.ClosestPoint(scene.physicalHead.position)))));
+				case WRStrategy.Thomas2019APF_PushPull:
+					(WRMainScript.strategyInstance as Thomas2019APF_PushPull).colliders.ForEach(o => Debug.DrawLine(scene.physicalHead.position, o.ClosestPoint(scene.physicalHead.position), Color.Lerp(Color.clear, Color.yellow, 1 / Vector3.Distance(scene.physicalHead.position, o.ClosestPoint(scene.physicalHead.position)))));
 					// (WRMainScript.strategyInstance as APFP2R).colliders.ForEach(o => {
 					// 	Debug.Log($"{o.gameObject.name} : {1 / Vector3.Distance(scene.physicalHead.position, o.ClosestPoint(scene.physicalHead.position))}");
 					// });

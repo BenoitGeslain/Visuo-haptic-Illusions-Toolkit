@@ -5,6 +5,9 @@ using UnityEditor;
 
 using VHToolkit.Redirection.PseudoHaptics;
 using VHToolkit.Redirection.Interpolation3D;
+using System;
+using VHToolkit.Redirection;
+using System.Linq;
 
 namespace VHToolkit.Redirection.BodyRedirection {
 	/// <summary>
@@ -26,27 +29,24 @@ namespace VHToolkit.Redirection.BodyRedirection {
 		SerializedProperty redirect;
 		SerializedProperty parameters;
 		SerializedObject parametersObject;
-
-		readonly HashSet<string> bufferTechniques = new() { nameof(Han2018InterpolatedReach), nameof(Azmandian2016Body), nameof(Geslain2022Polynom), nameof(Cheng2017Sparse) };
-		readonly HashSet<string> noThresholdTechniques = new() { nameof(Poupyrev1996GoGo), nameof(Lecuyer2000Swamp), nameof(Samad2019Weight) };
-
+		private SerializedProperty Find(string name) => serializedObject.FindProperty(name);
 
 		private void OnEnable() {
 
-			technique = serializedObject.FindProperty("_technique");
-			techniqueInstance = serializedObject.FindProperty("techniqueInstance");
+			technique = Find("_technique");
+			techniqueInstance = Find("techniqueInstance");
 
-			limbs = serializedObject.FindProperty("scene.limbs");
-			physicalHead = serializedObject.FindProperty("scene.physicalHead");
-			virtualHead = serializedObject.FindProperty("scene.virtualHead");
-			physicalTarget = serializedObject.FindProperty("scene.physicalTarget");
-			virtualTarget = serializedObject.FindProperty("scene.virtualTarget");
-			origin = serializedObject.FindProperty("scene.origin");
-			referenceSurface = serializedObject.FindProperty("scene.referenceParent");
-			interpolatedSurface = serializedObject.FindProperty("scene.interpolatedParent");
+			limbs = Find("scene.limbs");
+			physicalHead = Find("scene.physicalHead");
+			virtualHead = Find("scene.virtualHead");
+			physicalTarget = Find("scene.physicalTarget");
+			virtualTarget = Find("scene.virtualTarget");
+			origin = Find("scene.origin");
+			referenceSurface = Find("scene.referenceParent");
+			interpolatedSurface = Find("scene.interpolatedParent");
 
-			redirect = serializedObject.FindProperty("redirect");
-			parameters = serializedObject.FindProperty("scene.parameters");
+			redirect = Find("redirect");
+			parameters = Find("scene.parameters");
 		}
 
 		private void MakePropertyField(SerializedProperty property, string text, string tooltip = null) {
@@ -66,13 +66,16 @@ namespace VHToolkit.Redirection.BodyRedirection {
 			// Scene
 			MakePropertyField(limbs, "User Limbs", "A list of tracked user limbs.");
 
-			string techniqueName = technique.enumNames[technique.enumValueIndex];
+			Enum.TryParse(technique.enumNames[technique.enumValueIndex], out BRTechnique actualTechnique);
 
-			if (techniqueName == nameof(Azmandian2016Hybrid)) {
+			var enumType = typeof(BRTechnique);
+			var memberInfos = enumType.GetMember(actualTechnique.ToString());
+			var enumValueMemberInfo = memberInfos.FirstOrDefault(m => m.DeclaringType == enumType);
+			if (enumValueMemberInfo.IsDefined(typeof(ShowHeadAttribute), false)) {
 				MakePropertyField(physicalHead, "Physical Head", "The Transform of the VR headset worn by the user.");
+			}
+			if (actualTechnique == BRTechnique.Azmandian2016Hybrid) {
 				MakePropertyField(virtualHead, "Virtual Head", "");
-			} else if (techniqueName == nameof(Poupyrev1996GoGo)) {
-				MakePropertyField(physicalHead, "Physical Head", "");
 			}
 
 			EditorGUILayout.Space(5);
@@ -92,37 +95,40 @@ namespace VHToolkit.Redirection.BodyRedirection {
 			parametersObject = new SerializedObject(parameters.objectReferenceValue);
 			parametersObject.Update();
 
-			if (techniqueName == nameof(Kohli2010RedirectedTouching)) {
+			if (actualTechnique == BRTechnique.Kohli2010RedirectedTouching) {
 				MakePropertyField(referenceSurface, "Reference Surface", "Points on the physical surface that the physical hand of the user explores. This Transform should be the parent of the points. The order of points is matched with the order of interpolated surface.");
 				MakePropertyField(interpolatedSurface, "Interpolated Surface", "Points on the virtual surface that the virtual hand of the user will explore when touching the physical surface.This Transform should be the parent of the points. The order of points is matched with the order of reference surface.");
-			} else {
+			}
+			else {
 				MakePropertyField(physicalTarget, "Physical Target", "");
 				MakePropertyField(virtualTarget, "Virtual Target", "");
 				MakePropertyField(origin, "Origin", "");
 			}
 
 
-			if (techniqueName == nameof(Kohli2010RedirectedTouching)) {
+			if (actualTechnique == BRTechnique.Kohli2010RedirectedTouching) {
 				MakePropertyField(parametersObject.FindProperty("SmoothingParameter"), "Smoothing", "");
 				MakePropertyField(parametersObject.FindProperty("Rescale"), "Rescale", "");
-			} else if (techniqueName == nameof(Geslain2022Polynom)) {
-				MakePropertyField(parametersObject.FindProperty("redirectionLateness"), "Redirection Lateness (a2)");
-				MakePropertyField(parametersObject.FindProperty("controlPoint"), "ControlPoint");
-			} else if (techniqueName == nameof(Poupyrev1996GoGo)) {
+				MakePropertyField(parametersObject.FindProperty("add_boundaries"), "Add Boundaries", "");
+			}
+			else if (actualTechnique == BRTechnique.Geslain2022Polynom) {
+				// TODO broken
+				//MakePropertyField(parametersObject.FindProperty("redirectionLateness"), "Redirection Lateness (a2)");
+				//MakePropertyField(parametersObject.FindProperty("controlPoint"), "ControlPoint");
+			}
+			else if (actualTechnique == BRTechnique.Poupyrev1996GoGo) {
 				MakePropertyField(parametersObject.FindProperty("GoGoCoefficient"), "Coefficient");
 				MakePropertyField(parametersObject.FindProperty("GoGoActivationDistance"), "Activation Distance");
 			}
 
-			if (bufferTechniques.Contains(techniqueName)) {
+			if (enumValueMemberInfo.IsDefined(typeof(HasBufferAttribute), false)) {
 				MakePropertyField(parametersObject.FindProperty("RedirectionBuffer"), "Redirection Buffer");
 			}
-
-			if (noThresholdTechniques.Contains(techniqueName)) {
-				if (techniqueName == nameof(Lecuyer2000Swamp)) {
-					MakePropertyField(parametersObject.FindProperty("SwampSquareLength"), "Square Side Length");
-					MakePropertyField(parametersObject.FindProperty("SwampCDRatio"), "C/D Ratio");
-				}
-			} else {
+			if (actualTechnique == BRTechnique.Lecuyer2000Swamp) {
+				MakePropertyField(parametersObject.FindProperty("SwampSquareLength"), "Square Side Length");
+				MakePropertyField(parametersObject.FindProperty("SwampCDRatio"), "C/D Ratio");
+			}
+			if (enumValueMemberInfo.IsDefined(typeof(HasThresholdAttribute), false)) {
 				EditorGUILayout.Space(5);
 				EditorGUILayout.LabelField("Threshold Parameters", EditorStyles.largeLabel);
 				MakePropertyField(parametersObject.FindProperty(nameof(ParametersToolkit.HorizontalAngles)), "Max Horizontal Angles");
