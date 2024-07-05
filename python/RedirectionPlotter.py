@@ -35,7 +35,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as serversocket:
     serversocket.bind(("localhost", 13000))
     serversocket.listen(5)
     with serversocket.accept()[0] as clientsocket:
-        with clientsocket.makefile() as file:
+        with clientsocket.makefile('r') as file:
             for line in file:
                 print(line)
                 if not plt.get_fignums():
