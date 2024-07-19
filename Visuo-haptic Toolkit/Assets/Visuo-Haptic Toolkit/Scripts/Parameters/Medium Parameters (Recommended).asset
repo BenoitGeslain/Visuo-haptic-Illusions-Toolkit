@@ -37,6 +37,8 @@ MonoBehaviour:
   obstaclesFallOffFactor: 2.656
   usersFallOffFactor: 3.091
   scaleMultipler: 2.5
+  SegmentLength: 0.005
+  ObstacleScalingFactor: 0.00897
   OverTimeRotation: 0.1
   GainsTranslational: {x: 1, y: 1, z: 1}
   GainsRotational:

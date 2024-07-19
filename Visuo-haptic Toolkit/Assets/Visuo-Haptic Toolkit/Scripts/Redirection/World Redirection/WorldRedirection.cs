@@ -44,7 +44,7 @@ namespace VHToolkit.Redirection.WorldRedirection {
 				WRStrategy.SteerToMultipleTargets => new SteerToMultipleTargets(),
 				WRStrategy.SteerInDirection => new SteerInDirection(),
 				WRStrategy.Thomas2019APF_PushPull => new Thomas2019APF_PushPull(),
-				WRStrategy.Messinger2019APF => new Messinger2019APF(),
+				WRStrategy.Messinger2019APF => new Messinger2019APF(scene),
 				_ => null
 			};
 

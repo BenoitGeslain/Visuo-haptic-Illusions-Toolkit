@@ -62,6 +62,10 @@ namespace VHToolkit.Redirection {
 		public float usersFallOffFactor = 3.091f;
 		[Tooltip("")]
 		public float scaleMultipler = 2.5f;
+		[Tooltip("")]
+		public float SegmentLength = 1f;
+		[Tooltip("")]
+		public float ObstacleScalingFactor = 0.00897f;
 
 		// Techniques params
 		[Tooltip("The maximum rotation that can be applied to the user's point of view in rotation along the vertical axis (Y). Value is in °/s.")]

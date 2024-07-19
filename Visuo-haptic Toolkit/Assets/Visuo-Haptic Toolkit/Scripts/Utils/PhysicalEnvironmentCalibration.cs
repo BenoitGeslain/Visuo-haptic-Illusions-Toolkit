@@ -18,13 +18,13 @@ public class PhysicalEnvironmentCalibration : MonoBehaviour {
 	// Update is called once per frame
 	void Update() {
 		var obs = bounds.CyclicPairs().SelectMany(
-				p => {
-					var dir = (p.Item1 - p.Item2).normalized;
-					var n = (int)(Vector3.Distance(p.Item1, p.Item2) / eps);
+			p => {
+				var dir = (p.Item1 - p.Item2).normalized;
+				var n = (int)(Vector3.Distance(p.Item1, p.Item2) / eps);
 
-					return Enumerable.Range(0, n).Select(j => p.Item2 + (j + 0.5f) * eps * dir);
-				}
-			).ToList();
+				return Enumerable.Range(0, n).Select(j => p.Item2 + (j + 0.5f) * eps * dir);
+			}
+		).ToList();
 
 		// Debug.Log(obs.Count);
 		// obs.ForEach(o => Debug.Log(o));

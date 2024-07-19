@@ -88,6 +88,37 @@ namespace VHToolkit.Redirection.WorldRedirection {
 
 	public class Messinger2019APF : WorldRedirectionStrategy {
 
-		public override Vector3 SteerTo(Scene scene) => Vector3.forward;
+		public List<Vector3> dividedSegments;
+
+		public Messinger2019APF(Scene scene) {
+			ComputeDividedObstacles(scene);
+		}
+
+		public override Vector3 SteerTo(Scene scene) {
+			ComputeDividedObstacles(scene);
+			return ComputeGradient(scene);
+		}
+
+		private void ComputeDividedObstacles(Scene scene) {
+			dividedSegments = scene.bounds.CyclicPairs().SelectMany(
+				p => {
+					var dir = (p.Item1.position - p.Item2.position).normalized;
+					var n = (int)(Vector3.Distance(p.Item1.position, p.Item2.position) / scene.parameters.SegmentLength);
+
+					// Enumerable.Range(0, n).ToList().ForEach(x => {Debug.DrawLine(scene.physicalHead.position,
+					// 															p.Item2.position + (x + 0.5f) * scene.parameters.SegmentLength * dir,
+					// 															Color.white); Debug.Log("test");});
+
+					return Enumerable.Range(0, n).Select(j => p.Item2.position + (j + 0.5f) * scene.parameters.SegmentLength * dir);
+				}
+			).ToList();
+		}
+
+		private Vector3 ComputeGradient(Scene scene) => Vector3.ProjectOnPlane(MathTools.Gradient3(
+											MathTools.RepulsivePotential3D(dividedSegments),
+											MathTools.ProjectToHorizontalPlaneV3(scene.physicalHead.position)
+										), Vector3.up);
+
+		private Func<Vector3,
 	}
 }

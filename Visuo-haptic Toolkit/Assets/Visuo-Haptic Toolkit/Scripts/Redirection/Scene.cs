@@ -73,6 +73,8 @@ namespace VHToolkit.Redirection {
 		[Ignore] public Transform referenceParent;
 		[Ignore] public Transform interpolatedParent;
 
+		[Ignore] public List<Transform> bounds;
+
 
 		/// <summary>
 		/// The position of the virtual limb is given by <c>physicalHand.position + Redirection</c>.

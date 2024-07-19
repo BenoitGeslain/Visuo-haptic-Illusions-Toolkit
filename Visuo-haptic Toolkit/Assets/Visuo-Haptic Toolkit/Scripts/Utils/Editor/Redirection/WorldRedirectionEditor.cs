@@ -20,6 +20,7 @@ namespace VHToolkit.Redirection.WorldRedirection {
 		applyDampening, applySmoothing,
 		redirect, direction,
 		enableOverTime, enableRotational, enableCurvature,
+		bounds,
 		parameters;
 		SerializedObject parametersObject;
 
@@ -43,6 +44,7 @@ namespace VHToolkit.Redirection.WorldRedirection {
 			enableOverTime = serializedObject.FindProperty("scene.enableHybridOverTime");
 			enableRotational = serializedObject.FindProperty("scene.enableHybridRotational");
 			enableCurvature = serializedObject.FindProperty("scene.enableHybridCurvature");
+			bounds = serializedObject.FindProperty("scene.bounds");
 
 			parameters = serializedObject.FindProperty("scene.parameters");
 		}
@@ -176,8 +178,7 @@ namespace VHToolkit.Redirection.WorldRedirection {
 					MakePropertyField(parametersObject.FindProperty("DampeningRange"), "Dampening Range");
 					MakePropertyField(applySmoothing, "Apply Smoothing");
 					MakePropertyField(parametersObject.FindProperty("SmoothingFactor"), "Smoothing Factor");
-				}
-				else if (actualStrategy == WRStrategy.SteerToOrbit) {
+				} else if (actualStrategy == WRStrategy.SteerToOrbit) {
 					MakePropertyField(targetsScene, "Targets");
 
 					var steerToOrbitRadius = parametersObject.FindProperty("SteerToOrbitRadius");
@@ -187,9 +188,11 @@ namespace VHToolkit.Redirection.WorldRedirection {
 					EditorGUILayout.LabelField($"Rotation Rate: {(360f / (2 * Mathf.PI * steerToOrbitRadius.floatValue)).ToString("N2")} °/m/s");
 					GUILayout.EndHorizontal();
 
-				}
-				else if (actualStrategy == WRStrategy.SteerInDirection) {
+				} else if (actualStrategy == WRStrategy.SteerInDirection) {
 					MakePropertyField(direction, "Direction");
+				} else if (actualStrategy == WRStrategy.Messinger2019APF) {
+					MakePropertyField(parametersObject.FindProperty("SegmentLength"), "Segment Length");
+					MakePropertyField(bounds, "Bounds");
 				}
 			}
 
