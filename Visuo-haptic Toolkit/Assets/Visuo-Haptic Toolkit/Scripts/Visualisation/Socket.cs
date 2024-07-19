@@ -13,11 +13,24 @@ namespace VHToolkit.Logging {
 
 
 	[Serializable]
-	public struct WorldRedirectionData {
+	public struct WRData
+    {
 		[SerializeField] public float overTime, rotational, curvature;
 		[SerializeField] public float overTimeSum, rotationalSum, curvatureSum;
-		[SerializeField] float time;
-		[SerializeField] float[] maxSums;
+		[SerializeField] public float time;
+		[SerializeField] public float[] maxSums;
+
+		public WRData(float overTime, float rotational, float curvature, float time)
+		{ 
+			this.overTime = overTime;
+			this.rotational = rotational;
+			this.curvature = curvature;
+			this.overTimeSum = 0.0f;
+			this.rotationalSum = 0.0f;
+			this.curvatureSum = 0.0f;
+			this.time = time;
+			this.maxSums = null;
+		}
 
 		public void AddTo(float overTime, float rotational, float curvature, float time) {
 			if (maxSums?.Length != 3) {
@@ -43,12 +56,12 @@ namespace VHToolkit.Logging {
 			this.curvature = 0f;
 		}
 	}
-	public class VisualizerWrapper : IObserver<WorldRedirectionData> {
+	public class VisualizerWrapper : IObserver<WRData> {
 		private string filename;
 		private string pythonPath;
 		private IDisposable unsubscriber;
 
-		public void Subscribe(IObservable<WorldRedirectionData> observable) => unsubscriber = observable?.Subscribe(this);
+		public void Subscribe(IObservable<WRData> observable) => unsubscriber = observable?.Subscribe(this);
 
 		public VisualizerWrapper(string filename, string pythonPath) {
 			this.filename = filename;
@@ -81,17 +94,17 @@ namespace VHToolkit.Logging {
 			throw new NotImplementedException();
 		}
 
-		void IObserver<WorldRedirectionData>.OnNext(WorldRedirectionData value) {
+		void IObserver<WRData>.OnNext(WRData value) {
 			throw new NotImplementedException();
 		}
 	}
-	public class Socket : MonoBehaviour, IObservable<WorldRedirectionData> {
+	public class Socket : MonoBehaviour, IObservable<WRData> {
 		private Scene scene;
 		private WorldRedirection script;
 		private DateTime startTime;
 
 
-		private readonly HashSet<IObserver<WorldRedirectionData>> observers = new();
+		private readonly HashSet<IObserver<WRData>> observers = new();
 
 		private TcpClient client;
 
@@ -103,7 +116,7 @@ namespace VHToolkit.Logging {
 
 		private Razzaque2001Hybrid loggingTechnique;
 
-		private WorldRedirectionData redirectionData;
+		private WRData redirectionData;
 
 		private void Start() {
 			script = GetComponent<WorldRedirection>();
@@ -121,7 +134,7 @@ namespace VHToolkit.Logging {
 			wrapper.Subscribe(this);
 		}
 
-		private void GetClient() {
+        private void GetClient() {
 			client ??= new();
 			if (!client.Connected) {
 				try {
@@ -162,9 +175,9 @@ namespace VHToolkit.Logging {
 								  (float)(DateTime.Now - startTime).TotalSeconds);
 		}
 
-		public IDisposable Subscribe(IObserver<WorldRedirectionData> observer) {
+		public IDisposable Subscribe(IObserver<WRData> observer) {
 			observers.Add(observer);
-			return new HashSetUnsubscriber<WorldRedirectionData>(observers, observer);
+			return new HashSetUnsubscriber<WRData>(observers, observer);
 		}
 	}
 }

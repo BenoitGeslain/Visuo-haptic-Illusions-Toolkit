@@ -2447,6 +2447,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   logDirectoryPath: LoggedData\
   optionalFilenamePrefix: 
+  filename: 
+  pythonPath: 
 --- !u!114 &844723486
 MonoBehaviour:
   m_ObjectHideFlags: 0
