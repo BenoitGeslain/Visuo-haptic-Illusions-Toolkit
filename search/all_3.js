@@ -4,5 +4,6 @@ var searchData=
   ['dampeningrange_39',['DampeningRange',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#a7425413ae5e4323d34cd4eb06de237da',1,'VHToolkit::Redirection::ParametersToolkit']]],
   ['depthgain_40',['DepthGain',['../classVHToolkit_1_1Redirection_1_1ParametersToolkit.html#ac87d5b6c80ae01b8093934caf5875375',1,'VHToolkit::Redirection::ParametersToolkit']]],
   ['dispose_41',['Dispose',['../classVHToolkit_1_1Logging_1_1HashSetUnsubscriber.html#a40a6af3c94b5743ba3fd8c228fbbcf69',1,'VHToolkit::Logging::HashSetUnsubscriber']]],
-  ['down_42',['down',['../classVHToolkit_1_1Redirection_1_1Vector2Vertical.html#a1c33ecb13b9dfc503da06bfbd34f057e',1,'VHToolkit::Redirection::Vector2Vertical']]]
+  ['dividedsegments_42',['dividedSegments',['../classVHToolkit_1_1Redirection_1_1WorldRedirection_1_1Messinger2019APF.html#ac6082cf24ee7c518b9f4a9264ad347c8',1,'VHToolkit::Redirection::WorldRedirection::Messinger2019APF']]],
+  ['down_43',['down',['../classVHToolkit_1_1Redirection_1_1Vector2Vertical.html#a1c33ecb13b9dfc503da06bfbd34f057e',1,'VHToolkit::Redirection::Vector2Vertical']]]
 ];
