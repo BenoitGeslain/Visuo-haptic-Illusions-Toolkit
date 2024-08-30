@@ -118,7 +118,5 @@ namespace VHToolkit.Redirection.WorldRedirection {
 											MathTools.RepulsivePotential3D(dividedSegments),
 											MathTools.ProjectToHorizontalPlaneV3(scene.physicalHead.position)
 										), Vector3.up);
-
-		private Func<Vector3,
 	}
 }
